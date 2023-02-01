@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import "~/styles/globals.css";
+import ThemeToogle from "./ThemeToogle";
 
 function Header() {
   const [opened, setOpened] = useState(false);
@@ -92,7 +93,7 @@ function Header() {
                     </li>
                     <li>
                       <Link
-                        href={`/`}
+                        href={`/about`}
                         className={` cursor-pointer items-center border-b-2 align-middle transition duration-200 ease-in-out hover:text-blue-600 ${
                           currentRoute === "/about"
                             ? " border-orange-500"
@@ -156,6 +157,11 @@ function Header() {
             className="
                absolute right-0 flex h-screen w-[60%] max-w-[20rem]  flex-col gap-4 overflow-y-auto bg-[#F7F6FB] p-4 pt-[5rem] text-2xl font-semibold text-gray-800 opacity-100 bg-blend-darken sm:text-3xl md:w-60 "
           >
+            <div
+              className={` w-fit items-center px-2`}
+            >
+              <ThemeToogle/>
+            </div>
             <Link
               href={`/`}
               className={` w-fit cursor-pointer items-center border-b-2 px-2 transition duration-200 ease-in-out hover:text-blue-600 ${

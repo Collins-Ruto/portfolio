@@ -111,9 +111,6 @@ export const PinnedCard = ({ project }: { project: RepositoryData }) => {
           {project.description}
         </span>
         <div className="flex-end flex justify-between pt-2">
-          {/* <Link href={project.html_url} className="rounded border px-2 py-1">
-            Article
-          </Link> */}
           <Link
             href={project.homepage == "" ? project.html_url : project.homepage}
             className="flex items-center rounded border px-2 py-1 dark:border-0 dark:bg-gray-800"

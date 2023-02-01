@@ -3,11 +3,13 @@ import type { Metadata } from "next";
 // import ReactMarkdown from "react-markdown";
 // import remarkGfm from "remark-gfm";
 import Image from "next/image";
+import Link from "next/link";
+import ThemeToogle from "~/components/ThemeToogle";
 
 export const metadata: Metadata = {
   title: "About",
   description: "All About Collins",
-  
+
   authors: [
     {
       name: "Collins Ruto",
@@ -18,18 +20,22 @@ export const metadata: Metadata = {
   twitter: { creator: "@ruto_collins_" },
 };
 
- function BlogPage() {
+function BlogPage() {
   // const res = await fetch(
   //   // "https://raw.githubusercontent.com/Collins-Ruto/collins-ruto/main/README.md"
   //   "https://raw.githubusercontent.com/Collins-Ruto/blogs/main/whoami/README.md"
   // );
   // const markdown = await res.text();
-  
 
   return (
     <div className="pt-8">
       <div className="prose mx-auto dark:prose-invert lg:prose-xl ">
-        <h1>Whoami</h1>
+        <div className="flex mt-6 items-center justify-between">
+          <div className="my-auto text-6xl font-bold ">Whoami</div>
+          <span className="mt-0">
+          <ThemeToogle />
+          </span>
+        </div>
         <p>
           I&apos;m Collins Ruto, a full-stack developer from Mombasa, Kenya{" "}
           <span role="img" aria-label="Kenya Flag">
@@ -40,20 +46,21 @@ export const metadata: Metadata = {
           and mentor upcoming developers worldwide.
         </p>
         <h4>Social tags</h4>
-        <p className="flex flex-wrap gap-2">
-          <a
+        <div className="flex flex-wrap items-center justify-around gap-2 p-0">
+          <Link
             href="https://twitter.com/ruto_collins_"
             target="_blank"
+            className="h-full"
             rel="noopener noreferrer"
           >
             <Image
               height={100}
-              width={100}
+              width={120}
               src="https://img.shields.io/badge/-@ruto_collins_-1ca0f1?style=flat&labelColor=1ca0f1&logo=twitter&logoColor=white"
               alt="Twitter Badge"
             />
-          </a>
-          <a
+          </Link>
+          <Link
             href="https://codepen.com/collins-ruto"
             target="_blank"
             rel="noopener noreferrer"
@@ -64,8 +71,8 @@ export const metadata: Metadata = {
               src="https://img.shields.io/badge/-CodePen-gray?style=flat&labelColor=gray&logo=codepen&logoColor=white"
               alt="Codepen Badge"
             />
-          </a>
-          <a
+          </Link>
+          <Link
             href="https://www.linkedin.com/in/collins-ruto/"
             target="_blank"
             rel="noopener noreferrer"
@@ -76,8 +83,8 @@ export const metadata: Metadata = {
               src="https://img.shields.io/badge/-LinkedIn-0e76a8?style=flat&labelColor=0e76a8&logo=linkedin&logoColor=white"
               alt="Linkedin Badge"
             />
-          </a>
-          <a
+          </Link>
+          <Link
             href="https://instagram.com/colins_ruto"
             target="_blank"
             rel="noopener noreferrer"
@@ -88,32 +95,33 @@ export const metadata: Metadata = {
               src="https://img.shields.io/badge/-Instagram-e84393?style=flat&labelColor=e84393&logo=instagram&logoColor=white"
               alt="Instagram Badge"
             />
-          </a>
-          <a
+          </Link>
+          <Link
             href="https://stackoverflow.com/users/17242991/collins-ruto"
             target="_blank"
             rel="noopener noreferrer"
           >
             <Image
               height={100}
-              width={100}
+              width={120}
+              className="border"
               src="https://img.shields.io/badge/-StackOverflow-1ca0f1?style=flat&labelColor=1ca0f1&logo=stackoverflow&logoColor=white"
               alt="Stackoverflow Badge"
             />
-          </a>
-          <a
+          </Link>
+          <Link
             href="mailto:collinsruto48@gmail.com"
             target="_blank"
             rel="noopener noreferrer"
           >
             <Image
               height={100}
-              width={100}
+              width={80}
               src="https://img.shields.io/badge/-Gmail-c0392b?style=flat&labelColor=c0392b&logo=gmail&logoColor=white"
               alt="Mail Badge"
             />
-          </a>
-        </p>
+          </Link>
+        </div>
         <h3>What am I doing?</h3>
         <ul>
           <li>
@@ -129,14 +137,14 @@ export const metadata: Metadata = {
         </ul>
         <p>
           My website:{" "}
-          <a href="https://collinsruto.netlify.app">
+          <Link href="https://collinsruto.netlify.app">
             https://collinsruto.netlify.app
-          </a>
+          </Link>
         </p>
         <h3>Top Technologies</h3>
         <p>Links take you to repositories utilizing them. Give it a try.</p>
-        <p className="flex flex-wrap gap-2">
-          <a
+        <span className="flex flex-wrap items-center gap-2 p-0">
+          <Link
             href="https://github.com/collins-ruto/wallpaper-app"
             target="_blank"
             rel="noopener noreferrer"
@@ -147,8 +155,8 @@ export const metadata: Metadata = {
               src="https://img.shields.io/badge/-React-61DBFB?style=for-the-badge&labelColor=black&logo=react&logoColor=61DBFB"
               alt="React Badge"
             />
-          </a>
-          <a
+          </Link>
+          <Link
             href="https://github.com/collins-ruto/wallpaper-app"
             target="_blank"
             rel="noopener noreferrer"
@@ -159,16 +167,16 @@ export const metadata: Metadata = {
               src="https://img.shields.io/badge/-Javascript-F0DB4F?style=for-the-badge&labelColor=black&logo=javascript&logoColor=F0DB4F"
               alt="Javascript Badge"
             />
-          </a>
-          <a href="#" target="_blank" rel="noopener noreferrer">
+          </Link>
+          <Link href="#" target="_blank" rel="noopener noreferrer">
             <Image
               height={100}
               width={100}
               src="https://img.shields.io/badge/-Typescript-007acc?style=for-the-badge&labelColor=black&logo=typescript&logoColor=007acc"
               alt="Typescript Badge"
             />
-          </a>
-          <a
+          </Link>
+          <Link
             href="https://github.com/collins-ruto/christmas-tree-python"
             target="_blank"
             rel="noopener noreferrer"
@@ -179,8 +187,8 @@ export const metadata: Metadata = {
               src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&labelColor=black&logo=python&logoColor=ffdd54"
               alt="Python Badge"
             />
-          </a>
-          <a
+          </Link>
+          <Link
             href="https://github.com/collins-ruto/wallpaper-app/server"
             target="_blank"
             rel="noopener noreferrer"
@@ -191,16 +199,16 @@ export const metadata: Metadata = {
               src="https://img.shields.io/badge/-Nodejs-3C873A?style=for-the-badge&labelColor=black&logo=node.js&logoColor=3C873A"
               alt="Nodejs Badge"
             />
-          </a>
-          <a href="#" target="_blank" rel="noopener noreferrer">
+          </Link>
+          <Link href="#" target="_blank" rel="noopener noreferrer">
             <Image
               height={100}
               width={100}
               src="https://img.shields.io/badge/-GraphQl-e535ab?style=for-the-badge&labelColor=black&logo=node.js&logoColor=e535ab"
               alt="GraphQL Badge"
             />
-          </a>
-          <a
+          </Link>
+          <Link
             href="https://github.com/collins-ruto/restaurant-reviews"
             target="_blank"
             rel="noopener noreferrer"
@@ -211,8 +219,8 @@ export const metadata: Metadata = {
               src="https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&labelColor=black&logo=mongodb&logoColor=white"
               alt="MongoDB Badge"
             />
-          </a>
-          <a
+          </Link>
+          <Link
             href="https://github.com/collins-ruto/my-portfolio"
             target="_blank"
             rel="noopener noreferrer"
@@ -223,30 +231,30 @@ export const metadata: Metadata = {
               src="https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&labelColor=black&logo=html5&logoColor=white"
               alt="HTML5 Badge"
             />
-          </a>
-        </p>
+          </Link>
+        </span>
         <h3>Tools</h3>
         <p className="flex flex-wrap gap-2">
           <Image
             height={50}
-            width={80}
+            width={120}
             src="https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white"
             alt="Visual Studio Code"
           />
           <Image
-            height={50}
-            width={80}
+            height={40}
+            width={100}
             src="https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white"
             alt="Figma"
           />
           <Image
-            height={50}
-            width={80}
+            height={40}
+            width={100}
             src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white"
             alt="GitHub"
           />
           <Image
-            height={50}
+            height={40}
             width={80}
             src="https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white"
             alt="Git"
@@ -276,30 +284,31 @@ export const metadata: Metadata = {
             height={400}
             width={400}
             src="https://github-readme-stats.vercel.app/api?username=collins-ruto&show_icons=true&theme=radical&count_private=true"
-            alt="Collins&apos; GitHub stats"
+            alt="Collins' GitHub stats"
           />
         </p>
         <h4>Coding stats</h4>
         <p>
-          <a href="https://wakatime.com/@426a2cff-37ab-4579-87f6-d3f2fa22c2a8">
+          <Link href="https://wakatime.com/@426a2cff-37ab-4579-87f6-d3f2fa22c2a8">
             <Image
               src="https://wakatime.com/badge/user/426a2cff-37ab-4579-87f6-d3f2fa22c2a8.svg"
               alt="Wakatime Badge 2"
               width={200}
               height={100}
             />
-          </a>
+          </Link>
         </p>
         <h2>More stuff about me</h2>
         <h4>What is DevsQuest?</h4>
         <p>
           It is meant to connect and build communities of developers where we
           can organize, link, and build working teams for educational and
-          development purposes. Catch phrase: Code and Coffee. I&apos;ll be building
-          it gradually and adding new features with time, and hopefully launch
-          it soon. In the end, it should have games, challenges, collaborations,
-          blogs, and a forum. The project is part of my learning of React and
-          when I&apos;m proficient enough, I&apos;ll be able to develop it further.
+          development purposes. Catch phrase: Code and Coffee. I&apos;ll be
+          building it gradually and adding new features with time, and hopefully
+          launch it soon. In the end, it should have games, challenges,
+          collaborations, blogs, and a forum. The project is part of my learning
+          of React and when I&apos;m proficient enough, I&apos;ll be able to
+          develop it further.
         </p>
         <h4>A bit more</h4>
         <p>
@@ -309,8 +318,8 @@ export const metadata: Metadata = {
           everything about it. And voila, here I am learning and developing
           using the same curiosity. The little things and steps are key. Keep
           learning and write it all down in code. Did I mention I&apos;m also a
-          marine engineering student? Well, that&apos;s what I do at the Technical
-          University of Mombasa.
+          marine engineering student? Well, that&apos;s what I do at the
+          Technical University of Mombasa.
         </p>
         <h4>Likes</h4>
         <ul>
@@ -324,10 +333,10 @@ export const metadata: Metadata = {
           <li>Swimming</li>
         </ul>
         <p>
-          <a href="#">Back home</a>
+          <Link href="#">Back home</Link>
         </p>
         <h5>
-          Credits to <a href="https://github.com/ipenywis">ipenywis</a>
+          Credits to <Link href="https://github.com/ipenywis">ipenywis</Link>
         </h5>
         <p>🦝⚡️🥂🏆🚀⚙️🌐🇰🇪🖥️🐶🫂🎲🎙️📢💬</p>
       </div>
