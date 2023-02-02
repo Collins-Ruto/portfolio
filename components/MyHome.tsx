@@ -100,7 +100,7 @@ function MyHome() {
                 </div>
                 <div className="about-me__body mb-8 text-lg">
                   <p>
-                    I'm a freelance web developer and designer based in Mombasa,
+                    I&apos;m a freelance web developer and designer based in Mombasa,
                     Kenya. I believe life is all about pursuing your dreams and
                     finding what makes you happy. My goal is to help individuals
                     and businesses turn their ideas into functional websites and
@@ -129,10 +129,10 @@ function MyHome() {
                 <div className="lifestyle-text md:mr-8">
                   <p className="text-lg">
                     I love open source because it provides opportunities for
-                    learning, growth, and helping others. Although I'm
+                    learning, growth, and helping others. Although I&apos;m
                     relatively new to web development with less than a year of
                     experience, I dedicate time to contribute to other
-                    developers' projects on platforms like GitHub and Stack
+                    developers&apos; projects on platforms like GitHub and Stack
                     Overflow. This approach allows me to learn more and enhance
                     my foundational knowledge.
                   </p>
