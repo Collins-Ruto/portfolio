@@ -5,7 +5,7 @@ import StatusMsg from "~/components/StatusMsg";
 import Image from "next/image";
 import { api } from "@/utils/api";
 import type { User, Teacher } from "@prisma/client";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 function Account() {
   const { data: session } = useSession();
@@ -15,6 +15,7 @@ function Account() {
   const [passManager, setPassManager] = useState(false);
   const [password, setPassword] = useState("");
   const [confPass, setConfPass] = useState("");
+  const [validInput, setValidInput] = useState<boolean>(true);
   const [oldPassword, setOldPassword] = useState("");
   const [submit, setSubmit] = useState(false);
   const [status, setStatus] = useState({ message: "", type: "" });
@@ -22,6 +23,11 @@ function Account() {
   const { data, isLoading, error } = api.teacher.getById.useQuery(
     user?.id || "621dd16f2eece6ce9587cb0d"
   );
+
+  const passwordVerify = api.teacher.passwordVerify.useQuery({
+    password: oldPassword,
+    id: user?.id || "621dd16f2eece6ce9587cb0d",
+  });
 
   useEffect(() => {
     const user = session?.user as User;
@@ -49,6 +55,7 @@ function Account() {
     setEditUser((prevEditUser) => {
       return {
         ...prevEditUser,
+        id: user?.id || "",
         [name]: value,
       };
     });
@@ -57,14 +64,22 @@ function Account() {
   console.log("tech user edt",editUser);
   console.log("techer",teacher);
 
-  const editTeacherMutation = api.teacher.editTeacher.useMutation();
+  const editPasswordMutation = api.teacher.editPassword.useMutation();
+  const editInfoMutation = api.teacher.editInfo.useMutation();
 
   const handleSubmit = () => {
+    if (confPass !== "") {
+      if (!handleVerify()) {
+        return;
+      }
+    }
     setSubmit(true);
 
     try {
       console.log("edit teacher", editUser);
-      const data = editTeacherMutation.mutate(editUser);
+      confPass === ""
+        ? editInfoMutation.mutate(editUser)
+        : editPasswordMutation.mutate(editUser);
 
       setSubmit(false);
       console.log("add editUser data", data);
@@ -73,7 +88,7 @@ function Account() {
         message: `${editUser?.name ?? "User"} update is succesfull`,
       });
       setTimeout(() => {
-        // data.message === "success" && window.location.reload();
+        // window.location.reload();
       }, 2000);
     } catch (error) {
       setSubmit(false);
@@ -81,15 +96,11 @@ function Account() {
     }
   };
 
-  const logOut = () => {
-    localStorage.setItem("saved", JSON.stringify(false));
-    localStorage.removeItem("user");
-    window.location.reload();
-  };
-
-  const handleVerify = (e: React.ChangeEvent) => {
-    const target = e.target as HTMLInputElement;
-    setConfPass(target.value);
+  const handleVerify = () => {
+    const { data } = passwordVerify;
+    setValidInput(data || false);
+    console.log(data);
+    return data;
   };
 
   console.log(editUser);
@@ -98,14 +109,14 @@ function Account() {
     <div>
       {<StatusMsg status={status} />}
       {isLoading && <Loader />}
-      <div className="flex h-[100vh_-_4rem] flex-col gap-4">
+      <div className="flex  flex-col gap-4">
         <div className="h-60 w-full bg-[url('https://b1311116.smushcdn.com/1311116/wp-content/uploads/2021/12/great-school-website-01.png?size=912x479&lossy=1&strip=1&webp=1')] bg-cover bg-center">
           <div className="flex h-full min-w-full items-center justify-center text-2xl font-semibold text-white backdrop-brightness-50">
             Welcome to your account page
           </div>
         </div>
         <div className="relative flex flex-col">
-          <div className="flex h-[max-content] flex-col items-center justify-center rounded-lg bg-[#F7F6FB] pb-6 md:absolute md:-top-16 md:ml-10 md:w-[25%] md:py-6">
+          <div className="flex flex-col items-center justify-center rounded-lg bg-[#F7F6FB] pb-6 md:absolute md:-top-16 md:ml-10 md:w-[25%] md:py-6">
             <Image
               width={100}
               height={100}
@@ -116,19 +127,19 @@ function Account() {
             <div className="pb-4 pt-2 text-blue-600">{user?.role}</div>
             <div className="flex flex-col gap-2 p-2 text-start text-slate-800">
               <div className="p-1">Name: {user?.name} </div>
-              <div className="p-1">Phone: {teacher?.phone} </div>
+              <div className="p-1">Phone: {user?.phone} </div>
               <div className="p-1">Email: {user?.email} </div>
             </div>
             <div
               onClick={() => {
-                logOut();
+                void signOut();
               }}
               className="rounded bg-blue-500 px-10 py-2 font-bold text-white hover:bg-blue-700"
             >
               Log Out
             </div>
           </div>
-          <div className="-top-16 grow rounded-lg bg-[#F7F6FB] md:absolute md:ml-[30%] md:w-[68%]">
+          <div className="-top-16 grow rounded-lg bg-[#F7F6FB] md:ml-[30%] md:w-[68%]">
             <div className=" flex justify-around border-b-2 p-2 text-lg">
               <div
                 className={` cursor-pointer ${
@@ -157,65 +168,76 @@ function Account() {
                   Change your Password
                 </h1>
                 <div>
-                  <div className="mx-auto flex w-80 flex-col gap-4 gap-y-8 pb-4">
-                    <div className="col-12 col-sm-4">
-                      <div>
-                        <label>
-                          Old Password <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          onChange={(e) => {
-                            setOldPassword(e.target.value);
-                          }}
-                          value={oldPassword}
-                          name="oldPassword"
-                          type="password"
-                          className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
-                          placeholder="Enter Old Password"
-                          required
-                        />
+                  <div className="mx-auto flex w-80 flex-col  pb-4">
+                    <div className="flex flex-col gap-4 gap-y-8">
+                      <div className="col-12 col-sm-4">
+                        <div>
+                          <label>
+                            Old Password <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            onChange={(e) => {
+                              setOldPassword(e.target.value);
+                              setValidInput(true);
+                            }}
+                            value={oldPassword}
+                            name="oldPassword"
+                            type="password"
+                            className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
+                            placeholder="Enter Old Password"
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div className="col-12 col-sm-4">
+                        <div>
+                          <label>
+                            New Password <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            onChange={(e) => {
+                              handleInput(e);
+                            }}
+                            value={editUser?.password}
+                            name="password"
+                            type="password"
+                            className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
+                            placeholder="Enter New Password"
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div className="col-12 col-sm-4">
+                        <div className="form-group local-forms">
+                          <label>
+                            Repeat Password{" "}
+                            <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            onChange={(e) => {
+                              setConfPass(e.target.value);
+                            }}
+                            value={confPass}
+                            name="password"
+                            type="password"
+                            className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
+                            placeholder="Confirm Password"
+                            required
+                          />
+                          {confPass && confPass !== editUser?.password && (
+                            <div className="text-xs text-red-500">
+                              new passwords do not match
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
-                    <div className="col-12 col-sm-4">
-                      <div>
-                        <label>
-                          New Password <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          onChange={(e) => {
-                            handleInput(e);
-                          }}
-                          value={password}
-                          name="password"
-                          type="password"
-                          className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
-                          placeholder="Enter New Password"
-                          required
-                        />
-                      </div>
-                    </div>
-                    <div className="col-12 col-sm-4">
-                      <div className="form-group local-forms">
-                        <label>
-                          Repeat Password{" "}
-                          <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          onChange={(e) => {
-                            handleVerify(e);
-                          }}
-                          value={confPass}
-                          name="password"
-                          type="password"
-                          className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
-                          placeholder="Confirm Password"
-                          required
-                        />
-                        {confPass && confPass !== editUser?.password && (
-                          <div className="text-xs text-red-500">
-                            passwords do not match
-                          </div>
-                        )}
+                    <div className="my-2">
+                      <div className="opacity80 rounded text-sm text-red-500">
+                        <span className="">
+                          {validInput ? "" : "Incorrect password, try again"}
+                        </span>
+                        <span className="text-transparent">.</span>
                       </div>
                     </div>
                     <div>

@@ -52,14 +52,14 @@ function Account() {
     });
   };
 
-  const editAdminMutation = api.admin.editAdmin.useMutation();
+  const editPasswordMutation = api.admin.editPassword.useMutation();
 
   const handleSubmit = () => {
     setSubmit(true);
 
     try {
       console.log("edit admin", editUser);
-      const data = editAdminMutation.mutate(editUser);
+      const data = editPasswordMutation.mutate(editUser);
 
       setSubmit(false);
       console.log("add editUser data", data);
