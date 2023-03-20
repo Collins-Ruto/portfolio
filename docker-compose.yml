@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  app:
+    image: t3-next-dev
+    build: .
+    ports:
+      - 3000:3000
+   
