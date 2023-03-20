@@ -1,13 +1,15 @@
-FROM node:16-alpine
+FROM node:18
 
 WORKDIR /app
 
 COPY package*.json ./
+COPY package.json /app/package.json
+COPY package-lock.json /app/package-lock.json
 
 RUN npm install
 
 # Bundle app source
-COPY . .
+COPY . /app
 
 # Build the Next.js app for production
 RUN npm run build

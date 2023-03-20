@@ -58,7 +58,7 @@ model User {
 }
 
 model VerificationToken {
-     id         String @id @default(auto()) @map("_id") @db.ObjectId
+    id         String @id @default(auto()) @map("_id") @db.ObjectId
     identifier String
     token      String   @unique
     expires    DateTime
