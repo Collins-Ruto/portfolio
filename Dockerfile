@@ -1,4 +1,4 @@
-FROM node:18
+FROM node:alpine
 
 WORKDIR /app
 
@@ -6,7 +6,7 @@ COPY package*.json ./
 COPY package.json /app/package.json
 COPY package-lock.json /app/package-lock.json
 
-RUN npm install
+RUN npm install --timeout=60000
 
 # Bundle app source
 COPY . /app
