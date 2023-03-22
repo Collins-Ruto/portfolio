@@ -4,8 +4,8 @@ import { Button, StatusMsg } from "../../components";
 
 // eslint-disable-next-line no-unused-vars
 
-function AddStream() {
-  const [stream, setStream] = useState({});
+function AddSubject() {
+  const [subject, setSubject] = useState({});
   const [submit, setSubmit] = useState(false);
   const [status, setStatus] = useState({});
 
@@ -16,14 +16,14 @@ function AddStream() {
       target.type === "number" ? parseInt(target.value) : target.value;
     const name = target.name;
 
-    setStream({ ...stream, [name]: value });
+    setSubject({ ...subject, [name]: value });
   };
 
   const handleSubmit = () => {
     setSubmit(true);
 
     axios
-      .post("https://lmsadmin.onrender.com/infos/streams", stream)
+      .post("https://lmsadmin.onrender.com/infos/subjects", subject)
       .then((res) => {
         setSubmit(false);
         console.log(res.data);
@@ -31,7 +31,7 @@ function AddStream() {
           res.data.message === "success"
             ? {
                 type: "success",
-                message: `succesfully Created a ${stream.name} stream of id ${stream.id}`,
+                message: `succesfully Created a ${subject.name} subject of id ${subject.id}`,
               }
             : { type: "error", message: res.data.message }
         );
@@ -45,7 +45,7 @@ function AddStream() {
     <div>
       {<StatusMsg status={status} />}
       <div className="p-2 md:p-4 text-2xl font-semibold">
-        <h3>Add Streams</h3>
+        <h3>Add Subjects</h3>
       </div>
       <div>
         <div>
@@ -54,7 +54,7 @@ function AddStream() {
               <form>
                 <div className="col-12">
                   <h5 className="text-xl pb-4">
-                    Stream Information{" "}
+                    Subject Information{" "}
                     <span>
                       <a href="javascript">
                         <i className="feather-more-vertical"></i>
@@ -66,29 +66,29 @@ function AddStream() {
                   <div className="flex pb-4 flex-col md:grid grid-cols-3 gap-2 gap-y-4 md:gap-y-8">
                     <div>
                       <label>
-                        Stream Name <span className="text-red-500">*</span>
+                        Subject Name <span className="text-red-500">*</span>
                       </label>
                       <input
                         onChange={(e) => {
                           handleInput(e);
                         }}
-                        value={stream.name}
+                        value={subject.name}
                         className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         type="text"
-                        placeholder="Enter Stream Name"
+                        placeholder="Enter Subject Name"
                         name="name"
                       />
                     </div>
                     <div>
-                      <label>Stream ID </label>
+                      <label>Subject ID </label>
                       <input
                         onChange={(e) => {
                           handleInput(e);
                         }}
-                        value={stream.id}
+                        value={subject.id}
                         className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         type="text"
-                        placeholder="Enter unique Stream ID"
+                        placeholder="Enter unique Subject ID"
                         name="id"
                       />
                     </div>
@@ -116,4 +116,4 @@ function AddStream() {
   );
 }
 
-export default AddStream;
+export default AddSubject;
