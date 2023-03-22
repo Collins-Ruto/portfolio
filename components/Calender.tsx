@@ -13,6 +13,8 @@ import {
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Image from "next/image";
+import React from "react";
+import type { User } from "api/types";
 
 
 function classNames(...classes: (string | boolean | undefined)[]) {
@@ -21,14 +23,7 @@ function classNames(...classes: (string | boolean | undefined)[]) {
 
 type Props = {
   full: boolean,
-  user: {
-    slug: string
-    name: string,
-    type: string,
-    stream: {
-      slug: string
-    }
-  }
+  user: User | null
 }
 
 type Lesson = {
@@ -56,12 +51,18 @@ export default function Calender({ full, user }: Props) {
   const [selectedDay, setSelectedDay] = useState(today);
   const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
   const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
-  const [lessons, setLessons] = useState<[Lesson]>();
+  const [lessons, setLessons] = useState<Lesson[] | undefined>();
 
   useEffect(() => {
-    axios.get("https://lmsadmin.onrender.com/lessons").then((res) => {
-      setLessons(res.data);
-    });
+    axios.get<Lesson[] | undefined>("https://lmsadmin.onrender.com/lessons").then((res) => {
+      if (res.data) {
+        setLessons(res.data);
+      } else {
+        setLessons(undefined);
+      }
+    }).catch(err => console.log(err))
+      .then(() => console.log('this will succeed'))
+      .catch(() => 'obligatory catch')
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -122,9 +123,11 @@ export default function Calender({ full, user }: Props) {
               <button
                 type="button"
                 onClick={previousMonth}
-                className="-my-1.5 w-10 items-center p-1.5 text-gray-400 hover:text-gray-500"
+                className=" w-10 mr-2 items-center pb-1 px-1.5 text-gray-400 hover:text-gray-500"
               >
                 <Image
+                width={20}
+                height={16}
                   src="https://img.icons8.com/ios-filled/50/000000/less-than.png"
                   alt=""
                 />
@@ -136,9 +139,11 @@ export default function Calender({ full, user }: Props) {
               <button
                 onClick={nextMonth}
                 type="button"
-                className="-my-1.5 w-10 -mr-1.5 ml-2 items-center p-1.5 text-gray-400 hover:text-gray-500"
+                className=" w-10 ml-2 -mt-2 items-center pb-1 px-1.5 text-gray-400 hover:text-gray-500"
               >
                 <Image
+                width={20}
+                height={20}
                   src="https://img.icons8.com/ios-filled/50/000000/more-than.png"
                   alt=""
                 />

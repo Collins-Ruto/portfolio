@@ -1,9 +1,14 @@
 "use client"
+
+import React, {useEffect, useState} from 'react'
 import Head from "next/head";
 
 import { api } from "@/utils/api";
 
 import "@/styles/globals.css";
+import { Header } from "components";
+import type {  User } from 'api/types';
+import {  DummyUser, } from 'api/types';
 
 function RootLayout({
   // Layouts must accept a children prop.
@@ -11,7 +16,15 @@ function RootLayout({
   children,
 }: {
   children: React.ReactNode;
-}) {
+  }) {
+  const [user, setUser] = useState<User>(DummyUser)
+   useEffect(() => {
+
+   const userFromLocalStorage = localStorage.getItem("user");
+     const user: User = userFromLocalStorage !== null ? JSON.parse(userFromLocalStorage) as User : DummyUser
+     setUser(user)
+  }, [])
+  
   return (
       <html lang="en">
     <Head>
@@ -22,7 +35,12 @@ function RootLayout({
         <meta name="twitter:title" content="LearnHq" />
         <meta name="twitter:description" content="LearnHQ is a comprehensive learning management system that provides quality education and resources to students, teachers, and parents." />
       </Head>
-      <body>{children}</body>
+      <body>
+        <Header user={user} />
+        <div className='flex md:ml-60 pb-10'>
+          <div className="grow">{children}</div>
+        </div>
+      </body>
     </html>
   );
 }

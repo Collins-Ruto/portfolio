@@ -9,5 +9,12 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
+  images: {
+    domains: [
+      "img.icons8.com",
+      "cdn-icons-png.flaticon.com",
+      "preschool.dreamguystech.com",
+    ],
+  },
 };
 export default nextConfig;

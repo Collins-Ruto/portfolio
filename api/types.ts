@@ -25,3 +25,12 @@ export type User = {
       slug: string
   }
 }
+
+export const DummyUser: User = {
+  slug: "",
+    name: "",
+    type: "admin",
+    stream: {
+        slug: "",
+    }
+}

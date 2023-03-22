@@ -1,11 +1,12 @@
 'use client'
 
 import React, { useEffect, useState } from "react";
-import { Calender, Loader } from "../../components";
-import { Link } from "react-router-dom";
+import { Calender, Loader } from "@/../components";
 import axios from "axios";
 import Image from "next/image";
-import type { User } from '../../api/types'
+import type {  User } from '../../api/types'
+import {  DummyUser, } from '../../api/types'
+import Link from "next/link";
 
 type Data = {
   subjects: number
@@ -14,20 +15,26 @@ type Data = {
 }
 
 function Dashboard() {
-  const [data, setData] = useState<Data>();
+  const [data, setData] = useState<Data | undefined>();
   const [loading, setLoading] = useState(true);
 
   //localhost:8000
   useEffect(() => {
-    const user: User = JSON?.parse(localStorage.getItem("user"));
-    const getData = async () => {
-      const response = await axios.post("https://lmsadmin.onrender.com/data", { slug: user?.slug })
-      const data: Data = await response.json()
-        setData(data);
+   const userFromLocalStorage = localStorage.getItem("user");
+   const user: User = userFromLocalStorage !== null ? JSON.parse(userFromLocalStorage)  as User : DummyUser
+    // Do something with the user object
+ 
+    axios.post<Data | undefined>("https://lmsadmin.onrender.com/data", { slug: user?.slug }).then((res) => {
+      if (res.data) {
+        setData(res.data);
         setLoading(false);
+      } else {
+        setData(undefined)
+      }
+    }).catch(err => console.log(err))
+      .then(() => console.log('this will succeed'))
+      .catch(() => 'obligatory catch')
       
-    };
-    getData()
   }, []);
   const termVvalue = "II";
 
@@ -82,6 +89,7 @@ function Dashboard() {
   ];
 
   return (
+    <>
     <div className="p-4 pb-6 sm:p-6 ">
       <div className=" text-2xl font-semibold">
         <h3>Admin Dashboard</h3>
@@ -98,8 +106,10 @@ function Dashboard() {
               <span className="text-2xl font-semibold lg:mx-auto">
                 {data?.value}
               </span>
-            </div>
+            </div>  
             <Image
+              width={100}
+              height={100}
               src={data?.url}
               alt={data?.title}
               className="w-16 rounded-full bg-slate-700 p-0"
@@ -114,12 +124,14 @@ function Dashboard() {
             <div className="mt-4 flex justify-between p-1" key={data.title}>
               <span className="text-lg">{data.title}</span>
               <Link
-                to={data.path}
+                href={data.path}
                 type="btn"
                 className="flex items-center rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
               >
                 {" "}
                 <Image
+                    width={100}
+                    height={100}
                   src="https://img.icons8.com/ios-glyphs/30/FFFFFF/plus-math.png"
                   className="mr-1 w-5"
                   alt=""
@@ -130,10 +142,11 @@ function Dashboard() {
           ))}
         </div>
         <div className=" lg:col-span-2 lg:col-start-2">
-          <Calender full={false} />
+          <Calender full={false} user={null} />
         </div>
       </div>
     </div>
+    </>
   );
 }
 

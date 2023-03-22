@@ -1,24 +1,23 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
+import type { User } from "api/types";
 
 type Props = {
-  user: {
-    name: string,
-    type: string
-}}
+  user: User
+}
 
 function Header({ user }: Props) {
   const [opened, setOpened] = useState(false);
   const [dropdown, setDropdown] = useState(false);
   // const [bgColor, setbgColor] = useState("000000");
 
-  const router = useRouter();
-  const currentRoute = router.pathname;
+  // const router = useRouter();
+  const currentRoute = usePathname();
 
 
   const logOut = () => {
@@ -54,6 +53,8 @@ function Header({ user }: Props) {
                   aria-haspopup="true"
                 >
                   <Image
+                  width={10}
+                  height={10}
                     className="w-6 mr-2 bg-[#F7F6FB] rounded-sm"
                     src="https://img.icons8.com/material-rounded/24/000000/user.png"
                     alt=""
@@ -142,6 +143,8 @@ function Header({ user }: Props) {
               }
             >
               <Image
+              width={10}
+              height={10}
                 className="w-6 mr-2 bg-[#F7F6FB] rounded-sm"
                 src="https://img.icons8.com/material-rounded/24/000000/dashboard-layout.png"
                 alt=""
@@ -160,6 +163,8 @@ function Header({ user }: Props) {
                 }
               >
                 <Image
+                width={10}
+                height={10}
                   className="w-6 mr-2 bg-[#F7F6FB] rounded-sm"
                   src="https://img.icons8.com/material-rounded/24/000000/student-center.png"
                   alt=""
@@ -180,6 +185,8 @@ function Header({ user }: Props) {
                   }
                 >
                   <Image
+                  width={10}
+                  height={10}
                     className="w-6 mr-2 bg-[#F7F6FB] rounded-sm"
                     src="https://img.icons8.com/material-rounded/24/000000/teacher.png"
                     alt=""
@@ -199,6 +206,8 @@ function Header({ user }: Props) {
               }
             >
               <Image
+              width={10}
+              height={10}
                 className="w-6 mr-2 bg-[#F7F6FB] rounded-sm"
                 src="https://img.icons8.com/material-rounded/24/000000/test-partial-passed.png"
                 alt=""
@@ -216,6 +225,8 @@ function Header({ user }: Props) {
               }
             >
               <Image
+              width={10}
+              height={10}
                 className="w-6 mr-2 bg-[#F7F6FB] rounded-sm"
                 src="https://img.icons8.com/material-rounded/24/000000/2012.png"
                 alt=""
@@ -234,6 +245,8 @@ function Header({ user }: Props) {
               }
             >
               <Image
+              width={10}
+              height={10}
                 className="w-6 mr-2 bg-[#F7F6FB] rounded-sm"
                 src="https://img.icons8.com/material-rounded/24/000000/currency-exchange.png"
                 alt=""
@@ -256,6 +269,8 @@ function Header({ user }: Props) {
                   }
                 >
                   <Image
+                  width={10}
+                  height={10}
                     className="w-6 mr-2 bg-[#F7F6FB] rounded-sm"
                     src="https://img.icons8.com/ios-filled/50/000000/admin-settings-male.png"
                     alt=""
@@ -273,6 +288,8 @@ function Header({ user }: Props) {
                   }
                 >
                   <Image
+                  width={10}
+                  height={10}
                     className="w-6 mr-2 bg-[#F7F6FB] rounded-sm"
                     src="https://img.icons8.com/external-vitaliy-gorbachev-fill-vitaly-gorbachev/60/000000/external-lesson-university-vitaliy-gorbachev-fill-vitaly-gorbachev-1.png"
                     alt=""
@@ -290,6 +307,8 @@ function Header({ user }: Props) {
                   }
                 >
                   <Image
+                  width={10}
+                  height={10}
                     className="w-6 mr-2 bg-[#F7F6FB] rounded-sm"
                     src="https://img.icons8.com/material/24/000000/school-building.png"
                     alt=""
@@ -307,6 +326,8 @@ function Header({ user }: Props) {
                   }
                 >
                   <Image
+                  width={10}
+                  height={10}
                     className="w-6 mr-2 bg-[#F7F6FB] rounded-sm"
                     src="https://img.icons8.com/ios-filled/50/000000/wordbook.png"
                     alt=""
@@ -325,7 +346,9 @@ function Header({ user }: Props) {
                   }`
                 }
               >
-                <Image className="w-6 mr-2 bg-[#F7F6FB] rounded-sm" src="https://img.icons8.com/material-rounded/24/000000/user.png" alt="" />
+                <Image
+                width={10} className="w-6 mr-2 bg-[#F7F6FB] rounded-sm" src="https://img.icons8.com/material-rounded/24/000000/user.png" alt="" />
+                height={10}
                 <span className="text-lg">Assignments</span>
               </Link> */}
             <Link
@@ -339,6 +362,8 @@ function Header({ user }: Props) {
               }
             >
               <Image
+              width={10}
+              height={10}
                 className="w-6 mr-2 bg-[#F7F6FB] rounded-sm"
                 src="https://img.icons8.com/material-rounded/24/000000/user.png"
                 alt=""
