@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Button } from "../components";
 import StatusMsg from "../components/StatusMsg";
+import Image from "next/image";
 
 function Account() {
   const [user, setUser] = useState();
@@ -83,7 +84,9 @@ function Account() {
         </div>
         <div className="flex relative flex-col">
           <div className="bg-[#F7F6FB] md:absolute md:-top-16 rounded-lg md:ml-10 md:w-[25%] h-[max-content] pb-6 md:py-6 flex flex-col items-center justify-center">
-            <img
+            <Image
+              width={100}
+              height={100} 
               className="w-28  rounded-full bg-gray-300 p-2"
               src="https://img.icons8.com/ios-glyphs/120/000000/user--v1.png"
               alt=""

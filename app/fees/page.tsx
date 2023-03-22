@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button, Loader } from "../components";
+import Image from "next/image";
 
 function FeeData() {
   const [fees, setFees] = useState([]);
@@ -122,7 +123,9 @@ function FeeData() {
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center"
               >
                 {" "}
-                <img
+                <Image
+                  width={100}
+                  height={100} 
                   src="https://img.icons8.com/ios-glyphs/30/FFFFFF/plus-math.png"
                   className="w-5 mr-1"
                   alt=""

@@ -130,8 +130,8 @@ function Dashboard() {
               >
                 {" "}
                 <Image
-                    width={100}
-                    height={100}
+                  width={100}
+                  height={100}
                   src="https://img.icons8.com/ios-glyphs/30/FFFFFF/plus-math.png"
                   className="mr-1 w-5"
                   alt=""

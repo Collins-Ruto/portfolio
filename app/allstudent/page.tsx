@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Button, Loader } from "../components";
+import Image from "next/image";
 
 function Students() {
   const [students, setStudents] = useState([]);
@@ -81,7 +82,9 @@ function Students() {
                 flex flex-col fixed left-[45%] pt-[10%] h-screen opacity-100 bg-blend-darken "
         >
           <div className="text-center bg-white rounded-lg md:max-w-md md:mx-auto p-4 fixed inset-x-0 bottom-0 z-50 mb-4 mx-4 md:relative">
-            <img
+            <Image 
+    width={100}
+    height={100} 
               onClick={() => {
                 setisDelete(false);
               }}
@@ -99,7 +102,9 @@ function Students() {
               </div>
               <div className="text-orange-500 text-start rounded-xl bg-[#F7F6FB] p-2">
                 <div className="flex text-orange-600">
-                  <img
+                  <Image 
+    width={100}
+    height={100} 
                     className="w-6 mr-1"
                     src="https://img.icons8.com/ios-glyphs/30/EE640C/error--v2.png"
                     alt=""
@@ -190,7 +195,9 @@ function Students() {
                       className="bg-blue-500 w-fit hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center"
                     >
                       {" "}
-                      <img
+                      <Image 
+    width={100}
+    height={100} 
                         src="https://img.icons8.com/ios-glyphs/30/FFFFFF/plus-math.png"
                         className="w-5 mr-1 text-white"
                         alt=""
@@ -235,7 +242,9 @@ function Students() {
                       {userType === "admin" && (
                         <td className="p-4 flex gap-2">
                           <Link to="/addstudent">
-                            <img
+                            <Image 
+                              width={100}
+                              height={100} 
                               src="https://img.icons8.com/external-kiranshastry-solid-kiranshastry/64/000000/external-edit-interface-kiranshastry-solid-kiranshastry.png"
                               alt=""
                               className="w-6 cursor-pointer"
@@ -247,7 +256,9 @@ function Students() {
                               setDelStudent(student.node.slug);
                             }}
                           >
-                            <img
+                            <Image
+                              width={100}
+                              height={100} 
                               src="https://img.icons8.com/ios-filled/50/000000/waste.png"
                               alt=""
                               className="w-6 cursor-pointer"

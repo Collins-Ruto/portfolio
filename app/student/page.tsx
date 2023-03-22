@@ -3,6 +3,7 @@ import { Calender, Loader } from "../../components";
 // import { Link } from "react-router-dom";
 import axios from "axios";
 import { format } from "date-fns";
+import Image from "next/image";
 
 function Dashboard() {
   const [data, setData] = useState({});
@@ -72,7 +73,9 @@ function Dashboard() {
                 {data?.value}
               </span>
             </div>
-            <img
+            <Image
+              width={100}
+              height={100} 
               src={data?.url}
               alt={data?.title}
               className="w-16 rounded-full bg-slate-700 p-0"

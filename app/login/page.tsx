@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import homepic from "../res/homepic1.webp";
 import { Button } from "../components";
 import {  useNavigate } from "react-router-dom";
+import Image from "next/image";
 
 function Login({ setLogin }) {
   const navigate = useNavigate()
@@ -56,7 +57,9 @@ function Login({ setLogin }) {
     <div className="h-screen p-2 flex justify-center w-full text-black">
       <div className="sm:flex m-auto items-center rounded-lg bg-[#F7F6FB] ">
         <div className="p-4">
-          <img
+          <Image 
+    width={100}
+    height={100} 
             className="h-96 mx-auto cover"
             // src="https://preschool.dreamguystech.com/template/assets/img/login.png"
             src={homepic}
@@ -123,7 +126,9 @@ function Login({ setLogin }) {
                   placeholder="eg: 01john"
                 />
                 <div className="cursor-pointer right-0 absolute px-2 text-gray-700">
-                  <img
+                  <Image 
+                    width={100}
+                    height={100} 
                     src="https://img.icons8.com/external-kiranshastry-lineal-kiranshastry/64/000000/external-user-interface-kiranshastry-lineal-kiranshastry.png"
                     alt="user"
                     className="fill-current w-8"
@@ -147,7 +152,9 @@ function Login({ setLogin }) {
                   type={`${passView ? "text" : "password"}`}
                 />
                 <div className="cursor-pointer right-0 absolute px-2 text-gray-700">
-                  <img
+                  <Image 
+                    width={100}
+                    height={100} 
                     onClick={() => {setPassView(!passView)}}
                     src={`${passView ? "https://img.icons8.com/ios-filled/50/000000/visible--v2.png" : "https://img.icons8.com/ios/50/000000/closed-eye.png"}`}
                     alt="user"
