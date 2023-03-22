@@ -3,9 +3,10 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { Button, Loader } from "@/../components";
 import Image from "next/image";
+import type { Teacher } from "api/types";
 
 function Teachers() {
-  const [teachers, setTeachers] = useState([]);
+  const [teachers, setTeachers] = useState<Teacher[] | undefined>();
   const [loading, setLoading] = useState(true);
   const [isDelete, setisDelete] = useState(false);
   const [submit, setSubmit] = useState(false);
@@ -17,11 +18,13 @@ function Teachers() {
   });
 
   useEffect(() => {
-    axios.get("https://lmsadmin.onrender.com/teachers").then((res) => {
+    axios.get<Teacher[] | undefined>("https://lmsadmin.onrender.com/teachers").then((res) => {
       setTeachers(res.data.edges);
       setPages(res.data.pageInfo);
       setLoading(false);
-    });
+    }).catch(err => console.log(err))
+      .then(() => console.log('this will succeed'))
+      .catch(() => 'obligatory catch');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

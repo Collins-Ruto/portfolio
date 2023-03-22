@@ -12,3 +12,150 @@
       - '27017:27017'
     volumes:
       - ./data:/data/db
+
+
+      chat gpt  useRoutes.ts
+
+      import type { NextApiRequest, NextApiResponse } from 'next';
+import prisma from '../../lib/prisma';
+import { createUser, getUsers, getUserById, updateUserById, deleteUserById } from '../../controllers/usersController';
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const { method, query } = req;
+
+  switch (method) {
+    case 'GET':
+      if (query.id) {
+        const user = await getUserById(query.id.toString());
+        res.status(200).json(user);
+      } else {
+        const users = await getUsers();
+        res.status(200).json(users);
+      }
+      break;
+
+    case 'POST':
+      const { name, email, password } = req.body;
+      const newUser = await createUser(name, email, password);
+      res.status(201).json(newUser);
+      break;
+
+    case 'PUT':
+      const { id } = query;
+      const { name: newName, email: newEmail, password: newPassword } = req.body;
+      const updatedUser = await updateUserById(id.toString(), newName, newEmail, newPassword);
+      res.status(200).json(updatedUser);
+      break;
+
+    case 'DELETE':
+      const userId = query.id.toString();
+      await deleteUserById(userId);
+      res.status(204).send();
+      break;
+
+    default:
+      res.setHeader('Allow', ['GET', 'POST', 'PUT', 'DELETE']);
+      res.status(405).end(`Method ${method} Not Allowed`);
+  }
+}
+
+chat 2
+
+import { NextApiRequest, NextApiResponse } from 'next';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  switch (req.method) {
+    case 'GET':
+      return handleGet(req, res);
+    case 'POST':
+      return handlePost(req, res);
+    case 'PUT':
+      return handlePut(req, res);
+    case 'DELETE':
+      return handleDelete(req, res);
+    default:
+      return res.status(405).json({ message: 'Method not allowed' });
+  }
+}
+
+async function handleGet(req: NextApiRequest, res: NextApiResponse) {
+  const users = await prisma.user.findMany();
+  res.status(200).json(users);
+}
+
+async function handlePost(req: NextApiRequest, res: NextApiResponse) {
+  const { name, email, password } = req.body;
+  const newUser = await prisma.user.create({ data: { name, email, password } });
+  res.status(201).json(newUser);
+}
+
+async function handlePut(req: NextApiRequest, res: NextApiResponse) {
+  const { id } = req.query;
+  const { name, email, password } = req.body;
+ 
+api/users
+
+import { NextApiRequest, NextApiResponse } from 'next';
+import prisma from '../../lib/prisma';
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method === 'GET') {
+    const users = await prisma.user.findMany();
+    res.status(200).json(users);
+  } else if (req.method === 'POST') {
+    const { name, email, password } = req.body;
+    const newUser = await prisma.user.create({
+      data: {
+        name,
+        email,
+        password,
+      },
+    });
+    res.status(201).json(newUser);
+  } else if (req.method === 'PUT') {
+    const { id } = req.query;
+    const { name, email, password } = req.body;
+    const updatedUser = await prisma.user.update({
+      where: { id: Number(id) },
+      data: {
+        name,
+        email,
+        password,
+      },
+    });
+    res.status(200).json(updatedUser);
+  } else if (req.method === 'DELETE') {
+    const { id } = req.query;
+    await prisma.user.delete({ where: { id: Number(id) } });
+    res.status(204).send();
+  } else {
+    res.status(405).send();
+  }
+}
+
+
+promts
+
+if user has name, email, phone rewrite in the format below
+const userRouter = createTRPCRouter({
+  getById: publicProcedure.input(z.string()).query(({ ctx, input }) => {
+    return ctx.prisma.user.findFirst({
+      where: {
+        id: input,
+      },
+    });
+  }),
+});
+use ctx, createTRPCRouter, publicProcedure and nextjs 13
+how do i get the data of all users in DB from client side nextjs component
+use this format 
+const userQuery = api.users.getById.useQuery(query.id);
+
+what of getting all users in the database use ctx, createTRPCRouter, publicProcedure and nextjs 13
+
+use nextjs 13 default useQuery do NOT import useQuery from react-query
+
+this works for server components, what about client Next js 13 components

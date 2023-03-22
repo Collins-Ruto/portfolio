@@ -3,11 +3,19 @@ import Head from "next/head";
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 
+// import useQuery from 'next-query';
 import { api } from "@/utils/api";
 
 const Home: NextPage = () => {
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
+  const studentQuery = api.student.getAll.useQuery()
+  const userQuery = api.student.getById.useQuery('all');
 
+  console.log("students", studentQuery)
+  console.log("user", userQuery)
+
+  console.log("students",  studentQuery?.data && studentQuery?.data[0]?.name)
+  
   return (
     <>
       <Head>
@@ -38,6 +46,7 @@ const Home: NextPage = () => {
               target="_blank"
             >
               <h3 className="text-2xl font-bold">Documentation →</h3>
+              <div className="">{ studentQuery.data ? studentQuery?.data[0]?.name : ""}</div>
               <div className="text-lg">
                 Learn more about Create T3 App, the libraries it uses, and how
                 to deploy it.

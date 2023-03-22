@@ -7,6 +7,7 @@ import Image from "next/image";
 import type {  User } from '../../api/types'
 import {  DummyUser, } from '../../api/types'
 import Link from "next/link";
+import { api } from "@/utils/api";
 
 type Data = {
   subjects: number
@@ -17,6 +18,14 @@ type Data = {
 function Dashboard() {
   const [data, setData] = useState<Data | undefined>();
   const [loading, setLoading] = useState(true);
+
+  const studentQuery = api.withTRPC(student.getAll.useQuery(undefined))
+  const userQuery = api.withTRPC(student.getById.useQuery('all'));
+
+  console.log("students", studentQuery)
+  console.log("user", userQuery)
+
+  console.log("students",  studentQuery?.data && studentQuery?.data[0]?.name)
 
   //localhost:8000
   useEffect(() => {
@@ -143,7 +152,8 @@ function Dashboard() {
         </div>
         <div className=" lg:col-span-2 lg:col-start-2">
           <Calender full={false} user={null} />
-        </div>
+          </div>
+          <div className="">{ studentQuery.data ? studentQuery?.data[0]?.name : ""}</div>
       </div>
     </div>
     </>
