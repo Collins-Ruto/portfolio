@@ -1,8 +1,8 @@
 'use client'
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Button } from "../components";
-import StatusMsg from "../components/StatusMsg";
+import { Button } from "~/components";
+import StatusMsg from "~/components/StatusMsg";
 import Image from "next/image";
 
 function Account() {

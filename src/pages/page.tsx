@@ -4,8 +4,8 @@ import React, { useEffect, useState } from "react";
 import { Calender, Loader } from "@/../components";
 import axios from "axios";
 import Image from "next/image";
-import type {  User } from '../../api/types'
-import {  DummyUser, } from '../../api/types'
+import type {  User } from '@/../api/types'
+import {  DummyUser, } from '@/../api/types'
 import Link from "next/link";
 import { api } from "@/utils/api";
 
@@ -19,8 +19,8 @@ function Dashboard() {
   const [data, setData] = useState<Data | undefined>();
   const [loading, setLoading] = useState(true);
 
-  const studentQuery = api.withTRPC(student.getAll.useQuery(undefined))
-  const userQuery = api.withTRPC(student.getById.useQuery('all'));
+  const studentQuery = api.student.getAll.useQuery();
+  const userQuery = api.student.getById.useQuery('all');
 
   console.log("students", studentQuery)
   console.log("user", userQuery)
