@@ -1,6 +1,7 @@
+'use client'
 import axios from "axios";
 import React, { useState } from "react";
-import { Button, StatusMsg } from "../../components";
+import { Button, StatusMsg } from "~/components";
 
 // eslint-disable-next-line no-unused-vars
 const dum2 = {

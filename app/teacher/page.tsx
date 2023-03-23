@@ -1,7 +1,8 @@
+'use client'
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { Button, Loader } from "@/../components";
+import { Button, Loader } from "~/components";
 import Image from "next/image";
 import type { Teacher } from "api/types";
 
@@ -212,7 +213,7 @@ function Teachers() {
             <tbody>
               {teachers?.map((teacher, index) => (
                 <tr
-                  className={` p-4 ${index % 2 === 0 && "bg-white"}`}
+                  className={` p-4 ${index % 2 === 0 ? "bg-white" : ""}`}
                   key={index}
                 >
                   <td className="p-4">{teacher.node.slug}</td>

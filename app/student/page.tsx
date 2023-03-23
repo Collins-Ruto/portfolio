@@ -1,5 +1,6 @@
+'use client'
 import React, { useEffect, useState } from "react";
-import { Calender, Loader } from "../../components";
+import { Calender, Loader } from "~/components";
 // import { Link } from "react-router-dom";
 import axios from "axios";
 import { format } from "date-fns";

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Calender } from '@/../components'
+import { Calender } from '~/components'
 
 function CalenderPage() {
   return (

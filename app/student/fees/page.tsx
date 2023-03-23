@@ -1,6 +1,7 @@
+'use client'
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Loader } from "../../components";
+import { Loader } from "~/components";
 
 function FeeData() {
   const [student, setStudent] = useState({});

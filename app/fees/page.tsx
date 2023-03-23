@@ -1,7 +1,8 @@
+'use client'
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Button, Loader } from "../components";
+import { Button, Loader } from "~/components";
 import Image from "next/image";
 
 function FeeData() {

@@ -1,6 +1,7 @@
+'use client'
 import React, { useState } from "react";
 import axios from "axios";
-import { Button, StatusMsg } from "../../components";
+import { Button, StatusMsg } from "~/components";
 
 function CreateTask() {
   const [task, setTask] = useState({});

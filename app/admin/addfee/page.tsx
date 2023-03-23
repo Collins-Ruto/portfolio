@@ -1,7 +1,8 @@
+'use client'
 import React, { useState } from "react";
-import { Button, DateTime } from "../../components";
+import { Button, DateTime } from "~/components";
 import axios from "axios";
-import StatusMsg from "../../components/StatusMsg";
+import StatusMsg from "~/components/StatusMsg";
 
 function AddFee() {
   const [fee, setFee] = useState({ pday: DateTime() });

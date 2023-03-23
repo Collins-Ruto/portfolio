@@ -65,3 +65,103 @@ model VerificationToken {
 
     @@unique([identifier, token])
 }
+
+model Student {
+    id          String @id @default(auto()) @map("_id") @db.ObjectId
+    dateOfBirth String
+    name        String
+    slug        String
+    email       String
+    password    String
+    phone       Int
+    parent      String
+    gender      String
+    admissionId String
+    subjects    Subject[]
+    exams       Exam[]
+    fees        Fee[]
+}
+model Teacher {
+    id          String @id @default(auto()) @map("_id") @db.ObjectId
+    dateOfBirth String
+    joiningDate String
+    name        String
+    slug        String
+    email       String
+    password    String
+    phone       Int
+    parent      String
+    gender      String
+    qualification String
+    Lessons     lesson[]
+    tasks       Task[]
+}
+
+model Admin {
+    id          String @id @default(auto()) @map("_id") @db.ObjectId
+    name        String
+    slug        String
+    email       String
+    password    String
+    phone       Int
+}
+
+model Exam {
+    id          String @id @default(auto()) @map("_id") @db.ObjectId
+    name        String
+    slug        String
+    term        String
+    results     Json
+    examDate    String
+    student     Student @relation(fields: [studentId], references: [id])
+    studentId   String @unique @db.ObjectId
+}
+
+model Fee {
+    id          String @id @default(auto()) @map("_id") @db.ObjectId
+    name        String
+    slug        String
+    term        String
+    type        String
+    amount      String
+    payday      String
+    student     Student @relation(fields: [studentId], references: [id])
+    studentId   String @unique @db.ObjectId
+}
+
+model Stream {
+    id          String @id @default(auto()) @map("_id") @db.ObjectId
+    name        String
+    slug        String
+    lessons     lesson[]
+    tasks       Task[]
+}
+
+model lesson {
+    id          String @id @default(auto()) @map("_id") @db.ObjectId
+    day         String
+    startTime   String
+    endTime     String
+    subject     Subject
+    attendance  String
+    stream      Stream @relation(fields: [streamId], references: [id])
+    streamId    String @unique @db.ObjectId
+    teacher     Teacher @relation(fields: [teacherId], references: [id])
+    teacherId   String @unique @db.ObjectId
+}
+
+model Task {
+    id          String @id @default(auto()) @map("_id") @db.ObjectId
+    name        String
+    description String
+    subject     Subject
+    stream      Stream @relation(fields: [streamId], references: [id])
+    streamId    String @unique @db.ObjectId
+    teacher     Teacher @relation(fields: [teacherId], references: [id])
+    teacherId   String @unique @db.ObjectId
+}
+
+type Subject {
+    name String
+    slug String
+}

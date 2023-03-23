@@ -49,6 +49,7 @@ export type Student = {
     name: string
   }
 }
+
 export type Teacher = {
   node: {dateOfBirth: string
   joiningDate: string
@@ -67,7 +68,7 @@ export type Exam = {
   name: string
   slug: string
   term: string
-  results: string
+  results: JSON
   student: {
     name: string
     slug: string
@@ -95,6 +96,12 @@ export type Fee = {
     }
   }
 }
+
+export type Stream = {
+      id: string
+      name: string
+      slug: string
+    }
 
 export const DummyUser: User = {
   slug: "",

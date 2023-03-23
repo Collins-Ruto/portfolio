@@ -1,8 +1,8 @@
 'use client'
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Button, DateTime, Loader } from "../components";
-import StatusMsg from "../components/StatusMsg";
+import { Button, DateTime, Loader } from "~/components";
+import StatusMsg from "~/components/StatusMsg";
 
 const data = {
   examDate: "10-03-2020",

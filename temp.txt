@@ -159,3 +159,28 @@ what of getting all users in the database use ctx, createTRPCRouter, publicProce
 use nextjs 13 default useQuery do NOT import useQuery from react-query
 
 this works for server components, what about client Next js 13 components
+
+const isAdmin = async (req, res, next) => {
+  // Check if user is authenticated and authorized as an admin
+  const user = req.user; // Assuming user object is stored in the request object
+  
+  // Query the database to check if the user exists in the `admins` table
+  const isAdmin = await db.checkIfUserIsAdmin(user.id);
+  
+  if (!isAdmin) {
+    // User is not authorized, send an error response
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+  
+  // User is authorized, continue to the next middleware
+  next();
+}
+
+// pages/admin/dashboard.js
+import { withMiddleware } from '../../middleware';
+
+const Dashboard = () => {
+  // Render admin dashboard here
+}
+
+export default withMiddleware(Dashboard, isAdmin);

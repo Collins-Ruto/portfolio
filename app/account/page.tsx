@@ -4,10 +4,11 @@ import React, { useEffect, useState } from "react";
 import { Button } from "~/components";
 import StatusMsg from "~/components/StatusMsg";
 import Image from "next/image";
+import type { User } from "~/api/types";
 
 function Account() {
-  const [user, setUser] = useState();
-  const [editUser, setEditUser] = useState({
+  const [user, setUser] = useState<User | undefined>();
+  const [editUser, setEditUser] = useState<User>({
     email: user?.email,
     phone: user?.phone,
   });
