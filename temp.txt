@@ -184,3 +184,21 @@ const Dashboard = () => {
 }
 
 export default withMiddleware(Dashboard, isAdmin);
+
+Running seed command `ts-node ./prisma/seed.ts` ...
+Start seeding ...
+Created user with id: 641ca7d8be8caf6d48376e4c
+Created stream with id: 641ca7dbbe8caf6d48376e4d
+Created stream with id: 641ca7dcbe8caf6d48376e4e
+Created stream with id: 641ca7debe8caf6d48376e4f
+Created stream with id: 641ca7dfbe8caf6d48376e50
+Created stream with id: 641ca7e0be8caf6d48376e51
+Created stream with id: 641ca7e1be8caf6d48376e52
+Created stream with id: 641ca7e3be8caf6d48376e53
+Created stream with id: 641ca7e4be8caf6d48376e54
+Created stream with id: 641ca7e5be8caf6d48376e55
+Created stream with id: 641ca7e7be8caf6d48376e56
+Created admin with id: 641ca7e8be8caf6d48376e57
+Created admin with id: 641ca7e9be8caf6d48376e58
+Created admin with id: 641ca7eabe8caf6d48376e59
+Seeding finished.
