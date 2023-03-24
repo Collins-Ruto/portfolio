@@ -70,37 +70,38 @@ model Student {
     id          String @id @default(auto()) @map("_id") @db.ObjectId
     dateOfBirth String
     name        String
-    slug        String
+    slug        String @unique 
     email       String
     password    String
-    phone       Int
+    phone       String
     parent      String
     gender      String
     admissionId String
     subjects    Subject[]
     exams       Exam[]
     fees        Fee[]
+    stream     Stream @relation(fields: [streamId], references: [id])
+    streamId   String @db.ObjectId
 }
 model Teacher {
     id          String @id @default(auto()) @map("_id") @db.ObjectId
     dateOfBirth String
     joiningDate String
     name        String
-    slug        String
+    slug        String @unique 
     email       String
     password    String
-    phone       Int
-    parent      String
+    phone       String
     gender      String
     qualification String
-    Lessons     lesson[]
+    lessons     Lesson[]
     tasks       Task[]
 }
 
 model Admin {
     id          String @id @default(auto()) @map("_id") @db.ObjectId
     name        String
-    slug        String
+    slug        String @unique 
     email       String
     password    String
     phone       Int
@@ -109,35 +110,36 @@ model Admin {
 model Exam {
     id          String @id @default(auto()) @map("_id") @db.ObjectId
     name        String
-    slug        String
+    slug        String @unique 
     term        String
     results     Json
     examDate    String
     student     Student @relation(fields: [studentId], references: [id])
-    studentId   String @unique @db.ObjectId
+    studentId   String @db.ObjectId
 }
 
 model Fee {
     id          String @id @default(auto()) @map("_id") @db.ObjectId
     name        String
-    slug        String
+    slug        String @unique 
     term        String
     type        String
     amount      String
     payday      String
     student     Student @relation(fields: [studentId], references: [id])
-    studentId   String @unique @db.ObjectId
+    studentId   String @db.ObjectId
 }
 
 model Stream {
     id          String @id @default(auto()) @map("_id") @db.ObjectId
     name        String
-    slug        String
-    lessons     lesson[]
+    slug        String @unique 
+    lessons     Lesson[]
     tasks       Task[]
+    students    Student[]
 }
 
-model lesson {
+model Lesson {
     id          String @id @default(auto()) @map("_id") @db.ObjectId
     day         String
     startTime   String
@@ -145,9 +147,9 @@ model lesson {
     subject     Subject
     attendance  String
     stream      Stream @relation(fields: [streamId], references: [id])
-    streamId    String @unique @db.ObjectId
+    streamId    String @db.ObjectId
     teacher     Teacher @relation(fields: [teacherId], references: [id])
-    teacherId   String @unique @db.ObjectId
+    teacherId   String @db.ObjectId
 }
 
 model Task {
@@ -156,9 +158,9 @@ model Task {
     description String
     subject     Subject
     stream      Stream @relation(fields: [streamId], references: [id])
-    streamId    String @unique @db.ObjectId
+    streamId    String @db.ObjectId
     teacher     Teacher @relation(fields: [teacherId], references: [id])
-    teacherId   String @unique @db.ObjectId
+    teacherId   String @db.ObjectId
 }
 
 type Subject {

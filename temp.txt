@@ -188,6 +188,7 @@ export default withMiddleware(Dashboard, isAdmin);
 Running seed command `ts-node ./prisma/seed.ts` ...
 Start seeding ...
 Created user with id: 641ca7d8be8caf6d48376e4c
+
 Created stream with id: 641ca7dbbe8caf6d48376e4d
 Created stream with id: 641ca7dcbe8caf6d48376e4e
 Created stream with id: 641ca7debe8caf6d48376e4f
@@ -198,7 +199,35 @@ Created stream with id: 641ca7e3be8caf6d48376e53
 Created stream with id: 641ca7e4be8caf6d48376e54
 Created stream with id: 641ca7e5be8caf6d48376e55
 Created stream with id: 641ca7e7be8caf6d48376e56
+
 Created admin with id: 641ca7e8be8caf6d48376e57
 Created admin with id: 641ca7e9be8caf6d48376e58
 Created admin with id: 641ca7eabe8caf6d48376e59
 Seeding finished.
+
+Created student with id: 641dd16d2eece6ce9587cb0c
+Created student with id: 641dd16f2eece6ce9587cb0d
+Created student with id: 641dd1712eece6ce9587cb0e
+Created student with id: 641dd5d8590da608c00b4e69
+Created student with id: 641dd5da590da608c00b4e6a
+Created student with id: 641dd5db590da608c00b4e6b
+Created student with id: 641dd5dd590da608c00b4e6c
+Created student with id: 641dd5df590da608c00b4e6d
+Created student with id: 641dd5e0590da608c00b4e6e
+Created student with id: 641dd5e2590da608c00b4e6f
+Created student with id: 641dd5e4590da608c00b4e70
+Created student with id: 641dd5e5590da608c00b4e71
+Created student with id: 641dd5e7590da608c00b4e72
+Created student with id: 641dd5e9590da608c00b4e73
+Created student with id: 641dd5eb590da608c00b4e74
+Created student with id: 641dd5ec590da608c00b4e75
+Created student with id: 641dd5ee590da608c00b4e76
+Created student with id: 641dd5f0590da608c00b4e77
+
+Created teacher with id: 641dd5f1590da608c00b4e78
+Created teacher with id: 641dd5f2590da608c00b4e79
+Created teacher with id: 641dd5f5590da608c00b4e7b
+Created teacher with id: 641dd5f6590da608c00b4e7c
+Created teacher with id: 641dd5f7590da608c00b4e7d
+Created teacher with id: 641dd5fa590da608c00b4e7f
+
