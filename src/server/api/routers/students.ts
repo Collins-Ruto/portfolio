@@ -8,12 +8,16 @@ import {
 
 export const studentRouter = createTRPCRouter({
   getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.user.findMany();
+    return ctx.prisma.student.findMany({
+      include: {
+        stream: true
+      }
+    });
   }),
     
   getById: publicProcedure.input(z.string()).query(({ ctx, input }) => {
     if (input === 'all') {
-        return ctx.prisma.user.findMany({
+        return ctx.prisma.student.findMany({
             select: {
                 id: true,
                 name: true,

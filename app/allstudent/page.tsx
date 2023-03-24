@@ -3,15 +3,17 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Button, Loader } from "~/components";
+import type { Student, User } from 'api/types';
+import {  DummyUser, } from 'api/types';
 import Image from "next/image";
+import { api } from "@/utils/api";
 
 function Students() {
-  const [students, setStudents] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // const [students, setStudents] = useState<Student[]>();
   const [isDelete, setisDelete] = useState(false);
   const [submit, setSubmit] = useState(false);
   const [delStudent, setDelStudent] = useState("");
-  const [userType, setUserType] = useState("");
+  const [userType, setUserType] = useState<string>("");
   const [search, setSearch] = useState("");
   const [pages, setPages] = useState({
     hasNextPage: false,
@@ -19,52 +21,55 @@ function Students() {
   });
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    setUserType(user.type);
+    const userFromLocalStorage = localStorage.getItem("user");
+    const user: User = userFromLocalStorage !== null ? JSON.parse(userFromLocalStorage) as User : DummyUser
+     setUserType(user.type)
 
-    axios.get("https://lmsadmin.onrender.com/students").then((res) => {
-      setStudents(res.data.edges);
-      setPages(res.data.pageInfo);
-      setLoading(false);
-    });
+      // setPages(res.data.pageInfo);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const changePage = (direction) => {
-    const data = {
-      ...pages,
-      direction: direction,
-      cursor: direction === "after" ? pages.endCursor : pages.startCursor,
-    };
-    axios
-      .post("https://lmsadmin.onrender.com/students/page", data)
-      .then((res) => {
-        setPages(res.data.pageInfo);
-        setStudents(res.data.edges);
-      });
-  };
+  const {data, isLoading, error} = api.student.getAll.useQuery();
+  // const students: Student[] = data
+    const [students, setStudents] = useState<Student[]>(data);
+  // console.log("students", studentQuery)
 
-  const searchSubmit = async () => {
-    const data = await axios.get(
-      `https://lmsadmin.onrender.com/students/search?name=${search}`
-    );
-    setStudents(data.data);
-    setSubmit(false);
-  };
 
-  const deleteStudent = () => {
-    axios
-      .delete("https://lmsadmin.onrender.com/students", {
-        data: { slug: delStudent },
-      })
-      .then((res) => {
-        setisDelete(false);
-      });
-    const newStudent = students.filter(
-      (student) => student.node.slug !== delStudent
-    );
-    setStudents(newStudent);
-  };
+  // const changePage = (direction) => {
+  //   const data = {
+  //     ...pages,
+  //     direction: direction,
+  //     cursor: direction === "after" ? pages.endCursor : pages.startCursor,
+  //   };
+  //   axios
+  //     .post("https://lmsadmin.onrender.com/students/page", data)
+  //     .then((res) => {
+  //       setPages(res.data.pageInfo);
+  //       setStudents(res.data.edges);
+  //     });
+  // };
+
+  // const searchSubmit = async () => {
+  //   const data = await axios.get(
+  //     `https://lmsadmin.onrender.com/students/search?name=${search}`
+  //   );
+  //   setStudents(data.data);
+  //   setSubmit(false);
+  // };
+
+  // const deleteStudent = () => {
+  //   axios
+  //     .delete("https://lmsadmin.onrender.com/students", {
+  //       data: { slug: delStudent },
+  //     })
+  //     .then((res) => {
+  //       setisDelete(false);
+  //     });
+  //   const newStudent = students.filter(
+  //     (student) => student.slug !== delStudent
+  //   );
+  //   setStudents(newStudent);
+  // };
 
   console.log("students", students);
   console.log("pages", pages);
@@ -84,8 +89,8 @@ function Students() {
         >
           <div className="text-center bg-white rounded-lg md:max-w-md md:mx-auto p-4 fixed inset-x-0 bottom-0 z-50 mb-4 mx-4 md:relative">
             <Image 
-    width={100}
-    height={100} 
+              width={100}
+              height={100} 
               onClick={() => {
                 setisDelete(false);
               }}
@@ -104,8 +109,8 @@ function Students() {
               <div className="text-orange-500 text-start rounded-xl bg-[#F7F6FB] p-2">
                 <div className="flex text-orange-600">
                   <Image 
-    width={100}
-    height={100} 
+              width={100}
+              height={100} 
                     className="w-6 mr-1"
                     src="https://img.icons8.com/ios-glyphs/30/EE640C/error--v2.png"
                     alt=""
@@ -130,7 +135,7 @@ function Students() {
               ) : (
                 <button
                   onClick={() => {
-                    deleteStudent();
+                    // deleteStudent();
                     setSubmit(true);
                   }}
                   className="hover:bg-red-400 hover:text-white w-full md:w-auto px-4 py-3 md:py-2 bg-red-600 text-white rounded-lg font-semibold text-sm "
@@ -153,7 +158,7 @@ function Students() {
         <div className="p-4 text-2xl font-semibold">
           <h3>Students</h3>
         </div>
-        {loading && <Loader />}
+        {isLoading && <Loader />}
         <div>
           <div>
             <div className="flex flex-col md:flex-row gap-4 justify-between p-4">
@@ -178,7 +183,7 @@ function Students() {
                   ) : (
                     <button
                       onClick={() => {
-                        searchSubmit();
+                        // searchSubmit();
                         setSubmit(true);
                       }}
                       type="btn"
@@ -197,8 +202,8 @@ function Students() {
                     >
                       {" "}
                       <Image 
-    width={100}
-    height={100} 
+                        width={100}
+                        height={100} 
                         src="https://img.icons8.com/ios-glyphs/30/FFFFFF/plus-math.png"
                         className="w-5 mr-1 text-white"
                         alt=""
@@ -226,20 +231,20 @@ function Students() {
                 <tbody>
                   {students?.map((student, index) => (
                     <tr
-                      className={` p-4 ${index % 2 === 0 && "bg-white"}`}
+                      className={` p-4 ${index % 2 === 0 ? "bg-white": ""}`}
                       key={index}
                     >
-                      <td className="p-4">{student.node.slug}</td>
+                      <td className="p-4">{student.slug}</td>
                       <td className="p-4">
                         <h2 className="table-avatar">
-                          <a href="student-details.html">{student.node.name}</a>
+                          <a href="student-details.html">{student.name}</a>
                         </h2>
                       </td>
-                      <td className="p-4">{student?.node.stream?.name}</td>
-                      <td className="p-4">{student.node.dateOfBirth}</td>
-                      <td className="p-4">{student.node.parent}</td>
-                      <td className="p-4">{student.node.phone}</td>
-                      <td className="p-4">{student.node.gender}</td>
+                      <td className="p-4">{student?.stream?.name}</td>
+                      <td className="p-4">{student.dateOfBirth}</td>
+                      <td className="p-4">{student.parent}</td>
+                      <td className="p-4">{student.phone}</td>
+                      <td className="p-4">{student.gender}</td>
                       {userType === "admin" && (
                         <td className="p-4 flex gap-2">
                           <Link to="/addstudent">
@@ -254,7 +259,7 @@ function Students() {
                           <div
                             onClick={() => {
                               setisDelete(true);
-                              setDelStudent(student.node.slug);
+                              setDelStudent(student.slug);
                             }}
                           >
                             <Image
@@ -275,7 +280,7 @@ function Students() {
             <div className="flex align-middle justify-center pb-10 md:pb-8">
               <div
                 onClick={() => {
-                  pages.hasPreviousPage && changePage("before");
+                  // pages.hasPreviousPage && changePage("before");
                 }}
                 className={` ${
                   pages.hasPreviousPage
@@ -300,7 +305,7 @@ function Students() {
               </div>
               <div
                 onClick={() => {
-                  pages.hasNextPage && changePage("after");
+                  // pages.hasNextPage && changePage("after");
                 }}
                 className={` ${
                   pages.hasNextPage
