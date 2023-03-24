@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "next/link";
+import Link from "next/link";
 import { Button, Loader } from "~/components";
 import Image from "next/image";
 import type { Teacher } from "api/types";
@@ -181,7 +181,7 @@ function Teachers() {
             )}
             <div>
               <Link
-                to="/addteacher"
+                href="/addteacher"
                 type="btn"
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center"
               >
@@ -232,7 +232,7 @@ function Teachers() {
                   <td className="p-4">{teacher.node.joiningDate}</td>
                   <td className="p-4">{teacher.node.phone}</td>
                   <td className="p-4 flex gap-2">
-                    <Link to="/addteacher">
+                    <Link href="/addteacher">
                       <Image
                         src="https://img.icons8.com/external-kiranshastry-solid-kiranshastry/64/000000/external-edit-interface-kiranshastry-solid-kiranshastry.png"
                         alt=""

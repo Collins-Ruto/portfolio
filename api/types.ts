@@ -100,6 +100,11 @@ export type Stream = {
       slug: string
     }
 
+export type Search = {
+  name: string
+  id: string
+}
+
 export const DummyUser: User = {
   slug: "",
     name: "",

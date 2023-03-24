@@ -1,16 +1,19 @@
 'use client'
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "next/link";
+import Link from "next/link";
 import { Button, Loader } from "~/components";
 import Image from "next/image";
+import {  DummyUser, } from '~/api/types';
+import type {Search, User, Fee } from '~/api/types';
+import { api } from "@/utils/api";
 
 function FeeData() {
-  const [fees, setFees] = useState([]);
+ 
   const [loading, setLoading] = useState(true);
   const [userType, setUserType] = useState("");
   const [submit, setSubmit] = useState(false);
-  const [search, setSearch] = useState({});
+  const [search, setSearch] = useState<Search>();
   const [pages, setPages] = useState({
     hasNextPage: false,
     hasPreviousPage: false,
@@ -19,66 +22,72 @@ function FeeData() {
   // https://lmsadmin.onrender.com
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    setUserType(user.type);
+    const userFromLocalStorage = localStorage.getItem("user");
+    const user: User = userFromLocalStorage !== null ? JSON.parse(userFromLocalStorage) as User : DummyUser
+     setUserType(user.type)
 
-    axios.get("https://lmsadmin.onrender.com/fees").then((res) => {
-      setFees(res.data.edges);
-      setPages(res.data.pageInfo);
-      setLoading(false);
-    });
+
+    // axios.get("https://lmsadmin.onrender.com/fees").then((res) => {
+    //   setFees(res.data.edges);
+    //   setPages(res.data.pageInfo);
+    //   setLoading(false);
+    // });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const changePage = (direction) => {
-    const data = {
-      ...pages,
-      direction: direction,
-      cursor: direction === "after" ? pages.endCursor : pages.startCursor,
-    };
-    axios.post("https://lmsadmin.onrender.com/fees/page", data).then((res) => {
-      setPages(res.data.pageInfo);
-      setFees(res.data.edges);
-    });
-  };
+  const {data, isLoading, error} = api.fee.getAll.useQuery();
+   const [fees, setFees] = useState<Fee[]>(data);
+   console.log("fees", fees);
 
-  const handleInput = (event) => {
-    const target = event.target;
-    // const value = target.type === "checkbox" ? target.checked : target.value;
-    const value =
-      target.type === "number" ? parseInt(target.value) : target.value;
-    const name = target.name;
+  // const changePage = (direction) => {
+  //   const data = {
+  //     ...pages,
+  //     direction: direction,
+  //     cursor: direction === "after" ? pages.endCursor : pages.startCursor,
+  //   };
+  //   axios.post("https://lmsadmin.onrender.com/fees/page", data).then((res) => {
+  //     setPages(res.data.pageInfo);
+  //     setFees(res.data.edges);
+  //   });
+  // };
 
-    setSearch({ ...search, [name]: value });
-  };
+  // const handleInput = (event) => {
+  //   const target = event.target;
+  //   // const value = target.type === "checkbox" ? target.checked : target.value;
+  //   const value =
+  //     target.type === "number" ? parseInt(target.value) : target.value;
+  //   const name = target.name;
 
-  const searchSubmit = async () => {
-    const data = await axios.get(
-      `https://lmsadmin.onrender.com/fees/search?name=${search.name}&id=${search.id}`
-    );
-    const neData = data.data.feeSearch.concat(
-      data.data.studentSearch.length ? data.data.studentSearch[0].node.fees : []
-    );
-    setFees(neData);
-    setSubmit(false);
-    setSearch({ name: "", id: "" });
-  };
+  //   setSearch({ ...search, [name]: value });
+  // };
+
+  // const searchSubmit = async () => {
+  //   const data = await axios.get(
+  //     `https://lmsadmin.onrender.com/fees/search?name=${search.name}&id=${search.id}`
+  //   );
+  //   const neData = data.data.feeSearch.concat(
+  //     data.data.studentSearch.length ? data.data.studentSearch[0].node.fees : []
+  //   );
+  //   setFees(neData);
+  //   setSubmit(false);
+  //   setSearch({ name: "", id: "" });
+  // };
 
   return (
     <div className="w-screen md:w-full md:pb-8">
       <div className="p-4 text-2xl font-semibold">
         <h3>Fee Details</h3>
       </div>
-      {loading && <Loader />}
+      {isLoading && <Loader />}
       <div className="flex flex-col md:flex-row gap-4 justify-between p-4">
         <div>
           <div>
             <input
               onChange={(e) => {
-                handleInput(e);
+                // handleInput(e);
               }}
               name="id"
-              value={search.id}
+              value={search?.id}
               type="text"
               className="shadow appearance-none border bg-[#F7F6FB] rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               placeholder="Search by ID ..."
@@ -89,10 +98,10 @@ function FeeData() {
           <div>
             <input
               onChange={(e) => {
-                handleInput(e);
+                // handleInput(e);
               }}
               name="name"
-              value={search.name}
+              value={search?.name}
               type="text"
               className="shadow appearance-none border bg-[#F7F6FB] rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               placeholder="Search by student Name ..."
@@ -106,7 +115,7 @@ function FeeData() {
             ) : (
               <button
                 onClick={() => {
-                  searchSubmit();
+                  // searchSubmit();
                   setSubmit(true);
                 }}
                 type="btn"
@@ -119,7 +128,7 @@ function FeeData() {
           {userType === "admin" && (
             <div>
               <Link
-                to="/addfee"
+                href="/addfee"
                 type="btn"
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center"
               >
@@ -152,13 +161,13 @@ function FeeData() {
             </tr>
           </thead>
           <tbody>
-            {fees?.map((fees, index) => {
-              const fee = fees && (fees?.node || fees);
+            {fees?.map((fee, index) => {
+              // const fee = fees && (fees?.node || fees);
 
               return (
                 <tr
                   key={index}
-                  className={` p-4 ${index % 2 === 0 && "bg-white"}`}
+                  className={` p-4 ${index % 2 === 0 ? "bg-white" : ""}`}
                 >
                   <td className="p-4">{fee.slug}</td>
                   <td className="p-4">
@@ -177,7 +186,7 @@ function FeeData() {
                   <td className="p-4">{fee.payday}</td>
                   <td className="text-end p-4">
                     <span>
-                      {parseFloat(fees.balance) < 1 ? "Paid" : "Arrears"}
+                      {/* {parseFloat(fees.balance) < 1 ? "Paid" : "Arrears"} */}
                     </span>
                   </td>
                 </tr>
@@ -189,7 +198,7 @@ function FeeData() {
       <div className="flex align-middle justify-center pb-10 md:pb-0">
         <div
           onClick={() => {
-            pages.hasPreviousPage && changePage("before");
+            // pages.hasPreviousPage && changePage("before");
           }}
           className={` ${
             pages.hasPreviousPage
@@ -214,7 +223,7 @@ function FeeData() {
         </div>
         <div
           onClick={() => {
-            pages?.hasNextPage && changePage("after");
+            // pages?.hasNextPage && changePage("after");
           }}
           className={` ${
             pages?.hasNextPage

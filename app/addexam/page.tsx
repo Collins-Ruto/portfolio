@@ -18,33 +18,33 @@ function AddExam() {
   const [submit, setSubmit] = useState(false);
   const [status, setStatus] = useState({});
 
-  useEffect(() => {
-    axios.get("https://lmsadmin.onrender.com/infos").then((res) => {
-      setSubjects(res.data.subjects);
-      setLoading(false);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   axios.get("https://lmsadmin.onrender.com/infos").then((res) => {
+  //     setSubjects(res.data.subjects);
+  //     setLoading(false);
+  //   });
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
-  const handleInput = (event) => {
-    const target = event.target;
-    // const value = target.type === "checkbox" ? target.checked : target.value;
-    const value =
-      target.type === "number" ? parseInt(target.value) : target.value;
-    const name = target.name;
+  // const handleInput = (event) => {
+  //   const target = event.target;
+  //   // const value = target.type === "checkbox" ? target.checked : target.value;
+  //   const value =
+  //     target.type === "number" ? parseInt(target.value) : target.value;
+  //   const name = target.name;
 
-    setExam({ ...exam, [name]: value });
-  };
+  //   setExam({ ...exam, [name]: value });
+  // };
 
-  const handleResult = (event) => {
-    const target = event.target;
-    // const value = target.type === "checkbox" ? target.checked : target.value;
-    const value =
-      target.type === "number" ? parseInt(target.value) : target.value;
-    const name = target.name.toString();
+  // const handleResult = (event) => {
+  //   const target = event.target;
+  //   // const value = target.type === "checkbox" ? target.checked : target.value;
+  //   const value =
+  //     target.type === "number" ? parseInt(target.value) : target.value;
+  //   const name = target.name.toString();
 
-    setExam({ ...exam, results: { ...exam.results, [name]: value } });
-  };
+  //   setExam({ ...exam, results: { ...exam.results, [name]: value } });
+  // };
 
   const handleSubmit = () => {
     setSubmit(true);

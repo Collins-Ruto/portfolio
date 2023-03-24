@@ -1,85 +1,88 @@
 'use client'
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "next/link";
+import Link from "next/link";
 import { Button, Loader } from "~/components";
 import Image from "next/image";
+import type {Search, Exam } from '~/api/types';
+import { api } from "@/utils/api";
 
 function Exam() {
-  const [exam, setExam] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [subjects, setSubjects] = useState([]);
+   const [subjects, setSubjects] = useState([]);
   const [submit, setSubmit] = useState(false);
-  const [search, setSearch] = useState({});
+  const [search, setSearch] = useState<Search>();
   const [pages, setPages] = useState({
     hasNextPage: false,
     hasPreviousPage: false,
   });
 
+  const {data, isLoading, error} = api.exam.getAll.useQuery();
+   const [exam, setExam] = useState<Exam[]>(data);
+   console.log("exam", exam);
   // https://lmsadmin.onrender.com
-  useEffect(() => {
-    axios.get("https://lmsadmin.onrender.com/exams").then((res) => {
-      setExam(res.data.edges);
-      setPages(res.data.pageInfo);
-    });
+  // useEffect(() => {
+  //   axios.get("https://lmsadmin.onrender.com/exams").then((res) => {
+  //     setExam(res.data.edges);
+  //     setPages(res.data.pageInfo);
+  //   });
 
-    axios.get("https://lmsadmin.onrender.com/infos").then((res) => {
-      setSubjects(res.data.subjects);
-      setLoading(false);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  //   axios.get("https://lmsadmin.onrender.com/infos").then((res) => {
+  //     setSubjects(res.data.subjects);
+  //     setLoading(false);
+  //   });
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
-  const changePage = (direction) => {
-    const data = {
-      ...pages,
-      direction: direction,
-      cursor: direction === "after" ? pages.endCursor : pages.startCursor,
-    };
-    axios.post("https://lmsadmin.onrender.com/exams/page", data).then((res) => {
-      setPages(res.data.pageInfo);
-      setExam(res.data.edges);
-    });
-  };
+  // const changePage = (direction) => {
+  //   const data = {
+  //     ...pages,
+  //     direction: direction,
+  //     cursor: direction === "after" ? pages.endCursor : pages.startCursor,
+  //   };
+  //   axios.post("https://lmsadmin.onrender.com/exams/page", data).then((res) => {
+  //     setPages(res.data.pageInfo);
+  //     setExam(res.data.edges);
+  //   });
+  // };
 
-  const handleInput = (event) => {
-    const target = event.target;
-    // const value = target.type === "checkbox" ? target.checked : target.value;
-    const value =
-      target.type === "number" ? parseInt(target.value) : target.value;
-    const name = target.name;
+  // const handleInput = (event) => {
+  //   const target = event.target;
+  //   // const value = target.type === "checkbox" ? target.checked : target.value;
+  //   const value =
+  //     target.type === "number" ? parseInt(target.value) : target.value;
+  //   const name = target.name;
 
-    setSearch({ ...search, [name]: value });
-  };
+  //   setSearch({ ...search, [name]: value });
+  // };
 
-  const searchSubmit = async () => {
-    const data = await axios.get(
-      `https://lmsadmin.onrender.com/exams/search?name=${search.name}&id=${search.id}`
-    );
-    const neData = data.data.examSearch.concat(
-      data.data.studentSearch.length
-        ? data.data.studentSearch[0].node.exams
-        : []
-    );
-    setExam(neData);
-    setSubmit(false);
-    setSearch({ name: "", id: "" });
-  };
+  // const searchSubmit = async () => {
+  //   const data = await axios.get(
+  //     `https://lmsadmin.onrender.com/exams/search?name=${search.name}&id=${search.id}`
+  //   );
+  //   const neData = data.data.examSearch.concat(
+  //     data.data.studentSearch.length
+  //       ? data.data.studentSearch[0].node.exams
+  //       : []
+  //   );
+  //   setExam(neData);
+  //   setSubmit(false);
+  //   setSearch({ name: "", id: "" });
+  // };
 
   return (
     <div className="w-screen md:w-full">
       <div className="p-4 text-2xl font-semibold">
         <h3>exam</h3>
       </div>
-      {loading && <Loader />}
+      {isLoading && <Loader />}
       <div className="flex flex-col md:flex-row gap-4 justify-between p-4">
         <div>
           <input
             onChange={(e) => {
-              handleInput(e);
+              // handleInput(e);
             }}
             name="id"
-            value={search.id}
+            value={search?.id}
             type="text"
             className="shadow bg-[#F7F6FB] appearance-none border-[1px] rounded w-full py-2 px-3 text-gray-800 leading-tight focus:outline-none focus:shadow-outline"
             placeholder="Search by exam ID ..."
@@ -88,10 +91,10 @@ function Exam() {
         <div>
           <input
             onChange={(e) => {
-              handleInput(e);
+              // handleInput(e);
             }}
             name="name"
-            value={search.name}
+            value={search?.name}
             type="text"
             className="shadow appearance-none border bg-[#F7F6FB] rounded w-full py-2 px-3 text-gray-800 leading-tight focus:outline-none focus:shadow-outline"
             placeholder="Search by student Name ..."
@@ -104,7 +107,7 @@ function Exam() {
             ) : (
               <button
                 onClick={() => {
-                  searchSubmit();
+                  // searchSubmit();
                   setSubmit(true);
                 }}
                 type="btn"
@@ -116,7 +119,7 @@ function Exam() {
           </div>
           <div>
             <Link
-              to="/addexam"
+              href="/addexam"
               type="btn"
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center"
             >
@@ -149,23 +152,21 @@ function Exam() {
             </tr>
           </thead>
           <tbody>
-            {exam.length &&
-              exam.map((data, index) => {
-                const exam = data.node || data;
+            {exam?.map((data, index) => {
                 return (
                   <tr
-                    className={` p-4 ${index % 2 === 0 && "bg-white"}`}
+                    className={` p-4 ${index % 2 === 0 ? "bg-white": ""}`}
                     key={index}
                   >
                     <td className="p-4">{exam.name}</td>
-                    <td className="p-4">{exam.student?.name}</td>
+                    {/* <td className="p-4">{exam?.student?.name}</td> */}
                     <td className="p-4">{exam?.term}</td>
                     <td className="p-4">{exam.examDate}</td>
-                    {subjects.map((subject, index) => (
+                    {/* {subjects.map((subject, index) => (
                       <td className="p-4 border-x-2" key={index}>
                         {exam.results[subject.slug] || "-"}
                       </td>
-                    ))}
+                    ))} */}
                   </tr>
                 );
               })}
@@ -174,7 +175,7 @@ function Exam() {
         <div className="flex align-middle justify-center pb-10 md:pb-0">
           <div
             onClick={() => {
-              pages.hasPreviousPage && changePage("before");
+              // pages.hasPreviousPage && changePage("before");
             }}
             className={` ${
               pages.hasPreviousPage
@@ -199,7 +200,7 @@ function Exam() {
           </div>
           <div
             onClick={() => {
-              pages.hasNextPage && changePage("after");
+              // pages.hasNextPage && changePage("after");
             }}
             className={` ${
               pages.hasNextPage

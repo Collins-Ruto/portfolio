@@ -1,11 +1,11 @@
 'use client'
 import React, { useEffect, useState } from "react";
 // import axios from "axios";
-import { Link } from "next/link";
+import Link from "next/link";
 import { Button, Loader } from "~/components";
-import type { Student, User } from '~/api/types';
 import {  DummyUser, } from '~/api/types';
 import Image from "next/image";
+import type { Student, User } from '~/api/types';
 import { api } from "@/utils/api";
 
 function Students() {
