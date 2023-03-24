@@ -3,7 +3,7 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
-
+import type {  Teacher } from '~/api/types'
 // import useQuery from 'next-query';
 import { api } from "@/utils/api";
 
@@ -12,10 +12,9 @@ const Home: NextPage = () => {
   const studentQuery = api.student.getAll.useQuery()
   const userQuery = api.student.getById.useQuery('all');
 
-  console.log("students", studentQuery)
-  console.log("user", userQuery)
-
-  console.log("students",  studentQuery?.data && studentQuery?.data[0]?.name)
+  const {data, isLoading, error} = api.teacher.getAll.useQuery();
+  const teachers: Teacher[] = data
+  console.log("teachersa", teachers)
   
   return (
     <>

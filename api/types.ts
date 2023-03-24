@@ -1,5 +1,4 @@
 export type Lesson = {
-  node: {
     startTime: string
     endTime: string
     day: string,
@@ -15,7 +14,6 @@ export type Lesson = {
     subject: {
       name: string
     }
-  }
 }
 
 export type User = {
@@ -51,16 +49,15 @@ export type Student = {
 }
 
 export type Teacher = {
-  node: {dateOfBirth: string
+  dateOfBirth: string
   joiningDate: string
   name: string
-  parent: string
-  phone: number
+  phone: string
   gender: string
   slug: string
   email: string
   password: string
-  qualification: string}
+  qualification: string
 }
 
 export type Exam = {

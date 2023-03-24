@@ -1,15 +1,14 @@
 'use client'
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
+// import axios from "axios";
+import { Link } from "next/link";
 import { Button, Loader } from "~/components";
-import type { Student, User } from 'api/types';
-import {  DummyUser, } from 'api/types';
+import type { Student, User } from '~/api/types';
+import {  DummyUser, } from '~/api/types';
 import Image from "next/image";
 import { api } from "@/utils/api";
 
 function Students() {
-  // const [students, setStudents] = useState<Student[]>();
   const [isDelete, setisDelete] = useState(false);
   const [submit, setSubmit] = useState(false);
   const [delStudent, setDelStudent] = useState("");
@@ -30,8 +29,7 @@ function Students() {
   }, []);
 
   const {data, isLoading, error} = api.student.getAll.useQuery();
-  // const students: Student[] = data
-    const [students, setStudents] = useState<Student[]>(data);
+  const [students, setStudents] = useState<Student[]>(data);
   // console.log("students", studentQuery)
 
 
@@ -196,7 +194,7 @@ function Students() {
                 {userType === "admin" && (
                   <div>
                     <Link
-                      to="/addstudent"
+                      href="/addstudent"
                       type="btn"
                       className="bg-blue-500 w-fit hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center"
                     >
@@ -247,7 +245,7 @@ function Students() {
                       <td className="p-4">{student.gender}</td>
                       {userType === "admin" && (
                         <td className="p-4 flex gap-2">
-                          <Link to="/addstudent">
+                          <Link href="/admin/addstudent">
                             <Image 
                               width={100}
                               height={100} 

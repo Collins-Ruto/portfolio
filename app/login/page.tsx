@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import homepic from "../res/homepic1.webp";
 import { Button } from "~/components";
-import {  useNavigate } from "react-router-dom";
+import {  useNavigate } from "next/link";
 import Image from "next/image";
 
 function Login({ setLogin }) {

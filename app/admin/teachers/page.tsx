@@ -1,12 +1,13 @@
 'use client'
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { Button, Loader } from "~/components";
+import Image from "next/image";
+import type {  Teacher } from '~/api/types'
+import { api } from "@/utils/api";
 
 function Teachers() {
-  const [teachers, setTeachers] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [isDelete, setisDelete] = useState(false);
   const [submit, setSubmit] = useState(false);
   const [delTeacher, setDelTeacher] = useState("");
@@ -16,28 +17,32 @@ function Teachers() {
     hasPreviousPage: false,
   });
 
-  useEffect(() => {
-    axios.get("https://lmsadmin.onrender.com/teachers").then((res) => {
-      setTeachers(res.data.edges);
-      setPages(res.data.pageInfo);
-      setLoading(false);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   axios.get("https://lmsadmin.onrender.com/teachers").then((res) => {
+  //     setTeachers(res.data.edges);
+  //     setPages(res.data.pageInfo);
+  //     setLoading(false);
+  //   });
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
-  const changePage = (direction) => {
-    const data = {
-      ...pages,
-      direction: direction,
-      cursor: direction === "after" ? pages.endCursor : pages.startCursor,
-    };
-    axios
-      .post("https://lmsadmin.onrender.com/teachers/page", data)
-      .then((res) => {
-        setPages(res.data.pageInfo);
-        setTeachers(res.data.edges);
-      });
-  };
+  const {data, isLoading, error} = api.teacher.getAll.useQuery();
+  const [teachers, setTeachers] = useState<Teacher[]>(data);
+  console.log("teachers", teachers)
+
+  // const changePage = (direction) => {
+  //   const data = {
+  //     ...pages,
+  //     direction: direction,
+  //     cursor: direction === "after" ? pages.endCursor : pages.startCursor,
+  //   };
+  //   axios
+  //     .post("https://lmsadmin.onrender.com/teachers/page", data)
+  //     .then((res) => {
+  //       setPages(res.data.pageInfo);
+  //       setTeachers(res.data.edges);
+  //     });
+  // };
 
   console.log("pages", pages);
 
@@ -45,24 +50,24 @@ function Teachers() {
     const data = await axios.get(
       `https://lmsadmin.onrender.com/teachers/teacher?name=${search}`
     );
-    setTeachers(data.data);
+    // setTeachers(data.data);
     setSubmit(false);
   };
 
-  const deleteTeacher = () => {
-    axios
-      .delete("https://lmsadmin.onrender.com/teachers", {
-        data: { slug: delTeacher },
-      })
-      .then((res) => {
-        setisDelete(false);
-        setSubmit(false);
-      });
-    const newTeachers = teachers.filter(
-      (teacher) => teacher.node.slug !== delTeacher
-    );
-    setTeachers(newTeachers);
-  };
+  // const deleteTeacher = () => {
+  //   axios
+  //     .delete("https://lmsadmin.onrender.com/teachers", {
+  //       data: { slug: delTeacher },
+  //     })
+  //     .then((res) => {
+  //       setisDelete(false);
+  //       setSubmit(false);
+  //     });
+  //   const newTeachers = teachers.filter(
+  //     (teacher) => teacher.slug !== delTeacher
+  //   );
+  //   setTeachers(newTeachers);
+  // };
 
   const ConfirmDel = () => {
     return (
@@ -78,7 +83,7 @@ function Teachers() {
                 flex flex-col mx-auto fixed left-[45%] pt-[10%] h-screen opacity-100 bg-blend-darken "
         >
           <div className="text-center bg-white rounded-lg md:max-w-md md:mx-auto p-4 fixed inset-x-0 bottom-0 z-50 mb-4 mx-4 md:relative">
-            <Image 
+            <Image
     width={100}
     height={100} 
               onClick={() => {
@@ -125,7 +130,7 @@ function Teachers() {
               ) : (
                 <button
                   onClick={() => {
-                    deleteTeacher();
+                    // deleteTeacher();
                     setSubmit(true);
                   }}
                   className="hover:bg-red-400 hover:text-white w-full md:w-auto px-4 py-3 md:py-2 bg-red-600 text-white rounded-lg font-semibold text-sm "
@@ -148,7 +153,7 @@ function Teachers() {
       <div className="p-4 text-2xl font-semibold">
         <h3>Teachers</h3>
       </div>
-      {loading && <Loader />}
+      {isLoading && <Loader />}
       <div>
         <div className="flex flex-col md:flex-row gap-4 justify-between p-4">
           <div>
@@ -170,7 +175,7 @@ function Teachers() {
             ) : (
               <button
                 onClick={() => {
-                  searchSubmit();
+                  // searchSubmit();
                   setSubmit(true);
                 }}
                 type="btn"
@@ -181,14 +186,14 @@ function Teachers() {
             )}
             <div>
               <Link
-                to="/addteacher"
+                href="/addteacher"
                 type="btn"
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center"
               >
                 {" "}
                 <Image 
-    width={100}
-    height={100} 
+                  width={100}
+                  height={100} 
                   src="https://img.icons8.com/ios-glyphs/30/FFFFFF/plus-math.png"
                   className="w-5 mr-1"
                   alt=""
@@ -215,29 +220,29 @@ function Teachers() {
             <tbody>
               {teachers?.map((teacher, index) => (
                 <tr
-                  className={` p-4 ${index % 2 === 0 && "bg-white"}`}
+                  className={` p-4 ${index % 2 === 0 ? "bg-white" : ""}`}
                   key={index}
                 >
-                  <td className="p-4">{teacher.node.slug}</td>
+                  <td className="p-4">{teacher.slug}</td>
                   <td className="p-4">
                     <h2 className="table-avatar">
-                      <a href="student-details.html">{teacher.node.name}</a>
+                      <a href="student-details.html">{teacher.name}</a>
                     </h2>
                   </td>
                   <td className="p-4">
-                    {teacher.node.email?.substring(0, 29)}
+                    {teacher.email?.substring(0, 29)}
                   </td>
-                  <td className="p-4">{teacher.node.dateOfBirth}</td>
+                  <td className="p-4">{teacher.dateOfBirth}</td>
                   <td className="p-4">
-                    {teacher.node.qualification}
+                    {teacher.qualification}
                   </td>
-                  <td className="p-4">{teacher.node.joiningDate}</td>
-                  <td className="p-4">{teacher.node.phone}</td>
+                  <td className="p-4">{teacher.joiningDate}</td>
+                  <td className="p-4">{teacher.phone}</td>
                   <td className="p-4 flex gap-2">
-                    <Link to="/addteacher">
+                    <Link href="/addteacher">
                       <Image 
-    width={100}
-    height={100} 
+                        width={100}
+                        height={100} 
                         src="https://img.icons8.com/external-kiranshastry-solid-kiranshastry/64/000000/external-edit-interface-kiranshastry-solid-kiranshastry.png"
                         alt=""
                         className="w-6 cursor-pointer"
@@ -246,12 +251,12 @@ function Teachers() {
                     <div
                       onClick={() => {
                         setisDelete(true);
-                        setDelTeacher(teacher.node.slug);
+                        setDelTeacher(teacher.slug);
                       }}
                     >
                       <Image 
-    width={100}
-    height={100} 
+                        width={100}
+                        height={100} 
                         src="https://img.icons8.com/ios-filled/50/000000/waste.png"
                         alt=""
                         className="w-6 cursor-pointer"
@@ -266,7 +271,7 @@ function Teachers() {
         <div className="flex align-middle justify-center pb-10 md:pb-0">
           <div
             onClick={() => {
-              pages.hasPreviousPage && changePage("before");
+              // pages.hasPreviousPage && changePage("before");
             }}
             className={` ${
               pages.hasPreviousPage
@@ -291,7 +296,7 @@ function Teachers() {
           </div>
           <div
             onClick={() => {
-              pages.hasNextPage && changePage("after");
+              // pages.hasNextPage && changePage("after");
             }}
             className={` ${
               pages.hasNextPage

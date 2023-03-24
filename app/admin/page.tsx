@@ -4,9 +4,9 @@ import React, { useEffect, useState } from "react";
 import { Calender, Loader } from "~/components";
 import axios from "axios";
 import Image from "next/image";
-import type {  User } from '../../api/types'
-import {  DummyUser, } from '../../api/types'
+import {  DummyUser, } from '~/api/types'
 import Link from "next/link";
+import type {  User } from '~/api/types'
 import { api } from "@/utils/api";
 
 type Data = {
