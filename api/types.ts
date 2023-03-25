@@ -90,6 +90,11 @@ export type Search = {
   id: string
 }
 
+export type Result = {
+    slug:   string
+    marks:  string
+}
+
 export const DummyUser: User = {
   slug: "",
     name: "",

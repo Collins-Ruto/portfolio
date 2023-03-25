@@ -31,25 +31,25 @@ const dumt = [
 function Task() {
   const [tasks, setTasks] = useState(dumt);
 
-  const downloadURI = (uri, name) => {
-    const link = document.createElement("a");
-    link.download = name;
-    link.href = uri;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+  // const downloadURI = (uri, name) => {
+  //   const link = document.createElement("a");
+  //   link.download = name;
+  //   link.href = uri;
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
+  // };
 
   return (
     <div>
       <div className="p-4 text-2xl font-semibold">Your Tasks</div>
 
       <div
-        onClick={() =>
-          downloadURI(
-            "https://ccsuniversity.ac.in/bridge-library/pdf/Lecture-3-Engine.pdf", "lecture3.pdf"
-          )
-        }
+        onClick={() => {
+          // downloadURI(
+          //   "https://ccsuniversity.ac.in/bridge-library/pdf/Lecture-3-Engine.pdf", "lecture3.pdf"
+          // )
+        }}
       >
         download
       </div>

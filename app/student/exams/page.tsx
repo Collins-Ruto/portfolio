@@ -1,10 +1,10 @@
 'use client'
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Loader } from "~/components";
 import {  DummyUser, Subjects } from '~/api/types';
-import type { Exam, User } from '~/api/types';
+import type { User, Result } from '~/api/types';
 import { api } from "@/utils/api";
+import type { Exam } from "@prisma/client";
 
 function Exam() {
   useEffect(() => {
@@ -30,8 +30,8 @@ function Exam() {
 
   const {data, isLoading, error} = api.exam.studentExams.useQuery(id);
   //  const [exam, setExam] = useState<Exam[]>(data);
-  const exam: Exam[] | undefined = data
-  console.log("exam", exam);
+  const exams: Exam[] | undefined = data
+  console.log("exam", exams);
 
   return (
     <div className="w-screen md:w-full">
@@ -40,7 +40,7 @@ function Exam() {
       </div>
       {isLoading && <Loader />}
       <div>
-        {exam?.length === 0 ? (
+        {exams?.length === 0 ? (
           <div>
             <h1>Sorry, Your results have not been uploaded yet</h1>
           </div>
@@ -61,7 +61,7 @@ function Exam() {
               </thead>
               <tbody>
                 {
-                  exam?.map((exam, index) => {
+                  exams?.map((exam, index) => {
                     return (
                       <tr
                         className={` p-4 ${index % 2 === 0 ? "bg-white" : ""}`}
@@ -70,11 +70,14 @@ function Exam() {
                         <td className="p-4">{exam?.name}</td>
                         <td className="p-4">{exam?.term}</td>
                         <td className="p-4">{exam.examDate}</td>
-                        {Subjects.map((subject, index) => (
+                        {Subjects.map((subject, index) => {
+                          const resultsObj: Result[] = exam.results as Result[]
+                          const myResult = resultsObj.find(obj => obj.slug === subject.slug);
+                          return (
                           <td className="p-4 border-x-2" key={index}>
-                            {(exam.results[subject.slug  as keyof typeof exam.results]).toString() || "-"}
+                              {myResult?.marks || "-"}
                           </td>
-                        ))}
+                        )})}
                       </tr>
                     );
                   })}

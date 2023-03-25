@@ -112,7 +112,7 @@ model Exam {
     name        String
     slug        String @unique 
     term        String
-    results     Json
+    results     Result[]
     examDate    String
     student     Student @relation(fields: [studentId], references: [id])
     studentId   String @db.ObjectId
@@ -161,6 +161,11 @@ model Task {
     streamId    String @db.ObjectId
     teacher     Teacher @relation(fields: [teacherId], references: [id])
     teacherId   String @db.ObjectId
+}
+
+type Result {
+    slug   String
+    marks  String
 }
 
 type Subject {

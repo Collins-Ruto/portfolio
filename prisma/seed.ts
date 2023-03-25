@@ -236,16 +236,16 @@ const examData: Prisma.ExamCreateInput[] = [
         "examDate": "10-03-2020",
         "slug": "242021i",
         "term": "2021 I",
-        "results": {
-          "bio": 74,
-          "bss": 86,
-          "eng": 69,
-          "geo": 76,
-          "phy": 54,
-          "chem": 69,
-          "kisw": 66,
-          "math": 67
-        },
+        "results": [
+          {slug:"bio", marks: "74"},
+          {slug:"bss", marks: "86"},
+          {slug:"eng", marks: "69"},
+          {slug:"geo", marks: "76"},
+          {slug:"phy", marks: "54"},
+          {slug:"chem", marks: "69"},
+          {slug:"kisw", marks: "66"},
+          {slug:"math", marks: " 67"}
+        ],
         "student": {
           "connect": {"id": "641dd16d2eece6ce9587cb0c"}
         }
@@ -255,16 +255,16 @@ const examData: Prisma.ExamCreateInput[] = [
         "examDate": "10-03-2020",
         "slug": "252020i",
         "term": "2020 I",
-        "results": {
-          "bio": 89,
-          "bss": null,
-          "eng": 88,
-          "phy": 68,
-          "agri": 69,
-          "hist": 78,
-          "kisw": 79,
-          "math": 78
-        },
+        "results": [
+          {slug:"bio", marks: "89"},
+          {slug:"bss", marks: "69"},
+          {slug:"eng", marks: "88"},
+          {slug:"phy", marks: "68"},
+          {slug:"agri", marks: "69"},
+          {slug:"hist", marks: "78"},
+          {slug:"kisw", marks: "79"},
+          {slug:"math", marks:  "78"}
+        ],
         "student": {
           "connect": {"id": "641dd5d8590da608c00b4e69"}
         }
@@ -274,16 +274,16 @@ const examData: Prisma.ExamCreateInput[] = [
         "examDate": "10-03-2020",
         "slug": "282021i",
         "term": "2021 I",
-        "results": {
-          "bio": 88,
-          "bss": 75,
-          "eng": 86,
-          "phy": 79,
-          "chem": 78,
-          "hist": 67,
-          "kisw": 87,
-          "math": 92
-        },
+        "results": [
+          {slug:"bio", marks: "88"},
+          {slug:"bss", marks: "75"},
+          {slug:"eng", marks: "86"},
+          {slug:"phy", marks: "79"},
+          {slug:"chem", marks: "78"},
+          {slug:"hist", marks:" 67"},
+          {slug:"kisw", marks: "87"},
+          {slug:"math", marks:  "92"}
+        ],
         "student": {
           "connect": {"id": "641dd16f2eece6ce9587cb0d"}
         }
@@ -293,16 +293,16 @@ const examData: Prisma.ExamCreateInput[] = [
         "examDate": "10-03-2020",
         "slug": "282021iii",
         "term": "2021 III",
-        "results": {
-          "bio": 67,
-          "bss": 78,
-          "eng": 75,
-          "phy": 74,
-          "chem": 76,
-          "hist": 64,
-          "kisw": 89,
-          "math": 72
-        },
+        "results": [
+          {slug:"bio", marks:" 67"},
+          {slug:"bss", marks: "78"},
+          {slug:"eng", marks: "75"},
+          {slug:"phy", marks: "74"},
+          {slug:"chem", marks: "76"},
+          {slug:"hist", marks: "64"},
+          {slug:"kisw", marks: "89"},
+          {slug:"math", marks:  "72"}
+        ],
         "student": {
           "connect": {"id": "641dd5df590da608c00b4e6d"}
         }
@@ -312,18 +312,18 @@ const examData: Prisma.ExamCreateInput[] = [
         "examDate": "10-03-2020",
         "slug": "142021i",
         "term": "2021 I",
-        "results": {
+        "results": [
           
-          "bio": 76,
-          "bss": null,
-          "eng": 78,
-          "phy": 85,
-          "agri": 86,
-          "chem": 65,
-          "hist": 68,
-          "kisw": 77,
-          "math": 67
-        },
+          {slug:"bio", marks: "76"},
+          {slug:"bss", marks: "69"},
+          {slug:"eng", marks: "78"},
+          {slug:"phy", marks: "85"},
+          {slug:"agri", marks: "86"},
+          {slug:"chem", marks: "65"},
+          {slug:"hist", marks: "68"},
+          { slug: "kisw", marks: "77"},
+          {slug:"math", marks: "67"}
+        ],
         "student": {
           "connect": {"id": "641dd5e2590da608c00b4e6f"}
         }
@@ -333,17 +333,16 @@ const examData: Prisma.ExamCreateInput[] = [
         "examDate": "10-03-2020",
         "slug": "172021i",
         "term": "2021 I",
-        "results": {
-          
-          "bio": 86,
-          "bss": 77,
-          "eng": 78,
-          "phy": 67,
-          "agri": 66,
-          "chem": 67,
-          "kisw": 87,
-          "math": 75
-        },
+        "results": [
+          {slug:"bio", marks:"86"},
+          {slug:"bss", marks:"77"},
+          {slug:"eng", marks:"78"},
+          {slug:"phy", marks: "67"},
+          {slug:"agri", marks: "66"},
+          {slug:"chem", marks: "67"},
+          {slug:"kisw", marks: "87"},
+          {slug:"math", marks: "75"}
+        ],
         "student": {
           "connect": {"id": "641dd16d2eece6ce9587cb0c"}
         }
@@ -353,17 +352,17 @@ const examData: Prisma.ExamCreateInput[] = [
         "examDate": "10-03-2020",
         "slug": "292021ii",
         "term": "2021 II",
-        "results": {
-          "bio": 77,
-          "bss": 77,
-          "eng": 67,
-          "geo": 80,
-          "phy": 89,
-          "agri": null,
-          "chem": 68,
-          "kisw": 92,
-          "math": 78
-        },
+        "results": [
+          {slug: "bio", marks: "77"},
+          {slug: "bss", marks: "77"},
+          {slug: "eng", marks:" 67"},
+          {slug: "geo", marks: "80"},
+          {slug: "phy", marks: "89"},
+          {slug: "agri", marks:  "86"},
+          {slug: "chem", marks:  "68"},
+          {slug: "kisw", marks:  "92"},
+          { slug: "math", marks: "78" }
+        ],
         "student": {
           "connect": {"id": "641dd16f2eece6ce9587cb0d"}
         }
@@ -375,12 +374,12 @@ const examData: Prisma.ExamCreateInput[] = [
 async function main() {
   console.log(`Start seeding ...`)
 
-  for (const u of taskData) {
-    const task = await prisma.task.create({
-      data: u,
-    })
-    console.log(`Created task with id: ${task.id}`)
-  }
+  // for (const u of taskData) {
+  //   const task = await prisma.task.create({
+  //     data: u,
+  //   })
+  //   console.log(`Created task with id: ${task.id}`)
+  // }
 
   for (const u of examData) {
     const exam = await prisma.exam.create({

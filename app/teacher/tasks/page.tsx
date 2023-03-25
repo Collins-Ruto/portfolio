@@ -1,51 +1,57 @@
 'use client'
 import React, { useState } from "react";
-import axios from "axios";
 import { Button, StatusMsg } from "~/components";
+import type { Task } from "@prisma/client";
+
+type Status = {
+  type: string
+  message: string
+
+}
 
 function CreateTask() {
-  const [task, setTask] = useState({});
+  const [task, setTask] = useState<Task>();
   const [file, setFile] = useState();
   const [submit, setSubmit] = useState(false);
-  const [status, setStatus] = useState({});
+  const [status, setStatus] = useState<Status>();
 
-  const handleInput = (event) => {
-    const target = event.target;
-    const name = target.name;
-    const value = target.type === "file" ? target.files[0] : target.value;
-    target.type === "file"
-      ? setFile(target.files[0])
-      : setTask({ ...task, [name]: value });
-  };
+  // const handleInput = (event) => {
+  //   const target = event.target;
+  //   const name = target.name;
+  //   const value = target.type === "file" ? target.files[0] : target.value;
+  //   target.type === "file"
+  //     ? setFile(target.files[0])
+  //     : setTask({ ...task, [name]: value });
+  // };
 
-  async function handleSubmit() {
-    const formData = new FormData();
-    // Object.entries(task).forEach(([key, value]) => {
-    //   formData.append(key, value);
-    // });
-    formData.append("file", file);
+  // async function handleSubmit() {
+  //   const formData = new FormData();
+  //   // Object.entries(task).forEach(([key, value]) => {
+  //   //   formData.append(key, value);
+  //   // });
+  //   formData.append("file", file);
 
-    // const formData2 = new FormData();
+  //   // const formData2 = new FormData();
     
-    const res = await axios.post("http://localhost:8000/infos/addasset", formData);
-    console.log(res)
+  //   const res = await axios.post("http://localhost:8000/infos/addasset", formData);
+  //   console.log(res)
 
-    const taskData = {...task, fileId: res.data.id}
+  //   const taskData = {...task, fileId: res.data.id}
 
-    const resTask = await axios.post("http://localhost:8000/infos/addtask", taskData);
-    setSubmit(false);
-    // setStatus(
-    //   res.data.message === "success"
-    //     ? {
-    //         type: "success",
-    //         message: `succesfully Created a ${res.data.subject.name} lesson for ${res.data.stream.name} on ${res.data.day}`,
-    //       }
-    //     : { type: "error", message: res.data.message }
-    // );
-    // setTimeout(() => {
-    //   res.data.message === "success" && window.location.reload(true);
-    // }, 2000);
-  }
+  //   const resTask = await axios.post("http://localhost:8000/infos/addtask", taskData);
+  //   setSubmit(false);
+  //   // setStatus(
+  //   //   res.data.message === "success"
+  //   //     ? {
+  //   //         type: "success",
+  //   //         message: `succesfully Created a ${res.data.subject.name} lesson for ${res.data.stream.name} on ${res.data.day}`,
+  //   //       }
+  //   //     : { type: "error", message: res.data.message }
+  //   // );
+  //   // setTimeout(() => {
+  //   //   res.data.message === "success" && window.location.reload(true);
+  //   // }, 2000);
+  // }
 
   console.log(task);
 
@@ -65,13 +71,13 @@ function CreateTask() {
                 </label>
                 <input
                   onChange={(e) => {
-                    handleInput(e);
+                    // handleInput(e);
                   }}
-                  value={task.title}
+                  value={task?.name}
                   className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   type="text"
                   placeholder="eg. Assignmets 1"
-                  name="title"
+                  name="name"
                 />
               </div>
             </div>
@@ -82,9 +88,9 @@ function CreateTask() {
                 </label>
                 <input
                   onChange={(e) => {
-                    handleInput(e);
+                    // handleInput(e);
                   }}
-                  value={task.subjectId}
+                  value={task?.subject.slug}
                   className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   type="text"
                   placeholder="eg. geo"
@@ -97,9 +103,9 @@ function CreateTask() {
                 <label>Stream ID </label>
                 <input
                   onChange={(e) => {
-                    handleInput(e);
+                    // handleInput(e);
                   }}
-                  value={task.streamId}
+                  value={task?.streamId}
                   className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   type="text"
                   placeholder="eg. 1n"
@@ -113,9 +119,9 @@ function CreateTask() {
               </label>
               <input
                 onChange={(e) => {
-                  handleInput(e);
+                  // handleInput(e);
                 }}
-                value={task.teacherId}
+                value={task?.teacherId}
                 className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="text"
                 placeholder="eg. 456erick"
@@ -126,11 +132,10 @@ function CreateTask() {
               <label>Task Description & rules</label>
               <textarea
                 onChange={(e) => {
-                  handleInput(e);
+                  // handleInput(e);
                 }}
-                value={task.description}
+                value={task?.description}
                 className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="text"
                 placeholder="eg. assignments 1"
                 name="description"
               />
@@ -142,7 +147,7 @@ function CreateTask() {
             </label>
             <input
               onChange={(e) => {
-                handleInput(e);
+                // handleInput(e);
               }}
               className="block w-fit leading-loose text-lg text-gray-900 bg-gray-500 rounded cursor-pointer focus:outline-none"
               type="file"
@@ -160,7 +165,7 @@ function CreateTask() {
                 <Button />
               ) : (
                 <div
-                  onClick={() => handleSubmit()}
+                  // onClick={() => handleSubmit()}
                   className="bg-blue-500 w-fit hover:bg-blue-700 text-white font-bold py-2 px-10 rounded"
                 >
                   Submit

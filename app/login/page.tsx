@@ -1,5 +1,4 @@
 'use client'
-import axios from "axios";
 import React, { useState } from "react";
 import homepic from "../res/homepic1.webp";
 import { Button } from "~/components";

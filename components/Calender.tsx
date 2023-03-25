@@ -12,7 +12,6 @@ import {
   startOfToday,
 } from "date-fns";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import Image from "next/image";
 import React from "react";
 import type { User } from "api/types";

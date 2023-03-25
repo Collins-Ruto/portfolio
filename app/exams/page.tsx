@@ -1,12 +1,12 @@
 'use client'
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import Link from "next/link";
 import { Button, Loader } from "~/components";
 import Image from "next/image";
-import type { Search, Exam, Student } from '~/api/types';
+import type { Search, Result, Student } from '~/api/types';
 import {  Subjects } from '~/api/types';
 import { api } from "@/utils/api";
+import { Exam } from "@prisma/client";
 
 function Exam() {
    const [subjects, setSubjects] = useState([]);
@@ -19,7 +19,7 @@ function Exam() {
 
   const {data, isLoading, error} = api.exam.getAll.useQuery();
   //  const [exam, setExam] = useState<Exam[]>(data);
-  const exams: (Exam & { student: Student; })[] | undefined = data
+  const exams: Exam[] | undefined = data
    console.log("exams", exams);
   // https://lmsadmin.onrender.com
   // useEffect(() => {
@@ -164,11 +164,14 @@ function Exam() {
                     {/* <td className="p-4">{exam?.student?.name}</td> */}
                     <td className="p-4">{exam?.term}</td>
                     <td className="p-4">{exam.examDate}</td>
-                    {Subjects.map((subject, index) => (
-                      <td className="p-4 border-x-2" key={index}>
-                        {(exam.results[subject.slug  as keyof typeof exam.results])?.toString() || "-"}
-                      </td>
-                    ))}
+                    {Subjects.map((subject, index) => {
+                      const resultsObj: Result[] = exam.results as Result[]
+                          const myResult = resultsObj.find(obj => obj.slug === subject.slug);
+                          return (
+                          <td className="p-4 border-x-2" key={index}>
+                              {myResult?.marks || "-"}
+                          </td>
+                    )})}
                   </tr>
                 );
               })}

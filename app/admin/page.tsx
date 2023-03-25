@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import { Calender, Loader } from "~/components";
-import axios from "axios";
 import Image from "next/image";
 import {  DummyUser, } from '~/api/types'
 import Link from "next/link";

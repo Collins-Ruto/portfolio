@@ -1,7 +1,6 @@
 'use client'
 import React, { useEffect, useState } from "react";
-// import axios from "axios";
-import Link from "next/link";
+// import Link from "next/link";
 import { Button, Loader } from "~/components";
 import {  DummyUser, } from '~/api/types';
 import Image from "next/image";

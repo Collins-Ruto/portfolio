@@ -7,14 +7,14 @@ type Props = {
   status: {
     type: string
     message: string
-  }
+  } | undefined
 }
 
 function StatusMsg({ status }: Props) {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-      status.message && status.message !== "" && setShow(true);
+      status?.message && status?.message !== "" && setShow(true);
       
     const timer = setTimeout(() => {
       setShow(false);
@@ -27,15 +27,15 @@ function StatusMsg({ status }: Props) {
       {show && (
         <div
           className={`opacity-90 ${
-            status.type === "success"
+            status?.type === "success"
               ? "bg-green-600 "
-              : status.type === "error"
+              : status?.type === "error"
               ? "bg-red-500"
               : "bg-yellow-500"
           } text-white px-4 py-2`}
         >
           <div className="flex justify-between">
-            {status.message}
+            {status?.message}
             <Image
               onClick={() => {
                 setShow(false);

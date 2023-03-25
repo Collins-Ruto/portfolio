@@ -1,8 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from "react";
-import { Calender, Loader } from "@/~/components";
-import axios from "axios";
+import { Calender, Loader } from "~/components";
 import Image from "next/image";
 import type {  User } from '@/../api/types'
 import {  DummyUser, } from '@/../api/types'

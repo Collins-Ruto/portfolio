@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import { usePathname } from 'next/navigation';
-import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import type { User } from "api/types";

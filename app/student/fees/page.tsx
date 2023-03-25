@@ -1,10 +1,10 @@
 'use client'
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Loader } from "~/components";
 import {  DummyUser } from '~/api/types';
-import type { Fee, User } from '~/api/types';
+import type { User } from '~/api/types';
 import { api } from "@/utils/api";
+import type { Fee } from "@prisma/client";
 
 function FeeData() {
   const [student, setStudent] = useState({});
