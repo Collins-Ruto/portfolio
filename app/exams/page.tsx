@@ -4,7 +4,8 @@ import axios from "axios";
 import Link from "next/link";
 import { Button, Loader } from "~/components";
 import Image from "next/image";
-import type {Search, Exam } from '~/api/types';
+import type { Search, Exam, Student } from '~/api/types';
+import {  Subjects } from '~/api/types';
 import { api } from "@/utils/api";
 
 function Exam() {
@@ -17,8 +18,9 @@ function Exam() {
   });
 
   const {data, isLoading, error} = api.exam.getAll.useQuery();
-   const [exam, setExam] = useState<Exam[]>(data);
-   console.log("exam", exam);
+  //  const [exam, setExam] = useState<Exam[]>(data);
+  const exams: (Exam & { student: Student; })[] | undefined = data
+   console.log("exams", exams);
   // https://lmsadmin.onrender.com
   // useEffect(() => {
   //   axios.get("https://lmsadmin.onrender.com/exams").then((res) => {
@@ -110,7 +112,7 @@ function Exam() {
                   // searchSubmit();
                   setSubmit(true);
                 }}
-                type="btn"
+                type="button"
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
               >
                 Search
@@ -120,7 +122,7 @@ function Exam() {
           <div>
             <Link
               href="/addexam"
-              type="btn"
+              type="button"
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center"
             >
               {" "}
@@ -144,7 +146,7 @@ function Exam() {
               <th className="p-4">Student</th>
               <th className="p-4">Term</th>
               <th className="p-4">Date</th>
-              {subjects.map((subject, index) => (
+              {Subjects.map((subject, index) => (
                 <th className="p-4 border-x-2" key={index}>
                   {subject.slug}
                 </th>
@@ -152,7 +154,7 @@ function Exam() {
             </tr>
           </thead>
           <tbody>
-            {exam?.map((data, index) => {
+            {exams?.map((exam, index) => {
                 return (
                   <tr
                     className={` p-4 ${index % 2 === 0 ? "bg-white": ""}`}
@@ -162,17 +164,17 @@ function Exam() {
                     {/* <td className="p-4">{exam?.student?.name}</td> */}
                     <td className="p-4">{exam?.term}</td>
                     <td className="p-4">{exam.examDate}</td>
-                    {/* {subjects.map((subject, index) => (
+                    {Subjects.map((subject, index) => (
                       <td className="p-4 border-x-2" key={index}>
-                        {exam.results[subject.slug] || "-"}
+                        {(exam.results[subject.slug  as keyof typeof exam.results])?.toString() || "-"}
                       </td>
-                    ))} */}
+                    ))}
                   </tr>
                 );
               })}
           </tbody>
         </table>
-        <div className="flex align-middle justify-center pb-10 md:pb-0">
+        <div className="flex align-middle pt-2 justify-center pb-10 md:pb-0">
           <div
             onClick={() => {
               // pages.hasPreviousPage && changePage("before");

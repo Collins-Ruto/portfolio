@@ -29,7 +29,8 @@ function Students() {
   }, []);
 
   const {data, isLoading, error} = api.student.getAll.useQuery();
-  const [students, setStudents] = useState<Student[]>(data);
+  // const [students, setStudents] = useState<Student[]>(data);
+  const students: Student[] | undefined = data
   // console.log("students", studentQuery)
 
 
@@ -184,7 +185,7 @@ function Students() {
                         // searchSubmit();
                         setSubmit(true);
                       }}
-                      type="btn"
+                      type="button"
                       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                     >
                       Search
@@ -195,7 +196,7 @@ function Students() {
                   <div>
                     <Link
                       href="/addstudent"
-                      type="btn"
+                      type="button"
                       className="bg-blue-500 w-fit hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center"
                     >
                       {" "}

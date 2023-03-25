@@ -14,16 +14,21 @@ export const feeRouter = createTRPCRouter({
         }
     });
   }),
-    
+    // :{ctx:Context, input:string}
   getById: publicProcedure.input(z.string()).query(({ ctx, input }) => {
-    if (input === 'all') {
+        return ctx.prisma.fee.findUnique({
+            where: {
+                id: input
+            }
+        });
+    }),
+
+    studentFees: publicProcedure.input(z.string()).query(({ ctx, input }) => {
         return ctx.prisma.fee.findMany({
-            select: {
-                id: true,
-                name: true,
+            where: {
+                studentId: input,
             },
         });
-    }
     }),
 
   getSecretMessage: protectedProcedure.query(() => {

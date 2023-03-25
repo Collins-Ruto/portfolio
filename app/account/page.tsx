@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Button } from "~/components";
 import StatusMsg from "~/components/StatusMsg";
+import {  DummyUser, } from '~/api/types';
 import Image from "next/image";
 import type { User } from "~/api/types";
 
@@ -18,49 +19,50 @@ function Account() {
   const [status, setStatus] = useState({});
 
   useEffect(() => {
-    const user = JSON?.parse(localStorage?.getItem("user"));
-    user && setUser(user);
+    const userFromLocalStorage = localStorage.getItem("user");
+    const user: User = userFromLocalStorage !== null ? JSON.parse(userFromLocalStorage) as User : DummyUser
+     setUser(user)
   }, []);
 
-  const handleInput = (event) => {
-    const target = event.target;
-    // const value = target.type === "checkbox" ? target.checked : target.value;
-    const value =
-      target.type === "number" ? parseInt(target.value) : target.value;
-    const name = target.name;
+  // const handleInput = (event) => {
+  //   const target = event.target;
+  //   // const value = target.type === "checkbox" ? target.checked : target.value;
+  //   const value =
+  //     target.type === "number" ? parseInt(target.value) : target.value;
+  //   const name = target.name;
 
-    setEditUser({ ...editUser, [name]: value });
-  };
+  //   setEditUser({ ...editUser, [name]: value });
+  // };
 
-  const handleSubmit = (inputType) => {
-    setSubmit(true);
-    axios
-      .post(`https://lmsadmin.onrender.com/${user.type}s/${inputType}`, {
-        slug: user.slug,
-        data: editUser,
-      })
-      .then((res) => {
-        setSubmit(false);
-        console.log("res", res.data.message);
-        res.data.message === "success" && setConfPass("");
-        setEditUser({
-          password: "",
-          oldPassword: "",
-        });
-        console.log(res.data);
-        setStatus(
-          res.data.message === "success"
-            ? {
-                type: "success",
-                message: `succesfully updated your credidentials`,
-              }
-            : { type: "error", message: res.data.message }
-        );
-        setTimeout(() => {
-          res.data.message === "success" && window.location.reload(true);
-        }, 2000);
-      });
-  };
+  // const handleSubmit = (inputType) => {
+  //   setSubmit(true);
+  //   axios
+  //     .post(`https://lmsadmin.onrender.com/${user.type}s/${inputType}`, {
+  //       slug: user.slug,
+  //       data: editUser,
+  //     })
+  //     .then((res) => {
+  //       setSubmit(false);
+  //       console.log("res", res.data.message);
+  //       res.data.message === "success" && setConfPass("");
+  //       setEditUser({
+  //         password: "",
+  //         oldPassword: "",
+  //       });
+  //       console.log(res.data);
+  //       setStatus(
+  //         res.data.message === "success"
+  //           ? {
+  //               type: "success",
+  //               message: `succesfully updated your credidentials`,
+  //             }
+  //           : { type: "error", message: res.data.message }
+  //       );
+  //       setTimeout(() => {
+  //         res.data.message === "success" && window.location.reload(true);
+  //       }, 2000);
+  //     });
+  // };
 
   const logOut = () => {
     localStorage.setItem("saved", JSON.stringify(false));
@@ -69,9 +71,9 @@ function Account() {
     window.location.reload(true);
   };
 
-  const handleVerify = (e) => {
-    setConfPass(e.target.value);
-  };
+  // const handleVerify = (e) => {
+  //   setConfPass(e.target.value);
+  // };
 
   console.log(editUser);
 
@@ -112,7 +114,7 @@ function Account() {
             <div className=" flex justify-around border-b-2 text-lg p-2">
               <div
                 className={` cursor-pointer ${
-                  !passManager && " border-b-4 border-blue-600"
+                  !passManager ? " border-b-4 border-blue-600":""
                 }`}
                 onClick={() => {
                   setPassManager(false);
@@ -122,7 +124,7 @@ function Account() {
               </div>
               <div
                 className={` cursor-pointer ${
-                  passManager && " border-b-4 border-blue-600"
+                  passManager ? " border-b-4 border-blue-600":""
                 }`}
                 onClick={() => {
                   setPassManager(true);
@@ -145,9 +147,9 @@ function Account() {
                         </label>
                         <input
                           onChange={(e) => {
-                            handleInput(e);
+                            // handleInput(e);
                           }}
-                          value={editUser.oldPassword}
+                          value={editUser?.oldPassword}
                           name="oldPassword"
                           type="password"
                           className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -163,9 +165,9 @@ function Account() {
                         </label>
                         <input
                           onChange={(e) => {
-                            handleInput(e);
+                            // handleInput(e);
                           }}
-                          value={editUser.password}
+                          value={editUser?.password}
                           name="password"
                           type="password"
                           className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -182,7 +184,7 @@ function Account() {
                         </label>
                         <input
                           onChange={(e) => {
-                            handleVerify(e);
+                            // handleVerify(e);
                           }}
                           value={confPass}
                           name="password"
@@ -203,7 +205,7 @@ function Account() {
                         <Button />
                       ) : (
                         <button
-                          onClick={() => handleSubmit("password")}
+                          // onClick={() => handleSubmit("password")}
                           type="submit"
                           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded"
                         >
@@ -228,9 +230,9 @@ function Account() {
                       </label>
                       <input
                         onChange={(e) => {
-                          handleInput(e);
+                          // handleInput(e);
                         }}
-                        value={editUser.email}
+                        value={editUser?.email}
                         className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         type="text"
                         placeholder="Enter Email Address"
@@ -243,9 +245,9 @@ function Account() {
                       <label>Phone </label>
                       <input
                         onInput={(e) => {
-                          handleInput(e);
+                          // handleInput(e);
                         }}
-                        value={editUser.phone}
+                        value={editUser?.phone}
                         className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         type="number"
                         placeholder="Enter Phone Number"
@@ -258,7 +260,7 @@ function Account() {
                       <Button />
                     ) : (
                       <button
-                        onClick={() => handleSubmit("edit")}
+                        // onClick={() => handleSubmit("edit")}
                         type="submit"
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded"
                       >

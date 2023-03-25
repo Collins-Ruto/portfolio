@@ -26,6 +26,14 @@ export const examRouter = createTRPCRouter({
     }
     }),
 
+  studentExams: publicProcedure.input(z.string()).query(({ ctx, input }) => {
+        return ctx.prisma.exam.findMany({
+            where: {
+                studentId: input,
+            },
+        });
+    }),
+
   getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";
   }),

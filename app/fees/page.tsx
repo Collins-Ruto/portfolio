@@ -9,8 +9,6 @@ import type {Search, User, Fee } from '~/api/types';
 import { api } from "@/utils/api";
 
 function FeeData() {
- 
-  const [loading, setLoading] = useState(true);
   const [userType, setUserType] = useState("");
   const [submit, setSubmit] = useState(false);
   const [search, setSearch] = useState<Search>();
@@ -36,7 +34,7 @@ function FeeData() {
   }, []);
 
   const {data, isLoading, error} = api.fee.getAll.useQuery();
-   const [fees, setFees] = useState<Fee[]>(data);
+   const [fees, setFees] = useState<Fee[] | undefined>(data);
    console.log("fees", fees);
 
   // const changePage = (direction) => {
@@ -118,7 +116,7 @@ function FeeData() {
                   // searchSubmit();
                   setSubmit(true);
                 }}
-                type="btn"
+                type="button"
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
               >
                 Search
@@ -129,7 +127,7 @@ function FeeData() {
             <div>
               <Link
                 href="/addfee"
-                type="btn"
+                type="button"
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center"
               >
                 {" "}
@@ -162,7 +160,12 @@ function FeeData() {
           </thead>
           <tbody>
             {fees?.map((fee, index) => {
-              // const fee = fees && (fees?.node || fees);
+
+              const studentFees = fees.filter((f) => f.studentId === fee.studentId);
+              const invoiceSum = studentFees.filter((f) => f.type === 'invoice').reduce((acc, f) => acc + parseFloat(f.amount), 0);
+              const creditSum = studentFees.filter((f) => f.type === 'credit').reduce((acc, f) => acc + parseFloat(f.amount), 0);                
+                
+              const balance = invoiceSum - creditSum;
 
               return (
                 <tr
@@ -182,7 +185,7 @@ function FeeData() {
                   <td className="p-4">
                     {fee.type === "credit" ? fee.amount : "0.00"}
                   </td>
-                  <td className="p-4">{fees.balance}</td>
+                  <td className="p-4">{balance}</td>
                   <td className="p-4">{fee.payday}</td>
                   <td className="text-end p-4">
                     <span>

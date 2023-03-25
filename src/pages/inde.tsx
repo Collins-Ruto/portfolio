@@ -14,7 +14,7 @@ const Home: NextPage = () => {
 
   const {data, isLoading, error} = api.teacher.getAll.useQuery();
   const teachers: Teacher[] = data
-  console.log("teachersa", teachers)
+  console.log("teachers", teachers)
   
   return (
     <>

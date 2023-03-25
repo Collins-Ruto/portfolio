@@ -134,7 +134,7 @@ function Dashboard() {
               <span className="text-lg">{data.title}</span>
               <Link
                 href={data.path}
-                type="btn"
+                type="button"
                 className="flex items-center rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
               >
                 {" "}

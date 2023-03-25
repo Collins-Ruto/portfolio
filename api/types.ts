@@ -18,11 +18,13 @@ export type Lesson = {
 
 export type User = {
   slug: string
-  name: string,
-  type: string,
-  stream: {
-      slug: string
-  }
+  name: string
+  type: string
+  email: string
+  phone: string
+  password: string
+  oldPassword: string
+  stream: Stream
 }
 
 export type Admin = {
@@ -36,16 +38,13 @@ export type Admin = {
 export type Student = {
   dateOfBirth: string
   name: string
-  email: string
   parent: string
-  phone: number
   gender: string
   slug: string
+  email: string
+  phone: string
   password: string
-  stream: {
-    slug: string
-    name: string
-  }
+  stream: Stream
 }
 
 export type Teacher = {
@@ -66,10 +65,7 @@ export type Exam = {
   slug: string
   term: string
   results: JSON
-  student: {
-    name: string
-    slug: string
-  }
+  student: Student
 }
 
 export type Fee = {
@@ -79,19 +75,8 @@ export type Fee = {
   type: string
   payday: string
   amount: string
-  student: {
-    name: string
-    slug: string
-    fees: {
-      type: string
-      amount: string
-    }
-    stream: {
-      id: string
-      name: string
-      slug: string
-    }
-  }
+  studentId: string
+  student: Student | undefined
 }
 
 export type Stream = {
@@ -109,7 +94,69 @@ export const DummyUser: User = {
   slug: "",
     name: "",
     type: "admin",
+    email: "",
+    phone: "",
+    password: "",
+    oldPassword: "",
     stream: {
-        slug: "",
+      id: "",
+      name: "",
+      slug: "",
     }
 }
+
+export type Subject = {
+  name: string
+  slug: string
+}
+
+export const Subjects: Subject[] =  [
+      {
+        "name": "Chemistry",
+        "slug": "chem"
+      },
+      {
+        "name": "Biology",
+        "slug": "bio"
+      },
+      {
+        "name": "Maths",
+        "slug": "math"
+      },
+      {
+        "name": "English",
+        "slug": "eng"
+      },
+      {
+        "name": "Kiswahili",
+        "slug": "kisw"
+      },
+      {
+        "name": "Physics",
+        "slug": "phy"
+      },
+      {
+        "name": "Bussiness",
+        "slug": "bss"
+      },
+      {
+        "name": "Agriculture",
+        "slug": "agri"
+      },
+      {
+        "name": "History",
+        "slug": "hist"
+      },
+      {
+        "name": "Geography",
+        "slug": "geo"
+      },
+      {
+        "name": "CRE",
+        "slug": "cre"
+      },
+      {
+        "name": "Music",
+        "slug": "msc"
+      }
+    ]
