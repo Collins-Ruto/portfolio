@@ -34,44 +34,46 @@ const HomePage = async () => {
               />
               <h1 className="text-lg font-semibold text-gray-800">LearnHQ</h1>
             </div>
-            <nav className="text-gray-700">
-              <ul className="flex space-x-2 text-sm">
-                <li>
-                  <Link
-                    href={`/${user?.role ?? "#"}`}
-                    className="hover:text-blue-500"
-                  >
-                    Dashboard
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-blue-500">
-                    Courses
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-blue-500">
-                    About
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-blue-500">
-                    Contact
-                  </Link>
-                </li>
-                <li></li>
-              </ul>
-            </nav>
-            <Link
-              href="/login"
-              className="rounded-md bg-blue-500 px-4 py-1.5 font-medium text-white hover:bg-blue-600"
-            >
-              Sign In
-            </Link>
-            <div className="cursor-pointer space-y-1 p-2 md:space-y-2">
-              <div className="h-1 w-6 rounded bg-blue-600 md:w-8"></div>
-              <div className="h-1 w-6 rounded bg-blue-600 md:w-8"></div>
-              <div className="h-1 w-6 rounded bg-blue-600 md:w-8"></div>
+            <div className="flex items-center">
+              <nav className="text-gray-700">
+                <ul className="flex font-semibold md:text-lg space-x-2 md:space-x-4 text-sm">
+                  <li>
+                    <Link
+                      href={`/${user?.role ?? "#"}`}
+                      className="hover:text-blue-500"
+                    >
+                      Dashboard
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="#" className="hover:text-blue-500">
+                      Courses
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="#" className="hover:text-blue-500">
+                      About
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="#" className="hover:text-blue-500 hidden md:block">
+                      Contact
+                    </Link>
+                  </li>
+                  <li></li>
+                </ul>
+              </nav>
+              <Link
+                href="/login"
+                className="rounded-md md:mx-2 bg-blue-500 px-4 py-1.5 font-medium text-white hover:bg-blue-600"
+              >
+                Sign In
+              </Link>
+              {/* <div className="cursor-pointer md:hidden space-y-1 p-2 md:space-y-2">
+                <div className="h-1 w-6 rounded bg-blue-600 md:w-8"></div>
+                <div className="h-1 w-6 rounded bg-blue-600 md:w-8"></div>
+                <div className="h-1 w-6 rounded bg-blue-600 md:w-8"></div>
+              </div> */}
             </div>
           </div>
         </header>
