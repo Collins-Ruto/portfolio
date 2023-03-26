@@ -4,7 +4,7 @@ export default function robots(): MetadataRoute.Robots {
     return {
         rules: {
             userAgent: '*',
-            allow: '/',
+            allow: ['/', '/learn/'],
             disallow: ['/admin/', '/teacher/', "/student/", '/page/'],
         },
         sitemap: 'https://learnhq.vercel.app/sitemap.xml',

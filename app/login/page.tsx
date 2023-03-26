@@ -51,9 +51,9 @@ function Login() {
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    if (!user?.userName || !user?.userName || !user?.group) { 
-      setInvalid("fields")
-      return
+    if (!user?.userName || !user?.userName || !user?.group) {
+      setInvalid("fields");
+      return;
     }
     setSubmit(true);
     signIn("credentials", {
@@ -62,28 +62,30 @@ function Login() {
       group: user?.group,
       redirect: true,
       callbackUrl: `/${user?.group ?? "login"}`,
-    }).then((response) => {
-      if (response?.error) {
-        setInvalid("password")
-        // show notification for user
-      } else {
-        // redirect to destination page
-      }
-    }).catch((error) => {
-      // TODO show error  to user
-      setInvalid("password");
-      console.log(error)
-    });
-  }
+    })
+      .then((response) => {
+        if (response?.error) {
+          setInvalid("password");
+          // show notification for user
+        } else {
+          // redirect to destination page
+        }
+      })
+      .catch((error) => {
+        // TODO show error  to user
+        setInvalid("password");
+        console.log(error);
+      });
+  };
 
   return (
-    <div className="flex flex-col h-screen w-full justify-center text-black">
+    <div className="flex min-h-screen border-4 border-red-400 w-full flex-col justify-center text-black">
       <div className="m-auto items-center rounded-lg bg-gray-200 p-2 sm:flex ">
         <div className="p-4">
           <Image
             width={250}
             height={100}
-            className="cover mx-auto h-96"
+            className="cover mx-auto h-64 md:h-96"
             src={homepic}
             alt="Logo"
           />
@@ -235,10 +237,55 @@ function Login() {
           </form>
         </div>
       </div>
+      <div className="container mx-auto w-full p-4">
+        <div className="mx-auto w-fit ">
+          <h1 className="text-3xl font-semibold">Login As Demo User</h1>
+          <div className="text-2xl flex flex-col md:flex-row gap-4">
+            <div className="flex flex-col">
+              <h2 className="py-2 underline underline-offset-2">
+                Log in as Admin
+              </h2>
+              <div className="">
+                Username: <span className="font-semibold">johndoe</span>{" "}
+              </div>
+              <div className="">
+                Password: <span className="font-semibold">password</span>{" "}
+              </div>
+            </div>
+            <div className="flex flex-col">
+              <h2 className="py-2  underline underline-offset-2">
+                Log in as Teacher
+              </h2>
+              <div className="">
+                Username: <span className="font-semibold">4535brenda</span>{" "}
+              </div>
+              <div className="">
+                Password: <span className="font-semibold">password</span>{" "}
+              </div>
+            </div>
+            <div className="flex flex-col">
+              <h2 className="py-2 underline underline-offset-2">
+                Log in as Student
+              </h2>
+              <div className="">
+                Username: <span className="font-semibold">23isaac</span>{" "}
+              </div>
+              <div className="">
+                Password: <span className="font-semibold">23isaac</span>{" "}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <footer className="w-full border-t border-gray-300 bg-gray-300 py-4">
         <div className="container mx-auto text-center text-gray-900">
           © 2023 LearnHq. All rights reserved. by{" "}
-          <a className="text-blue-500 font-semibold" href="https://collinsruto.netlify.app">Collins Ruto</a>
+          <a
+            className="font-semibold text-blue-500"
+            href="https://collinsruto.netlify.app"
+          >
+            Collins Ruto
+          </a>
         </div>
       </footer>
     </div>

@@ -32,7 +32,7 @@ export default function RootLayout({
 export const metadata: Metadata = {
   title: {
     default: "LearnHq School & Learning System",
-    template: `%s | LearnHq LMS`
+    template: `%s | LearnHq LMS`,
   },
   metadataBase: new URL("https://learnhq.vercel.app"),
   description:
@@ -44,6 +44,9 @@ export const metadata: Metadata = {
     "education",
     "learning management system",
     "lms",
+    "africa education",
+    "study",
+    "online learning",
   ],
   alternates: {
     canonical: "/",
@@ -105,7 +108,4 @@ export const metadata: Metadata = {
     initialScale: 1,
     maximumScale: 1,
   },
-  robots: {
-    
-  }
 };
