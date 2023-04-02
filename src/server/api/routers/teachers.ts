@@ -45,8 +45,9 @@ export const teacherRouter = createTRPCRouter({
     dateOfBirth: z.string(),
   })).mutation(({ ctx, input }) => {
     console.log("trpc input", input)
+    const newInput = { ...input, createdAt: new Date() };
     return ctx.prisma.teacher.create({
-      data: input,
+      data: newInput,
     });
   }),
 

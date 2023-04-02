@@ -66,8 +66,9 @@ export const examRouter = createTRPCRouter({
     studentId: z.string()
   })).mutation(({ ctx, input }) => {
     console.log("trpc input", input)
+    const newInput = { ...input, createdAt: new Date() };
     return ctx.prisma.exam.create({
-      data: input,
+      data: newInput,
     });
   }),
 

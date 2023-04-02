@@ -66,9 +66,10 @@ export const feeRouter = createTRPCRouter({
     amount: z.string(),
     studentId: z.string()
   })).mutation(({ ctx, input }) => {
-    console.log("trpc input",input)
+    console.log("trpc input", input)
+    const newInput = { ...input, createdAt: new Date() };
     return ctx.prisma.fee.create({
-      data: input,
+      data: newInput,
     });
   }),
 

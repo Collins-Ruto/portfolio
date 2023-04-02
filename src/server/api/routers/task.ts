@@ -89,6 +89,7 @@ export const taskRouter = createTRPCRouter({
         console.log("trpc input", input)
         return ctx.prisma.task.create({
             data: {
+                createdAt: new Date(),
                 name: input.name,
                 description: input.description,
                 due: input.due,
