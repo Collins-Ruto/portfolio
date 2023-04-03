@@ -1,89 +1,135 @@
-'use client'
+"use client";
 import React, { useState } from "react";
 import homepic from "~/assets/homepic1.webp";
 import { Button } from "~/components";
-import   useNavigate  from "next/link";
+import useNavigate from "next/link";
 import Image from "next/image";
+import { api } from "@/utils/api";
+import { type User } from "~/api/types";
 
 type userInput = {
   group: string;
   password: string;
   userName: string;
-  radio: boolean
-}
+  radio: boolean;
+};
 
-function Login({ setLogin }) {
+type Props = {
+  setLogin: React.Dispatch<React.SetStateAction<userInput | undefined>>;
+};
+
+function Login({ setLogin }: Props) {
   // const navigate = useNavigate()
-  
+
   const [user, setUser] = useState<userInput | undefined>();
   const [submit, setSubmit] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [invalid, setInvalid] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [passView, setPassView] = useState(false);
 
   const handleInput = (event: React.SyntheticEvent) => {
     const target = event.target as HTMLInputElement;
-    // const value = target.type === "checkbox" ? target.checked : target.value;
-    const value =
-      target.type === "number" ? parseInt(target.value) : target.value;
+    const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
 
     target.type === "checkbox" && setIsChecked(!isChecked);
 
     setUser((prevUser) => {
       if (!prevUser) {
-        return {
-          [name]: value
-        } as userInput;
+        return undefined;
       }
       return {
-        ...user, [name]: value
-      }
-    })
+        ...prevUser,
+        [name]: value,
+      };
+    });
   };
 
   const handleSubmit = () => {
-    if (!window.navigator.onLine) {
-      return;
-    }
-    setSubmit(true);
+    try {
+      setSubmit(true);
 
-    axios
-      .post(`https://lmsadmin.onrender.com/user/${user?.group}`, user)
-      .then((res) => {
-        if (res.data[user?.group]) {
-          setLogin({ ...res.data[user?.group], type: user?.group });
-          localStorage.setItem(
-            "user",
-            JSON.stringify({ ...res.data[user?.group], type: user?.group })
-          );
-          localStorage.setItem("saved", JSON.stringify(isChecked));
-          // axios.defaults.headers.common["Authorization"] = `${
-          //   res.data[user?.group].token
-          //   }`;
-          // navigate("/")
-        } else {
-          setInvalid(true);
-        }
-        setSubmit(false);
-      });
+      if (user?.group === "admin") {
+        const { data, isLoading, error } = api.admin.getById.useQuery(
+          user?.userName
+        );
+        setLoading(isLoading);
+        // setLogin({ ...data, type: user?.group } as User);
+        localStorage.setItem(
+          "user",
+          JSON.stringify({ ...data, type: user?.group })
+        );
+      } else if (user?.group === "teacher") {
+        const { data, isLoading, error } = api.teacher.getById.useQuery(
+          user?.userName
+        );
+        setLoading(isLoading);
+        localStorage.setItem(
+          "user",
+          JSON.stringify({ ...data, type: user?.group })
+        );
+      } else if (user?.group === "student") {
+        const { data, isLoading, error } = api.student.getById.useQuery(
+          user?.userName
+        );
+        setLoading(isLoading);
+        localStorage.setItem(
+          "user",
+          JSON.stringify({ ...data, type: user?.group })
+        );
+      }
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    } catch (error) {
+      setSubmit(false);
+    }
   };
 
+  // const handleSubmit = () => {
+  //   if (!window.navigator.onLine) {
+  //     return;
+  //   }
+  //   setSubmit(true);
+
+  //   axios
+  //     .post(`https://lmsadmin.onrender.com/user/${user?.group}`, user)
+  //     .then((res) => {
+  //       if (res.data[user?.group]) {
+  //         setLogin({ ...res.data[user?.group], type: user?.group });
+  //         localStorage.setItem(
+  //           "user",
+  //           JSON.stringify({ ...res.data[user?.group], type: user?.group })
+  //         );
+  //         localStorage.setItem("saved", JSON.stringify(isChecked));
+  //         // axios.defaults.headers.common["Authorization"] = `${
+  //         //   res.data[user?.group].token
+  //         //   }`;
+  //         // navigate("/")
+  //       } else {
+  //         setInvalid(true);
+  //       }
+  //       setSubmit(false);
+  //     });
+  // };
+
   return (
-    <div className="h-screen p-2 flex justify-center w-full text-black">
-      <div className="sm:flex m-auto items-center rounded-lg bg-[#F7F6FB] ">
+    <div className="flex h-screen w-full justify-center p-2 text-black">
+      <div className="m-auto items-center rounded-lg bg-[#F7F6FB] sm:flex ">
         <div className="p-4">
-          <Image 
-    width={100}
-    height={100} 
-            className="h-96 mx-auto cover"
+          <Image
+            width={100}
+            height={100}
+            className="cover mx-auto h-96"
             // src="https://preschool.dreamguystech.com/template/assets/img/login.png"
             src={homepic}
             alt="Logo"
           />
         </div>
         <div className="mx-0 p-4 ">
-          <h1 className="text-2xl text-center font-semibold mb-4">
+          <h1 className="mb-4 text-center text-2xl font-semibold">
             Welcome to Ace Accademy
           </h1>
           {invalid && (
@@ -100,7 +146,7 @@ function Login({ setLogin }) {
               <label>
                 Log in as <span className="text-red-500">*</span>
               </label>
-              <div className="flex items-center cursor-pointer">
+              <div className="flex cursor-pointer items-center">
                 <select
                   onChange={(e) => {
                     handleInput(e);
@@ -108,7 +154,7 @@ function Login({ setLogin }) {
                   required
                   name="group"
                   value={user?.group}
-                  className="block appearance-none w-full text-black bg-white border border-gray-400 hover:border-gray-500 px-4 py-3 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                  className="focus:shadow-outline block w-full appearance-none rounded border border-gray-400 bg-white px-4 py-3 pr-8 leading-tight text-black shadow hover:border-gray-500 focus:outline-none"
                 >
                   <option>Select group</option>
                   <option value="student">student</option>
@@ -117,7 +163,7 @@ function Login({ setLogin }) {
                 </select>
                 <div className="pointer-events-none absolute right-0 flex items-center px-2 text-gray-700">
                   <svg
-                    className="fill-current h-4 w-4"
+                    className="h-4 w-4 fill-current"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
                   >
@@ -130,24 +176,24 @@ function Login({ setLogin }) {
               <label>
                 userName <span className="text-red-500">*</span>
               </label>
-              <div className="flex relative items-center cursor-pointer">
+              <div className="relative flex cursor-pointer items-center">
                 <input
                   onChange={(e) => {
                     handleInput(e);
                   }}
                   name="userName"
                   value={user?.userName}
-                  className="block shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="focus:shadow-outline block w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
                   type="text"
                   placeholder="eg: 01john"
                 />
-                <div className="cursor-pointer right-0 absolute px-2 text-gray-700">
-                  <Image 
+                <div className="absolute right-0 cursor-pointer px-2 text-gray-700">
+                  <Image
                     width={100}
-                    height={100} 
+                    height={100}
                     src="https://img.icons8.com/external-kiranshastry-lineal-kiranshastry/64/000000/external-user-interface-kiranshastry-lineal-kiranshastry.png"
                     alt="user"
-                    className="fill-current w-8"
+                    className="w-8 fill-current"
                   />
                 </div>
               </div>
@@ -156,7 +202,7 @@ function Login({ setLogin }) {
               <label>
                 Password <span className="text-red-500">*</span>
               </label>
-              <div className="flex relative items-center">
+              <div className="relative flex items-center">
                 <input
                   onChange={(e) => {
                     handleInput(e);
@@ -164,17 +210,23 @@ function Login({ setLogin }) {
                   checked={isChecked}
                   name="password"
                   value={user?.password}
-                  className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline pass-input"
+                  className="focus:shadow-outline pass-input w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
                   type={`${passView ? "text" : "password"}`}
                 />
-                <div className="cursor-pointer right-0 absolute px-2 text-gray-700">
-                  <Image 
+                <div className="absolute right-0 cursor-pointer px-2 text-gray-700">
+                  <Image
                     width={100}
-                    height={100} 
-                    onClick={() => {setPassView(!passView)}}
-                    src={`${passView ? "https://img.icons8.com/ios-filled/50/000000/visible--v2.png" : "https://img.icons8.com/ios/50/000000/closed-eye.png"}`}
+                    height={100}
+                    onClick={() => {
+                      setPassView(!passView);
+                    }}
+                    src={`${
+                      passView
+                        ? "https://img.icons8.com/ios-filled/50/000000/visible--v2.png"
+                        : "https://img.icons8.com/ios/50/000000/closed-eye.png"
+                    }`}
                     alt="user"
-                    className="fill-current w-8 p-1"
+                    className="w-8 fill-current p-1"
                   />
                 </div>
               </div>
@@ -187,8 +239,8 @@ function Login({ setLogin }) {
                     onChange={(e) => {
                       handleInput(e);
                     }}
-                    value={user?.radio}
-                    className="mr-2 w-4 h-4"
+                    checked={user?.radio}
+                    className="mr-2 h-4 w-4"
                     type="checkbox"
                     name="radio"
                   />
@@ -203,13 +255,13 @@ function Login({ setLogin }) {
                 <div>
                   <button
                     onClick={() => handleSubmit()}
-                    className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 rounded"
+                    className="w-full rounded bg-blue-500 py-2 font-bold text-white hover:bg-blue-700"
                     type="submit"
                   >
                     Login
                   </button>
                   {!window.navigator.onLine && (
-                    <span className="text-sm mt-2 flex flex-col">
+                    <span className="mt-2 flex flex-col text-sm">
                       <span className="text-red-600">Error!</span> Please check
                       your network connection
                     </span>

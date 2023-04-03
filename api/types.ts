@@ -23,9 +23,10 @@ export type User = {
   email: string
   phone: string
   password: string
-  oldPassword: string
-  stream: Stream
+  oldPassword?: string
+  stream?: Stream
 }
+
 
 export type Admin = {
   name: string
