@@ -1,45 +1,69 @@
 'use client'
+import { api } from "@/utils/api";
+import { type Lesson } from "@prisma/client";
 import React, { useState } from "react";
+import { Subjects } from "~/api/types";
 import { Button } from "~/components";
 import StatusMsg from "~/components/StatusMsg";
 
 // eslint-disable-next-line no-unused-vars
 
 function AddLesson() {
-  const [lesson, setLesson] = useState({});
+  const [lesson, setLesson] = useState<Lesson | undefined>();
   const [submit, setSubmit] = useState(false);
-  const [status, setStatus] = useState({});
+  const [status, setStatus] = useState({ message: "", type: "" });
 
-  const handleInput = (event) => {
-    const target = event.target;
+  const handleInput = (event: React.SyntheticEvent) => {
+    const target = event.target as HTMLInputElement;
     // const value = target.type === "checkbox" ? target.checked : target.value;
-    const value =
-      target.type === "number" ? parseInt(target.value) : target.value;
+    const value = target.value;
     const name = target.name;
 
-    setLesson({ ...lesson, [name]: value });
+    setLesson((prevLesson) => {
+      if (!prevLesson) {
+        return
+          undefined
+      }
+
+      if (target.name === "subject") {
+        return {
+          ...prevLesson,
+          [name]: value,
+          subject: {
+            slug: value,
+            name: Subjects.find((subject) => subject.slug === value)?.name || ""
+          },
+        };
+      }
+        return {
+          ...prevLesson,
+          [name]: value,
+        };
+    });
   };
+
+  const addLessonMutation = api.lesson.addLesson.useMutation();
 
   const handleSubmit = () => {
     setSubmit(true);
-    // axios
-    //   .post("https://lmsadmin.onrender.com/lessons", lesson)
-    //   .then((res) => console.log(res.message));
-    axios.post("https://lmsadmin.onrender.com/lessons", lesson).then((res) => {
+
+    try {
+      console.log("add lesson", lesson);
+      const data = addLessonMutation.mutate(lesson as Lesson);
+
       setSubmit(false);
-      console.log(res.data);
-      setStatus(
-        res.data.message === "success"
-          ? {
-              type: "success",
-              message: `succesfully Created a ${res.data.subject.name} lesson for ${res.data.stream.name} on ${res.data.day}`,
-            }
-          : { type: "error", message: res.data.message }
-      );
+      console.log("add lesson data", data);
+      setStatus({
+        type: "success",
+        message: `${lesson?.subject.name ?? "lesson"} of  is succesfull`,
+      });
       setTimeout(() => {
-        res.data.message === "success" && window.location.reload(true);
+        window.location.reload();
       }, 2000);
-    });
+    } catch (error) {
+      setSubmit(false);
+      setStatus({ type: "error", message: "error check your input" });
+    }
   };
 
   return (
@@ -73,11 +97,11 @@ function AddLesson() {
                         onChange={(e) => {
                           handleInput(e);
                         }}
-                        value={lesson.sid}
+                        value={lesson?.subject?.slug}
                         className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         type="text"
                         placeholder="Enter subject ID"
-                        name="sid"
+                        name="subject"
                       />
                     </div>
                   </div>
@@ -88,11 +112,11 @@ function AddLesson() {
                         onChange={(e) => {
                           handleInput(e);
                         }}
-                        value={lesson.stid}
+                        value={lesson?.streamId}
                         className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         type="text"
                         placeholder="Enter Stream ID"
-                        name="stid"
+                        name="streamId"
                       />
                     </div>
                   </div>
@@ -105,11 +129,11 @@ function AddLesson() {
                         onChange={(e) => {
                           handleInput(e);
                         }}
-                        value={lesson.tid}
+                        value={lesson?.teacherId}
                         className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         type="text"
                         placeholder="Enter Teacher Username"
-                        name="tid"
+                        name="teacherId"
                       />
                     </div>
                   </div>
@@ -122,7 +146,7 @@ function AddLesson() {
                         onChange={(e) => {
                           handleInput(e);
                         }}
-                        value={lesson.day}
+                        value={lesson?.day}
                         className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline datetimepicker"
                         type="text"
                         placeholder="eg, Fri"
@@ -139,11 +163,11 @@ function AddLesson() {
                         onChange={(e) => {
                           handleInput(e);
                         }}
-                        value={lesson.start}
+                        value={lesson?.startTime}
                         className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline datetimepicker"
                         type="time"
                         placeholder="eg: 14:00"
-                        name="start"
+                        name="startTime"
                       />
                     </div>
                   </div>
@@ -156,11 +180,11 @@ function AddLesson() {
                         onChange={(e) => {
                           handleInput(e);
                         }}
-                        value={lesson.end}
+                        value={lesson?.endTime}
                         className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline datetimepicker"
                         type="time"
                         placeholder="eg: 15:20"
-                        name="end"
+                        name="endTime"
                       />
                     </div>
                   </div>
@@ -172,11 +196,10 @@ function AddLesson() {
                         onChange={(e) => {
                           handleInput(e);
                         }}
-                        value={lesson.attnd}
+                        value={lesson?.attendance}
                         className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        type="text"
                         placeholder="Enter Attendance list"
-                        name="attnd"
+                        name="attendance"
                       />
                     </div>
                   </div>

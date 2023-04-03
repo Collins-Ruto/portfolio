@@ -61,7 +61,7 @@ function Account() {
         message: `${editUser?.name ?? "User"} update is succesfull`,
       });
       setTimeout(() => {
-        // data.message === "success" && window.location.reload();
+        window.location.reload();
       }, 2000);
     } catch (error) {
       setSubmit(false);

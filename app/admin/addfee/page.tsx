@@ -56,7 +56,7 @@ function AddFee() {
             }
       );
       setTimeout(() => {
-        // data.message === "success" && window.location.reload();
+        window.location.reload();
       }, 2000);
     } catch (error) {
       setSubmit(false);
