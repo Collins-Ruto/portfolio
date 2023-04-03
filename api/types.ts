@@ -30,7 +30,7 @@ export type User = {
 export type Admin = {
   name: string
   password: string
-  emai: string
+  email: string
   slug: string
   phone: string
 }

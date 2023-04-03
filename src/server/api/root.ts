@@ -6,6 +6,7 @@ import { feeRouter } from "@/server/api/routers/fees";
 import { exampleRouter } from "./routers/example";
 import { lessonRouter } from "./routers/lesson";
 import { adminRouter } from "./routers/admin";
+import { streamRouter } from "./routers/stream";
 
 /**
  * This is the primary router for your server.
@@ -19,6 +20,7 @@ export const appRouter = createTRPCRouter({
   fee: feeRouter,
   lesson: lessonRouter,
   admin: adminRouter,
+  stream: streamRouter,
   example: exampleRouter
 });
 

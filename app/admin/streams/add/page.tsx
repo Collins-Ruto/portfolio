@@ -1,44 +1,56 @@
 'use client'
+import { api } from "@/utils/api";
+import { type Stream } from "@prisma/client";
 import React, { useState } from "react";
 import { Button, StatusMsg } from "~/components";
 
 // eslint-disable-next-line no-unused-vars
 
 function AddStream() {
-  const [stream, setStream] = useState({});
+  const [stream, setStream] = useState<Stream | undefined>();
   const [submit, setSubmit] = useState(false);
-  const [status, setStatus] = useState({});
+  const [status, setStatus] = useState({ message: "", type: "" });
 
-  const handleInput = (event) => {
-    const target = event.target;
-    // const value = target.type === "checkbox" ? target.checked : target.value;
-    const value =
-      target.type === "number" ? parseInt(target.value) : target.value;
+  const handleInput = (event: React.SyntheticEvent) => {
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
     const name = target.name;
 
-    setStream({ ...stream, [name]: value });
+    setStream((prevStream: Stream | undefined) => {
+      if (!prevStream) {
+        return { [name]: value } as Stream; // or some default value if you have one
+      }
+
+      const updatedStream = {
+        ...prevStream,
+        [name]: value,
+      };
+
+      return updatedStream;
+    });
   };
+
+  const addStreamMutation = api.stream.addStream.useMutation();
 
   const handleSubmit = () => {
     setSubmit(true);
-
-    axios
-      .post("https://lmsadmin.onrender.com/infos/streams", stream)
-      .then((res) => {
-        setSubmit(false);
-        console.log(res.data);
-        setStatus(
-          res.data.message === "success"
-            ? {
-                type: "success",
-                message: `succesfully Created a ${stream.name} stream of id ${stream.id}`,
-              }
-            : { type: "error", message: res.data.message }
-        );
-        setTimeout(() => {
-          res.data.message === "success" && window.location.reload(true);
-        }, 2000);
+    try {
+      addStreamMutation.mutate(stream as Stream, {
+        onSuccess: (res) => {
+          setSubmit(false);
+          setStatus({
+            type: "success",
+            message: `succesfully added ${stream?.name ?? ""} as  stream`,
+          });
+          setTimeout(() => {
+            res && window.location.reload();
+          }, 2000);
+        },
       });
+    } catch (error) {
+      setSubmit(false);
+      setStatus({ type: "error", message: "error check your input" });
+    }
   };
 
   return (
@@ -72,7 +84,7 @@ function AddStream() {
                         onChange={(e) => {
                           handleInput(e);
                         }}
-                        value={stream.name}
+                        value={stream?.name}
                         className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         type="text"
                         placeholder="Enter Stream Name"
@@ -85,11 +97,11 @@ function AddStream() {
                         onChange={(e) => {
                           handleInput(e);
                         }}
-                        value={stream.id}
+                        value={stream?.slug}
                         className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         type="text"
                         placeholder="Enter unique Stream ID"
-                        name="id"
+                        name="slug"
                       />
                     </div>
                   </div>
