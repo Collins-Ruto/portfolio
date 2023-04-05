@@ -1,53 +1,67 @@
-'use client'
+"use client";
+import { api } from "@/utils/api";
+import { type Student } from "@prisma/client";
 import React, { useState } from "react";
 import { Button, StatusMsg } from "~/components";
 
 // eslint-disable-next-line no-unused-vars
-const dum2 = {
-  name: "Cynthia Graham",
-  email: "cynthia@gmail.com",
-  gender: "Female",
-  parent: "George Graham",
-  admid: "19",
-  phone: 7122342729,
-  dob: "2-6-2002",
-  slug: "19cynthia",
-  stream_slug: "1e",
-};
+// const dum2 = {
+//   name: "Cynthia Graham",
+//   email: "cynthia@gmail.com",
+//   gender: "Female",
+//   parent: "George Graham",
+//   admid: "19",
+//   phone: 7122342729,
+//   dob: "2-6-2002",
+//   slug: "19cynthia",
+//   stream_slug: "1e",
+// };
 
 function AddStudent() {
-  const [student, setStudent] = useState({ password: "" });
+  const [student, setStudent] = useState<Student | undefined>();
   const [submit, setSubmit] = useState(false);
-  const [status, setStatus] = useState({});
+  const [status, setStatus] = useState({ message: "", type: "" });
 
-  const handleInput = (event) => {
-    const target = event.target;
-    // const value = target.type === "checkbox" ? target.checked : target.value;
-    const value =
-      target.type === "number" ? parseInt(target.value) : target.value;
+  const handleInput = (event: React.SyntheticEvent) => {
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
     const name = target.name;
 
-    setStudent({ ...student, [name]: value });
+    setStudent((prevStudent: Student | undefined) => {
+      if (!prevStudent) {
+        return undefined; // or some default value if you have one
+      }
+
+      const updatedStudent = {
+        ...prevStudent,
+        [name]: value,
+      };
+
+      return updatedStudent;
+    });
   };
   //http://localhost:8000
+  const addStudentMutation = api.student.addStudent.useMutation();
+
   const handleSubmit = () => {
     setSubmit(true);
-    axios
-      .post("https://lmsadmin.onrender.com/students", student)
-      .then((res) => {
-        setSubmit(false);
-        setStatus(
-          res.data.message === "success"
-            ? {
-                type: "success",
-                message: `succesfully added ${student.name} as student`,
-              }
-            : { type: "error", message: res.data.message }
-        );
-        setTimeout(() => {
-          res.data.message === "success" && window.location.reload(true);
-        }, 2000);
+    try {
+      addStudentMutation.mutate(student as Student, {
+        onSuccess: (res) => {
+          setSubmit(false);
+          setStatus({
+            type: "success",
+            message: `succesfully added ${student?.name ?? ""} as a student`,
+          });
+          setTimeout(() => {
+            res && window.location.reload();
+          }, 2000);
+        },
       });
+    } catch (error) {
+      setSubmit(false);
+      setStatus({ type: "error", message: "error check your input" });
+    }
   };
 
   return (
@@ -58,11 +72,11 @@ function AddStudent() {
       </div>
       <div className="row">
         <div className="col-sm-12">
-          <div className="m-4 bg-[#F7F6FB] rounded-xl p-4 md:p-6">
+          <div className="m-4 rounded-xl bg-[#F7F6FB] p-4 md:p-6">
             <div className="card-body">
               <form>
                 <div className="col-12">
-                  <h5 className="text-xl pb-4">
+                  <h5 className="pb-4 text-xl">
                     Student Information{" "}
                     <span>
                       <a href="javascript">
@@ -71,7 +85,7 @@ function AddStudent() {
                     </span>
                   </h5>
                 </div>
-                <div className="flex flex-col md:grid grid-cols-3 gap-4 md:gap-y-8">
+                <div className="flex grid-cols-3 flex-col gap-4 md:grid md:gap-y-8">
                   <div>
                     <div>
                       <label>
@@ -81,8 +95,8 @@ function AddStudent() {
                         onChange={(e) => {
                           handleInput(e);
                         }}
-                        value={student.name}
-                        className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        value={student?.name}
+                        className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
                         type="text"
                         placeholder="Enter Full Names"
                         name="name"
@@ -96,11 +110,11 @@ function AddStudent() {
                         onChange={(e) => {
                           handleInput(e);
                         }}
-                        value={student.admid}
-                        className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        value={student?.admissionId}
+                        className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
                         type="text"
                         placeholder="eg. 49"
-                        name="admid"
+                        name="admissionId"
                       />
                     </div>
                   </div>
@@ -113,26 +127,26 @@ function AddStudent() {
                         onChange={(e) => {
                           handleInput(e);
                         }}
-                        value={student.parent}
-                        className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        value={student?.parent}
+                        className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
                         type="text"
                         placeholder="Enter Guardian Name"
                         name="parent"
                       />
                     </div>
                   </div>
-                  <div className="inline-block relative items-center">
+                  <div className="relative inline-block items-center">
                     <label>
                       Gender <span className="text-red-500">*</span>
                     </label>
-                    <div className="flex items-center cursor-pointer">
+                    <div className="flex cursor-pointer items-center">
                       <select
                         onChange={(e) => {
                           handleInput(e);
                         }}
                         name="gender"
-                        value={student.gender}
-                        className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-3 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                        value={student?.gender}
+                        className="focus:shadow-outline block w-full appearance-none rounded border border-gray-400 bg-white px-4 py-3 pr-8 leading-tight shadow hover:border-gray-500 focus:outline-none"
                       >
                         <option>Select Gender</option>
                         <option value="Female">Female</option>
@@ -141,7 +155,7 @@ function AddStudent() {
                       </select>
                       <div className="pointer-events-none absolute right-0 flex items-center px-2 text-gray-700">
                         <svg
-                          className="fill-current h-4 w-4"
+                          className="h-4 w-4 fill-current"
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 20 20"
                         >
@@ -159,11 +173,11 @@ function AddStudent() {
                         onChange={(e) => {
                           handleInput(e);
                         }}
-                        value={student.dob}
-                        className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline datetimepicker"
+                        value={student?.dateOfBirth}
+                        className="focus:shadow-outline datetimepicker w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
                         type="text"
                         placeholder="DD-MM-YYYY"
-                        name="dob"
+                        name="dateOfBirth"
                       />
                     </div>
                   </div>
@@ -174,8 +188,8 @@ function AddStudent() {
                         onChange={(e) => {
                           handleInput(e);
                         }}
-                        value={student.slug?.toLowerCase()}
-                        className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        value={student?.slug?.toLowerCase()}
+                        className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
                         type="text"
                         placeholder="eg. 49mike"
                         name="slug"
@@ -192,15 +206,15 @@ function AddStudent() {
                         onChange={(e) => {
                           handleInput(e);
                         }}
-                        value={student.email}
-                        className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        value={student?.email}
+                        className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
                         type="text"
                         placeholder="eg. example@gmail.com"
                         name="email"
                       />
                     </div>
                   </div>
-                  <div className="inline-block relative items-center">
+                  <div className="relative inline-block items-center">
                     <label>
                       Stream ID<span className="text-red-500">*</span>
                     </label>
@@ -208,11 +222,11 @@ function AddStudent() {
                       onChange={(e) => {
                         handleInput(e);
                       }}
-                      value={student.stream_slug}
-                      className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      value={student?.streamId}
+                      className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
                       type="text"
                       placeholder="Sream ID:  eg. 1w"
-                      name="stream_slug"
+                      name="streamId"
                     />
                   </div>
 
@@ -223,8 +237,8 @@ function AddStudent() {
                         onInput={(e) => {
                           handleInput(e);
                         }}
-                        value={student.phone}
-                        className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        value={student?.phone}
+                        className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
                         type="number"
                         placeholder="eg. 722123456"
                         name="phone"
@@ -235,7 +249,7 @@ function AddStudent() {
                     <div className="form-group students-up-files">
                       <label>Upload Student Photo (150px X 150px)</label>
                       <div className="mt-2">
-                        <label className="border px-6 py-2 mx-auto cursor-pointer bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded inline-flex items-center">
+                        <label className="mx-auto inline-flex cursor-pointer items-center rounded border bg-gray-300 px-6 py-2 font-bold text-gray-800 hover:bg-gray-400">
                           Choose File
                           <input className="hidden" type="file" />
                         </label>
@@ -251,7 +265,7 @@ function AddStudent() {
                       <button
                         onClick={() => handleSubmit()}
                         type="submit"
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded"
+                        className="rounded bg-blue-500 py-2 px-10 font-bold text-white hover:bg-blue-700"
                       >
                         Submit
                       </button>

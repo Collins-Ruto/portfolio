@@ -2,20 +2,19 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "~/components";
 import StatusMsg from "~/components/StatusMsg";
-import {  DummyUser, } from '~/api/types';
+import {  DummyUser, type User } from '~/api/types';
 import Image from "next/image";
-import type { User } from "~/api/types";
+import { api } from "@/utils/api";
+import { type Admin } from "@prisma/client";
 
 function Account() {
   const [user, setUser] = useState<User | undefined>();
-  const [editUser, setEditUser] = useState<User>({
-    email: user?.email,
-    phone: user?.phone,
-  });
+  const [editUser, setEditUser] = useState<Admin>();
   const [passManager, setPassManager] = useState(false);
   const [confPass, setConfPass] = useState("");
+  const [oldPassword, setOldPassword] = useState("");
   const [submit, setSubmit] = useState(false);
-  const [status, setStatus] = useState({});
+  const [status, setStatus] = useState({ message: "", type: "" });
 
   useEffect(() => {
     const userFromLocalStorage = localStorage.getItem("user");
@@ -23,15 +22,52 @@ function Account() {
      setUser(user)
   }, []);
 
-  // const handleInput = (event) => {
-  //   const target = event.target;
-  //   // const value = target.type === "checkbox" ? target.checked : target.value;
-  //   const value =
-  //     target.type === "number" ? parseInt(target.value) : target.value;
-  //   const name = target.name;
+  const handleInput = (event: React.SyntheticEvent) => {
+    const target = event.target as HTMLInputElement;
+    // const value = target.type === "checkbox" ? target.checked : target.value;
+    const value =
+      target.type === "number"
+        ? Number(target.value).toFixed(
+            Math.max(target?.value.split(".")[1]?.length ?? 0, 2) || 2
+          )
+        : target.value;
+    const name = target.name;
 
-  //   setEditUser({ ...editUser, [name]: value });
-  // };
+    setEditUser((prevEditUser) => {
+      if (!prevEditUser) {
+        return undefined
+      }
+
+      return {
+        ...prevEditUser,
+        [name]: value,
+      };
+    });
+  };
+
+  const editAdminMutation = api.admin.editAdmin.useMutation();
+
+  const handleSubmit = () => {
+    setSubmit(true);
+
+    try {
+      console.log("edit admin", editUser);
+      const data = editAdminMutation.mutate(editUser as Admin);
+
+      setSubmit(false);
+      console.log("add editUser data", data);
+      setStatus({
+        type: "success",
+        message: `${editUser?.name ?? "User"} update is succesfull`,
+      });
+      setTimeout(() => {
+        // data.message === "success" && window.location.reload();
+      }, 2000);
+    } catch (error) {
+      setSubmit(false);
+      setStatus({ type: "error", message: "error check your input" });
+    }
+  };
 
   // const handleSubmit = (inputType) => {
   //   setSubmit(true);
@@ -66,13 +102,13 @@ function Account() {
   const logOut = () => {
     localStorage.setItem("saved", JSON.stringify(false));
     localStorage.removeItem("user");
-    delete axios.defaults.headers.common["Authorization"];
-    window.location.reload(true);
+    window.location.reload();
   };
 
-  // const handleVerify = (e) => {
-  //   setConfPass(e.target.value);
-  // };
+  const handleVerify = (e: React.ChangeEvent) => {
+    const target = e.target as HTMLInputElement;
+    setConfPass(target.value);
+  };
 
   console.log(editUser);
 
@@ -146,9 +182,9 @@ function Account() {
                         </label>
                         <input
                           onChange={(e) => {
-                            // handleInput(e);
+                            setOldPassword(e.target.value);
                           }}
-                          value={editUser?.oldPassword}
+                          value={oldPassword}
                           name="oldPassword"
                           type="password"
                           className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -164,7 +200,7 @@ function Account() {
                         </label>
                         <input
                           onChange={(e) => {
-                            // handleInput(e);
+                            handleInput(e);
                           }}
                           value={editUser?.password}
                           name="password"
@@ -183,7 +219,7 @@ function Account() {
                         </label>
                         <input
                           onChange={(e) => {
-                            // handleVerify(e);
+                            handleVerify(e);
                           }}
                           value={confPass}
                           name="password"
@@ -192,7 +228,7 @@ function Account() {
                           placeholder="Confirm Password"
                           required
                         />
-                        {confPass && confPass !== editUser.password && (
+                        {confPass && confPass !== editUser?.password && (
                           <div className="text-xs text-red-500">
                             passwords do not match
                           </div>
@@ -204,7 +240,7 @@ function Account() {
                         <Button />
                       ) : (
                         <button
-                          // onClick={() => handleSubmit("password")}
+                          onClick={() => handleSubmit()}
                           type="submit"
                           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded"
                         >
@@ -229,7 +265,7 @@ function Account() {
                       </label>
                       <input
                         onChange={(e) => {
-                          // handleInput(e);
+                          handleInput(e);
                         }}
                         value={editUser?.email}
                         className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -244,7 +280,7 @@ function Account() {
                       <label>Phone </label>
                       <input
                         onInput={(e) => {
-                          // handleInput(e);
+                          handleInput(e);
                         }}
                         value={editUser?.phone}
                         className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -259,7 +295,7 @@ function Account() {
                       <Button />
                     ) : (
                       <button
-                        // onClick={() => handleSubmit("edit")}
+                        onClick={() => handleSubmit()}
                         type="submit"
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded"
                       >

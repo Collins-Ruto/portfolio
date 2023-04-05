@@ -31,7 +31,7 @@ function AddTeacher() {
 
     setTeacher((prevTeacher: Teacher | undefined) => {
       if (!prevTeacher) {
-        return undefined; // or some default value if you have one
+        return { [name]: value } as Teacher; // or some default value if you have one
       }
 
       const updatedTeacher = {
@@ -43,7 +43,7 @@ function AddTeacher() {
     });
   };
 
-  const addTeacherMutation = api.teacher?.addTeacher?.useMutation();
+  const addTeacherMutation = api.teacher.addTeacher.useMutation();
 
   const handleSubmit = () => {
     setSubmit(true);

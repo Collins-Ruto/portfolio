@@ -76,7 +76,7 @@ model Student {
     phone       String
     parent      String
     gender      String
-    admissionId String
+    admissionId String @unique
     subjects    Subject[]
     exams       Exam[]
     fees        Fee[]

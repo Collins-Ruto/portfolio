@@ -1,83 +1,106 @@
-'use client'
-import React, { useEffect, useState } from "react";
+"use client";
+import { api } from "@/utils/api";
+import { type Exam } from "@prisma/client";
+import React, { useState } from "react";
+import { Subjects } from "~/api/types";
 import { Button, DateTime, Loader } from "~/components";
 import StatusMsg from "~/components/StatusMsg";
 
-const data = {
-  examDate: "10-03-2020",
-  results: JSON.stringify({}),
+type getStudent = {
+  id: string;
+  name: string;
+  email: string;
+  stream: {
+    id: string;
+    name: string;
+  };
 };
 
 function AddExam() {
-  const [exam, setExam] = useState(data);
+  const [exam, setExam] = useState<Exam | undefined>();
   const [admid, setAdmid] = useState("");
-  const [student, setStudent] = useState({});
-  const [subjects, setSubjects] = useState([]);
+  const [student, setStudent] = useState<getStudent | undefined>();
+  // const [subjects, setSubjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [submit, setSubmit] = useState(false);
-  const [status, setStatus] = useState({});
+  const [status, setStatus] = useState({ message: "", type: "" });
 
-  // useEffect(() => {
-  //   axios.get("https://lmsadmin.onrender.com/infos").then((res) => {
-  //     setSubjects(res.data.subjects);
-  //     setLoading(false);
-  //   });
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+  const handleInput = (event: React.SyntheticEvent) => {
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
+    const name = target.name;
 
-  // const handleInput = (event) => {
-  //   const target = event.target;
-  //   // const value = target.type === "checkbox" ? target.checked : target.value;
-  //   const value =
-  //     target.type === "number" ? parseInt(target.value) : target.value;
-  //   const name = target.name;
+    setExam((prevExam: Exam | undefined) => {
+      if (!prevExam) {
+        return undefined; // or some default value if you have one
+      }
 
-  //   setExam({ ...exam, [name]: value });
-  // };
+      const updatedExam = {
+        ...prevExam,
+        [name]: value,
+      };
 
-  // const handleResult = (event) => {
-  //   const target = event.target;
-  //   // const value = target.type === "checkbox" ? target.checked : target.value;
-  //   const value =
-  //     target.type === "number" ? parseInt(target.value) : target.value;
-  //   const name = target.name.toString();
+      return updatedExam;
+    });
+  };
 
-  //   setExam({ ...exam, results: { ...exam.results, [name]: value } });
-  // };
+  const handleResult = (event: React.SyntheticEvent) => {
+    const target = event.target as HTMLInputElement;
+    // const value = target.type === "checkbox" ? target.checked : target.value;
+    const value = target.value;
+    const name = target.name;
+
+    setExam((prevExam) => {
+      if (!prevExam) {
+        return undefined;
+      }
+
+      return {
+        ...prevExam,
+        [name]: value,
+      };
+    });
+  };
+
+  const addExamMutation = api.exam.addExam.useMutation();
 
   const handleSubmit = () => {
     setSubmit(true);
-    axios
-      .post("https://lmsadmin.onrender.com/exams", { data: exam })
-      .then((res) => {
-        res.status === 200 && setExam(data);
-        setSubmit(false);
-        setStatus(
-          res.data.message === "success"
-            ? {
-                type: "success",
-                message: `succesfully added ${exam.dame} results for ${student.name}`,
-              }
-            : { type: "error", message: res.data.message }
-        );
-        setTimeout(() => {
-          res.data.message === "success" && window.location.reload(true);
-        }, 2000);
+    try {
+      addExamMutation.mutate(exam as Exam, {
+        onSuccess: (res) => {
+          setSubmit(false);
+          setStatus({
+            type: "success",
+            message: `succesfully added ${exam?.name ?? ""} exam`,
+          });
+
+          setTimeout(() => {
+            res && window.location.reload();
+          }, 2000);
+        },
       });
+    } catch (error) {
+      setSubmit(false);
+      setStatus({ type: "error", message: "error check your input" });
+    }
   };
 
   const getStudent = () => {
     setSubmit(true);
-    axios
-      .get(`https://lmsadmin.onrender.com/exams/student?admissionId=${admid}`)
-      .then((res) => {
-        setStudent(res.data.student);
-        setExam({
-          ...exam,
-          student: { connect: { Student: { slug: res.data.student.slug } } },
-        });
-        setSubmit(false);
-      });
+    try {
+      const { data, isLoading, error } = api.student.getById.useQuery(admid);
+      if (error) {
+        setStatus({ type: "error", message: "error check your input" });
+      }
+      setStudent(data as getStudent | undefined);
+      setLoading(isLoading);
+      setSubmit(false);
+      console.log("add exam student data", data);
+    } catch (error) {
+      setSubmit(false);
+      setStatus({ type: "error", message: "error check your input" });
+    }
   };
   return (
     <div>
@@ -88,14 +111,14 @@ function AddExam() {
       {loading && <Loader />}
       <div>
         <h2 className="px-4 text-sm">Search for student in the system first</h2>
-        <div className="flex px-4 justify-between md:justify-start">
+        <div className="flex justify-between px-4 md:justify-start">
           <div className="md:mr-8">
             <div>
               <input
                 onChange={(e) => setAdmid(e.target.value)}
                 value={admid}
                 type="text"
-                className="shadow bg-[#F7F6FB] appearance-none border-[1px] rounded w-full py-2 px-3 text-gray-800 leading-tight focus:outline-none focus:shadow-outline"
+                className="focus:shadow-outline w-full appearance-none rounded border-[1px] bg-[#F7F6FB] py-2 px-3 leading-tight text-gray-800 shadow focus:outline-none"
                 placeholder="Enter Admission No"
               />
             </div>
@@ -108,7 +131,7 @@ function AddExam() {
                 <button
                   onClick={() => getStudent()}
                   type="button"
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  className="rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
                 >
                   Search
                 </button>
@@ -116,23 +139,23 @@ function AddExam() {
             </div>
           </div>
         </div>
-        <div className="m-4 bg-[#F7F6FB] rounded-xl flex flex-col md:flex-row justify-between p-4">
+        <div className="m-4 flex flex-col justify-between rounded-xl bg-[#F7F6FB] p-4 md:flex-row">
           <div>
             Student :{" "}
-            <span className="font-semibold text-lg">{student?.name}</span>
+            <span className="text-lg font-semibold">{student?.name}</span>
           </div>
           <div>
             Stream:{" "}
-            <span className="font-semibold text-lg">
+            <span className="text-lg font-semibold">
               {student?.stream?.name}
             </span>
           </div>
           <div>
-            Date: <span className="font-semibold text-lg">{DateTime()}</span>
+            Date: <span className="text-lg font-semibold">{DateTime()}</span>
           </div>
         </div>
 
-        <div className="m-4 flex-col bg-[#F7F6FB] flex md:flex-row gap-4 rounded-xl p-4 md:p-6">
+        <div className="m-4 flex flex-col gap-4 rounded-xl bg-[#F7F6FB] p-4 md:flex-row md:p-6">
           <div>
             <label>
               Exam Name <span className="text-red-500">*</span>
@@ -141,8 +164,8 @@ function AddExam() {
               onChange={(e) => {
                 handleInput(e);
               }}
-              value={exam.name}
-              className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              value={exam?.name}
+              className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
               type="text"
               placeholder="eg: End Term 1"
               name="name"
@@ -156,8 +179,8 @@ function AddExam() {
               onChange={(e) => {
                 handleInput(e);
               }}
-              value={exam.term}
-              className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              value={exam?.term}
+              className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
               type="text"
               placeholder="eg: 2020 II"
               name="term"
@@ -171,8 +194,8 @@ function AddExam() {
               onChange={(e) => {
                 handleInput(e);
               }}
-              value={exam.slug}
-              className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              value={exam?.slug}
+              className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
               type="text"
               placeholder="eg: 282021i"
               name="slug"
@@ -180,21 +203,21 @@ function AddExam() {
           </div>
         </div>
       </div>
-      <div className="m-4 bg-[#F7F6FB] p-4 rounded-xl">
+      <div className="m-4 rounded-xl bg-[#F7F6FB] p-4">
         <table className="w-full">
           <thead>
-            <tr className="p-4 text-lg bg-[#efeef4]">
-              <th className=" text-xl p-4">Subject</th>
+            <tr className="bg-[#eexamf4] p-4 text-lg">
+              <th className=" p-4 text-xl">Subject</th>
               <th className="text-xl">Score</th>
             </tr>
           </thead>
           <tbody>
-            {subjects?.map((subject, index) => {
+            {Subjects?.map((subject, index) => {
               const slug = subject.slug;
               return (
                 <tr
                   key={index}
-                  className={` p-4 ${index % 2 === 0 && "bg-white"}`}
+                  className={` p-4 ${index % 2 === 0 ? "bg-white" : ""}`}
                 >
                   <td className="px-4 py-2 text-lg">{subject.name}</td>
                   <td className="px-4 py-2">
@@ -202,9 +225,11 @@ function AddExam() {
                       onInput={(e) => {
                         handleResult(e);
                       }}
-                      value={exam.results[slug]}
-                      className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                      type="number"
+                      value={
+                        exam?.results?.find((result) => result.slug === slug)?.marks || ""
+                      }
+                      className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                      type="text"
                       placeholder="eg: 80"
                       name={slug}
                     />
@@ -222,7 +247,7 @@ function AddExam() {
               <button
                 onClick={() => handleSubmit()}
                 type="submit"
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded"
+                className="rounded bg-blue-500 py-2 px-10 font-bold text-white hover:bg-blue-700"
               >
                 Submit
               </button>

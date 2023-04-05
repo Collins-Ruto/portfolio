@@ -18,11 +18,15 @@ export const studentRouter = createTRPCRouter({
   getById: publicProcedure.input(z.string()).query(({ ctx, input }) => {
     if (input === 'all') {
       return ctx.prisma.student.findMany({
+        where: {
+          admissionId: input
+        },
         select: {
           id: true,
           name: true,
           email: true,
-        },
+          stream: true
+        }
       });
     }
   }),
