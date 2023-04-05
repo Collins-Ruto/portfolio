@@ -49,6 +49,21 @@ export const studentRouter = createTRPCRouter({
     });
   }),
 
+  editStudent: publicProcedure.input(z.object({
+    slug: z.string(),
+    email: z.string(),
+    password: z.string(),
+    phone: z.string(),
+  })).mutation(({ ctx, input }) => {
+    console.log("trpc input", input)
+    return ctx.prisma.student.update({
+      where: {
+        slug: input.slug
+      },
+      data: input,
+    });
+  }),
+
   getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";
   }),

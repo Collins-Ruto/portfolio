@@ -38,4 +38,19 @@ export const teacherRouter = createTRPCRouter({
       data: input,
     });
   }),
+
+  editTeacher: publicProcedure.input(z.object({
+    slug: z.string(),
+    email: z.string(),
+    password: z.string(),
+    phone: z.string(),
+  })).mutation(({ ctx, input }) => {
+    console.log("trpc input", input)
+    return ctx.prisma.teacher.update({
+      where: {
+        slug: input.slug
+      },
+      data: input,
+    });
+  }),
 });
