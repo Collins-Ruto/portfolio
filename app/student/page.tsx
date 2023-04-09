@@ -4,6 +4,7 @@ import { Calender, Loader } from "~/components";
 // import Link from "next/link";
 import { format } from "date-fns";
 import Image from "next/image";
+import axios from "axios";
 
 function Dashboard() {
   const [data, setData] = useState({});

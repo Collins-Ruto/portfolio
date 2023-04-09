@@ -7,6 +7,7 @@ import {  DummyUser, } from '~/api/types'
 import Link from "next/link";
 import type {  User } from '~/api/types'
 import { api } from "@/utils/api";
+import axios from "axios";
 
 type Data = {
   subjects: number
@@ -26,7 +27,6 @@ function Dashboard() {
 
   console.log("students",  studentQuery?.data && studentQuery?.data[0]?.name)
 
-  //localhost:8000
   useEffect(() => {
    const userFromLocalStorage = localStorage.getItem("user");
    const user: User = userFromLocalStorage !== null ? JSON.parse(userFromLocalStorage)  as User : DummyUser

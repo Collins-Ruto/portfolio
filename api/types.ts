@@ -35,6 +35,18 @@ export type Admin = {
   phone: number
 }
 
+export interface Student = {
+  dateOfBirth: string
+  name: string
+  parent: string
+  gender: string
+  slug: string
+  email: string
+  phone: string
+  password: string
+  stream: Stream
+}
+
 export type Student = {
   dateOfBirth: string
   name: string
