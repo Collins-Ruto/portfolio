@@ -1,5 +1,5 @@
 "use client";
-
+import axios from "axios";
 import React, { useState } from "react";
 import { usePathname } from 'next/navigation';
 import Image from "next/image";
@@ -135,7 +135,7 @@ function Header({ user }: Props) {
               href="/"
               className={
                 `mt-4 align-middle p-2 rounded-md flex items-center text-gray-800 hover:text-blue-700 cursor-pointer ${
-                  currentRoute === "/"
+                  currentRoute === "/admin"
                     ? "bg-blue-700 text-white hover:text hover:text-white"
                     : ""
                 }`
@@ -152,7 +152,7 @@ function Header({ user }: Props) {
             </Link>
             {!(user.type === "student") && (
               <Link
-                href="/students"
+                href="/allstudents"
                 className={
                   `mt-4 align-middle p-2 rounded-md flex items-center text-gray-800 hover:text-blue-700 cursor-pointer ${
                     currentRoute === "/students"
@@ -174,7 +174,7 @@ function Header({ user }: Props) {
             {user.type === "admin" && (
               <div className="">
                 <Link
-                  href="/teachers"
+                  href="/teacher"
                   className={
                     `mt-4 align-middle p-2 rounded-md flex items-center text-gray-800 hover:text-blue-700 cursor-pointer ${
                       currentRoute === "/teachers"
@@ -234,7 +234,7 @@ function Header({ user }: Props) {
             </Link>
 
             <Link
-              href="/fee"
+              href="/fees"
               className={
                 `mt-4 align-middle p-2 rounded-md flex items-center text-gray-800 hover:text-blue-700 cursor-pointer ${
                   currentRoute === "/fee"
@@ -258,7 +258,7 @@ function Header({ user }: Props) {
                   Data Management
                 </h2>
                 <Link
-                  href="/addadmin"
+                  href="/admin/admins/add"
                   className={
                     `mt-4 align-middle p-2 rounded-md flex items-center text-gray-800 hover:text-blue-700 cursor-pointer ${
                       currentRoute === "/addadmin"
@@ -296,7 +296,7 @@ function Header({ user }: Props) {
                   <span className="text-lg">Add Lessons</span>
                 </Link>
                 <Link
-                  href="/addstream"
+                  href="/admin/streams/add"
                   className={
                     `mt-4 align-middle p-2 rounded-md flex items-center text-gray-800 hover:text-blue-700 cursor-pointer ${
                       currentRoute === "/addstream"
@@ -315,7 +315,7 @@ function Header({ user }: Props) {
                   <span className="text-lg">Add Stream</span>
                 </Link>
                 <Link
-                  href="/addsubject"
+                  href="/admin/subjects/add"
                   className={
                     `mt-4 align-middle p-2 rounded-md flex items-center text-gray-800 hover:text-blue-700 cursor-pointer ${
                       currentRoute === "/addsubject"

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Button, Loader } from "~/components";
 import Image from "next/image";
 import type { Teacher } from "api/types";
+import axios from "axios";
 
 function Teachers() {
   const [teachers, setTeachers] = useState<Teacher[] | undefined>();
