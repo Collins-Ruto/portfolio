@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from "react";
-import homepic from "../res/homepic1.webp";
+import homepic from "~/assets/homepic1.webp";
 import { Button } from "~/components";
 import {  useNavigate } from "next/link";
 import Image from "next/image";
