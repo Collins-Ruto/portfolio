@@ -35,7 +35,7 @@ export type Admin = {
   phone: number
 }
 
-export interface Student = {
+export interface StudentInt {
   dateOfBirth: string
   name: string
   parent: string
