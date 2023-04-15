@@ -31,13 +31,11 @@ export const feeRouter = createTRPCRouter({
         });
     }),
 
-  addFee: publicProcedure.input(z.string()).query(({ ctx, input }) => {      Binding element
-  27   │ │ │ return ctx.prisma.fee.findMany({
-  28   │ │ │ │ │ where: {
-  29   │ │ │ │ │ │ │ studentId: input,
-  30   │ │ │ │ │ },
-  31   │ │ │ });
-  32   │ }),
+  addFee: publicProcedure.input(z.string()).query(({ ctx, input }) => {
+      return ctx.prisma.fee.create({
+        data: input
+      });
+  }),
 
   getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";
