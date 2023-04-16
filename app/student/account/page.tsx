@@ -54,7 +54,7 @@ function Account() {
     });
   };
 
-  const editStudentMutation = api.student.editStudent.useMutation();
+  const editPasswordMutation = api.student.editPassword.useMutation();
   const editInfoMutation = api.student.editInfo.useMutation();
 
   const handleSubmit = () => {
@@ -70,7 +70,7 @@ function Account() {
       const data =
         confPass === ""
           ? editInfoMutation.mutate(editUser)
-          : editStudentMutation.mutate(editUser);
+          : editPasswordMutation.mutate(editUser);
 
       setSubmit(false);
       console.log("add editUser data", data);
@@ -148,7 +148,7 @@ function Account() {
             <div className="pb-4 pt-2 text-blue-600">{user?.role}</div>
             <div className="flex flex-col gap-2 p-2 text-start text-slate-800">
               <div className="p-1">Name: {user?.name} </div>
-              <div className="p-1">Phone: {student?.phone} </div>
+              <div className="p-1">Phone: {user?.phone} </div>
               <div className="p-1">Email: {user?.email} </div>
             </div>
             <div
@@ -199,6 +199,7 @@ function Account() {
                           <input
                             onChange={(e) => {
                               setOldPassword(e.target.value);
+                              setValidInput(true)
                             }}
                             value={oldPassword}
                             name="oldPassword"
@@ -246,7 +247,7 @@ function Account() {
                           />
                           {confPass && confPass !== editUser?.password && (
                             <div className="text-xs text-red-500">
-                              passwords do not match
+                              new passwords do not match
                             </div>
                           )}
                         </div>
