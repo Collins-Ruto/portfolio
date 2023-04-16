@@ -49,7 +49,8 @@ export const authOptions: NextAuthOptions = {
           ...token,
           id: u.id,
           role: u.role,
-          streamId: u.streamId
+          streamId: u.streamId,
+          phone: u.phone,
         }
       }
       return token

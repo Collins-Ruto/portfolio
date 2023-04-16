@@ -94,26 +94,20 @@ export const studentRouter = createTRPCRouter({
     });
   }),
 
-  editStudent: protectedProcedure.input(z.object({
-    name: z.string(),
-    slug: z.string(),
-    email: z.string(),
+  editPassword: protectedProcedure.input(z.object({
+    id: z.string(),
     password: z.string(),
-    phone: z.string(),
-    parent: z.string(),
-    gender: z.string(),
-    admissionId: z.string(),
-    streamId: z.string(),
-    dateOfBirth: z.string(),
   })).mutation(async ({ ctx, input }) => {
     const encrypterPass = await bcrypt.hash(input.password, 10)
     input.password = encrypterPass
     console.log("trpc input", input)
     return ctx.prisma.student.update({
       where: {
-        id: input.slug
+        id: input.id
       },
-      data: input,
+      data: {
+        password: encrypterPass
+      },
     });
   }),
 
@@ -125,7 +119,10 @@ export const studentRouter = createTRPCRouter({
 
   })).mutation(async ({ ctx, input }) => {
     console.log("trpc input", input)
-    const inputUpdate = {email: input.email, name: input.phone}
+    const inputUpdate = {
+      email: (input.email !== "" ? input.email : undefined),
+      phone: (input.phone !== "" ? input.phone : undefined)
+    }
     return ctx.prisma.student.update({
       where: {
         id: input.id
