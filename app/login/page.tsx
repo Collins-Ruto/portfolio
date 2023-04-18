@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import homepic from "~/assets/homepic1.webp";
 import { Button } from "~/components";
 import Image from "next/image";
@@ -17,8 +17,6 @@ type userInput = {
 // };
 
 function Login() {
-  const { data: session } = useSession();
-
   const [user, setUser] = useState<userInput | undefined>();
   const [submit, setSubmit] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
@@ -47,7 +45,6 @@ function Login() {
   };
 
   console.log("user input", user);
-  console.log("login session", { session });
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -85,7 +82,7 @@ function Login() {
           <Image
             width={250}
             height={100}
-            className="cover mx-auto h-72 w-52 md:h-96 md:w-72"
+            className="cover mx-auto h-96"
             src={homepic}
             alt="learnhq login"
           />
