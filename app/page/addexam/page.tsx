@@ -106,63 +106,67 @@ function AddExam() {
     }
   };
   return (
-    <div className="w-screen">
+    <div className="w-screen md:w-full">
       {<StatusMsg status={status} />}
       <div className="p-4 text-2xl font-semibold">
         <h3>Add Exam Results</h3>
       </div>
       {loading && <Loader />}
       <div className="px-4">
-        <div className="my-4 flex flex-col items-center justify-between rounded-xl bg-[#F7F6FB] p-2 md:lex-row">
-          <div className="relative flex items-center gap-4">
-            <label>
-              Stream <span className="text-red-500">*</span>
-            </label>
-            <div className="relative flex cursor-pointer items-center pt-2">
-              <select
-                onChange={(e) => {
-                  setStream(
-                    streams?.find((item) => item.slug === e.target.value)
-                  );
-                  getStudents();
-                }}
-                className="focus:shadow-outline block w-full appearance-none rounded border border-gray-400 bg-white px-4 py-3 pr-8 leading-tight shadow hover:border-gray-500 focus:outline-none"
-                name="streamId"
-              >
-                <option>Select Stream</option>
-                {streams?.map((stream, index) => {
-                  return (
-                    <option key={index} value={stream.slug}>
-                      {stream.name}
-                    </option>
-                  );
-                })}
-              </select>
-              <div className="pointer-events-none absolute right-0 flex items-center px-2 text-gray-700">
-                <svg
-                  className="h-6 w-6 fill-current"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
+        <div className="my-2 flex flex-col items-center justify-between rounded-xl bg-[#F7F6FB] p-2 md:flex-row">
+          <div className="flex w-full items-center justify-between gap-2 px-2 md:w-1/2 sm:justify-around">
+            <div className="relative flex items-center gap-4">
+              <label>
+                Stream <span className="text-red-500">*</span>
+              </label>
+              <div className="relative flex cursor-pointer items-center pt-2">
+                <select
+                  onChange={(e) => {
+                    setStream(
+                      streams?.find((item) => item.slug === e.target.value)
+                    );
+                    getStudents();
+                  }}
+                  className="focus:shadow-outline block w-full appearance-none rounded border border-gray-400 bg-white px-4 py-3 pr-8 leading-tight shadow hover:border-gray-500 focus:outline-none"
+                  name="streamId"
                 >
-                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                </svg>
+                  <option>Select Stream</option>
+                  {streams?.map((stream, index) => {
+                    return (
+                      <option key={index} value={stream.slug}>
+                        {stream.name}
+                      </option>
+                    );
+                  })}
+                </select>
+                <div className="pointer-events-none absolute right-0 flex items-center px-2 text-gray-700">
+                  <svg
+                    className="h-6 w-6 fill-current"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                  </svg>
+                </div>
               </div>
             </div>
+            <div>
+              Stream Id:{" "}
+              <span className="text-lg font-semibold">{stream?.slug}</span>
+            </div>
           </div>
-          <div>
-            Stream :{" "}
-            <span className="text-lg font-semibold">{stream?.name}</span>
-          </div>
-          <div>
-            Stream Id:{" "}
-            <span className="text-lg font-semibold">{stream?.slug}</span>
-          </div>
-          <div>
-            Date: <span className="text-lg font-semibold">{DateTime()}</span>
+          <div className="flex w-full items-center justify-between gap-2 px-2 md:w-1/2 sm:justify-around">
+            <div>
+              Stream :{" "}
+              <span className="text-lg font-semibold">{stream?.name}</span>
+            </div>
+            <div>
+              Date: <span className="text-lg font-semibold">{DateTime()}</span>
+            </div>
           </div>
         </div>
 
-        <div className="my-4 flex flex-col gap-4 rounded-xl bg-[#F7F6FB] p-2 md:flex-row ">
+        <div className="my-2 flex flex-col gap-4 rounded-xl bg-[#F7F6FB] p-2 md:flex-row ">
           <div>
             <label>
               Exam Name <span className="text-red-500">*</span>
@@ -212,56 +216,56 @@ function AddExam() {
       </div>
       <div className="m-4 mb-0 overflow-auto rounded-t-xl bg-[#F7F6FB] p-2">
         <div className="overflow-scroll">
-        <table className="w-full text-justify">
-          <thead>
-            <tr className="bg-[#eexamf4] p-2">
-              <th className="px-2 py-2 ">Student Name</th>
-              {Subjects?.map((subject, index) => {
+          <table className="w-full text-justify">
+            <thead>
+              <tr className="bg-[#eexamf4] p-2">
+                <th className="px-2 py-2 ">Student Name</th>
+                {Subjects?.map((subject, index) => {
+                  return (
+                    <th key={index} className="mx-auto border-x px-2 py-2">
+                      {subject.slug}
+                    </th>
+                  );
+                })}
+              </tr>
+            </thead>
+            <tbody>
+              {students?.map((student, index) => {
                 return (
-                  <th key={index} className="mx-auto border-x px-2 py-2">
-                    {subject.slug}
-                  </th>
+                  <tr
+                    key={index}
+                    className={` p-2 ${index % 2 === 0 ? "bg-white" : ""}`}
+                  >
+                    <td className="px-4 py-2 text-lg">{student?.name}</td>
+                    {Subjects?.map((subject, index) => {
+                      const slug = subject.slug.substring(0, 1);
+                      return (
+                        <td key={index} className="border-x px-2 py-2">
+                          <input
+                            onInput={(e) => {
+                              handleResult(e);
+                            }}
+                            value={
+                              exam?.results?.find(
+                                (result) => result.slug === slug
+                              )?.marks || ""
+                            }
+                            className="focus:shadow-outline w-14 appearance-none rounded border px-2 py-3 leading-tight text-gray-700 shadow focus:outline-none"
+                            type="text"
+                            placeholder="-"
+                            name={slug}
+                          />
+                        </td>
+                      );
+                    })}
+                  </tr>
                 );
               })}
-            </tr>
-          </thead>
-          <tbody>
-            {students?.map((student, index) => {
-              return (
-                <tr
-                  key={index}
-                  className={` p-2 ${index % 2 === 0 ? "bg-white" : ""}`}
-                >
-                  <td className="px-4 py-2 text-lg">{student?.name}</td>
-                  {Subjects?.map((subject, index) => {
-                    const slug = subject.slug.substring(0, 1);
-                    return (
-                      <td key={index} className="border-x px-2 py-2">
-                        <input
-                          onInput={(e) => {
-                            handleResult(e);
-                          }}
-                          value={
-                            exam?.results?.find(
-                              (result) => result.slug === slug
-                            )?.marks || ""
-                          }
-                          className="focus:shadow-outline w-14 appearance-none rounded border px-2 py-3 leading-tight text-gray-700 shadow focus:outline-none"
-                          type="text"
-                          placeholder="-"
-                          name={slug}
-                        />
-                      </td>
-                    );
-                  })}
-                </tr>
-              );
-            })}
-          </tbody>
+            </tbody>
           </table>
         </div>
       </div>
-      <div className=" mx-4 rounded-b-xl bg-[#F7F6FB] py-4 px-2">
+      <div className=" mx-4 rounded-b-xl bg-[#F7F6FB] px-2 py-4">
         <div>
           {submit ? (
             <Button />
