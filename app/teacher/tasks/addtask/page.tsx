@@ -182,7 +182,7 @@ function CreateTask() {
 
     try {
       addTaskMutation.mutate(fileTask, {
-        onSuccess: (res) => {
+        onSuccess: () => {
           setSubmit(false);
           setStatus({
             type: "success",
