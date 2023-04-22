@@ -8,7 +8,7 @@ import axios from "axios";
 
 function Dashboard() {
   const [data, setData] = useState({});
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
 
   //https://lmsadmin.onrender.com

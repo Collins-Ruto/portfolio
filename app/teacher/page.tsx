@@ -4,10 +4,11 @@ import Link from "next/link";
 import { Button, Loader } from "~/components";
 import Image from "next/image";
 import type { Teacher } from "api/types";
+import { api } from "@/utils/api";
 import axios from "axios";
 
 function Teachers() {
-  const [teachers, setTeachers] = useState<Teacher[] | undefined>();
+  // const [teachers, setTeachers] = useState<Teacher[] | undefined>();
   const [loading, setLoading] = useState(true);
   const [isDelete, setisDelete] = useState(false);
   const [submit, setSubmit] = useState(false);
@@ -20,8 +21,8 @@ function Teachers() {
 
   useEffect(() => {
     axios.get<Teacher[] | undefined>("https://lmsadmin.onrender.com/teachers").then((res) => {
-      setTeachers(res.data.edges);
-      setPages(res.data.pageInfo);
+      // setTeachers(res.data.edges);
+      // setPages(res.data.pageInfo);
       setLoading(false);
     }).catch(err => console.log(err))
       .then(() => console.log('this will succeed'))
@@ -29,44 +30,47 @@ function Teachers() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const changePage = (direction) => {
-    const data = {
-      ...pages,
-      direction: direction,
-      cursor: direction === "after" ? pages.endCursor : pages.startCursor,
-    };
-    axios
-      .post("https://lmsadmin.onrender.com/teachers/page", data)
-      .then((res) => {
-        setPages(res.data.pageInfo);
-        setTeachers(res.data.edges);
-      });
-  };
+  const {data, isLoading, error} = api.teacher.getAll.useQuery();
+  const teachers: Teacher[] | undefined = data;
+
+  // const changePage = (direction) => {
+  //   const data = {
+  //     ...pages,
+  //     direction: direction,
+  //     cursor: direction === "after" ? pages.endCursor : pages.startCursor,
+  //   };
+  //   axios
+  //     .post("https://lmsadmin.onrender.com/teachers/page", data)
+  //     .then((res) => {
+  //       setPages(res.data.pageInfo);
+  //       setTeachers(res.data.edges);
+  //     });
+  // };
 
   console.log("pages", pages);
 
-  const searchSubmit = async () => {
-    const data = await axios.get(
-      `https://lmsadmin.onrender.com/teachers/teacher?name=${search}`
-    );
-    setTeachers(data.data);
-    setSubmit(false);
-  };
+  // const searchSubmit = async () => {
+  //   const data = await axios.get(
+  //     `https://lmsadmin.onrender.com/teachers/teacher?name=${search}`
+  //   );
+  //   setTeachers(data.data);
+  //   setSubmit(false);
+  // };
 
-  const deleteTeacher = () => {
-    axios
-      .delete("https://lmsadmin.onrender.com/teachers", {
-        data: { slug: delTeacher },
-      })
-      .then((res) => {
-        setisDelete(false);
-        setSubmit(false);
-      });
-    const newTeachers = teachers.filter(
-      (teacher) => teacher.node.slug !== delTeacher
-    );
-    setTeachers(newTeachers);
-  };
+  // const deleteTeacher = () => {
+  //   axios
+  //     .delete("https://lmsadmin.onrender.com/teachers", {
+  //       data: { slug: delTeacher },
+  //     })
+  //     .then((res) => {
+  //       setisDelete(false);
+  //       setSubmit(false);
+  //     });
+  //   const newTeachers = teachers.filter(
+  //     (teacher) => teacher.slug !== delTeacher
+  //   );
+  //   setTeachers(newTeachers);
+  // };
 
   const ConfirmDel = () => {
     return (
@@ -125,7 +129,7 @@ function Teachers() {
               ) : (
                 <button
                   onClick={() => {
-                    deleteTeacher();
+                    // deleteTeacher();
                     setSubmit(true);
                   }}
                   className="hover:bg-red-400 hover:text-white w-full md:w-auto px-4 py-3 md:py-2 bg-red-600 text-white rounded-lg font-semibold text-sm "
@@ -170,7 +174,7 @@ function Teachers() {
             ) : (
               <button
                 onClick={() => {
-                  searchSubmit();
+                  // searchSubmit();
                   setSubmit(true);
                 }}
                 type="button"
@@ -216,21 +220,21 @@ function Teachers() {
                   className={` p-4 ${index % 2 === 0 ? "bg-white" : ""}`}
                   key={index}
                 >
-                  <td className="p-4">{teacher.node.slug}</td>
+                  <td className="p-4">{teacher.slug}</td>
                   <td className="p-4">
                     <h2 className="table-avatar">
-                      <a href="student-details.html">{teacher.node.name}</a>
+                      <a href="student-details.html">{teacher.name}</a>
                     </h2>
                   </td>
                   <td className="p-4">
-                    {teacher.node.email?.substring(0, 29)}
+                    {teacher.email?.substring(0, 29)}
                   </td>
-                  <td className="p-4">{teacher.node.dateOfBirth}</td>
+                  <td className="p-4">{teacher.dateOfBirth}</td>
                   <td className="p-4">
-                    {teacher.node.qualification}
+                    {teacher.qualification}
                   </td>
-                  <td className="p-4">{teacher.node.joiningDate}</td>
-                  <td className="p-4">{teacher.node.phone}</td>
+                  <td className="p-4">{teacher.joiningDate}</td>
+                  <td className="p-4">{teacher.phone}</td>
                   <td className="p-4 flex gap-2">
                     <Link href="/addteacher">
                       <Image
@@ -242,7 +246,7 @@ function Teachers() {
                     <div
                       onClick={() => {
                         setisDelete(true);
-                        setDelTeacher(teacher.node.slug);
+                        setDelTeacher(teacher.slug);
                       }}
                     >
                       <Image
@@ -260,7 +264,7 @@ function Teachers() {
         <div className="flex align-middle justify-center pb-10 md:pb-0">
           <div
             onClick={() => {
-              pages.hasPreviousPage && changePage("before");
+              // pages.hasPreviousPage && changePage("before");
             }}
             className={` ${
               pages.hasPreviousPage
@@ -285,7 +289,7 @@ function Teachers() {
           </div>
           <div
             onClick={() => {
-              pages.hasNextPage && changePage("after");
+              // pages.hasNextPage && changePage("after");
             }}
             className={` ${
               pages.hasNextPage

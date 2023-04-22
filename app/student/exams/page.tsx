@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Loader } from "~/components";
 import {  DummyUser, Subjects } from '~/api/types';
 import type { User, Result } from '~/api/types';
@@ -32,6 +32,8 @@ function Exam() {
   //  const [exam, setExam] = useState<Exam[]>(data);
   const exams: Exam[] | undefined = data
   console.log("exam", exams);
+  console.log("exam user", user);
+  console.log("exam error", error);
 
   return (
     <div className="w-screen md:w-full">
