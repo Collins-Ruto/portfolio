@@ -56,7 +56,7 @@ export type Student = {
   email: string
   phone: string
   password: string
-  stream: Stream
+  stream?: Stream
 }
 
 export type Teacher = {

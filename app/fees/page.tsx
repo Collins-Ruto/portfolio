@@ -1,10 +1,10 @@
-'use client'
+"use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button, Loader } from "~/components";
 import Image from "next/image";
-import {  DummyUser, } from '~/api/types';
-import type {Search, User, Fee } from '~/api/types';
+import { DummyUser } from "~/api/types";
+import type { Search, User, Fee, Student } from "~/api/types";
 import { api } from "@/utils/api";
 
 function FeeData() {
@@ -20,9 +20,11 @@ function FeeData() {
 
   useEffect(() => {
     const userFromLocalStorage = localStorage.getItem("user");
-    const user: User = userFromLocalStorage !== null ? JSON.parse(userFromLocalStorage) as User : DummyUser
-     setUserType(user.type)
-
+    const user: User =
+      userFromLocalStorage !== null
+        ? (JSON.parse(userFromLocalStorage) as User)
+        : DummyUser;
+    setUserType(user.type);
 
     // axios.get("https://lmsadmin.onrender.com/fees").then((res) => {
     //   setFees(res.data.edges);
@@ -32,8 +34,12 @@ function FeeData() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const {data, isLoading, error} = api.fee.getAll.useQuery();
-  const [fees, setFees] = useState<Fee[] | undefined>(data);
+  const { data, isLoading, error } = api.fee.getAll.useQuery();
+  const initialFees = data?.map((fee: Fee & { student: Student }) => ({
+    ...fee,
+    student: fee.student || undefined,
+  })) as Fee[] | undefined;
+  const [fees, setFees] = useState<Fee[] | undefined>(initialFees);
   console.log("fees", fees);
 
   // const changePage = (direction) => {
@@ -76,7 +82,7 @@ function FeeData() {
         <h3>Fee Details</h3>
       </div>
       {isLoading && <Loader />}
-      <div className="flex flex-col md:flex-row gap-4 justify-between p-4">
+      <div className="flex flex-col justify-between gap-4 p-4 md:flex-row">
         <div>
           <div>
             <input
@@ -86,7 +92,7 @@ function FeeData() {
               name="id"
               value={search?.id}
               type="text"
-              className="shadow appearance-none border bg-[#F7F6FB] rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="focus:shadow-outline w-full appearance-none rounded border bg-[#F7F6FB] py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
               placeholder="Search by ID ..."
             />
           </div>
@@ -100,7 +106,7 @@ function FeeData() {
               name="name"
               value={search?.name}
               type="text"
-              className="shadow appearance-none border bg-[#F7F6FB] rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="focus:shadow-outline w-full appearance-none rounded border bg-[#F7F6FB] py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
               placeholder="Search by student Name ..."
             />
           </div>
@@ -116,7 +122,7 @@ function FeeData() {
                   setSubmit(true);
                 }}
                 type="button"
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                className="rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
               >
                 Search
               </button>
@@ -127,14 +133,14 @@ function FeeData() {
               <Link
                 href="admin/addfee"
                 type="button"
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center"
+                className="flex items-center rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
               >
                 {" "}
                 <Image
                   width={100}
-                  height={100} 
+                  height={100}
                   src="https://img.icons8.com/ios-glyphs/30/FFFFFF/plus-math.png"
-                  className="w-5 mr-1"
+                  className="mr-1 w-5"
                   alt=""
                 />
                 Add Fee
@@ -143,7 +149,7 @@ function FeeData() {
           )}
         </div>
       </div>
-      <div className="m-4 bg-[#F7F6FB] rounded-xl p-6 overflow-auto">
+      <div className="m-4 overflow-auto rounded-xl bg-[#F7F6FB] p-6">
         <table className="w-full text-justify">
           <thead>
             <tr>
@@ -159,11 +165,16 @@ function FeeData() {
           </thead>
           <tbody>
             {fees?.map((fee, index) => {
+              const studentFees = fees.filter(
+                (f) => f.studentId === fee.studentId
+              );
+              const invoiceSum = studentFees
+                .filter((f) => f.type === "invoice")
+                .reduce((acc, f) => acc + parseFloat(f.amount), 0);
+              const creditSum = studentFees
+                .filter((f) => f.type === "credit")
+                .reduce((acc, f) => acc + parseFloat(f.amount), 0);
 
-              const studentFees = fees.filter((f) => f.studentId === fee.studentId);
-              const invoiceSum = studentFees.filter((f) => f.type === 'invoice').reduce((acc, f) => acc + parseFloat(f.amount), 0);
-              const creditSum = studentFees.filter((f) => f.type === 'credit').reduce((acc, f) => acc + parseFloat(f.amount), 0);                
-                
               const balance = invoiceSum - creditSum;
 
               return (
@@ -186,7 +197,7 @@ function FeeData() {
                   </td>
                   <td className="p-4">{balance}</td>
                   <td className="p-4">{fee.payday}</td>
-                  <td className="text-end p-4">
+                  <td className="p-4 text-end">
                     <span>
                       {/* {parseFloat(fees.balance) < 1 ? "Paid" : "Arrears"} */}
                     </span>
@@ -197,20 +208,20 @@ function FeeData() {
           </tbody>
         </table>
       </div>
-      <div className="flex align-middle justify-center pb-10 md:pb-0">
+      <div className="flex justify-center pb-10 align-middle md:pb-0">
         <div
           onClick={() => {
             // pages.hasPreviousPage && changePage("before");
           }}
           className={` ${
             pages.hasPreviousPage
-              ? "bg-slate-700 cursor-pointer text-gray-100 hover:bg-gray-600 hover:text-white"
+              ? "cursor-pointer bg-slate-700 text-gray-100 hover:bg-gray-600 hover:text-white"
               : "bg-gray-300 text-gray-800"
-          }  inline-flex items-center px-4 py-2 mr-3 text-sm font-medium border border-gray-300 rounded-lg `}
+          }  mr-3 inline-flex items-center rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium `}
         >
           <svg
             aria-hidden="true"
-            className="w-5 h-5 mr-2"
+            className="mr-2 h-5 w-5"
             fill="currentColor"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
@@ -229,14 +240,14 @@ function FeeData() {
           }}
           className={` ${
             pages?.hasNextPage
-              ? "bg-slate-700 cursor-pointer text-gray-100 hover:bg-gray-600 hover:text-white"
+              ? "cursor-pointer bg-slate-700 text-gray-100 hover:bg-gray-600 hover:text-white"
               : "bg-gray-300 text-gray-800"
-          }  inline-flex items-center px-4 py-2 mr-3 text-sm font-medium border border-gray-300 rounded-lg `}
+          }  mr-3 inline-flex items-center rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium `}
         >
           Next
           <svg
             aria-hidden="true"
-            className="w-5 h-5 ml-2"
+            className="ml-2 h-5 w-5"
             fill="currentColor"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
