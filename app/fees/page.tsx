@@ -35,11 +35,11 @@ function FeeData() {
   }, []);
 
   const { data, isLoading, error } = api.fee.getAll.useQuery();
-  const initialFees = data?.map((fee: Fee & { student: Student }) => ({
-    ...fee,
-    student: fee.student || undefined,
-  })) as Fee[] | undefined;
-  const [fees, setFees] = useState<Fee[] | undefined>(initialFees);
+  // const initialFees = data?.map((fee: Fee & { student: Student }) => ({
+  //   ...fee,
+  //   student: fee.student || undefined,
+  // })) as Fee[] | undefined;
+  const fees: Fee[] | undefined = data;
   console.log("fees", fees);
 
   // const changePage = (direction) => {

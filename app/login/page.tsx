@@ -2,20 +2,27 @@
 import React, { useState } from "react";
 import homepic from "~/assets/homepic1.webp";
 import { Button } from "~/components";
-import {  useNavigate } from "next/link";
+import   useNavigate  from "next/link";
 import Image from "next/image";
 
+type userInput = {
+  group: string;
+  password: string;
+  userName: string;
+  radio: boolean
+}
+
 function Login({ setLogin }) {
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   
-  const [user, setUser] = useState({ password: "" });
+  const [user, setUser] = useState<userInput | undefined>();
   const [submit, setSubmit] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [invalid, setInvalid] = useState(false);
   const [passView, setPassView] = useState(false);
 
-  const handleInput = (event) => {
-    const target = event.target;
+  const handleInput = (event: React.SyntheticEvent) => {
+    const target = event.target as HTMLInputElement;
     // const value = target.type === "checkbox" ? target.checked : target.value;
     const value =
       target.type === "number" ? parseInt(target.value) : target.value;
@@ -23,7 +30,16 @@ function Login({ setLogin }) {
 
     target.type === "checkbox" && setIsChecked(!isChecked);
 
-    setUser({ ...user, [name]: value });
+    setUser((prevUser) => {
+      if (!prevUser) {
+        return {
+          [name]: value
+        } as userInput;
+      }
+      return {
+        ...user, [name]: value
+      }
+    })
   };
 
   const handleSubmit = () => {
@@ -33,19 +49,19 @@ function Login({ setLogin }) {
     setSubmit(true);
 
     axios
-      .post(`https://lmsadmin.onrender.com/user/${user.group}`, user)
+      .post(`https://lmsadmin.onrender.com/user/${user?.group}`, user)
       .then((res) => {
-        if (res.data[user.group]) {
-          setLogin({ ...res.data[user.group], type: user.group });
+        if (res.data[user?.group]) {
+          setLogin({ ...res.data[user?.group], type: user?.group });
           localStorage.setItem(
             "user",
-            JSON.stringify({ ...res.data[user.group], type: user.group })
+            JSON.stringify({ ...res.data[user?.group], type: user?.group })
           );
           localStorage.setItem("saved", JSON.stringify(isChecked));
-          axios.defaults.headers.common["Authorization"] = `${
-            res.data[user.group].token
-            }`;
-          navigate("/")
+          // axios.defaults.headers.common["Authorization"] = `${
+          //   res.data[user?.group].token
+          //   }`;
+          // navigate("/")
         } else {
           setInvalid(true);
         }
@@ -91,7 +107,7 @@ function Login({ setLogin }) {
                   }}
                   required
                   name="group"
-                  value={user.group}
+                  value={user?.group}
                   className="block appearance-none w-full text-black bg-white border border-gray-400 hover:border-gray-500 px-4 py-3 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
                 >
                   <option>Select group</option>
@@ -120,7 +136,7 @@ function Login({ setLogin }) {
                     handleInput(e);
                   }}
                   name="userName"
-                  value={user.userName}
+                  value={user?.userName}
                   className="block shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   type="text"
                   placeholder="eg: 01john"
@@ -147,7 +163,7 @@ function Login({ setLogin }) {
                   }}
                   checked={isChecked}
                   name="password"
-                  value={user.password}
+                  value={user?.password}
                   className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline pass-input"
                   type={`${passView ? "text" : "password"}`}
                 />
@@ -171,7 +187,7 @@ function Login({ setLogin }) {
                     onChange={(e) => {
                       handleInput(e);
                     }}
-                    value={user.radio}
+                    value={user?.radio}
                     className="mr-2 w-4 h-4"
                     type="checkbox"
                     name="radio"

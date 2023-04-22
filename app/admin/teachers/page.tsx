@@ -1,12 +1,13 @@
-'use client'
+"use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button, Loader } from "~/components";
 import Image from "next/image";
-import type {  Teacher } from '~/api/types'
+import type { Teacher } from "api/types";
 import { api } from "@/utils/api";
 
 function Teachers() {
+  // const [teachers, setTeachers] = useState<Teacher[] | undefined>();
   const [isDelete, setisDelete] = useState(false);
   const [submit, setSubmit] = useState(false);
   const [delTeacher, setDelTeacher] = useState("");
@@ -17,17 +18,18 @@ function Teachers() {
   });
 
   // useEffect(() => {
-  //   axios.get("https://lmsadmin.onrender.com/teachers").then((res) => {
-  //     setTeachers(res.data.edges);
-  //     setPages(res.data.pageInfo);
+  //   axios.get<Teacher[] | undefined>("https://lmsadmin.onrender.com/teachers").then((res) => {
+  //     // setTeachers(res.data.edges);
+  //     // setPages(res.data.pageInfo);
   //     setLoading(false);
-  //   });
+  //   }).catch(err => console.log(err))
+  //     .then(() => console.log('this will succeed'))
+  //     .catch(() => 'obligatory catch');
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
 
-  const {data, isLoading, error} = api.teacher.getAll.useQuery();
-  const [teachers, setTeachers] = useState<Teacher[]>(data);
-  console.log("teachers", teachers)
+  const { data, isLoading, error } = api.teacher.getAll.useQuery();
+  const teachers: Teacher[] | undefined = data;
 
   // const changePage = (direction) => {
   //   const data = {
@@ -45,13 +47,13 @@ function Teachers() {
 
   console.log("pages", pages);
 
-  const searchSubmit = async () => {
-    const data = await axios.get(
-      `https://lmsadmin.onrender.com/teachers/teacher?name=${search}`
-    );
-    // setTeachers(data.data);
-    setSubmit(false);
-  };
+  // const searchSubmit = async () => {
+  //   const data = await axios.get(
+  //     `https://lmsadmin.onrender.com/teachers/teacher?name=${search}`
+  //   );
+  //   setTeachers(data.data);
+  //   setSubmit(false);
+  // };
 
   // const deleteTeacher = () => {
   //   axios
@@ -70,42 +72,42 @@ function Teachers() {
 
   const ConfirmDel = () => {
     return (
-      <div className="w-full absolute h-screen z-20">
+      <div className="absolute z-20 h-screen w-full">
         <div
-          className="fixed right-0 w-[100%] lg:w-screen p-4 h-full opacity-40 bg-blend-darken bg-[#979799]"
+          className="fixed right-0 h-full w-[100%] bg-[#979799] p-4 opacity-40 bg-blend-darken lg:w-screen"
           onClick={() => {
             setisDelete(!isDelete);
           }}
         ></div>
         <div
           className="
-                flex flex-col mx-auto fixed left-[45%] pt-[10%] h-screen opacity-100 bg-blend-darken "
+                fixed left-[45%] mx-auto flex h-screen flex-col pt-[10%] opacity-100 bg-blend-darken "
         >
-          <div className="text-center bg-white rounded-lg md:max-w-md md:mx-auto p-4 fixed inset-x-0 bottom-0 z-50 mb-4 mx-4 md:relative">
+          <div className="fixed inset-x-0 bottom-0 z-50 mx-4 mb-4 rounded-lg bg-white p-4 text-center md:relative md:mx-auto md:max-w-md">
             <Image
-    width={100}
-    height={100} 
+              width={100}
+              height={100}
               onClick={() => {
                 setisDelete(false);
               }}
-              className="w-8 cursor-pointer hover:bg-gray-200 p-1 rounded absolute right-2 top-2"
+              className="absolute right-2 top-2 w-8 cursor-pointer rounded p-1 hover:bg-gray-200"
               src="https://img.icons8.com/color/48/000000/delete-sign--v1.png"
               alt=""
             />
-            <div className="md:flex md:flex-col items-center">
-              <div className="mt-4 md:mt-0 md:ml-6 text-center ">
-                <p className="font-bold text-xl">Confirm teacher deletion</p>
-                <p className="text-base text-gray-600 my-2">
+            <div className="items-center md:flex md:flex-col">
+              <div className="mt-4 text-center md:mt-0 md:ml-6 ">
+                <p className="text-xl font-bold">Confirm teacher deletion</p>
+                <p className="my-2 text-base text-gray-600">
                   Are you sure you want to delete this teacher from the school
                   platform?
                 </p>
               </div>
-              <div className="text-orange-500 text-start rounded-xl bg-[#F7F6FB] p-2">
+              <div className="rounded-xl bg-[#F7F6FB] p-2 text-start text-orange-500">
                 <div className="flex text-orange-600">
-                  <Image 
-    width={100}
-    height={100} 
-                    className="w-6 mr-1"
+                  <Image
+                    width={100}
+                    height={100}
+                    className="mr-1 w-6"
                     src="https://img.icons8.com/ios-glyphs/30/EE640C/error--v2.png"
                     alt=""
                   />
@@ -115,12 +117,12 @@ function Teachers() {
                 permanently deleted.
               </div>
             </div>
-            <div className="text-center text-white flex justify-around mt-4 md:flex md:px-8">
+            <div className="mt-4 flex justify-around text-center text-white md:flex md:px-8">
               <button
                 onClick={() => {
                   setisDelete(false);
                 }}
-                className="block hover:bg-gray-400 w-full md:w-auto px-4 py-2 bg-gray-500 rounded-lg font-semibold text-sm mt-4 md:mt-0"
+                className="mt-4 block w-full rounded-lg bg-gray-500 px-4 py-2 text-sm font-semibold hover:bg-gray-400 md:mt-0 md:w-auto"
               >
                 Cancel
               </button>
@@ -132,7 +134,7 @@ function Teachers() {
                     // deleteTeacher();
                     setSubmit(true);
                   }}
-                  className="hover:bg-red-400 hover:text-white w-full md:w-auto px-4 py-3 md:py-2 bg-red-600 text-white rounded-lg font-semibold text-sm "
+                  className="w-full rounded-lg bg-red-600 px-4 py-3 text-sm font-semibold text-white hover:bg-red-400 hover:text-white md:w-auto md:py-2 "
                 >
                   Yes, confirm delete
                 </button>
@@ -154,7 +156,7 @@ function Teachers() {
       </div>
       {isLoading && <Loader />}
       <div>
-        <div className="flex flex-col md:flex-row gap-4 justify-between p-4">
+        <div className="flex flex-col justify-between gap-4 p-4 md:flex-row">
           <div>
             <input
               onChange={(e) => {
@@ -163,7 +165,7 @@ function Teachers() {
               value={search}
               name="name"
               type="text"
-              className="shadow appearance-none border bg-[#F7F6FB] rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="focus:shadow-outline w-full appearance-none rounded border bg-[#F7F6FB] py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
               placeholder="Search by Name ..."
             />
           </div>
@@ -178,7 +180,7 @@ function Teachers() {
                   setSubmit(true);
                 }}
                 type="button"
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                className="rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
               >
                 Search
               </button>
@@ -187,14 +189,14 @@ function Teachers() {
               <Link
                 href="/addteacher"
                 type="button"
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center"
+                className="flex items-center rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
               >
                 {" "}
-                <Image 
+                <Image
                   width={100}
-                  height={100} 
+                  height={100}
                   src="https://img.icons8.com/ios-glyphs/30/FFFFFF/plus-math.png"
-                  className="w-5 mr-1"
+                  className="mr-1 w-5"
                   alt=""
                 />
                 Add
@@ -202,7 +204,7 @@ function Teachers() {
             </div>
           </div>
         </div>
-        <div className="m-4 bg-[#F7F6FB] rounded-xl p-4 overflow-auto">
+        <div className="m-4 overflow-auto rounded-xl bg-[#F7F6FB] p-4">
           <table className=" w-full text-justify">
             <thead>
               <tr>
@@ -228,20 +230,16 @@ function Teachers() {
                       <a href="student-details.html">{teacher.name}</a>
                     </h2>
                   </td>
-                  <td className="p-4">
-                    {teacher.email?.substring(0, 29)}
-                  </td>
+                  <td className="p-4">{teacher.email?.substring(0, 29)}</td>
                   <td className="p-4">{teacher.dateOfBirth}</td>
-                  <td className="p-4">
-                    {teacher.qualification}
-                  </td>
+                  <td className="p-4">{teacher.qualification}</td>
                   <td className="p-4">{teacher.joiningDate}</td>
                   <td className="p-4">{teacher.phone}</td>
-                  <td className="p-4 flex gap-2">
+                  <td className="flex gap-2 p-4">
                     <Link href="/addteacher">
-                      <Image 
+                      <Image
                         width={100}
-                        height={100} 
+                        height={100}
                         src="https://img.icons8.com/external-kiranshastry-solid-kiranshastry/64/000000/external-edit-interface-kiranshastry-solid-kiranshastry.png"
                         alt=""
                         className="w-6 cursor-pointer"
@@ -253,9 +251,9 @@ function Teachers() {
                         setDelTeacher(teacher.slug);
                       }}
                     >
-                      <Image 
+                      <Image
                         width={100}
-                        height={100} 
+                    height={100}
                         src="https://img.icons8.com/ios-filled/50/000000/waste.png"
                         alt=""
                         className="w-6 cursor-pointer"
@@ -267,20 +265,20 @@ function Teachers() {
             </tbody>
           </table>
         </div>
-        <div className="flex align-middle justify-center pb-10 md:pb-0">
+        <div className="flex justify-center pb-10 align-middle md:pb-0">
           <div
             onClick={() => {
               // pages.hasPreviousPage && changePage("before");
             }}
             className={` ${
               pages.hasPreviousPage
-                ? "bg-slate-700 cursor-pointer text-gray-100 hover:bg-gray-600 hover:text-white"
+                ? "cursor-pointer bg-slate-700 text-gray-100 hover:bg-gray-600 hover:text-white"
                 : "bg-gray-300 text-gray-800"
-            }  inline-flex items-center px-4 py-2 mr-3 text-sm font-medium border border-gray-300 rounded-lg `}
+            }  mr-3 inline-flex items-center rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium `}
           >
             <svg
               aria-hidden="true"
-              className="w-5 h-5 mr-2"
+              className="mr-2 h-5 w-5"
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
@@ -299,14 +297,14 @@ function Teachers() {
             }}
             className={` ${
               pages.hasNextPage
-                ? "bg-slate-700 cursor-pointer text-gray-100 hover:bg-gray-600 hover:text-white"
+                ? "cursor-pointer bg-slate-700 text-gray-100 hover:bg-gray-600 hover:text-white"
                 : "bg-gray-300 text-gray-800"
-            }  inline-flex items-center px-4 py-2 mr-3 text-sm font-medium border border-gray-300 rounded-lg `}
+            }  mr-3 inline-flex items-center rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium `}
           >
             Next
             <svg
               aria-hidden="true"
-              className="w-5 h-5 ml-2"
+              className="ml-2 h-5 w-5"
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"

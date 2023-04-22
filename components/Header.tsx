@@ -1,14 +1,14 @@
 "use client";
 import axios from "axios";
 import React, { useState } from "react";
-import { usePathname } from 'next/navigation';
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import type { User } from "api/types";
 
 type Props = {
-  user: User
-}
+  user: User;
+};
 
 function Header({ user }: Props) {
   const [opened, setOpened] = useState(false);
@@ -18,7 +18,6 @@ function Header({ user }: Props) {
   // const router = useRouter();
   const currentRoute = usePathname();
 
-
   const logOut = () => {
     localStorage.setItem("saved", JSON.stringify(false));
     localStorage.removeItem("user");
@@ -27,18 +26,18 @@ function Header({ user }: Props) {
   };
 
   return (
-    <div className="mx-auto sticky top-0 z-40 bg-blend-darken bg-[#F7F6FB]">
+    <div className="sticky top-0 z-40 mx-auto bg-[#F7F6FB] bg-blend-darken">
       <div className="pl-4">
         <nav className="flex items-center justify-between">
           <div
-            className="space-y-1 md:space-y-2 cursor-pointer p-2"
+            className="cursor-pointer space-y-1 p-2 md:space-y-2"
             onClick={() => {
               setOpened(!opened);
             }}
           >
-            <div className="w-6 rounded md:w-8 h-1 bg-blue-600"></div>
-            <div className="w-6 rounded md:w-8 h-1 bg-blue-600"></div>
-            <div className="w-6 rounded md:w-8 h-1 bg-blue-600"></div>
+            <div className="h-1 w-6 rounded bg-blue-600 md:w-8"></div>
+            <div className="h-1 w-6 rounded bg-blue-600 md:w-8"></div>
+            <div className="h-1 w-6 rounded bg-blue-600 md:w-8"></div>
           </div>
           <div>
             <div className="relative inline-block text-left">
@@ -47,22 +46,22 @@ function Header({ user }: Props) {
                   onClick={() => {
                     setDropdown(!dropdown);
                   }}
-                  className="inline-flex cursor-pointer py-1 items-center w-full justify-center bg-[#F7F6FB] px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:border-2 focus:border-gray-500"
+                  className="inline-flex w-full cursor-pointer items-center justify-center bg-[#F7F6FB] py-1 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:border-2 focus:border-gray-500"
                   aria-expanded="true"
                   aria-haspopup="true"
                 >
                   <Image
-                  width={10}
-                  height={10}
-                    className="w-6 mr-2 bg-[#F7F6FB] rounded-sm"
+                    width={10}
+                    height={10}
+                    className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
                     src="https://img.icons8.com/material-rounded/24/000000/user.png"
                     alt=""
                   />
                   <div className="flex flex-col ">
-                    <span className="text-md md:text-lg -mb-2">
+                    <span className="text-md -mb-2 md:text-lg">
                       {user.name}
                     </span>
-                    <span className="text-sm text-center text-blue-600">
+                    <span className="text-center text-sm text-blue-600">
                       {user.type}
                     </span>
                   </div>
@@ -83,7 +82,7 @@ function Header({ user }: Props) {
 
               {dropdown && (
                 <div
-                  className="absolute right-0 px-1 z-10 -mt-1 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  className="absolute right-0 z-10 -mt-1 w-56 origin-top-right rounded-md bg-white px-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                   role="menu"
                   aria-orientation="vertical"
                   aria-labelledby="menu-button"
@@ -95,22 +94,22 @@ function Header({ user }: Props) {
                         setDropdown(false);
                       }}
                       href="/account"
-                      className="text-gray-700 block px-4 py-2 text-sm cursor-pointer hover:bg-gray-100"
+                      className="block cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       tabIndex={-1}
                     />
-                      Account
-                    </div>
-                    <div
-                      onClick={() => {
-                        logOut();
-                        setDropdown(false);
-                      }}
-                      className="text-gray-700 block px-4 py-2 text-sm cursor-pointer hover:bg-gray-100"
-                      tabIndex={-1}
-                    >
-                      Log Out
-                    </div>
+                    Account
                   </div>
+                  <div
+                    onClick={() => {
+                      logOut();
+                      setDropdown(false);
+                    }}
+                    className="block cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    tabIndex={-1}
+                  >
+                    Log Out
+                  </div>
+                </div>
               )}
             </div>
           </div>
@@ -119,7 +118,7 @@ function Header({ user }: Props) {
       <div>
         <div className={`${opened ? "block " : "hidden md:block"}`}>
           <div
-            className="md:hidden absolute right-0 w-screen h-screen opacity-20 bg-blend-darken bg-black"
+            className="absolute right-0 h-screen w-screen bg-black opacity-20 bg-blend-darken md:hidden"
             onClick={() => {
               setOpened(!opened);
             }}
@@ -129,22 +128,20 @@ function Header({ user }: Props) {
               setOpened(!opened);
             }}
             className="
-                flex flex-col absolute left-0 w-[60%] md:w-60 p-4 h-screen opacity-100 bg-blend-darken bg-[#F7F6FB] overflow-y-auto "
+                absolute left-0 flex h-screen w-[60%] flex-col overflow-y-auto bg-[#F7F6FB] p-4 opacity-100 bg-blend-darken md:w-60 "
           >
             <Link
               href="/"
-              className={
-                `mt-4 align-middle p-2 rounded-md flex items-center text-gray-800 hover:text-blue-700 cursor-pointer ${
-                  currentRoute === "/admin"
-                    ? "bg-blue-700 text-white hover:text hover:text-white"
-                    : ""
-                }`
-              }
+              className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
+                currentRoute === "/admin"
+                  ? "hover:text bg-blue-700 text-white hover:text-white"
+                  : ""
+              }`}
             >
               <Image
-              width={10}
-              height={10}
-                className="w-6 mr-2 bg-[#F7F6FB] rounded-sm"
+                width={10}
+                height={10}
+                className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
                 src="https://img.icons8.com/material-rounded/24/000000/dashboard-layout.png"
                 alt=""
               />
@@ -153,18 +150,16 @@ function Header({ user }: Props) {
             {!(user.type === "student") && (
               <Link
                 href="/allstudents"
-                className={
-                  `mt-4 align-middle p-2 rounded-md flex items-center text-gray-800 hover:text-blue-700 cursor-pointer ${
-                    currentRoute === "/students"
-                      ? "bg-blue-700 text-white hover:text hover:text-white"
-                      : ""
-                  }`
-                }
+                className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
+                  currentRoute === "/students"
+                    ? "hover:text bg-blue-700 text-white hover:text-white"
+                    : ""
+                }`}
               >
                 <Image
-                width={10}
-                height={10}
-                  className="w-6 mr-2 bg-[#F7F6FB] rounded-sm"
+                  width={10}
+                  height={10}
+                  className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
                   src="https://img.icons8.com/material-rounded/24/000000/student-center.png"
                   alt=""
                 />
@@ -174,19 +169,17 @@ function Header({ user }: Props) {
             {user.type === "admin" && (
               <div className="">
                 <Link
-                  href="/teacher"
-                  className={
-                    `mt-4 align-middle p-2 rounded-md flex items-center text-gray-800 hover:text-blue-700 cursor-pointer ${
-                      currentRoute === "/teachers"
-                        ? "bg-blue-700 text-white hover:text hover:text-white"
-                        : ""
-                    }`
-                  }
+                  href="/admin/teachers"
+                  className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
+                    currentRoute === "/teachers"
+                      ? "hover:text bg-blue-700 text-white hover:text-white"
+                      : ""
+                  }`}
                 >
                   <Image
-                  width={10}
-                  height={10}
-                    className="w-6 mr-2 bg-[#F7F6FB] rounded-sm"
+                    width={10}
+                    height={10}
+                    className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
                     src="https://img.icons8.com/material-rounded/24/000000/teacher.png"
                     alt=""
                   />
@@ -196,18 +189,16 @@ function Header({ user }: Props) {
             )}
             <Link
               href="/exams"
-              className={
-                `mt-4 align-middle p-2 rounded-md flex items-center text-gray-800 hover:text-blue-700 cursor-pointer ${
-                  currentRoute === "/exams"
-                    ? "bg-blue-700 text-white hover:text hover:text-white"
-                    : ""
-                }`
-              }
+              className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
+                currentRoute === "/exams"
+                  ? "hover:text bg-blue-700 text-white hover:text-white"
+                  : ""
+              }`}
             >
               <Image
-              width={10}
-              height={10}
-                className="w-6 mr-2 bg-[#F7F6FB] rounded-sm"
+                width={10}
+                height={10}
+                className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
                 src="https://img.icons8.com/material-rounded/24/000000/test-partial-passed.png"
                 alt=""
               />
@@ -215,18 +206,16 @@ function Header({ user }: Props) {
             </Link>
             <Link
               href="/calender"
-              className={
-                `mt-4 align-middle p-2 rounded-md flex items-center text-gray-800 hover:text-blue-700 cursor-pointer ${
-                  currentRoute === "/calender"
-                    ? "bg-blue-700 text-white hover:text hover:text-white"
-                    : ""
-                }`
-              }
+              className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
+                currentRoute === "/calender"
+                  ? "hover:text bg-blue-700 text-white hover:text-white"
+                  : ""
+              }`}
             >
               <Image
-              width={10}
-              height={10}
-                className="w-6 mr-2 bg-[#F7F6FB] rounded-sm"
+                width={10}
+                height={10}
+                className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
                 src="https://img.icons8.com/material-rounded/24/000000/2012.png"
                 alt=""
               />
@@ -235,18 +224,16 @@ function Header({ user }: Props) {
 
             <Link
               href="/fees"
-              className={
-                `mt-4 align-middle p-2 rounded-md flex items-center text-gray-800 hover:text-blue-700 cursor-pointer ${
-                  currentRoute === "/fee"
-                    ? "bg-blue-700 text-white hover:text hover:text-white"
-                    : ""
-                }`
-              }
+              className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
+                currentRoute === "/fee"
+                  ? "hover:text bg-blue-700 text-white hover:text-white"
+                  : ""
+              }`}
             >
               <Image
-              width={10}
-              height={10}
-                className="w-6 mr-2 bg-[#F7F6FB] rounded-sm"
+                width={10}
+                height={10}
+                className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
                 src="https://img.icons8.com/material-rounded/24/000000/currency-exchange.png"
                 alt=""
               />
@@ -254,23 +241,21 @@ function Header({ user }: Props) {
             </Link>
             {user.type === "admin" && (
               <div className="">
-                <h2 className="text-sm px-2 text-gray-600 border-b pt-1 w-fit">
+                <h2 className="w-fit border-b px-2 pt-1 text-sm text-gray-600">
                   Data Management
                 </h2>
                 <Link
                   href="/admin/admins/add"
-                  className={
-                    `mt-4 align-middle p-2 rounded-md flex items-center text-gray-800 hover:text-blue-700 cursor-pointer ${
-                      currentRoute === "/addadmin"
-                        ? "bg-blue-700 text-white hover:text hover:text-white"
-                        : ""
-                    }`
-                  }
+                  className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
+                    currentRoute === "/addadmin"
+                      ? "hover:text bg-blue-700 text-white hover:text-white"
+                      : ""
+                  }`}
                 >
                   <Image
-                  width={10}
-                  height={10}
-                    className="w-6 mr-2 bg-[#F7F6FB] rounded-sm"
+                    width={10}
+                    height={10}
+                    className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
                     src="https://img.icons8.com/ios-filled/50/000000/admin-settings-male.png"
                     alt=""
                   />
@@ -278,18 +263,16 @@ function Header({ user }: Props) {
                 </Link>
                 <Link
                   href="/addlesson"
-                  className={
-                    `mt-4 align-middle p-2 rounded-md flex items-center text-gray-800 hover:text-blue-700 cursor-pointer ${
-                      currentRoute === "/addlesson"
-                        ? "bg-blue-700 text-white hover:text hover:text-white"
-                        : ""
-                    }`
-                  }
+                  className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
+                    currentRoute === "/addlesson"
+                      ? "hover:text bg-blue-700 text-white hover:text-white"
+                      : ""
+                  }`}
                 >
                   <Image
-                  width={10}
-                  height={10}
-                    className="w-6 mr-2 bg-[#F7F6FB] rounded-sm"
+                    width={10}
+                    height={10}
+                    className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
                     src="https://img.icons8.com/external-vitaliy-gorbachev-fill-vitaly-gorbachev/60/000000/external-lesson-university-vitaliy-gorbachev-fill-vitaly-gorbachev-1.png"
                     alt=""
                   />
@@ -297,18 +280,16 @@ function Header({ user }: Props) {
                 </Link>
                 <Link
                   href="/admin/streams/add"
-                  className={
-                    `mt-4 align-middle p-2 rounded-md flex items-center text-gray-800 hover:text-blue-700 cursor-pointer ${
-                      currentRoute === "/addstream"
-                        ? "bg-blue-700 text-white hover:text hover:text-white"
-                        : ""
-                    }`
-                  }
+                  className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
+                    currentRoute === "/addstream"
+                      ? "hover:text bg-blue-700 text-white hover:text-white"
+                      : ""
+                  }`}
                 >
                   <Image
-                  width={10}
-                  height={10}
-                    className="w-6 mr-2 bg-[#F7F6FB] rounded-sm"
+                    width={10}
+                    height={10}
+                    className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
                     src="https://img.icons8.com/material/24/000000/school-building.png"
                     alt=""
                   />
@@ -316,18 +297,16 @@ function Header({ user }: Props) {
                 </Link>
                 <Link
                   href="/admin/subjects/add"
-                  className={
-                    `mt-4 align-middle p-2 rounded-md flex items-center text-gray-800 hover:text-blue-700 cursor-pointer ${
-                      currentRoute === "/addsubject"
-                        ? "bg-blue-700 text-white hover:text hover:text-white"
-                        : ""
-                    }`
-                  }
+                  className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
+                    currentRoute === "/addsubject"
+                      ? "hover:text bg-blue-700 text-white hover:text-white"
+                      : ""
+                  }`}
                 >
                   <Image
-                  width={10}
-                  height={10}
-                    className="w-6 mr-2 bg-[#F7F6FB] rounded-sm"
+                    width={10}
+                    height={10}
+                    className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
                     src="https://img.icons8.com/ios-filled/50/000000/wordbook.png"
                     alt=""
                   />
@@ -352,18 +331,16 @@ function Header({ user }: Props) {
               </Link> */}
             <Link
               href="/account"
-              className={
-                `mt-4 align-middle p-2 rounded-md flex items-center text-gray-800 hover:text-blue-700 cursor-pointer ${
-                  currentRoute === "/account"
-                    ? "bg-blue-700 text-white hover:text hover:text-white"
-                    : ""
-                }`
-              }
+              className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
+                currentRoute === "/account"
+                  ? "hover:text bg-blue-700 text-white hover:text-white"
+                  : ""
+              }`}
             >
               <Image
-              width={10}
-              height={10}
-                className="w-6 mr-2 bg-[#F7F6FB] rounded-sm"
+                width={10}
+                height={10}
+                className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
                 src="https://img.icons8.com/material-rounded/24/000000/user.png"
                 alt=""
               />

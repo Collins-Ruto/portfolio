@@ -4,39 +4,45 @@ import { Calender, Loader } from "~/components";
 // import Link from "next/link";
 import { format } from "date-fns";
 import Image from "next/image";
-import axios from "axios";
+import { DummyUser, type User } from "~/api/types";
 
 function Dashboard() {
   const [data, setData] = useState({});
-  const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
 
   //https://lmsadmin.onrender.com
-  useEffect(() => {
-    const user = JSON?.parse(localStorage.getItem("user"));
-    setUser(user);
-    console.log(user);
-    axios
-      .post("https://lmsadmin.onrender.com/data", { slug: user?.stream?.slug })
-      .then((res) => {
-        setData(res.data);
-        setLoading(false);
-      });
-  }, []);
+  // useEffect(() => {
+  //   const user = JSON?.parse(localStorage.getItem("user"));
+  //   setUser(user);
+  //   console.log(user);
+  //   axios
+  //     .post("https://lmsadmin.onrender.com/data", { slug: user?.stream?.slug })
+  //     .then((res) => {
+  //       setData(res.data);
+  //       setLoading(false);
+  //     });
+  // }, []);
+  
+  const userFromLocalStorage = localStorage.getItem("user");
+  const user: User =
+    userFromLocalStorage !== null
+      ? (JSON.parse(userFromLocalStorage) as User)
+      : DummyUser;
+
   const termVvalue = "II";
 
   const currentTime = new Date();
 
-  const todayLessons = data.lessonsToday?.lessons.filter(
-    (lesson) => format(currentTime, "EEE") === lesson.day
-  );
+  // const todayLessons = data.lessonsToday?.lessons.filter(
+  //   (lesson) => format(currentTime, "EEE") === lesson.day
+  // );
 
   console.log("data", data);
 
   const datas = [
     {
       title: "Lessons Today",
-      value: todayLessons?.length || "...",
+      // value: todayLessons?.length || "...",
       url: "https://icons-for-free.com/iconfiles/png/512/reading-131964753179295908.png",
     },
     {
@@ -46,12 +52,12 @@ function Dashboard() {
     },
     {
       title: "Subjects offered",
-      value: data.subjects || "...",
+      // value: data.subjects || "...",
       url: "https://cdn-icons-png.flaticon.com/512/3426/3426653.png",
     },
     {
       title: "Students",
-      value: data.students || "...",
+      // value: data.students || "...",
       url: "https://preschool.dreamguystech.com/template/assets/img/icons/dash-icon-01.svg",
     },
   ];
