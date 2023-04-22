@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { useState } from "react";
 import { Button, StatusMsg } from "~/components";
 import { api } from "@/utils/api";
@@ -19,12 +19,14 @@ const dum2 = {
 };
 
 function AddTeacher() {
-  const [teacher, setTeacher] = useState<Teacher | undefined>({ dum2 });
+  const [teacher, setTeacher] = useState<Teacher>();
   const [confPass, setConfPass] = useState("");
   const [submit, setSubmit] = useState(false);
   const [status, setStatus] = useState({});
 
-  type InputEvent = React.ChangeEvent<HTMLInputElement>;
+  type InputEvent = React.ChangeEvent<
+    HTMLInputElement | HTMLInputElement | HTMLSelectElement
+  >;
 
   const handleInput = (event: InputEvent): void => {
     const target = event.target;
@@ -96,7 +98,7 @@ function AddTeacher() {
                 name="name"
               />
             </div>
-            
+
             <div className="relative inline-block items-center">
               <label>
                 Gender <span className="text-red-500">*</span>
@@ -160,7 +162,7 @@ function AddTeacher() {
             <div>
               <label>Phone </label>
               <input
-                onChange={(e) => {
+                onInput={(e) => {
                   handleInput(e);
                 }}
                 value={teacher?.phone}
