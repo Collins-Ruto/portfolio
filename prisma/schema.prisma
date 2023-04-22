@@ -104,7 +104,7 @@ model Admin {
     slug        String @unique 
     email       String
     password    String
-    phone       Int
+    phone       String
 }
 
 model Exam {

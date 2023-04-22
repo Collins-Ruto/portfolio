@@ -3,7 +3,6 @@ import { z } from "zod";
 import {
   createTRPCRouter,
   publicProcedure,
-  protectedProcedure,
 } from "@/server/api/trpc";
 
 export const examRouter = createTRPCRouter({
@@ -34,15 +33,16 @@ export const examRouter = createTRPCRouter({
         });
     }),
 
-  getSecretMessage: protectedProcedure.query(() => {
-    return "you can now see this secret message!";
+  addExam: publicProcedure.input(z.object({
+    name: z.string(),
+    slug: z.string(),
+    term: z.string(),
+    examDate: z.string(),
+    studentId: z.string()
+  })).mutation(({ ctx, input }) => {
+    console.log("trpc input", input)
+    return ctx.prisma.exam.create({
+      data: input,
+    });
   }),
-    
-  hello: publicProcedure
-    .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input.text}`,
-      };
-    }),
 });

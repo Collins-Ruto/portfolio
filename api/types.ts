@@ -32,7 +32,7 @@ export type Admin = {
   password: string
   emai: string
   slug: string
-  phone: number
+  phone: string
 }
 
 export interface StudentInt {

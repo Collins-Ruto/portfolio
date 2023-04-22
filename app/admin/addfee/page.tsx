@@ -1,7 +1,7 @@
 "use client";
 import { type Fee } from "@prisma/client";
 import React, { useState } from "react";
-import { Button, DateTime } from "~/components";
+import { Button } from "~/components";
 import StatusMsg from "~/components/StatusMsg";
 import { api } from "@/utils/api";
 
@@ -39,55 +39,28 @@ function AddFee() {
     });
   };
 
-  // const handleSubmit = () => {
-  //   setSubmit(true);
-  //   axios.post("https://lmsadmin.onrender.com/fees", fee).then((res) => {
-  //     setSubmit(false);
-  //     console.log(res.data);
-  //     const data = res.data;
-  //     setStatus(
-  //       res.data.message === "success"
-  //         ? {
-  //             type: "success",
-  //             message: `${fee.type} of ${fee.amount} to ${fee.stdt_slug} is succesfull`,
-  //           }
-  //         : { type: "error", message: data.message }
-  //     );
-  //     setTimeout(() => {
-  //       res.data.message === "success" && window.location.reload(true);
-  //     }, 2000);
-  //   });
-  //   //   http://localhost:8000
-  // };
-
   const addFeeMutation = api.fee.addFee.useMutation();
   
   const handleSubmit = () => {
     setSubmit(true);
-    
-    // Use the useMutation hook from tRPC
-    
+        
     try {
       console.log("add fee", fee)
       const data = addFeeMutation.mutate(fee as Fee);
 
       setSubmit(false);
-      // const data = res.data;
       console.log("add fee data",data);
-      // setStatus(
-      //   res.data.message === "success"
-      //     ? {
-      //         type: "success",
-      //         message: `${fee.type} of ${fee.amount} to ${fee.stdt_slug} is succesfull`,
-      //       }
-      //     : { type: "error", message: data.message }
-      // );
+      setStatus({
+              type: "success",
+              message: `${fee?.type ?? "fee"} of ${fee?.amount ?? ""} is succesfull`,
+            }
+      );
       setTimeout(() => {
         // data.message === "success" && window.location.reload();
       }, 2000);
     } catch (error) {
       setSubmit(false);
-      // setStatus({ type: "error", message: error.message });
+      setStatus({ type: "error", message: "error check your input" });
     }
   };
 

@@ -14,23 +14,41 @@ export const studentRouter = createTRPCRouter({
       }
     });
   }),
-    
+
   getById: publicProcedure.input(z.string()).query(({ ctx, input }) => {
     if (input === 'all') {
-        return ctx.prisma.student.findMany({
-            select: {
-                id: true,
-                name: true,
-                email: true,
-            },
-        });
+      return ctx.prisma.student.findMany({
+        select: {
+          id: true,
+          name: true,
+          email: true,
+        },
+      });
     }
-    }),
+  }),
+
+  addStudent: publicProcedure.input(z.object({
+    name: z.string(),
+    slug: z.string(),
+    email: z.string(),
+    password: z.string(),
+    phone: z.string(),
+    parent: z.string(),
+    gender: z.string(),
+    admissionId: z.string(),
+    streamId: z.string(),
+    dateOfBirth: z.string(),
+  })).mutation(({ ctx, input }) => {
+    console.log("trpc input", input)
+    return ctx.prisma.student.create({
+      data: input,
+    });
+  }),
 
   getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";
   }),
-    
+
   hello: publicProcedure
     .input(z.object({ text: z.string() }))
     .query(({ input }) => {
