@@ -33,8 +33,8 @@ function FeeData() {
   }, []);
 
   const {data, isLoading, error} = api.fee.getAll.useQuery();
-   const [fees, setFees] = useState<Fee[] | undefined>(data);
-   console.log("fees", fees);
+  const [fees, setFees] = useState<Fee[] | undefined>(data);
+  console.log("fees", fees);
 
   // const changePage = (direction) => {
   //   const data = {
@@ -125,7 +125,7 @@ function FeeData() {
           {userType === "admin" && (
             <div>
               <Link
-                href="/addfee"
+                href="admin/addfee"
                 type="button"
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center"
               >
