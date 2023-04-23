@@ -1,8 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Calender, Loader } from "../../components";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import Link from "next/link";
 import { format } from "date-fns";
 import Image from "next/image";
 import { DummyUser, type User } from "~/api/types";
@@ -109,7 +108,7 @@ function Dashboard() {
             <div className="mt-4 flex justify-between p-1" key={data.title}>
               <span className="text-lg">{data.title}</span>
               <Link
-                to={data.path}
+                href={data.path}
                 type="btn"
                 className="flex items-center rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
               >

@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import homepic from "~/assets/homepic1.webp";
 import { Button } from "~/components";
-import useNavigate from "next/link";
+import {useRouter} from "next/navigation";
 import Image from "next/image";
 import { api } from "@/utils/api";
 import { type User } from "~/api/types";
@@ -18,8 +18,8 @@ type Props = {
   setLogin: React.Dispatch<React.SetStateAction<userInput | undefined>>;
 };
 
-function Login({ setLogin }: Props) {
-  // const navigate = useNavigate()
+function Login() {
+  const router = useRouter();
 
   const [user, setUser] = useState<userInput | undefined>();
   const [submit, setSubmit] = useState(false);
@@ -37,23 +37,35 @@ function Login({ setLogin }: Props) {
 
     setUser((prevUser) => {
       if (!prevUser) {
-        return undefined;
+        return {
+          [name]: value,
+        } as userInput;
       }
       return {
         ...prevUser,
         [name]: value,
       };
     });
+    console.log("user change", value);
   };
 
-  const handleSubmit = () => {
+  console.log("user input",user)
+
+  // const { data, isLoading, error } = api.teacher.getById.useQuery("123isaac");
+  // console.log("all data", data)
+
+  const handleSubmit = (e: React.SyntheticEvent) => {
+    console.log("submit")
+    e.preventDefault();
     try {
+      console.log("passed submit")
       setSubmit(true);
 
       if (user?.group === "admin") {
         const { data, isLoading, error } = api.admin.getById.useQuery(
           user?.userName
         );
+        console.log("admin data", data);
         setLoading(isLoading);
         // setLogin({ ...data, type: user?.group } as User);
         localStorage.setItem(
@@ -61,18 +73,18 @@ function Login({ setLogin }: Props) {
           JSON.stringify({ ...data, type: user?.group })
         );
       } else if (user?.group === "teacher") {
+        console.log("passed t submit");
         const { data, isLoading, error } = api.teacher.getById.useQuery(
           user?.userName
         );
+        console.log("teacher data", data)
         setLoading(isLoading);
         localStorage.setItem(
           "user",
           JSON.stringify({ ...data, type: user?.group })
         );
       } else if (user?.group === "student") {
-        const { data, isLoading, error } = api.student.getById.useQuery(
-          user?.userName
-        );
+        const { data, isLoading, error } = api.student.getAll.useQuery();
         setLoading(isLoading);
         localStorage.setItem(
           "user",
@@ -80,9 +92,7 @@ function Login({ setLogin }: Props) {
         );
       }
 
-      setTimeout(() => {
-        window.location.reload();
-      }, 2000);
+      // router.push(`/${user?.group ?? "/login"}`)
     } catch (error) {
       setSubmit(false);
     }
@@ -120,7 +130,7 @@ function Login({ setLogin }: Props) {
       <div className="m-auto items-center rounded-lg bg-[#F7F6FB] sm:flex ">
         <div className="p-4">
           <Image
-            width={100}
+            width={250}
             height={100}
             className="cover mx-auto h-96"
             // src="https://preschool.dreamguystech.com/template/assets/img/login.png"
@@ -136,11 +146,11 @@ function Login({ setLogin }: Props) {
             <div className="text-red-500">Invalid username or password</div>
           )}
           <form
-            action="index.html"
+            // action="index.html"
             className="mt-4"
-            onClick={() => {
-              setInvalid(false);
-            }}
+            // onClick={() => {
+            //   setInvalid(false);
+            // }}
           >
             <div className="relative items-center">
               <label>
@@ -254,18 +264,18 @@ function Login({ setLogin }: Props) {
               ) : (
                 <div>
                   <button
-                    onClick={() => handleSubmit()}
+                    onClick={(e) => handleSubmit(e)}
                     className="w-full rounded bg-blue-500 py-2 font-bold text-white hover:bg-blue-700"
                     type="submit"
                   >
                     Login
                   </button>
-                  {!window.navigator.onLine && (
+                  {/* {!window.navigator.onLine && (
                     <span className="mt-2 flex flex-col text-sm">
                       <span className="text-red-600">Error!</span> Please check
                       your network connection
                     </span>
-                  )}
+                  )} */}
                 </div>
               )}
             </div>

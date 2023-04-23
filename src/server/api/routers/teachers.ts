@@ -11,15 +11,19 @@ export const teacherRouter = createTRPCRouter({
   }),
 
   getById: publicProcedure.input(z.string()).query(({ ctx, input }) => {
-    if (input === 'all') {
-      return ctx.prisma.teacher.findMany({
-        select: {
-          id: true,
-          name: true,
-          email: true,
-        },
-      });
-    }
+    return ctx.prisma.teacher.findUnique({
+      where: {
+        slug: input
+      },
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+        email: true,
+        phone: true,
+        password: true
+      }
+    });
   }),
 
   addTeacher: publicProcedure.input(z.object({

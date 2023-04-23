@@ -10,10 +10,19 @@ export const adminRouter = createTRPCRouter({
         return ctx.prisma.admin.findMany();
     }),
     // :{ctx:Context, input:string}
+    
     getById: publicProcedure.input(z.string()).query(({ ctx, input }) => {
         return ctx.prisma.admin.findUnique({
             where: {
-                id: input
+                slug: input
+            },
+            select: {
+                id: true,
+                name: true,
+                slug: true,
+                email: true,
+                phone: true,
+                password: true
             }
         });
     }),
