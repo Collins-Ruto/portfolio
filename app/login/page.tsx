@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import homepic from "~/assets/homepic1.webp";
 import { Button } from "~/components";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { api } from "@/utils/api";
 import { type User } from "~/api/types";
@@ -49,22 +49,23 @@ function Login() {
     console.log("user change", value);
   };
 
-  console.log("user input",user)
+  console.log("user input", user);
 
-  // const { data, isLoading, error } = api.teacher.getById.useQuery("123isaac");
-  // console.log("all data", data)
-
+  const getAdmin = api.admin.getById.useQuery(user?.userName ?? "");
+  const getTeacher = api.teacher.getById.useQuery(user?.userName ?? "");
+  const getStudent = api.student.getById.useQuery(user?.userName ?? "");
+  
   const handleSubmit = (e: React.SyntheticEvent) => {
-    console.log("submit")
+    console.log("submit");
     e.preventDefault();
+    // const { data, isLoading, error } = getAdmin;
+    // console.log("all data", data)
     try {
-      console.log("passed submit")
+      console.log("passed submit");
       setSubmit(true);
 
       if (user?.group === "admin") {
-        const { data, isLoading, error } = api.admin.getById.useQuery(
-          user?.userName
-        );
+        const { data, isLoading, error } = getAdmin
         console.log("admin data", data);
         setLoading(isLoading);
         // setLogin({ ...data, type: user?.group } as User);
@@ -72,19 +73,19 @@ function Login() {
           "user",
           JSON.stringify({ ...data, type: user?.group })
         );
+        
       } else if (user?.group === "teacher") {
         console.log("passed t submit");
-        const { data, isLoading, error } = api.teacher.getById.useQuery(
-          user?.userName
-        );
-        console.log("teacher data", data)
+        const { data, isLoading, error } = getTeacher
+        console.log("teacher data", data);
         setLoading(isLoading);
         localStorage.setItem(
           "user",
           JSON.stringify({ ...data, type: user?.group })
         );
+
       } else if (user?.group === "student") {
-        const { data, isLoading, error } = api.student.getAll.useQuery();
+        const { data, isLoading, error } = getStudent
         setLoading(isLoading);
         localStorage.setItem(
           "user",
