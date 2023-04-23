@@ -31,7 +31,6 @@ export const teacherRouter = createTRPCRouter({
     joiningDate: z.string(),
     gender: z.string(),
     qualification: z.string(),
-    streamId: z.string(),
     dateOfBirth: z.string(),
   })).mutation(({ ctx, input }) => {
     console.log("trpc input", input)

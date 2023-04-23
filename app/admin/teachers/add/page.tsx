@@ -2,65 +2,75 @@
 import React, { useState } from "react";
 import { Button, StatusMsg } from "~/components";
 import { api } from "@/utils/api";
-import { Teacher } from "~/api/types";
+import { type Teacher } from "@prisma/client";
 
 // eslint-disable-next-line no-unused-vars
-const dum2 = {
-  name: "Isaac Mayers",
-  tid: "4564",
-  gender: "Male",
-  dob: "23-05-2002",
-  email: "isaac@gmail.com",
-  phone: 213124124,
-  jod: "12-04-2023",
-  quali: "Physics & Geography",
-  slug: "123isaac",
-  password: "123isaac",
-};
+// const dum2 = {
+//   name: "Isaac Mayers",
+//   tid: "4564",
+//   gender: "Male",
+//   dob: "23-05-2002",
+//   email: "isaac@gmail.com",
+//   phone: 213124124,
+//   jod: "12-04-2023",
+//   quali: "Physics & Geography",
+//   slug: "123isaac",
+//   password: "123isaac",
+// };
 
 function AddTeacher() {
-  const [teacher, setTeacher] = useState<Teacher>();
+  const [teacher, setTeacher] = useState<Teacher | undefined>();
   const [confPass, setConfPass] = useState("");
   const [submit, setSubmit] = useState(false);
-  const [status, setStatus] = useState({});
+  const [status, setStatus] = useState({ message: "", type: "" });
 
-  type InputEvent = React.ChangeEvent<
-    HTMLInputElement | HTMLInputElement | HTMLSelectElement
-  >;
-
-  const handleInput = (event: InputEvent): void => {
-    const target = event.target;
-    const value =
-      target.type === "number" ? parseInt(target.value) : target.value;
+  const handleInput = (event: React.SyntheticEvent) => {
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
     const name = target.name;
 
-    setTeacher({ ...teacher, [name]: value });
+    setTeacher((prevTeacher: Teacher | undefined) => {
+      if (!prevTeacher) {
+        return undefined; // or some default value if you have one
+      }
+
+      const updatedTeacher = {
+        ...prevTeacher,
+        [name]: value,
+      };
+
+      return updatedTeacher;
+    });
   };
 
   const addTeacherMutation = api.teacher?.addTeacher?.useMutation();
 
   const handleSubmit = () => {
     setSubmit(true);
-    addTeacherMutation.mutate(teacher, {
-      onSuccess: (res) => {
-        setSubmit(false);
-        setStatus(
-          res.message === "success"
-            ? {
-                type: "success",
-                message: `succesfully added ${teacher?.name} as a ${teacher?.quali} teacher`,
-              }
-            : { type: "error", message: res.message }
-        );
-        setTimeout(() => {
-          res.message === "success" && window.location.reload(true);
-        }, 2000);
-      },
-    });
+    try {
+      addTeacherMutation.mutate(teacher as Teacher, {
+        onSuccess: (res) => {
+          setSubmit(false);
+          setStatus({
+            type: "success",
+            message: `succesfully added ${teacher?.name ?? ""} as a ${
+              teacher?.qualification ?? ""
+            } teacher`,
+          });
+          setTimeout(() => {
+            res && window.location.reload();
+          }, 2000);
+        },
+      });
+    } catch (error) {
+      setSubmit(false);
+      setStatus({ type: "error", message: "error check your input" });
+    }
   };
 
   const handleVerify = (e: React.ChangeEvent) => {
-    setConfPass(e.target.value);
+    const target = e.target as HTMLInputElement;
+    setConfPass(target.value);
   };
 
   return (
@@ -167,7 +177,7 @@ function AddTeacher() {
                 }}
                 value={teacher?.phone}
                 className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
-                type="number"
+                type="text"
                 placeholder="eg. 722123456"
                 name="phone"
               />
