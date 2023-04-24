@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import {
   add,
   eachDayOfInterval,
@@ -17,36 +17,33 @@ import React from "react";
 import type { User } from "api/types";
 import axios from "axios";
 
-
-
 function classNames(...classes: (string | boolean | undefined)[]) {
   return classes.filter(Boolean).join(" ");
 }
 
 type Props = {
-  full: boolean,
-  user: User | null
-}
+  full: boolean;
+  user: User | null;
+};
 
 type Lesson = {
   node: {
-    startTime: string
-    endTime: string
-    day: string,
+    startTime: string;
+    endTime: string;
+    day: string;
     stream: {
-      slug: string
-      name: string
-    }
+      slug: string;
+      name: string;
+    };
     teacher: {
-      slug: string
-      name: string
-    }
+      slug: string;
+      name: string;
+    };
     subject: {
-      name: string
-    }
-  }
-}
-
+      name: string;
+    };
+  };
+};
 
 export default function Calender({ full, user }: Props) {
   const today = startOfToday();
@@ -56,15 +53,18 @@ export default function Calender({ full, user }: Props) {
   const [lessons, setLessons] = useState<Lesson[] | undefined>();
 
   useEffect(() => {
-    axios.get<Lesson[] | undefined>("https://lmsadmin.onrender.com/lessons").then((res) => {
-      if (res.data) {
-        setLessons(res.data);
-      } else {
-        setLessons(undefined);
-      }
-    }).catch(err => console.log(err))
-      .then(() => console.log('this will succeed'))
-      .catch(() => 'obligatory catch')
+    axios
+      .get<Lesson[] | undefined>("https://lmsadmin.onrender.com/lessons")
+      .then((res) => {
+        if (res.data) {
+          setLessons(res.data);
+        } else {
+          setLessons(undefined);
+        }
+      })
+      .catch((err) => console.log(err))
+      .then(() => console.log("this will succeed"))
+      .catch(() => "obligatory catch");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -101,7 +101,7 @@ export default function Calender({ full, user }: Props) {
       return lessons?.filter(
         (lesson) =>
           format(selectedDay, "EEE") === lesson.node.day &&
-          lesson.node.stream.slug === user.stream.slug
+          lesson.node.stream.slug === user?.stream?.slug
       );
     }
     if (user.type === "admin") {
@@ -114,9 +114,9 @@ export default function Calender({ full, user }: Props) {
 
   return (
     <div className={` rounded-lg ${full ? "w-full p-4" : "sm:w-full"}`}>
-      <div className="md:max-w-m mx-auto lg:px-4 lg:max-w-4xl">
+      <div className="md:max-w-m mx-auto lg:max-w-4xl lg:px-4">
         <div
-          className={` divide-x md:grid md:grid-cols-2 divide-gray-200 p-4 bg-[#F7F6FB] mx-auto ${
+          className={` mx-auto divide-x divide-gray-200 bg-[#F7F6FB] p-4 md:grid md:grid-cols-2 ${
             full ? "" : ""
           }`}
         >
@@ -125,33 +125,33 @@ export default function Calender({ full, user }: Props) {
               <button
                 type="button"
                 onClick={previousMonth}
-                className=" w-10 mr-2 items-center pb-1 px-1.5 text-gray-400 hover:text-gray-500"
+                className=" mr-2 w-10 items-center px-1.5 pb-1 text-gray-400 hover:text-gray-500"
               >
                 <Image
-                width={20}
-                height={16}
+                  width={20}
+                  height={16}
                   src="https://img.icons8.com/ios-filled/50/000000/less-than.png"
                   alt=""
                 />
               </button>
-              <h2 className="text-xl font-semibold text-gray-800 mx-auto">
+              <h2 className="mx-auto text-xl font-semibold text-gray-800">
                 {format(firstDayCurrentMonth, "MMMM yyyy")}
               </h2>
 
               <button
                 onClick={nextMonth}
                 type="button"
-                className=" w-10 ml-2 -mt-2 items-center pb-1 px-1.5 text-gray-400 hover:text-gray-500"
+                className=" ml-2 -mt-2 w-10 items-center px-1.5 pb-1 text-gray-400 hover:text-gray-500"
               >
                 <Image
-                width={20}
-                height={20}
+                  width={20}
+                  height={20}
                   src="https://img.icons8.com/ios-filled/50/000000/more-than.png"
                   alt=""
                 />
               </button>
             </div>
-            <div className="grid font-semibold grid-cols-7 mt-10 text-xs leading-6 text-center text-gray-700">
+            <div className="mt-10 grid grid-cols-7 text-center text-xs font-semibold leading-6 text-gray-700">
               <div>Sun</div>
               <div>Mon</div>
               <div>Tue</div>
@@ -160,7 +160,7 @@ export default function Calender({ full, user }: Props) {
               <div>Fri</div>
               <div>Sat</div>
             </div>
-            <div className="grid grid-cols-7 mt-2 text-sm">
+            <div className="mt-2 grid grid-cols-7 text-sm">
               {days.map((day, dayIdx: number) => (
                 <div
                   key={day.toString()}
@@ -193,7 +193,7 @@ export default function Calender({ full, user }: Props) {
                         "hover:bg-gray-900 hover:text-white ",
                       (isEqual(day, selectedDay) || isToday(day)) &&
                         "font-semibold",
-                      "mx-auto flex h-8 w-8 text-gray-700 items-center justify-center rounded-full"
+                      "mx-auto flex h-8 w-8 items-center justify-center rounded-full text-gray-700"
                     )}
                   >
                     <time dateTime={format(day, "yyyy-MM-dd")}>
@@ -204,15 +204,15 @@ export default function Calender({ full, user }: Props) {
               ))}
             </div>
           </div>
-          <section className="mt-12 md:mt-0 px-2">
-            <h2 className="font-semibold text-gray-800 text-lg">
+          <section className="mt-12 px-2 md:mt-0">
+            <h2 className="text-lg font-semibold text-gray-800">
               Schedule for{" "}
               <time dateTime={format(selectedDay, "yyyy-MM-dd")}>
                 {format(selectedDay, "MMM dd, yyy")}
               </time>
             </h2>
 
-            <ol className="mt-4 space-y-1 text-sm border-b-2 border-gray-600 leading-6 text-gray-500">
+            <ol className="mt-4 space-y-1 border-b-2 border-gray-600 text-sm leading-6 text-gray-500">
               {selectedDayLessons?.length ? (
                 selectedDayLessons?.map((lesson, index) => (
                   <Lesson node={lesson.node} key={index} />
@@ -229,21 +229,21 @@ export default function Calender({ full, user }: Props) {
 }
 
 function Lesson({ node }: Lesson) {
-  const lesson = node
+  const lesson = node;
   // const inputDate = new Date();
   // const inputTime = "05:59";
   // inputDate.setHours(inputTime?.split(":")[0]);
   // inputDate.setMinutes(inputTime?.split(":")[1]);
 
   return (
-    <div className="grid grid-flow-col border-b gap-4 pb-2 mb-2 divide-x-4 text-gray-700 divide-blue-600 ">
-      <div className="flex flex-col border-r-3">
-        <span className="font-semibold flex-1">{lesson.day}</span>
+    <div className="mb-2 grid grid-flow-col gap-4 divide-x-4 divide-blue-600 border-b pb-2 text-gray-700 ">
+      <div className="border-r-3 flex flex-col">
+        <span className="flex-1 font-semibold">{lesson.day}</span>
         <span className="flex-1">{lesson.stream?.name}</span>
       </div>
-      <div className="flex pl-2 justify-between grow ">
+      <div className="flex grow justify-between pl-2 ">
         <div>
-          <h2 className="text-gray-700 font-semibold text-base">
+          <h2 className="text-base font-semibold text-gray-700">
             {lesson.subject.name}
           </h2>
           <h2>{lesson.teacher?.name}</h2>
