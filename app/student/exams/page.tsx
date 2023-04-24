@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import { Loader } from "~/components";
 import { DummyUser, Subjects } from "~/api/types";
@@ -5,7 +6,7 @@ import type { User, Result } from "~/api/types";
 import { api } from "@/utils/api";
 import type { Exam } from "@prisma/client";
 
-function Exam() {
+export default function ExamPage() {
   const id = "641dd16f2eece6ce9587cb0d";
 
   const userFromLocalStorage = localStorage.getItem("user");
@@ -78,5 +79,3 @@ function Exam() {
     </div>
   );
 }
-
-export default Exam;
