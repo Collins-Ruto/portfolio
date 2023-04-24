@@ -7,27 +7,20 @@ import Image from "next/image";
 import { DummyUser, type User } from "~/api/types";
 
 function Dashboard() {
-  const [data, setData] = useState({});
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<User | undefined>();
+  const [data, setData] = useState();
+  const [isLoading, setIsLoading] = useState<boolean>();
 
-  //https://lmsadmin.onrender.com
-  // useEffect(() => {
-  //   const user = JSON?.parse(localStorage.getItem("user"));
-  //   setUser(user);
-  //   console.log(user);
-  //   axios
-  //     .post("https://lmsadmin.onrender.com/data", { slug: user?.slug })
-  //     .then((res) => {
-  //       setData(res.data);
-  //       setLoading(false);
-  //     });
-  // }, []);
+  useEffect(() => {
+    const userFromLocalStorage = localStorage.getItem("user");
+    const user: User =
+      userFromLocalStorage !== null
+        ? (JSON.parse(userFromLocalStorage) as User)
+        : DummyUser;
 
-  const userFromLocalStorage = localStorage.getItem("user");
-  const user: User =
-    userFromLocalStorage !== null
-      ? (JSON.parse(userFromLocalStorage) as User)
-      : DummyUser;
+    setUser(user);
+    setIsLoading(isLoading);
+  }, []);
 
   const termVvalue = "II";
 
@@ -37,7 +30,7 @@ function Dashboard() {
   //   (lesson) => format(currentTime, "EEE") === lesson.day
   // );
 
-  console.log("data", data);
+  // console.log("data", data);
 
   const datas = [
     {
@@ -78,7 +71,7 @@ function Dashboard() {
       <div className=" text-2xl font-semibold">
         <h3>Teacher Dashboard</h3>
       </div>
-      {loading && <Loader />}
+      {isLoading && <Loader />}
       <div className="flex flex-wrap justify-between gap-4 py-6">
         {datas.map((data) => (
           <div

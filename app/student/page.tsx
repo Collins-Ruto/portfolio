@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { useEffect, useState } from "react";
 import { Calender, Loader } from "~/components";
 // import Link from "next/link";
@@ -7,27 +7,20 @@ import Image from "next/image";
 import { DummyUser, type User } from "~/api/types";
 
 function Dashboard() {
+  const [user, setUser] = useState<User | undefined>();
   const [data, setData] = useState({});
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState<boolean>();
 
-  //https://lmsadmin.onrender.com
-  // useEffect(() => {
-  //   const user = JSON?.parse(localStorage.getItem("user"));
-  //   setUser(user);
-  //   console.log(user);
-  //   axios
-  //     .post("https://lmsadmin.onrender.com/data", { slug: user?.stream?.slug })
-  //     .then((res) => {
-  //       setData(res.data);
-  //       setLoading(false);
-  //     });
-  // }, []);
-  
-  const userFromLocalStorage = localStorage.getItem("user");
-  const user: User =
-    userFromLocalStorage !== null
-      ? (JSON.parse(userFromLocalStorage) as User)
-      : DummyUser;
+  useEffect(() => {
+    const userFromLocalStorage = localStorage.getItem("user");
+    const user: User =
+      userFromLocalStorage !== null
+        ? (JSON.parse(userFromLocalStorage) as User)
+        : DummyUser;
+
+    setUser(user);
+    setIsLoading(isLoading);
+  }, []);
 
   const termVvalue = "II";
 
@@ -67,22 +60,22 @@ function Dashboard() {
       <div className=" text-2xl font-semibold">
         <h3>Your Dashboard</h3>
       </div>
-      {loading && <Loader />}
-      <div className="flex justify-between py-6 gap-4 flex-wrap">
+      {isLoading && <Loader />}
+      <div className="flex flex-wrap justify-between gap-4 py-6">
         {datas.map((data) => (
           <div
-            className="flex grow min-w-[16rem] sm:max-w-[20rem] py-4 px-6 min-w- justify-between rounded-lg bg-[#F7F6FB]"
+            className="min-w- flex min-w-[16rem] grow justify-between rounded-lg bg-[#F7F6FB] py-4 px-6 sm:max-w-[20rem]"
             key={data.title}
           >
             <div className="flex flex-col rounded-lg">
-              <span className="text-gray-500 font-light ">{data?.title}</span>
-              <span className="lg:mx-auto text-2xl font-semibold">
+              <span className="font-light text-gray-500 ">{data?.title}</span>
+              <span className="text-2xl font-semibold lg:mx-auto">
                 {data?.value}
               </span>
             </div>
             <Image
               width={100}
-              height={100} 
+              height={100}
               src={data?.url}
               alt={data?.title}
               className="w-16 rounded-full bg-slate-700 p-0"
@@ -91,13 +84,13 @@ function Dashboard() {
         ))}
       </div>
       <div className="lg:grid lg:grid-cols-3">
-        <div className="bg-[#F7F6FB] p-4 mb-4 lg:m-0">
-          <h2 className="font-semibold text-gray-800 text-lg">Your Tasks</h2>
-          <ol className="mt-4 space-y-1 text-sm border-b-2 border-gray-600 leading-6 text-gray-500">
+        <div className="mb-4 bg-[#F7F6FB] p-4 lg:m-0">
+          <h2 className="text-lg font-semibold text-gray-800">Your Tasks</h2>
+          <ol className="mt-4 space-y-1 border-b-2 border-gray-600 text-sm leading-6 text-gray-500">
             <p>No Tasks currently</p>
           </ol>
         </div>
-        <div className="lg:col-start-2 lg:col-span-2">
+        <div className="lg:col-span-2 lg:col-start-2">
           <Calender full={false} user={user} />
         </div>
       </div>

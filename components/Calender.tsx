@@ -23,7 +23,7 @@ function classNames(...classes: (string | boolean | undefined)[]) {
 
 type Props = {
   full: boolean;
-  user: User | null;
+  user: User | null | undefined;
 };
 
 type Lesson = {

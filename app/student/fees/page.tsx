@@ -1,51 +1,46 @@
-'use client'
+"use client";
 import React, { useEffect, useState } from "react";
 import { Loader } from "~/components";
-import {  DummyUser } from '~/api/types';
-import type { User } from '~/api/types';
+import { DummyUser } from "~/api/types";
+import type { User } from "~/api/types";
 import { api } from "@/utils/api";
 import type { Fee } from "@prisma/client";
 
 function FeeData() {
-  const [student, setStudent] = useState({});
+  // const [student, setStudent] = useState({});
+  const [fees, setFees] = useState<Fee[] | undefined>();
+  const [isLoading, setIsLoading] = useState<boolean>();
 
-  // https://lmsadmin.onrender.com
+  useEffect(() => {
+    const id = "641dd16f2eece6ce9587cb0d";
 
-  // useEffect(() => {
-  //   const user = JSON?.parse(localStorage.getItem("user"));
-  //   console.log(user);
-  //   axios
-  //     .get(`https://lmsadmin.onrender.com/fees/student?slug=${user.slug}`)
-  //     .then((res) => {
-  //       setStudent(res.data[0].node);
-  //       setLoading(false);
-  //     });
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+    const userFromLocalStorage = localStorage.getItem("user");
+    const user: User =
+      userFromLocalStorage !== null
+        ? (JSON.parse(userFromLocalStorage) as User)
+        : DummyUser;
 
-  const id = "641dd16f2eece6ce9587cb0d"
+    const { data, isLoading, error } = api.fee.studentFees.useQuery(id);
+    const fees: Fee[] | undefined = data;
+    setFees(fees);
+    setIsLoading(isLoading);
+  }, []);
 
-  const userFromLocalStorage = localStorage.getItem("user");
-  const user: User = userFromLocalStorage !== null ? JSON.parse(userFromLocalStorage) as User : DummyUser
-
-  const {data, isLoading, error} = api.fee.studentFees.useQuery(id);
-  //  const [fee, setFee] = useState<Fee[]>(data);
-  const fees: Fee[] | undefined = data
   console.log("fee", fees);
 
   const balance = () => {
     let invoice = 0;
-      let credit = 0;
+    let credit = 0;
 
-      fees?.forEach((fee) => {
-        fee.type === "invoice"
-          ? (invoice += parseFloat(fee.amount))
-          : (credit += parseFloat(fee.amount));
-      });
-      return (invoice - credit).toString();
-    };
+    fees?.forEach((fee) => {
+      fee.type === "invoice"
+        ? (invoice += parseFloat(fee.amount))
+        : (credit += parseFloat(fee.amount));
+    });
+    return (invoice - credit).toString();
+  };
 
-  console.log(student);
+  // console.log(student);
 
   return (
     <div className="w-screen md:w-full">
@@ -54,7 +49,7 @@ function FeeData() {
       </div>
       {isLoading && <Loader />}
 
-      <div className="m-4 bg-[#F7F6FB] rounded-xl p-6 overflow-auto">
+      <div className="m-4 overflow-auto rounded-xl bg-[#F7F6FB] p-6">
         <table className="w-full text-justify">
           <thead>
             <tr>

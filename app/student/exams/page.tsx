@@ -1,25 +1,34 @@
-"use client"
-import React from "react";
+"use client";
+import React, { useEffect, useState} from "react";
 import { Loader } from "~/components";
 import { DummyUser, Subjects } from "~/api/types";
 import type { User, Result } from "~/api/types";
 import { api } from "@/utils/api";
-import type { Exam } from "@prisma/client";
+import { type Exam } from "@prisma/client";
 
-export default function ExamPage() {
-  const id = "641dd16f2eece6ce9587cb0d";
+function ExamPage() {
+  const [user, setUser] = useState<User | undefined>();
+  const [exams, setExams] = useState<Exam[] | undefined>();
+  const [isLoading, setIsLoading] = useState<boolean>();
 
-  const userFromLocalStorage = localStorage.getItem("user");
-  const user: User =
-    userFromLocalStorage !== null
-      ? (JSON.parse(userFromLocalStorage) as User)
-      : DummyUser;
+  useEffect(() => {
+    const id = "641dd16f2eece6ce9587cb0d";
 
-  const { data, isLoading, error } = api.exam.studentExams.useQuery(id);
-  const exams: Exam[] | undefined = data;
+    const userFromLocalStorage = localStorage.getItem("user");
+    const user: User =
+      userFromLocalStorage !== null
+        ? (JSON.parse(userFromLocalStorage) as User)
+        : DummyUser;
+    setUser(user);
+
+    const { data, isLoading, error } = api.exam.studentExams.useQuery(id);
+    const exams: Exam[] | undefined = data;
+    setExams(exams);
+    setIsLoading(isLoading);
+    console.log("exam error", error);
+  }, []);
   console.log("exam", exams);
   console.log("exam user", user);
-  console.log("exam error", error);
 
   return (
     <div className="w-screen md:w-full">
@@ -79,3 +88,5 @@ export default function ExamPage() {
     </div>
   );
 }
+
+export default ExamPage;
