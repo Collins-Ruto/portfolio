@@ -9,6 +9,7 @@ import "@/styles/globals.css";
 import { Header } from "components";
 import type { User } from "~/types/types";
 import { DummyUser } from "~/types/types";
+import { Analytics } from "@vercel/analytics/react";
 
 function RootLayout({
   // Layouts must accept a children prop.
@@ -48,6 +49,8 @@ function RootLayout({
         <div className="flex pb-10 md:ml-60">
           <div className="grow">{children}</div>
         </div>
+
+        <Analytics />
       </body>
     </html>
   );
