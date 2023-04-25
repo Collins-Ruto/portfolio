@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { Calender, Loader } from "~/components";
 import Image from "next/image";
-import { DummyUser, type User } from "~/api/types";
+import { DummyUser, type User } from "~/types/types";
 import Link from "next/link";
 import { api } from "@/utils/api";
 import axios from "axios";
@@ -78,15 +78,15 @@ function Dashboard() {
   const editInfo = [
     {
       title: "Students",
-      path: "/addstudent",
+      path: "/admin/addstudent",
     },
     {
       title: "Teachers",
-      path: "/addteacher",
+      path: "/admin/teacher/add",
     },
     {
       title: "Fees",
-      path: "/addfee",
+      path: "/admin/addfee",
     },
     {
       title: "Lessons",
@@ -98,7 +98,7 @@ function Dashboard() {
     },
     {
       title: "Admins",
-      path: "/addadmin",
+      path: "/admin/admins/add",
     },
   ];
 

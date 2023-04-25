@@ -1,8 +1,8 @@
-'use client'
+"use client";
 import React, { useEffect, useState } from "react";
 import { Button } from "~/components";
 import StatusMsg from "~/components/StatusMsg";
-import {  DummyUser, type User } from '~/api/types';
+import { DummyUser, type User } from "~/types/types";
 import Image from "next/image";
 import { api } from "@/utils/api";
 import { type Student } from "@prisma/client";
@@ -18,8 +18,11 @@ function Account() {
 
   useEffect(() => {
     const userFromLocalStorage = localStorage.getItem("user");
-    const user: User = userFromLocalStorage !== null ? JSON.parse(userFromLocalStorage) as User : DummyUser
-     setUser(user)
+    const user: User =
+      userFromLocalStorage !== null
+        ? (JSON.parse(userFromLocalStorage) as User)
+        : DummyUser;
+    setUser(user);
   }, []);
 
   const handleInput = (event: React.SyntheticEvent) => {
@@ -35,7 +38,7 @@ function Account() {
 
     setEditUser((prevEditUser) => {
       if (!prevEditUser) {
-        return undefined
+        return undefined;
       }
 
       return {
@@ -115,23 +118,23 @@ function Account() {
   return (
     <div>
       {<StatusMsg status={status} />}
-      <div className="flex flex-col gap-4 h-[100vh_-_4rem]">
-        <div className="w-full h-60 bg-[url('https://b1311116.smushcdn.com/1311116/wp-content/uploads/2021/12/great-school-website-01.png?size=912x479&lossy=1&strip=1&webp=1')] bg-cover bg-center">
-          <div className="min-w-full text-2xl font-semibold h-full flex text-white justify-center items-center backdrop-brightness-50">
+      <div className="flex h-[100vh_-_4rem] flex-col gap-4">
+        <div className="h-60 w-full bg-[url('https://b1311116.smushcdn.com/1311116/wp-content/uploads/2021/12/great-school-website-01.png?size=912x479&lossy=1&strip=1&webp=1')] bg-cover bg-center">
+          <div className="flex h-full min-w-full items-center justify-center text-2xl font-semibold text-white backdrop-brightness-50">
             Welcome to your account page
           </div>
         </div>
-        <div className="flex relative flex-col">
-          <div className="bg-[#F7F6FB] md:absolute md:-top-16 rounded-lg md:ml-10 md:w-[25%] h-[max-content] pb-6 md:py-6 flex flex-col items-center justify-center">
+        <div className="relative flex flex-col">
+          <div className="flex h-[max-content] flex-col items-center justify-center rounded-lg bg-[#F7F6FB] pb-6 md:absolute md:-top-16 md:ml-10 md:w-[25%] md:py-6">
             <Image
               width={100}
-              height={100} 
+              height={100}
               className="w-28  rounded-full bg-gray-300 p-2"
               src="https://img.icons8.com/ios-glyphs/120/000000/user--v1.png"
               alt=""
             />
-            <div className="text-blue-600 pb-4 pt-2">{user?.type}</div>
-            <div className="p-2 text-start text-slate-800 flex flex-col gap-2">
+            <div className="pb-4 pt-2 text-blue-600">{user?.type}</div>
+            <div className="flex flex-col gap-2 p-2 text-start text-slate-800">
               <div className="p-1">Name: {user?.name} </div>
               <div className="p-1">Phone: {user?.phone} </div>
               <div className="p-1">Email: {user?.email} </div>
@@ -140,16 +143,16 @@ function Account() {
               onClick={() => {
                 logOut();
               }}
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded"
+              className="rounded bg-blue-500 py-2 px-10 font-bold text-white hover:bg-blue-700"
             >
               Log Out
             </div>
           </div>
-          <div className="grow md:ml-[30%] md:w-[68%] bg-[#F7F6FB] md:absolute -top-16 rounded-lg">
-            <div className=" flex justify-around border-b-2 text-lg p-2">
+          <div className="-top-16 grow rounded-lg bg-[#F7F6FB] md:absolute md:ml-[30%] md:w-[68%]">
+            <div className=" flex justify-around border-b-2 p-2 text-lg">
               <div
                 className={` cursor-pointer ${
-                  !passManager ? " border-b-4 border-blue-600":""
+                  !passManager ? " border-b-4 border-blue-600" : ""
                 }`}
                 onClick={() => {
                   setPassManager(false);
@@ -159,7 +162,7 @@ function Account() {
               </div>
               <div
                 className={` cursor-pointer ${
-                  passManager ? " border-b-4 border-blue-600":""
+                  passManager ? " border-b-4 border-blue-600" : ""
                 }`}
                 onClick={() => {
                   setPassManager(true);
@@ -170,11 +173,11 @@ function Account() {
             </div>
             {passManager && (
               <div className="p-4">
-                <h1 className="text-xl py-4 text-center mx-auto">
+                <h1 className="mx-auto py-4 text-center text-xl">
                   Change your Password
                 </h1>
                 <div>
-                  <div className="mx-auto flex flex-col w-80 gap-4 gap-y-8 pb-4">
+                  <div className="mx-auto flex w-80 flex-col gap-4 gap-y-8 pb-4">
                     <div className="col-12 col-sm-4">
                       <div>
                         <label>
@@ -187,7 +190,7 @@ function Account() {
                           value={oldPassword}
                           name="oldPassword"
                           type="password"
-                          className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                          className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
                           placeholder="Enter Old Password"
                           required
                         />
@@ -205,7 +208,7 @@ function Account() {
                           value={editUser?.password}
                           name="password"
                           type="password"
-                          className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                          className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
                           placeholder="Enter New Password"
                           required
                         />
@@ -224,7 +227,7 @@ function Account() {
                           value={confPass}
                           name="password"
                           type="password"
-                          className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                          className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
                           placeholder="Confirm Password"
                           required
                         />
@@ -242,7 +245,7 @@ function Account() {
                         <button
                           onClick={() => handleSubmit()}
                           type="submit"
-                          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded"
+                          className="rounded bg-blue-500 py-2 px-10 font-bold text-white hover:bg-blue-700"
                         >
                           Submit
                         </button>
@@ -254,10 +257,10 @@ function Account() {
             )}
             {!passManager && (
               <div className="p-4">
-                <h1 className="text-xl py-4 text-center mx-auto">
+                <h1 className="mx-auto py-4 text-center text-xl">
                   Update your Details
                 </h1>
-                <div className="flex mx-auto flex-col w-80 gap-4 gap-y-8 pb-4">
+                <div className="mx-auto flex w-80 flex-col gap-4 gap-y-8 pb-4">
                   <div>
                     <div>
                       <label>
@@ -268,7 +271,7 @@ function Account() {
                           handleInput(e);
                         }}
                         value={editUser?.email}
-                        className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
                         type="text"
                         placeholder="Enter Email Address"
                         name="email"
@@ -283,7 +286,7 @@ function Account() {
                           handleInput(e);
                         }}
                         value={editUser?.phone}
-                        className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
                         type="number"
                         placeholder="Enter Phone Number"
                         name="phone"
@@ -297,7 +300,7 @@ function Account() {
                       <button
                         onClick={() => handleSubmit()}
                         type="submit"
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded"
+                        className="rounded bg-blue-500 py-2 px-10 font-bold text-white hover:bg-blue-700"
                       >
                         Submit
                       </button>

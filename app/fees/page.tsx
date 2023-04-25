@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button, Loader } from "~/components";
 import Image from "next/image";
-import { DummyUser } from "~/api/types";
-import type { Search, User, Fee, Student } from "~/api/types";
+import { DummyUser } from "~/types/types";
+import type { Search, User, Fee, Student } from "~/types/types";
 import { api } from "@/utils/api";
 
 function FeeData() {

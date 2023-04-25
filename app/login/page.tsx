@@ -5,7 +5,7 @@ import { Button } from "~/components";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { api } from "@/utils/api";
-import { type User } from "~/api/types";
+import { type User } from "~/types/types";
 
 type userInput = {
   group: string;
@@ -51,10 +51,10 @@ function Login() {
 
   console.log("user input", user);
 
-  const getAdmin = api.admin.getById.useQuery(user?.userName ?? "");
-  const getTeacher = api.teacher.getById.useQuery(user?.userName ?? "");
-  const getStudent = api.student.getById.useQuery(user?.userName ?? "");
-  
+  const getAdmin = api.admin.getById.useQuery(user?.userName ?? "johndoe");
+  const getTeacher = api.teacher.getById.useQuery(user?.userName ?? "123isaac");
+  const getStudent = api.student.getById.useQuery(user?.userName ?? "14selena");
+
   const handleSubmit = (e: React.SyntheticEvent) => {
     console.log("submit");
     e.preventDefault();
@@ -65,7 +65,7 @@ function Login() {
       setSubmit(true);
 
       if (user?.group === "admin") {
-        const { data, isLoading, error } = getAdmin
+        const { data, isLoading, error } = getAdmin;
         console.log("admin data", data);
         setLoading(isLoading);
         // setLogin({ ...data, type: user?.group } as User);
@@ -73,24 +73,25 @@ function Login() {
           "user",
           JSON.stringify({ ...data, type: user?.group })
         );
-        
+        setSubmit(false);
       } else if (user?.group === "teacher") {
         console.log("passed t submit");
-        const { data, isLoading, error } = getTeacher
+        const { data, isLoading, error } = getTeacher;
         console.log("teacher data", data);
         setLoading(isLoading);
         localStorage.setItem(
           "user",
           JSON.stringify({ ...data, type: user?.group })
         );
-
+        setSubmit(false);
       } else if (user?.group === "student") {
-        const { data, isLoading, error } = getStudent
+        const { data, isLoading, error } = getStudent;
         setLoading(isLoading);
         localStorage.setItem(
           "user",
           JSON.stringify({ ...data, type: user?.group })
         );
+        setSubmit(false);
       }
 
       // router.push(`/${user?.group ?? "/login"}`)

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import type { User } from "api/types";
+import type { User } from "~/types/types";
 
 type Props = {
   user: User;
@@ -93,7 +93,7 @@ function Header({ user }: Props) {
                       onClick={() => {
                         setDropdown(false);
                       }}
-                      href="/account"
+                      href={`${user.type}/account`}
                       className="block cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       tabIndex={-1}
                     />
@@ -296,7 +296,7 @@ function Header({ user }: Props) {
                   <span className="text-lg">Add Stream</span>
                 </Link>
                 <Link
-                  href="/admin/subjects/add"
+                  href="/admin/subjects"
                   className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
                     currentRoute === "/addsubject"
                       ? "hover:text bg-blue-700 text-white hover:text-white"
@@ -330,9 +330,9 @@ function Header({ user }: Props) {
                 <span className="text-lg">Assignments</span>
               </Link> */}
             <Link
-              href="/account"
+              href={`${user.type}/account`}
               className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
-                currentRoute === "/account"
+                currentRoute === `${user.type}/account`
                   ? "hover:text bg-blue-700 text-white hover:text-white"
                   : ""
               }`}

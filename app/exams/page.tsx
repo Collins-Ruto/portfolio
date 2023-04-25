@@ -1,15 +1,15 @@
-'use client'
+"use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button, Loader } from "~/components";
 import Image from "next/image";
-import type { Search, Result, Student } from '~/api/types';
-import {  Subjects } from '~/api/types';
+import type { Search, Result, Student } from "~/types/types";
+import { Subjects } from "~/types/types";
 import { api } from "@/utils/api";
 import { Exam } from "@prisma/client";
 
 function Exam() {
-   const [subjects, setSubjects] = useState([]);
+  const [subjects, setSubjects] = useState([]);
   const [submit, setSubmit] = useState(false);
   const [search, setSearch] = useState<Search>();
   const [pages, setPages] = useState({
@@ -17,10 +17,10 @@ function Exam() {
     hasPreviousPage: false,
   });
 
-  const {data, isLoading, error} = api.exam.getAll.useQuery();
+  const { data, isLoading, error } = api.exam.getAll.useQuery();
   //  const [exam, setExam] = useState<Exam[]>(data);
-  const exams: Exam[] | undefined = data
-   console.log("exams", exams);
+  const exams: Exam[] | undefined = data;
+  console.log("exams", exams);
   // https://lmsadmin.onrender.com
   // useEffect(() => {
   //   axios.get("https://lmsadmin.onrender.com/exams").then((res) => {
@@ -77,7 +77,7 @@ function Exam() {
         <h3>exam</h3>
       </div>
       {isLoading && <Loader />}
-      <div className="flex flex-col md:flex-row gap-4 justify-between p-4">
+      <div className="flex flex-col justify-between gap-4 p-4 md:flex-row">
         <div>
           <input
             onChange={(e) => {
@@ -86,7 +86,7 @@ function Exam() {
             name="id"
             value={search?.id}
             type="text"
-            className="shadow bg-[#F7F6FB] appearance-none border-[1px] rounded w-full py-2 px-3 text-gray-800 leading-tight focus:outline-none focus:shadow-outline"
+            className="focus:shadow-outline w-full appearance-none rounded border-[1px] bg-[#F7F6FB] py-2 px-3 leading-tight text-gray-800 shadow focus:outline-none"
             placeholder="Search by exam ID ..."
           />
         </div>
@@ -98,7 +98,7 @@ function Exam() {
             name="name"
             value={search?.name}
             type="text"
-            className="shadow appearance-none border bg-[#F7F6FB] rounded w-full py-2 px-3 text-gray-800 leading-tight focus:outline-none focus:shadow-outline"
+            className="focus:shadow-outline w-full appearance-none rounded border bg-[#F7F6FB] py-2 px-3 leading-tight text-gray-800 shadow focus:outline-none"
             placeholder="Search by student Name ..."
           />
         </div>
@@ -113,7 +113,7 @@ function Exam() {
                   setSubmit(true);
                 }}
                 type="button"
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                className="rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
               >
                 Search
               </button>
@@ -123,14 +123,14 @@ function Exam() {
             <Link
               href="/addexam"
               type="button"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center"
+              className="flex items-center rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
             >
               {" "}
               <Image
                 width={100}
-                height={100} 
+                height={100}
                 src="https://img.icons8.com/ios-glyphs/30/FFFFFF/plus-math.png"
-                className="w-5 mr-1 text-white"
+                className="mr-1 w-5 text-white"
                 alt=""
               />
               Add
@@ -138,16 +138,16 @@ function Exam() {
           </div>
         </div>
       </div>
-      <div className="m-4 bg-[#F7F6FB] rounded-xl p-4 overflow-auto">
+      <div className="m-4 overflow-auto rounded-xl bg-[#F7F6FB] p-4">
         <table className=" w-full text-justify">
           <thead>
-            <tr className="text-lg p-4">
+            <tr className="p-4 text-lg">
               <th className="p-4">Exam</th>
               <th className="p-4">Student</th>
               <th className="p-4">Term</th>
               <th className="p-4">Date</th>
               {Subjects.map((subject, index) => (
-                <th className="p-4 border-x-2" key={index}>
+                <th className="border-x-2 p-4" key={index}>
                   {subject.slug}
                 </th>
               ))}
@@ -155,42 +155,45 @@ function Exam() {
           </thead>
           <tbody>
             {exams?.map((exam, index) => {
-                return (
-                  <tr
-                    className={` p-4 ${index % 2 === 0 ? "bg-white": ""}`}
-                    key={index}
-                  >
-                    <td className="p-4">{exam.name}</td>
-                    {/* <td className="p-4">{exam?.student?.name}</td> */}
-                    <td className="p-4">{exam?.term}</td>
-                    <td className="p-4">{exam.examDate}</td>
-                    {Subjects.map((subject, index) => {
-                      const resultsObj: Result[] = exam.results as Result[]
-                          const myResult = resultsObj.find(obj => obj.slug === subject.slug);
-                          return (
-                          <td className="p-4 border-x-2" key={index}>
-                              {myResult?.marks || "-"}
-                          </td>
-                    )})}
-                  </tr>
-                );
-              })}
+              return (
+                <tr
+                  className={` p-4 ${index % 2 === 0 ? "bg-white" : ""}`}
+                  key={index}
+                >
+                  <td className="p-4">{exam.name}</td>
+                  {/* <td className="p-4">{exam?.student?.name}</td> */}
+                  <td className="p-4">{exam?.term}</td>
+                  <td className="p-4">{exam.examDate}</td>
+                  {Subjects.map((subject, index) => {
+                    const resultsObj: Result[] = exam.results as Result[];
+                    const myResult = resultsObj.find(
+                      (obj) => obj.slug === subject.slug
+                    );
+                    return (
+                      <td className="border-x-2 p-4" key={index}>
+                        {myResult?.marks || "-"}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
           </tbody>
         </table>
-        <div className="flex align-middle pt-2 justify-center pb-10 md:pb-0">
+        <div className="flex justify-center pt-2 pb-10 align-middle md:pb-0">
           <div
             onClick={() => {
               // pages.hasPreviousPage && changePage("before");
             }}
             className={` ${
               pages.hasPreviousPage
-                ? "bg-slate-700 cursor-pointer text-gray-100 hover:bg-gray-600 hover:text-white"
+                ? "cursor-pointer bg-slate-700 text-gray-100 hover:bg-gray-600 hover:text-white"
                 : "bg-gray-300 text-gray-800"
-            }  inline-flex items-center px-4 py-2 mr-3 text-sm font-medium border border-gray-300 rounded-lg `}
+            }  mr-3 inline-flex items-center rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium `}
           >
             <svg
               aria-hidden="true"
-              className="w-5 h-5 mr-2"
+              className="mr-2 h-5 w-5"
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
@@ -209,14 +212,14 @@ function Exam() {
             }}
             className={` ${
               pages.hasNextPage
-                ? "bg-slate-700 cursor-pointer text-gray-100 hover:bg-gray-600 hover:text-white"
+                ? "cursor-pointer bg-slate-700 text-gray-100 hover:bg-gray-600 hover:text-white"
                 : "bg-gray-300 text-gray-800"
-            }  inline-flex items-center px-4 py-2 mr-3 text-sm font-medium border border-gray-300 rounded-lg `}
+            }  mr-3 inline-flex items-center rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium `}
           >
             Next
             <svg
               aria-hidden="true"
-              className="w-5 h-5 ml-2"
+              className="ml-2 h-5 w-5"
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"

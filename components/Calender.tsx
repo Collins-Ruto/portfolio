@@ -14,7 +14,7 @@ import {
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import React from "react";
-import type { User } from "api/types";
+import type { User } from "~/types/types";
 import axios from "axios";
 
 function classNames(...classes: (string | boolean | undefined)[]) {

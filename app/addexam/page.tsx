@@ -2,7 +2,7 @@
 import { api } from "@/utils/api";
 import { type Exam } from "@prisma/client";
 import React, { useState } from "react";
-import { Subjects } from "~/api/types";
+import { Subjects } from "~/types/types";
 import { Button, DateTime, Loader } from "~/components";
 import StatusMsg from "~/components/StatusMsg";
 
@@ -226,7 +226,8 @@ function AddExam() {
                         handleResult(e);
                       }}
                       value={
-                        exam?.results?.find((result) => result.slug === slug)?.marks || ""
+                        exam?.results?.find((result) => result.slug === slug)
+                          ?.marks || ""
                       }
                       className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
                       type="text"

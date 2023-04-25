@@ -4,7 +4,7 @@ import { Calender, Loader } from "../../components";
 import Link from "next/link";
 import { format } from "date-fns";
 import Image from "next/image";
-import { DummyUser, type User } from "~/api/types";
+import { DummyUser, type User } from "~/types/types";
 
 function Dashboard() {
   const [user, setUser] = useState<User | undefined>();

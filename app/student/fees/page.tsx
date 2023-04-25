@@ -1,8 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Loader } from "~/components";
-import { DummyUser } from "~/api/types";
-import type { User } from "~/api/types";
+import { DummyUser } from "~/types/types";
+import type { User } from "~/types/types";
 import { api } from "@/utils/api";
 import type { Fee } from "@prisma/client";
 

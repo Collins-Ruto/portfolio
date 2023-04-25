@@ -2,9 +2,9 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button, Loader } from "~/components";
-import { DummyUser } from "~/api/types";
+import { DummyUser } from "~/types/types";
 import Image from "next/image";
-import type { Student, User } from "~/api/types";
+import type { Student, User } from "~/types/types";
 import { api } from "@/utils/api";
 
 function Students() {

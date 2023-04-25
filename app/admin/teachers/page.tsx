@@ -45,7 +45,7 @@ function Teachers() {
   //     });
   // };
 
-  console.log("pages", pages);
+  // console.log("pages", pages);
 
   // const searchSubmit = async () => {
   //   const data = await axios.get(
