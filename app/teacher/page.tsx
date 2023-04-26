@@ -5,8 +5,10 @@ import Link from "next/link";
 import { format } from "date-fns";
 import Image from "next/image";
 import { DummyUser, type User } from "~/types/types";
+import { useSession } from "next-auth/react";
 
 function Dashboard() {
+  const { data: session } = useSession();
   const [user, setUser] = useState<User | undefined>();
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState<boolean>();
@@ -21,6 +23,8 @@ function Dashboard() {
     setUser(user);
     setIsLoading(isLoading);
   }, []);
+
+  console.log("teach session", { session });
 
   const termVvalue = "II";
 

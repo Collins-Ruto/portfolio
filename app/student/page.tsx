@@ -3,10 +3,12 @@ import React, { useEffect, useState } from "react";
 import { Calender, Loader } from "~/components";
 // import Link from "next/link";
 import { format } from "date-fns";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { DummyUser, type User } from "~/types/types";
 
 function Dashboard() {
+  const { data: session } = useSession();
   const [user, setUser] = useState<User | undefined>();
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState<boolean>();
@@ -21,6 +23,8 @@ function Dashboard() {
     setUser(user);
     setIsLoading(isLoading);
   }, []);
+
+  console.log("student session", { session });
 
   const termVvalue = "II";
 

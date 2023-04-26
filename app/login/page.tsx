@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { signIn, useSession } from "next-auth/react";
 import homepic from "~/assets/homepic1.webp";
 import { Button } from "~/components";
 import { useRouter } from "next/navigation";
@@ -20,6 +21,7 @@ type Props = {
 
 function Login() {
   const router = useRouter();
+  const { data: session } = useSession();
 
   const [user, setUser] = useState<userInput | undefined>();
   const [submit, setSubmit] = useState(false);
@@ -50,12 +52,19 @@ function Login() {
   };
 
   console.log("user input", user);
+  console.log("login session", {session});
 
-  const getAdmin = api.admin.getById.useQuery(user?.userName ?? "johndoe");
-  const getTeacher = api.teacher.getById.useQuery(user?.userName ?? "123isaac");
-  const getStudent = api.student.getById.useQuery(user?.userName ?? "14selena");
+  const getAdmin = api.admin.getById.useQuery(user?.userName ?? "");
+  const getTeacher = api.teacher.getById.useQuery(user?.userName ?? "");
+  const getStudent = api.student.getById.useQuery(user?.userName ?? "");
 
-  const handleSubmit = (e: React.SyntheticEvent) => {
+  const handleSubmit =  (e: React.SyntheticEvent) => {
+    const result =  signIn("credentials", {
+      username: user?.userName,
+      password: user?.password,
+      redirect: true,
+      callbackUrl: `/${user?.group ?? "login"}`,
+    });
     console.log("submit");
     e.preventDefault();
     // const { data, isLoading, error } = getAdmin;

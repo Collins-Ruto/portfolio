@@ -4,10 +4,12 @@ import {
   type NextAuthOptions,
   type DefaultSession,
 } from "next-auth";
-import GithubProvider from "next-auth/providers/github";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { env } from "@/env.mjs";
+// import { env } from "@/env.mjs";
 import { prisma } from "@/server/db";
+import Credentials from "next-auth/providers/credentials";
+import { compare } from "bcryptjs";
+import type { Admin, Student, Teacher } from "@prisma/client";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -20,7 +22,7 @@ declare module "next-auth" {
     user: {
       id: string;
       // ...other properties
-      // role: UserRole;
+      // role: string;
     } & DefaultSession["user"];
   }
 
@@ -37,19 +39,113 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
   callbacks: {
+    jwt({ token, user }) {
+      return { ...token, ...user };
+    },
+
     session({ session, user }) {
       if (session.user) {
-        session.user.id = user.id;
-        // session.user.role = user.role; <-- put other properties on the session here
+        session.user = user;
+        // session.user.role = user.role; 
       }
       return session;
     },
   },
+
+  pages: {
+    signIn: "/login",
+  },
+
   adapter: PrismaAdapter(prisma),
   providers: [
-    GithubProvider({
-      clientId: env.GITHUB_CLIENT_ID,
-      clientSecret: env.GITHUB_CLIENT_SECRET,
+    Credentials({
+      name: 'Sign in',
+      credentials: {
+        username: {
+          label: 'Username',
+          type: 'username',
+          placeholder: 'johnsmith'
+        },
+        password: { label: 'Password', type: 'password' }
+      },
+      async authorize(credentials) {
+        console.log("credentialss", credentials)
+        if (!credentials?.username || !credentials.password) {
+          return null
+        }
+
+        const student = await prisma.student.findUnique({
+          where: {
+            slug: credentials.username
+          },
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+            email: true,
+            phone: true,
+            password: true,
+          }
+        }) as Student
+        const teacher = await prisma.teacher.findUnique({
+          where: {
+            slug: credentials.username
+          },
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+            email: true,
+            phone: true,
+            password: true,
+          }
+        }) as Teacher
+        const admin = await prisma.admin.findUnique({
+          where: {
+            slug: credentials.username
+          },
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+            email: true,
+            phone: true,
+            password: true,
+          }
+        }) as Admin
+
+        const user = student || teacher || admin
+
+        console.log("next user1", user)
+
+        if (!user) {
+          return null
+        }
+        console.log("next user2", user)
+
+        if (typeof user.password !== "string") {
+          return null; // or handle the error in some other way
+        }
+        console.log("next user3", user)
+
+        const isPasswordValid = await compare(
+          credentials.password,
+          user.password
+        )
+        console.log("next user4", user)
+
+        if (!isPasswordValid) {
+          return null
+        }
+
+        return {
+          id: user.id + '',
+          username: user.slug,
+          name: user.name,
+          role: student ? "student" : teacher ? "teacher" : "admin",
+          randomKey: 'Hey cool'
+        }
+      }
     }),
     /**
      * ...add more providers here.
