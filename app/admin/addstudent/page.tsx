@@ -18,7 +18,7 @@ import { Button, Loader, StatusMsg } from "~/components";
 // };
 
 interface IndexedInput extends Student {
-  [key: string]: string | Date | Boolean | Subject[];
+  [key: string]: string | Date | boolean | Subject[];
 }
 
 function AddStudent() {

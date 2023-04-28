@@ -7,7 +7,7 @@ import { Button, StatusMsg } from "~/components";
 // eslint-disable-next-line no-unused-vars
 
 interface IndexedInput extends Stream {
-  [key: string]: string | Boolean;
+  [key: string]: string | boolean;
 }
 
 function AddStream() {

@@ -6,7 +6,7 @@ import { api } from "@/utils/api";
 import { Subjects } from "~/types/types";
 
 interface IndexedTask extends Task {
-  [key: string]: string | Date | Boolean | Subject;
+  [key: string]: string | Date | boolean | Subject;
 }
 
 function CreateTask() {

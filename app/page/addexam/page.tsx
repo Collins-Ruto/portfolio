@@ -27,7 +27,7 @@ const dummyExams: Exam[] = [
 
 console.log(dummyExams);
 interface IndexedInput extends Exam {
-  [key: string]: string | Date | Boolean | Result[];
+  [key: string]: string | Date | boolean | Result[];
 }
 
 type Students = { id: string; name: string; streamId: string }[];
