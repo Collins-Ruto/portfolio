@@ -52,61 +52,63 @@ function Login() {
   };
 
   console.log("user input", user);
-  console.log("login session", {session});
+  console.log("login session", { session });
 
   const getAdmin = api.admin.getById.useQuery(user?.userName ?? "");
   const getTeacher = api.teacher.getById.useQuery(user?.userName ?? "");
   const getStudent = api.student.getById.useQuery(user?.userName ?? "");
 
-  const handleSubmit =  (e: React.SyntheticEvent) => {
-    const result =  signIn("credentials", {
+  const handleSubmit = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    setSubmit(true);
+    const result = signIn("credentials", {
       username: user?.userName,
       password: user?.password,
+      group: user?.group,
       redirect: true,
       callbackUrl: `/${user?.group ?? "login"}`,
     });
-    console.log("submit");
-    e.preventDefault();
+    console.log("submit result", result);
     // const { data, isLoading, error } = getAdmin;
     // console.log("all data", data)
-    try {
-      console.log("passed submit");
-      setSubmit(true);
+    // try {
+    //   console.log("passed submit");
+    //   setSubmit(true);
 
-      if (user?.group === "admin") {
-        const { data, isLoading, error } = getAdmin;
-        console.log("admin data", data);
-        setLoading(isLoading);
-        // setLogin({ ...data, type: user?.group } as User);
-        localStorage.setItem(
-          "user",
-          JSON.stringify({ ...data, type: user?.group })
-        );
-        setSubmit(false);
-      } else if (user?.group === "teacher") {
-        console.log("passed t submit");
-        const { data, isLoading, error } = getTeacher;
-        console.log("teacher data", data);
-        setLoading(isLoading);
-        localStorage.setItem(
-          "user",
-          JSON.stringify({ ...data, type: user?.group })
-        );
-        setSubmit(false);
-      } else if (user?.group === "student") {
-        const { data, isLoading, error } = getStudent;
-        setLoading(isLoading);
-        localStorage.setItem(
-          "user",
-          JSON.stringify({ ...data, type: user?.group })
-        );
-        setSubmit(false);
-      }
+    //   if (user?.group === "admin") {
+    //     const { data, isLoading, error } = getAdmin;
+    //     console.log("admin data", data);
+    //     setLoading(isLoading);
+    //     // setLogin({ ...data, type: user?.group } as User);
+    //     localStorage.setItem(
+    //       "user",
+    //       JSON.stringify({ ...data, type: user?.group })
+    //     );
+    //     setSubmit(false);
+    //   } else if (user?.group === "teacher") {
+    //     console.log("passed t submit");
+    //     const { data, isLoading, error } = getTeacher;
+    //     console.log("teacher data", data);
+    //     setLoading(isLoading);
+    //     localStorage.setItem(
+    //       "user",
+    //       JSON.stringify({ ...data, type: user?.group })
+    //     );
+    //     setSubmit(false);
+    //   } else if (user?.group === "student") {
+    //     const { data, isLoading, error } = getStudent;
+    //     setLoading(isLoading);
+    //     localStorage.setItem(
+    //       "user",
+    //       JSON.stringify({ ...data, type: user?.group })
+    //     );
+    //     setSubmit(false);
+    //   }
 
-      // router.push(`/${user?.group ?? "/login"}`)
-    } catch (error) {
-      setSubmit(false);
-    }
+    //   // router.push(`/${user?.group ?? "/login"}`)
+    // } catch (error) {
+    //   setSubmit(false);
+    // }
   };
 
   // const handleSubmit = () => {
@@ -277,7 +279,7 @@ function Login() {
                   <button
                     onClick={(e) => handleSubmit(e)}
                     className="w-full rounded bg-blue-500 py-2 font-bold text-white hover:bg-blue-700"
-                    type="submit"
+                    // type="submit"
                   >
                     Login
                   </button>

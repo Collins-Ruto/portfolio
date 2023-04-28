@@ -7,7 +7,7 @@ import {
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 // import { env } from "@/env.mjs";
 import { prisma } from "@/server/db";
-import Credentials from "next-auth/providers/credentials";
+import CredentialsProvider from "next-auth/providers/credentials";
 import { compare } from "bcryptjs";
 import type { Admin, Student, Teacher } from "@prisma/client";
 
@@ -22,7 +22,6 @@ declare module "next-auth" {
     user: {
       id: string;
       // ...other properties
-      // role: string;
     } & DefaultSession["user"];
   }
 
@@ -38,17 +37,27 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authOptions: NextAuthOptions = {
+  session: {
+    strategy: 'jwt'
+  },
   callbacks: {
     jwt({ token, user }) {
+      console.log("res jwt", user)
       return { ...token, ...user };
     },
 
-    session({ session, user }) {
-      if (session.user) {
-        session.user = user;
-        // session.user.role = user.role; 
+    session: ({ session, token }) => {
+      console.log('Session Callback', { session, token })
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          slug: token.slug,
+          phone: token.phone,
+          role: token.role,
+          randomKey: token.randomKey
+        }
       }
-      return session;
     },
   },
 
@@ -58,7 +67,7 @@ export const authOptions: NextAuthOptions = {
 
   adapter: PrismaAdapter(prisma),
   providers: [
-    Credentials({
+    CredentialsProvider({
       name: 'Sign in',
       credentials: {
         username: {
@@ -66,7 +75,11 @@ export const authOptions: NextAuthOptions = {
           type: 'username',
           placeholder: 'johnsmith'
         },
-        password: { label: 'Password', type: 'password' }
+        password: { label: 'Password', type: 'password' },
+        group: {
+          label: 'Group',
+          type: 'group',
+        }
       },
       async authorize(credentials) {
         console.log("credentialss", credentials)
@@ -114,7 +127,7 @@ export const authOptions: NextAuthOptions = {
           }
         }) as Admin
 
-        const user = student || teacher || admin
+        const user = credentials.group === "admin" ? admin : credentials.group === "teacher" ? teacher : student
 
         console.log("next user1", user)
 
@@ -140,7 +153,9 @@ export const authOptions: NextAuthOptions = {
 
         return {
           id: user.id + '',
-          username: user.slug,
+          slug: user.slug,
+          email: user.email,
+          phone: user.phone,
           name: user.name,
           role: student ? "student" : teacher ? "teacher" : "admin",
           randomKey: 'Hey cool'

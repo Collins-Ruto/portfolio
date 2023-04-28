@@ -18,13 +18,13 @@ function Dashboard() {
   const [data, setData] = useState<Data | undefined>();
   const [loading, setLoading] = useState(true);
 
-  const studentQuery = api.student.getAll.useQuery();
+  // const studentQuery = api.student.getAll.useQuery();
   const userQuery = api.student.getById.useQuery("all");
 
-  console.log("students", studentQuery);
+  // console.log("students", studentQuery);
   console.log("user", userQuery);
 
-  console.log("students", studentQuery?.data && studentQuery?.data[0]?.name);
+  // console.log("students", studentQuery?.data && studentQuery?.data[0]?.name);
 
   useEffect(() => {
     const userFromLocalStorage = localStorage.getItem("user");
@@ -159,7 +159,7 @@ function Dashboard() {
             <Calender full={false} user={null} />
           </div>
           <div className="">
-            {studentQuery.data ? studentQuery?.data[0]?.name : ""}
+            {/* {studentQuery.data ? studentQuery?.data[0]?.name : ""} */}
           </div>
         </div>
       </div>

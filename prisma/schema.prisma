@@ -53,6 +53,7 @@ model User {
     email         String?   @unique
     slug          String? @unique
     role          String?
+    phone         String?
     emailVerified DateTime?
     image         String?
     accounts      Account[]
