@@ -6,7 +6,6 @@ import { Button } from "~/components";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { api } from "@/utils/api";
-import { type User } from "~/types/types";
 
 type userInput = {
   group: string;
@@ -61,14 +60,22 @@ function Login() {
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     setSubmit(true);
-    const result = signIn("credentials", {
+    signIn("credentials", {
       username: user?.userName,
       password: user?.password,
       group: user?.group,
       redirect: true,
       callbackUrl: `/${user?.group ?? "login"}`,
+    }).then((response) => {
+      if (response?.error) {
+        // show notification for user
+      } else {
+        // redirect to destination page
+      }
+    }).catch((error) => {
+      // TODO show error  to user
+      console.log(error)
     });
-    console.log("submit result", result);
     // const { data, isLoading, error } = getAdmin;
     // console.log("all data", data)
     // try {

@@ -9,7 +9,7 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { prisma } from "@/server/db";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { compare } from "bcryptjs";
-import type { Admin, Student, Teacher } from "@prisma/client";
+import type { Admin, Student, Teacher, User } from "@prisma/client";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -42,8 +42,16 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     jwt({ token, user }) {
-      console.log("res jwt", user)
-      return { ...token, ...user };
+      console.log("res jwt callback", { token, user })
+      const u = user as unknown as User
+      if (user) {
+        return {
+          ...token,
+          id: u.id,
+          role: u.role
+        }
+      }
+      return token
     },
 
     session: ({ session, token }) => {
