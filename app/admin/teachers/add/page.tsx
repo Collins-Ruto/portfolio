@@ -94,7 +94,7 @@ function AddTeacher() {
     setSubmit(true);
     try {
       addTeacherMutation.mutate(teacher as Teacher, {
-        onSuccess: (res) => {
+        onSuccess: () => {
           setSubmit(false);
           setStatus({
             type: "success",
