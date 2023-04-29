@@ -152,6 +152,7 @@ function Courses() {
                 </button>
               )}
             </div>
+            {/* TODO impliment restricted adding of courses */}
             {/* user?.role === "admin" && */}
             {
               <div>

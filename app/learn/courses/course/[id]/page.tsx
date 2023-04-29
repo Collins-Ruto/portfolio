@@ -3,14 +3,12 @@ import { prisma } from "@/server/db";
 import type { Metadata, ResolvingMetadata } from "next";
 import type { Course } from "@prisma/client";
 
-export async function generateMetadata(
-  {
-    params: { id },
-  }: {
-    params: { id: string };
-  },
-  parent: ResolvingMetadata
-): Promise<Metadata> {
+export async function generateMetadata({
+  params: { id },
+}: {
+  params: { id: string };
+}): // parent: ResolvingMetadata
+Promise<Metadata> {
   const caller = appRouter.createCaller({
     session: null,
     prisma: prisma,
@@ -19,12 +17,12 @@ export async function generateMetadata(
   const data = await caller.course.getById(id || "621dd16f2eece6ce9587cb0d");
   const course = data[0] as Course;
 
-  const previousImages = (await parent)?.openGraph?.images || [];
+  // const previousImages = (await parent)?.openGraph?.images || [];
 
   return {
     title: course.topic,
     openGraph: {
-      images: [course.thumbnail_url, ...previousImages],
+      images: [course.thumbnail_url],
     },
     authors: [
       {
