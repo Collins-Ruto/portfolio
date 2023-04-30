@@ -3,7 +3,6 @@ import { withAuth } from "next-auth/middleware";
 import { NextRequest, NextResponse } from "next/server";
 import { getSession } from 'next-auth/react';
 
-
 export default withAuth(
     // `withAuth` augments your `Request` with the user's token.
     function middleware(req) {
@@ -15,11 +14,11 @@ export default withAuth(
             );
         if (req.nextUrl.pathname.startsWith("/student") && req.nextauth.token?.role !== "student")
             return NextResponse.rewrite(
-                new URL("/login", req.url)
+                new URL("/login?message=You Are Not Authorized!", req.url)
             );
         if (req.nextUrl.pathname.startsWith("/teacher") && req.nextauth.token?.role !== "teacher")
             return NextResponse.rewrite(
-                new URL("/login", req.url)
+                new URL("/login?message=You Are Not Authorized!", req.url)
             );
     },
     {
