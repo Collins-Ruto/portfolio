@@ -122,7 +122,7 @@ function Dashboard() {
           ))}
         </div>
         <div className="lg:col-span-2 lg:col-start-2">
-          <Calender full={false} user={user} />
+          <Calender full={false} />
         </div>
       </div>
     </div>

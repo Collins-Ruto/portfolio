@@ -156,7 +156,7 @@ function Dashboard() {
             ))}
           </div>
           <div className=" lg:col-span-2 lg:col-start-2">
-            <Calender full={false} user={null} />
+            <Calender full={false} />
           </div>
           <div className="">
             {/* {studentQuery.data ? studentQuery?.data[0]?.name : ""} */}

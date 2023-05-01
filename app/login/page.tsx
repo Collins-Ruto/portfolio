@@ -22,7 +22,7 @@ function Login() {
   const [user, setUser] = useState<userInput | undefined>();
   const [submit, setSubmit] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
-  const [invalid, setInvalid] = useState(false);
+  const [invalid, setInvalid] = useState("");
   const [passView, setPassView] = useState(false);
 
   const handleInput = (event: React.SyntheticEvent) => {
@@ -51,6 +51,10 @@ function Login() {
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
+    if (!user?.userName || !user?.userName || !user?.group) { 
+      setInvalid("fields")
+      return
+    }
     setSubmit(true);
     signIn("credentials", {
       username: user?.userName,
@@ -60,12 +64,14 @@ function Login() {
       callbackUrl: `/${user?.group ?? "login"}`,
     }).then((response) => {
       if (response?.error) {
+        setInvalid("password")
         // show notification for user
       } else {
         // redirect to destination page
       }
     }).catch((error) => {
       // TODO show error  to user
+      setInvalid("password");
       console.log(error)
     });
   }
@@ -87,15 +93,16 @@ function Login() {
           <h1 className="mb-4 text-center text-2xl font-semibold">
             Welcome to Ace Accademy
           </h1>
-          {invalid && (
+          {invalid === "password" ? (
             <div className="text-red-500">Invalid username or password</div>
-          )}
+            ) : invalid === "fields" ? (<div className="text-red-500">All fields are required</div>
+          ) : ("")}
           <form
             // action="index.html"
             className="mt-4"
-            // onClick={() => {
-            //   setInvalid(false);
-            // }}
+            onClick={() => {
+              setInvalid("");
+            }}
           >
             <div className="relative items-center">
               <label>

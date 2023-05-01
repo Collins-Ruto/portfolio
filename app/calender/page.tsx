@@ -7,7 +7,7 @@ function CalenderPage() {
       <div className=" text-2xl font-semibold pb-4">
         <h3 className="p-6 pb-0">Full School Callender</h3>
       </div>
-      <Calender full={true} user={null} />
+      <Calender full={true} />
     </div>
   );
 }
