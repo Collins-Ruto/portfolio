@@ -7,9 +7,12 @@ import {
 
 export const dataRouter = createTRPCRouter({
     getCount: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
-        const lessons = await ctx.prisma.lesson.count({
+        const lessons = await ctx.prisma.lesson.findMany({
             where: {
-                streamId: input
+                OR: [
+                    { streamId: input },
+                    { teacherId: input }
+                ]
             }
         })
         const students = await ctx.prisma.student.count()

@@ -34,7 +34,7 @@ function Dashboard() {
   const datas = [
     {
       title: "Lessons Today",
-      value: data?.lessons || "...",
+      value: data?.lessons.length || "...",
       url: "https://icons-for-free.com/iconfiles/png/512/reading-131964753179295908.png",
     },
     {
