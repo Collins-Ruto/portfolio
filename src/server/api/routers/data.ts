@@ -6,19 +6,20 @@ import {
 } from "@/server/api/trpc";
 
 export const dataRouter = createTRPCRouter({
-    getCount: publicProcedure.input(z.string()).query(({ ctx, input }) => {
-        const lessons = ctx.prisma.lesson.count({
+    getCount: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
+        const lessons = await ctx.prisma.lesson.count({
             where: {
                 streamId: input
             }
         })
-        const students = ctx.prisma.student.count()
-        const teachers = ctx.prisma.teacher.count()
+        const students = await ctx.prisma.student.count()
+        const teachers = await ctx.prisma.teacher.count()
         const data = {
             students,
             teachers,
             lessons
         }
+        console.log("data data", data)
         return data
     }),
     getById: publicProcedure.input(z.string()).query(({ ctx, input }) => {

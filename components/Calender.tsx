@@ -14,10 +14,9 @@ import {
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import React from "react";
-import axios from "axios";
-import type { User } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { api } from "@/utils/api";
+import type { User } from "@prisma/client";
 
 function classNames(...classes: (string | boolean | undefined)[]) {
   return classes.filter(Boolean).join(" ");
@@ -28,37 +27,38 @@ type Props = {
 };
 
 type Lesson = {
-  node: {
-    startTime: string;
-    endTime: string;
-    day: string;
-    stream: {
-      slug: string;
-      name: string;
-    };
-    teacher: {
-      slug: string;
-      name: string;
-    };
-    subject: {
-      name: string;
-    };
+  startTime: string;
+  endTime: string;
+  day: string;
+  stream: {
+    slug: string;
+    name: string;
+  };
+  teacher: {
+    slug: string;
+    name: string;
+  };
+  subject: {
+    name: string;
   };
 };
 
 export default function Calender({ full }: Props) {
   const today = startOfToday();
   const { data: session } = useSession();
-  const [user, setUser] = useState<User | undefined>();
+  const [user, setUser] = useState<User>();
   const [selectedDay, setSelectedDay] = useState(today);
   const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
   const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
-  const [lessons, setLessons] = useState<Lesson[] | undefined>();
 
-  const { data: stream, isLoading, error } = api.stream.getById.useQuery(
-    user?.streamId as string
-  );
+  const { data: stream } = api.stream.getById.useQuery(
+    (user?.streamId as string) || "621dd16f2eece6ce9587cb0d"
+  ); 
+  const { data: lessons, isLoading, error } = api.lesson.getAll.useQuery();
 
+  console.log("lessons", lessons);
+  console.log("stream", stream);
+  console.log("states", isLoading, error);
 
   useEffect(() => {
     const user = session?.user as User;
@@ -82,28 +82,28 @@ export default function Calender({ full }: Props) {
 
   // we want to only show the classes for a specific user
   const selectedDayLessonsFun = (): Lesson[] | undefined => {
-    if (!user) {
+    if (full) {
       return lessons?.filter(
-        (lesson) => format(selectedDay, "EEE") === lesson.node.day
+        (lesson) => format(selectedDay, "EEE") === lesson.day
       );
     }
-    if (user.role === "teacher") {
+    if (user?.role === "teacher") {
       return lessons?.filter(
         (lesson) =>
-          format(selectedDay, "EEE") === lesson.node.day &&
-          lesson.node.teacher.slug === user.slug
+          format(selectedDay, "EEE") === lesson.day &&
+          lesson.teacher.slug === user?.slug
       );
     }
-    if (user.role === "student") {
+    if (user?.role === "student") {
       return lessons?.filter(
         (lesson) =>
-          format(selectedDay, "EEE") === lesson.node.day &&
-          lesson.node.stream.slug === user?.stream?.slug
+          format(selectedDay, "EEE") === lesson.day &&
+          lesson.stream.slug === stream?.slug
       );
     }
-    if (user.role === "admin") {
+    if (user?.role === "admin") {
       return lessons?.filter(
-        (lesson) => format(selectedDay, "EEE") === lesson.node.day
+        (lesson) => format(selectedDay, "EEE") === lesson.day
       );
     }
   };
@@ -197,6 +197,13 @@ export default function Calender({ full }: Props) {
                       {format(day, "d")}
                     </time>
                   </button>
+                  <div className="mx-auto mt-1 h-1 w-1">
+                    {lessons?.some(
+                      (lesson) => lesson.day === format(day, "EEE")
+                    ) && (
+                      <div className="h-1 w-1 rounded-full bg-sky-500"></div>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
@@ -212,7 +219,9 @@ export default function Calender({ full }: Props) {
             <ol className="mt-4 space-y-1 border-b-2 border-gray-600 text-sm leading-6 text-gray-500">
               {selectedDayLessons?.length ? (
                 selectedDayLessons?.map((lesson, index) => (
-                  <Lesson node={lesson.node} key={index} />
+                  <div className="" key={index}>
+                    <Lesson lesson={lesson} />
+                  </div>
                 ))
               ) : (
                 <p>No lessons for today.</p>
@@ -225,8 +234,12 @@ export default function Calender({ full }: Props) {
   );
 }
 
-function Lesson({ node }: Lesson) {
-  const lesson = node;
+interface LessonProps {
+  lesson: Lesson;
+}
+
+function Lesson({ lesson }: LessonProps) {
+  // const lesson = node;
   // const inputDate = new Date();
   // const inputTime = "05:59";
   // inputDate.setHours(inputTime?.split(":")[0]);

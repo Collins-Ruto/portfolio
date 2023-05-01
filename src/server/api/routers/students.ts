@@ -27,7 +27,7 @@ export const studentRouter = createTRPCRouter({
         email: true,
         phone: true,
         password: true,
-        stream: true
+        streamId: true
       }
     });
   }),

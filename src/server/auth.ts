@@ -48,7 +48,8 @@ export const authOptions: NextAuthOptions = {
         return {
           ...token,
           id: u.id,
-          role: u.role
+          role: u.role,
+          streamId: u.streamId
         }
       }
       return token
@@ -140,12 +141,9 @@ export const authOptions: NextAuthOptions = {
 
         const user = credentials.group === "admin" ? admin : credentials.group === "teacher" ? teacher : student
 
-        console.log("next user1", user)
-
         if (!user) {
           return null
         }
-        console.log("next user2", user)
 
         if (typeof user.password !== "string") {
           return null; // or handle the error in some other way

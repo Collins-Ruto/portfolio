@@ -1,24 +1,19 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Calender, Loader } from "~/components";
-// import Link from "next/link";
-import { format } from "date-fns";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import type { User } from "@prisma/client";
 import { api } from "@/utils/api";
+import { Subjects } from "~/types/types";
 
 function Dashboard() {
   const { data: session } = useSession();
   const [user, setUser] = useState<User | undefined>();
-  // const [data, setData] = useState({});
-  // const [isLoading, setIsLoading] = useState<boolean>();
-
-  const {
-    data,
-    isLoading,
-    error,
-  } = api.data.getCount.useQuery(user?.id as string);
+ 
+  const { data, isLoading, error } = api.data?.getCount.useQuery(
+    (user?.streamId as string) || "621dd16f2eece6ce9587cb0d"
+  );
 
   useEffect(() => {
     const user = session?.user as User;
@@ -30,21 +25,16 @@ function Dashboard() {
   }
 
   console.log("student session", { session });
+  console.log("student data", data);
 
   const termVvalue = "II";
-
-  const currentTime = new Date();
-
-  // const todayLessons = data.lessonsToday?.lessons.filter(
-  //   (lesson) => format(currentTime, "EEE") === lesson.day
-  // );
 
   console.log("data", data);
 
   const datas = [
     {
       title: "Lessons Today",
-      // value: todayLessons?.length || "...",
+      value: data?.lessons || "...",
       url: "https://icons-for-free.com/iconfiles/png/512/reading-131964753179295908.png",
     },
     {
@@ -54,12 +44,12 @@ function Dashboard() {
     },
     {
       title: "Subjects offered",
-      // value: data.subjects || "...",
+      value: Subjects.length || "...",
       url: "https://cdn-icons-png.flaticon.com/512/3426/3426653.png",
     },
     {
       title: "Students",
-      // value: data.students || "...",
+      value: data?.students || "...",
       url: "https://preschool.dreamguystech.com/template/assets/img/icons/dash-icon-01.svg",
     },
   ];
@@ -74,7 +64,7 @@ function Dashboard() {
         {datas.map((data) => (
           <div
             className="min-w- flex min-w-[16rem] grow justify-between rounded-lg bg-[#F7F6FB] py-4 px-6 sm:max-w-[20rem]"
-            key={data.title}
+            key={data?.title}
           >
             <div className="flex flex-col rounded-lg">
               <span className="font-light text-gray-500 ">{data?.title}</span>
@@ -100,7 +90,7 @@ function Dashboard() {
           </ol>
         </div>
         <div className="lg:col-span-2 lg:col-start-2">
-          <Calender full={false} user={user} />
+          <Calender full={false} />
         </div>
       </div>
     </div>

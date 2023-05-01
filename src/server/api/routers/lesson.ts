@@ -7,13 +7,26 @@ import {
 
 export const lessonRouter = createTRPCRouter({
     getAll: publicProcedure.query(({ ctx }) => {
-        return ctx.prisma.lesson.findMany();
+        return ctx.prisma.lesson.findMany({
+            select: {
+                stream: true,
+                teacher: true,
+                day: true,
+                subject: true,
+                startTime: true,
+                endTime: true,
+            }
+        });
     }),
     // :{ctx:Context, input:string}
     getById: publicProcedure.input(z.string()).query(({ ctx, input }) => {
         return ctx.prisma.lesson.findUnique({
             where: {
                 id: input
+            },
+            select: {
+                stream: true,
+                teacher: true,
             }
         });
     }),
