@@ -3,9 +3,7 @@ import React, { useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 import homepic from "~/assets/homepic1.webp";
 import { Button } from "~/components";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { api } from "@/utils/api";
 
 type userInput = {
   group: string;
@@ -14,19 +12,17 @@ type userInput = {
   radio: boolean;
 };
 
-type Props = {
-  setLogin: React.Dispatch<React.SetStateAction<userInput | undefined>>;
-};
+// type Props = {
+//   setLogin: React.Dispatch<React.SetStateAction<userInput | undefined>>;
+// };
 
 function Login() {
-  const router = useRouter();
   const { data: session } = useSession();
 
   const [user, setUser] = useState<userInput | undefined>();
   const [submit, setSubmit] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [invalid, setInvalid] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [passView, setPassView] = useState(false);
 
   const handleInput = (event: React.SyntheticEvent) => {
@@ -53,10 +49,6 @@ function Login() {
   console.log("user input", user);
   console.log("login session", { session });
 
-  const getAdmin = api.admin.getById.useQuery(user?.userName ?? "");
-  const getTeacher = api.teacher.getById.useQuery(user?.userName ?? "");
-  const getStudent = api.student.getById.useQuery(user?.userName ?? "");
-
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     setSubmit(true);
@@ -76,74 +68,7 @@ function Login() {
       // TODO show error  to user
       console.log(error)
     });
-    // const { data, isLoading, error } = getAdmin;
-    // console.log("all data", data)
-    // try {
-    //   console.log("passed submit");
-    //   setSubmit(true);
-
-    //   if (user?.group === "admin") {
-    //     const { data, isLoading, error } = getAdmin;
-    //     console.log("admin data", data);
-    //     setLoading(isLoading);
-    //     // setLogin({ ...data, type: user?.group } as User);
-    //     localStorage.setItem(
-    //       "user",
-    //       JSON.stringify({ ...data, type: user?.group })
-    //     );
-    //     setSubmit(false);
-    //   } else if (user?.group === "teacher") {
-    //     console.log("passed t submit");
-    //     const { data, isLoading, error } = getTeacher;
-    //     console.log("teacher data", data);
-    //     setLoading(isLoading);
-    //     localStorage.setItem(
-    //       "user",
-    //       JSON.stringify({ ...data, type: user?.group })
-    //     );
-    //     setSubmit(false);
-    //   } else if (user?.group === "student") {
-    //     const { data, isLoading, error } = getStudent;
-    //     setLoading(isLoading);
-    //     localStorage.setItem(
-    //       "user",
-    //       JSON.stringify({ ...data, type: user?.group })
-    //     );
-    //     setSubmit(false);
-    //   }
-
-    //   // router.push(`/${user?.group ?? "/login"}`)
-    // } catch (error) {
-    //   setSubmit(false);
-    // }
-  };
-
-  // const handleSubmit = () => {
-  //   if (!window.navigator.onLine) {
-  //     return;
-  //   }
-  //   setSubmit(true);
-
-  //   axios
-  //     .post(`https://lmsadmin.onrender.com/user/${user?.group}`, user)
-  //     .then((res) => {
-  //       if (res.data[user?.group]) {
-  //         setLogin({ ...res.data[user?.group], type: user?.group });
-  //         localStorage.setItem(
-  //           "user",
-  //           JSON.stringify({ ...res.data[user?.group], type: user?.group })
-  //         );
-  //         localStorage.setItem("saved", JSON.stringify(isChecked));
-  //         // axios.defaults.headers.common["Authorization"] = `${
-  //         //   res.data[user?.group].token
-  //         //   }`;
-  //         // navigate("/")
-  //       } else {
-  //         setInvalid(true);
-  //       }
-  //       setSubmit(false);
-  //     });
-  // };
+  }
 
   return (
     <div className="flex h-screen w-full justify-center p-2 text-black">

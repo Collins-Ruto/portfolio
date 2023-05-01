@@ -1,33 +1,30 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Loader } from "~/components";
-import { DummyUser, Subjects } from "~/types/types";
-import type { User, Result } from "~/types/types";
+import { Subjects } from "~/types/types";
+import type { Result } from "~/types/types";
 import { api } from "@/utils/api";
-import { type Exam } from "@prisma/client";
+import type { User } from "@prisma/client";
+import { useSession } from "next-auth/react";
 
 function ExamPage() {
+  const { data: session } = useSession();
   const [user, setUser] = useState<User | undefined>();
-  const [exams, setExams] = useState<Exam[] | undefined>();
-  const [isLoading, setIsLoading] = useState<boolean>();
+  const {
+    data: exams,
+    isLoading,
+    error,
+  } = api.exam.studentExams.useQuery(user?.id as string);
 
   useEffect(() => {
-    const id = "641dd16f2eece6ce9587cb0d";
-
-    const userFromLocalStorage = localStorage.getItem("user");
-    const user: User =
-      userFromLocalStorage !== null
-        ? (JSON.parse(userFromLocalStorage) as User)
-        : DummyUser;
+    const user = session?.user as User;
     setUser(user);
+  }, [session]);
 
-    const { data, isLoading, error } = api.exam.studentExams.useQuery(id);
-    const exams: Exam[] | undefined = data;
-    setExams(exams);
-    setIsLoading(isLoading);
-    console.log("exam error", error);
-  }, []);
-  console.log("exam", exams);
+  if (error) {
+    console.log(error);
+  }
+  console.log("exams", exams);
   console.log("exam user", user);
 
   return (
@@ -58,6 +55,7 @@ function ExamPage() {
               </thead>
               <tbody>
                 {exams?.map((exam, index) => {
+                  console.log("the exam", exam);
                   return (
                     <tr
                       className={` p-4 ${index % 2 === 0 ? "bg-white" : ""}`}

@@ -1,29 +1,33 @@
 "use client";
-import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import type { User } from "~/types/types";
+import { signOut, useSession } from "next-auth/react";
+import { type User } from "@prisma/client";
 
-type Props = {
-  user: User;
-};
+function Header() {
+  const { data: session } = useSession();
 
-function Header({ user }: Props) {
+  const [user, setUser] = useState<User>();
   const [opened, setOpened] = useState(false);
   const [dropdown, setDropdown] = useState(false);
-  // const [bgColor, setbgColor] = useState("000000");
 
-  // const router = useRouter();
   const currentRoute = usePathname();
 
-  const logOut = () => {
-    localStorage.setItem("saved", JSON.stringify(false));
-    localStorage.removeItem("user");
-    delete axios.defaults.headers.common["Authorization"];
-    window.location.reload();
-  };
+  
+  useEffect(() => {
+    const user = session?.user as User
+    setUser(user);
+  }, [session]);
+  
+  console.log("header user", session);
+  // const logOut = () => {
+  //   localStorage.setItem("saved", JSON.stringify(false));
+  //   localStorage.removeItem("user");
+  //   delete axios.defaults.headers.common["Authorization"];
+  //   window.location.reload();
+  // };
 
   return (
     <div className="sticky top-0 z-40 mx-auto bg-[#F7F6FB] bg-blend-darken">
@@ -51,18 +55,18 @@ function Header({ user }: Props) {
                   aria-haspopup="true"
                 >
                   <Image
-                    width={10}
-                    height={10}
+                    width={20}
+                    height={20}
                     className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
                     src="https://img.icons8.com/material-rounded/24/000000/user.png"
                     alt=""
                   />
                   <div className="flex flex-col ">
                     <span className="text-md -mb-2 md:text-lg">
-                      {user.name}
+                      {user?.name}
                     </span>
                     <span className="text-center text-sm text-blue-600">
-                      {user.type}
+                      {user?.role}
                     </span>
                   </div>
                   <svg
@@ -93,7 +97,7 @@ function Header({ user }: Props) {
                       onClick={() => {
                         setDropdown(false);
                       }}
-                      href={`${user.type}/account`}
+                      href={user ? `${user?.role}/account` : "#"}
                       className="block cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       tabIndex={-1}
                     />
@@ -101,7 +105,7 @@ function Header({ user }: Props) {
                   </div>
                   <div
                     onClick={() => {
-                      logOut();
+                      void signOut();
                       setDropdown(false);
                     }}
                     className="block cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -131,34 +135,36 @@ function Header({ user }: Props) {
                 absolute left-0 flex h-screen w-[60%] flex-col overflow-y-auto bg-[#F7F6FB] p-4 opacity-100 bg-blend-darken md:w-60 "
           >
             <Link
-              href="/"
+              href={`/${user?.role || ""}`}
               className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
-                currentRoute === "/admin"
+                currentRoute === "/admin" ||
+                currentRoute === "/student" ||
+                currentRoute === "/teacher"
                   ? "hover:text bg-blue-700 text-white hover:text-white"
                   : ""
               }`}
             >
               <Image
-                width={10}
-                height={10}
+                width={20}
+                height={20}
                 className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
                 src="https://img.icons8.com/material-rounded/24/000000/dashboard-layout.png"
                 alt=""
               />
               <span className="text-lg">Dashboard</span>
             </Link>
-            {!(user.type === "student") && (
+            {user?.role === ("admin" || "teacher") && (
               <Link
-                href="/allstudents"
+                href="/page/allstudents"
                 className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
-                  currentRoute === "/students"
+                  currentRoute === "/page/allstudents"
                     ? "hover:text bg-blue-700 text-white hover:text-white"
                     : ""
                 }`}
               >
                 <Image
-                  width={10}
-                  height={10}
+                  width={20}
+                  height={20}
                   className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
                   src="https://img.icons8.com/material-rounded/24/000000/student-center.png"
                   alt=""
@@ -166,19 +172,19 @@ function Header({ user }: Props) {
                 <span className="text-lg">Students</span>
               </Link>
             )}
-            {user.type === "admin" && (
+            {user?.role === "admin" && (
               <div className="">
                 <Link
                   href="/admin/teachers"
                   className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
-                    currentRoute === "/teachers"
+                    currentRoute === "/admin/teachers"
                       ? "hover:text bg-blue-700 text-white hover:text-white"
                       : ""
                   }`}
                 >
                   <Image
-                    width={10}
-                    height={10}
+                    width={20}
+                    height={20}
                     className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
                     src="https://img.icons8.com/material-rounded/24/000000/teacher.png"
                     alt=""
@@ -188,16 +194,17 @@ function Header({ user }: Props) {
               </div>
             )}
             <Link
-              href="/exams"
+              href={user?.role === "student" ? "/student/exams" : "/page/exams"}
               className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
-                currentRoute === "/exams"
+                currentRoute === "/page/exams" ||
+                currentRoute === "/student/exams" 
                   ? "hover:text bg-blue-700 text-white hover:text-white"
                   : ""
               }`}
             >
               <Image
-                width={10}
-                height={10}
+                width={20}
+                height={20}
                 className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
                 src="https://img.icons8.com/material-rounded/24/000000/test-partial-passed.png"
                 alt=""
@@ -213,8 +220,8 @@ function Header({ user }: Props) {
               }`}
             >
               <Image
-                width={10}
-                height={10}
+                width={20}
+                height={20}
                 className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
                 src="https://img.icons8.com/material-rounded/24/000000/2012.png"
                 alt=""
@@ -223,7 +230,7 @@ function Header({ user }: Props) {
             </Link>
 
             <Link
-              href="/fees"
+              href={user?.role === "student" ? "/student/fees" : "/page/fees"}
               className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
                 currentRoute === "/fee"
                   ? "hover:text bg-blue-700 text-white hover:text-white"
@@ -231,15 +238,15 @@ function Header({ user }: Props) {
               }`}
             >
               <Image
-                width={10}
-                height={10}
+                width={20}
+                height={20}
                 className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
                 src="https://img.icons8.com/material-rounded/24/000000/currency-exchange.png"
                 alt=""
               />
               <span className="text-lg">Finance</span>
             </Link>
-            {user.type === "admin" && (
+            {user?.role === "admin" && (
               <div className="">
                 <h2 className="w-fit border-b px-2 pt-1 text-sm text-gray-600">
                   Data Management
@@ -253,8 +260,8 @@ function Header({ user }: Props) {
                   }`}
                 >
                   <Image
-                    width={10}
-                    height={10}
+                    width={20}
+                    height={20}
                     className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
                     src="https://img.icons8.com/ios-filled/50/000000/admin-settings-male.png"
                     alt=""
@@ -262,16 +269,16 @@ function Header({ user }: Props) {
                   <span className="text-lg">Add Admin</span>
                 </Link>
                 <Link
-                  href="/addlesson"
+                  href="/page/addlesson"
                   className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
-                    currentRoute === "/addlesson"
+                    currentRoute === "/page/addlesson"
                       ? "hover:text bg-blue-700 text-white hover:text-white"
                       : ""
                   }`}
                 >
                   <Image
-                    width={10}
-                    height={10}
+                    width={20}
+                    height={20}
                     className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
                     src="https://img.icons8.com/external-vitaliy-gorbachev-fill-vitaly-gorbachev/60/000000/external-lesson-university-vitaliy-gorbachev-fill-vitaly-gorbachev-1.png"
                     alt=""
@@ -287,8 +294,8 @@ function Header({ user }: Props) {
                   }`}
                 >
                   <Image
-                    width={10}
-                    height={10}
+                    width={20}
+                    height={20}
                     className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
                     src="https://img.icons8.com/material/24/000000/school-building.png"
                     alt=""
@@ -304,8 +311,8 @@ function Header({ user }: Props) {
                   }`}
                 >
                   <Image
-                    width={10}
-                    height={10}
+                    width={20}
+                    height={20}
                     className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
                     src="https://img.icons8.com/ios-filled/50/000000/wordbook.png"
                     alt=""
@@ -325,21 +332,21 @@ function Header({ user }: Props) {
                 }
               >
                 <Image
-                width={10} className="w-6 mr-2 bg-[#F7F6FB] rounded-sm" src="https://img.icons8.com/material-rounded/24/000000/user.png" alt="" />
-                height={10}
+                width={20} className="w-6 mr-2 bg-[#F7F6FB] rounded-sm" src="https://img.icons8.com/material-rounded/24/000000/user.png" alt="" />
+                height={20}
                 <span className="text-lg">Assignments</span>
               </Link> */}
             <Link
-              href={`${user.type}/account`}
+              href={`${user?.role || ""}/account`}
               className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
-                currentRoute === `${user.type}/account`
+                currentRoute === `${user?.role || ""}/account`
                   ? "hover:text bg-blue-700 text-white hover:text-white"
                   : ""
               }`}
             >
               <Image
-                width={10}
-                height={10}
+                width={20}
+                height={20}
                 className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
                 src="https://img.icons8.com/material-rounded/24/000000/user.png"
                 alt=""

@@ -90,11 +90,11 @@ function Dashboard() {
     },
     {
       title: "Lessons",
-      path: "/addlesson",
+      path: "/page/page/addlesson",
     },
     {
       title: "Exams",
-      path: "/addexam",
+      path: "/page/addexam",
     },
     {
       title: "Admins",

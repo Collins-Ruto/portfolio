@@ -1,30 +1,24 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Loader } from "~/components";
-import { DummyUser } from "~/types/types";
-import type { User } from "~/types/types";
 import { api } from "@/utils/api";
-import type { Fee } from "@prisma/client";
+import type { User } from "@prisma/client";
+import { useSession } from "next-auth/react";
 
 function FeeData() {
-  // const [student, setStudent] = useState({});
-  const [fees, setFees] = useState<Fee[] | undefined>();
-  const [isLoading, setIsLoading] = useState<boolean>();
+  const { data: session } = useSession();
+  const [user, setUser] = useState<User>();
+
+  const { data: fees, isLoading, error } = api.fee.studentFees.useQuery(user?.id as string);
 
   useEffect(() => {
-    const id = "641dd16f2eece6ce9587cb0d";
+    const user = session?.user as User;
+    setUser(user);
+  }, [session]);
 
-    const userFromLocalStorage = localStorage.getItem("user");
-    const user: User =
-      userFromLocalStorage !== null
-        ? (JSON.parse(userFromLocalStorage) as User)
-        : DummyUser;
-
-    const { data, isLoading, error } = api.fee.studentFees.useQuery(id);
-    const fees: Fee[] | undefined = data;
-    setFees(fees);
-    setIsLoading(isLoading);
-  }, []);
+  if (error) {
+    console.log(error);
+  }
 
   console.log("fee", fees);
 

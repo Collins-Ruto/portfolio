@@ -14,8 +14,10 @@ import {
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import React from "react";
-import type { User } from "~/types/types";
 import axios from "axios";
+import type { User } from "@prisma/client";
+import { useSession } from "next-auth/react";
+import { api } from "@/utils/api";
 
 function classNames(...classes: (string | boolean | undefined)[]) {
   return classes.filter(Boolean).join(" ");
@@ -23,7 +25,6 @@ function classNames(...classes: (string | boolean | undefined)[]) {
 
 type Props = {
   full: boolean;
-  user: User | null | undefined;
 };
 
 type Lesson = {
@@ -45,28 +46,24 @@ type Lesson = {
   };
 };
 
-export default function Calender({ full, user }: Props) {
+export default function Calender({ full }: Props) {
   const today = startOfToday();
+  const { data: session } = useSession();
+  const [user, setUser] = useState<User | undefined>();
   const [selectedDay, setSelectedDay] = useState(today);
   const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
   const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
   const [lessons, setLessons] = useState<Lesson[] | undefined>();
 
+  const { data: stream, isLoading, error } = api.stream.getById.useQuery(
+    user?.streamId as string
+  );
+
+
   useEffect(() => {
-    axios
-      .get<Lesson[] | undefined>("https://lmsadmin.onrender.com/lessons")
-      .then((res) => {
-        if (res.data) {
-          setLessons(res.data);
-        } else {
-          setLessons(undefined);
-        }
-      })
-      .catch((err) => console.log(err))
-      .then(() => console.log("this will succeed"))
-      .catch(() => "obligatory catch");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    const user = session?.user as User;
+    setUser(user);
+  }, [session]);
 
   const days = eachDayOfInterval({
     start: firstDayCurrentMonth,
@@ -90,21 +87,21 @@ export default function Calender({ full, user }: Props) {
         (lesson) => format(selectedDay, "EEE") === lesson.node.day
       );
     }
-    if (user.type === "teacher") {
+    if (user.role === "teacher") {
       return lessons?.filter(
         (lesson) =>
           format(selectedDay, "EEE") === lesson.node.day &&
           lesson.node.teacher.slug === user.slug
       );
     }
-    if (user.type === "student") {
+    if (user.role === "student") {
       return lessons?.filter(
         (lesson) =>
           format(selectedDay, "EEE") === lesson.node.day &&
           lesson.node.stream.slug === user?.stream?.slug
       );
     }
-    if (user.type === "admin") {
+    if (user.role === "admin") {
       return lessons?.filter(
         (lesson) => format(selectedDay, "EEE") === lesson.node.day
       );

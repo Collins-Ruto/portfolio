@@ -5,24 +5,29 @@ import { Calender, Loader } from "~/components";
 import { format } from "date-fns";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { DummyUser, type User } from "~/types/types";
+import type { User } from "@prisma/client";
+import { api } from "@/utils/api";
 
 function Dashboard() {
   const { data: session } = useSession();
   const [user, setUser] = useState<User | undefined>();
-  const [data, setData] = useState({});
-  const [isLoading, setIsLoading] = useState<boolean>();
+  // const [data, setData] = useState({});
+  // const [isLoading, setIsLoading] = useState<boolean>();
+
+  const {
+    data,
+    isLoading,
+    error,
+  } = api.data.getCount.useQuery(user?.id as string);
 
   useEffect(() => {
-    const userFromLocalStorage = localStorage.getItem("user");
-    const user: User =
-      userFromLocalStorage !== null
-        ? (JSON.parse(userFromLocalStorage) as User)
-        : DummyUser;
-
+    const user = session?.user as User;
     setUser(user);
-    setIsLoading(isLoading);
-  }, []);
+  }, [session]);
+
+  if (error) {
+    console.log(error);
+  }
 
   console.log("student session", { session });
 

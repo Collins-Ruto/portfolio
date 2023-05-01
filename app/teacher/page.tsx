@@ -62,11 +62,11 @@ function Dashboard() {
   const editInfo = [
     {
       title: "Lessons",
-      path: "/addlesson",
+      path: "/page/addlesson",
     },
     {
       title: "Exams",
-      path: "/addexam",
+      path: "/page/addexam",
     },
   ];
 

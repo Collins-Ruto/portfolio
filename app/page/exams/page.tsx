@@ -121,7 +121,7 @@ function Exam() {
           </div>
           <div>
             <Link
-              href="/addexam"
+              href="/page/addexam"
               type="button"
               className="flex items-center rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
             >

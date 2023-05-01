@@ -60,9 +60,11 @@ export const authOptions: NextAuthOptions = {
         ...session,
         user: {
           ...session.user,
+          id: token.id as string,
           slug: token.slug,
           phone: token.phone,
           role: token.role,
+          streamId: token.streamId,
           randomKey: token.randomKey
         }
       }
@@ -106,6 +108,7 @@ export const authOptions: NextAuthOptions = {
             email: true,
             phone: true,
             password: true,
+            streamId: true
           }
         }) as Student
         const teacher = await prisma.teacher.findUnique({
@@ -166,7 +169,8 @@ export const authOptions: NextAuthOptions = {
           phone: user.phone,
           name: user.name,
           role: student ? "student" : teacher ? "teacher" : "admin",
-          randomKey: 'Hey cool'
+          randomKey: 'Hey cool',
+          streamId: student ? student.streamId : ""
         }
       }
     }),

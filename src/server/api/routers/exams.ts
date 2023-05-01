@@ -16,7 +16,10 @@ export const examRouter = createTRPCRouter({
     
   getById: publicProcedure.input(z.string()).query(({ ctx, input }) => {
     if (input === 'all') {
-        return ctx.prisma.exam.findMany({
+      return ctx.prisma.exam.findMany({
+        where: {
+            id: input
+          },
             select: {
                 id: true,
                 name: true,

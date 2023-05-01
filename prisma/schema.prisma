@@ -52,8 +52,9 @@ model User {
     name          String?
     email         String?   @unique
     slug          String? @unique
-    role          String?
+    role          String
     phone         String?
+    streamId      String?
     emailVerified DateTime?
     image         String?
     accounts      Account[]
