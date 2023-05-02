@@ -20,7 +20,7 @@ export default withAuth(
             return NextResponse.redirect(
                 new URL("/login", req.url)
             );
-        if (req.nextUrl.pathname.startsWith("/page") && token?.role !== ("teacher" || "admin"))
+        if (req.nextUrl.pathname.startsWith("/page") && !["teacher", "admin"].includes(token?.role as string))
             return NextResponse.redirect(
                 new URL("/login", req.url)
             );
