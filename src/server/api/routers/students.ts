@@ -13,9 +13,9 @@ export const studentRouter = createTRPCRouter({
         stream: true
       },
       take: 10,
-      orderBy: {
-        createdAt: 'desc'
-      }
+      // orderBy: {
+      //   createdAt: 'desc'
+      // }
     });
   }),
 
@@ -80,7 +80,7 @@ export const studentRouter = createTRPCRouter({
   search: protectedProcedure.input(z.string()).query(({ ctx, input }) => {
     return ctx.prisma.student.findMany({
       where: {
-        name: {contains: input}
+        name: { contains: input }
       },
       include: {
         stream: true

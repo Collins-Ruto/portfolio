@@ -26,15 +26,16 @@ function Students() {
   useEffect(() => {
     const user = session?.user as User;
     setUser(user);
-    if (data) { setStudents(data) }
+    if (data) {
+      setStudents(data);
+    }
   }, [data, session]);
 
-  
   if (error) {
     console.log(error);
   }
 
-  console.log("del Stdt", delStudent)
+  console.log("del Stdt", delStudent);
 
   const deleteMutation = api.student.delete.useMutation();
 
@@ -68,9 +69,9 @@ function Students() {
   const searchStudents = api.student.search.useQuery(search);
 
   const searchSubmit = () => {
-    console.log("search std", search)
-    const {data} = searchStudents
-    console.log("search data std", data)
+    console.log("search std", search);
+    const { data } = searchStudents;
+    console.log("search data std", data);
     setStudents(data);
     setSubmit(false);
   };
@@ -200,7 +201,7 @@ function Students() {
                 {user?.role === "admin" && (
                   <div>
                     <Link
-                      href="/addstudent"
+                      href="/admin/addstudent"
                       type="button"
                       className="flex w-fit items-center rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
                     >
