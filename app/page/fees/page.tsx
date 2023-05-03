@@ -199,7 +199,7 @@ function FeeData() {
                   <td className="p-4">{fee.payday}</td>
                   <td className="p-4 text-end">
                     <span>
-                      {/* {parseFloat(fees.balance) < 1 ? "Paid" : "Arrears"} */}
+                      {balance < 1 ? "Paid" : "Arrears"}
                     </span>
                   </td>
                 </tr>

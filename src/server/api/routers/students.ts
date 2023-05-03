@@ -65,6 +65,14 @@ export const studentRouter = createTRPCRouter({
     });
   }),
 
+  delete: protectedProcedure.input(z.string()).mutation(({ ctx, input }) => {
+    return ctx.prisma.student.delete({
+      where: {
+        slug: input
+      }
+    })
+  }),
+
   getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";
   }),

@@ -2,12 +2,13 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "~/components";
 import StatusMsg from "~/components/StatusMsg";
-import { DummyUser, type User } from "~/types/types";
 import Image from "next/image";
 import { api } from "@/utils/api";
-import { type Admin } from "@prisma/client";
+import type { User, Admin } from "@prisma/client";
+import { useSession } from "next-auth/react";
 
 function Account() {
+  const { data: session } = useSession();
   const [user, setUser] = useState<User | undefined>();
   const [editUser, setEditUser] = useState<Admin>();
   const [passManager, setPassManager] = useState(false);
@@ -17,17 +18,12 @@ function Account() {
   const [status, setStatus] = useState({ message: "", type: "" });
 
   useEffect(() => {
-    const userFromLocalStorage = localStorage.getItem("user");
-    const user: User =
-      userFromLocalStorage !== null
-        ? (JSON.parse(userFromLocalStorage) as User)
-        : DummyUser;
+    const user = session?.user as User;
     setUser(user);
-  }, []);
+  }, [session]);
 
   const handleInput = (event: React.SyntheticEvent) => {
     const target = event.target as HTMLInputElement;
-    // const value = target.type === "checkbox" ? target.checked : target.value;
     const value =
       target.type === "number"
         ? Number(target.value).toFixed(
@@ -133,7 +129,7 @@ function Account() {
               src="https://img.icons8.com/ios-glyphs/120/000000/user--v1.png"
               alt=""
             />
-            <div className="pb-4 pt-2 text-blue-600">{user?.type}</div>
+            <div className="pb-4 pt-2 text-blue-600">{user?.role}</div>
             <div className="flex flex-col gap-2 p-2 text-start text-slate-800">
               <div className="p-1">Name: {user?.name} </div>
               <div className="p-1">Phone: {user?.phone} </div>

@@ -2,16 +2,17 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button, Loader } from "~/components";
-import { DummyUser } from "~/types/types";
 import Image from "next/image";
-import type { Student, User } from "~/types/types";
 import { api } from "@/utils/api";
+import { useSession } from "next-auth/react";
+import type { Stream, Student, User } from "@prisma/client";
 
 function Students() {
+  const { data: session } = useSession();
+  const [user, setUser] = useState<User | undefined>();
   const [isDelete, setisDelete] = useState(false);
   const [submit, setSubmit] = useState(false);
   const [delStudent, setDelStudent] = useState("");
-  const [userType, setUserType] = useState<string>("");
   const [search, setSearch] = useState("");
   const [pages, setPages] = useState({
     hasNextPage: false,
@@ -19,21 +20,34 @@ function Students() {
   });
 
   useEffect(() => {
-    const userFromLocalStorage = localStorage.getItem("user");
-    const user: User =
-      userFromLocalStorage !== null
-        ? (JSON.parse(userFromLocalStorage) as User)
-        : DummyUser;
-    setUserType(user.type);
-
-    // setPages(res.data.pageInfo);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    const user = session?.user as User;
+    setUser(user);
+  }, [session]);
 
   const { data, isLoading, error } = api.student.getAll.useQuery();
-  // const [students, setStudents] = useState<Student[]>(data);
-  const students: Student[] | undefined = data;
-  // console.log("students", studentQuery)
+  const [students, setStudents] = useState<
+    (Student & { stream: Stream })[] | undefined
+  >(data);
+  if (error) {
+    console.log(error);
+  }
+
+  console.log("del Stdt", delStudent)
+
+  const deleteMutation = api.student.delete.useMutation();
+
+  const deleteStudent = () => {
+    try {
+      deleteMutation.mutate(delStudent);
+      setisDelete(false);
+
+      const newStudent: (Student & { stream: Stream })[] | undefined =
+        students?.filter((student) => student.slug !== delStudent);
+      setStudents(newStudent);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // const changePage = (direction) => {
   //   const data = {
@@ -55,20 +69,6 @@ function Students() {
   //   );
   //   setStudents(data.data);
   //   setSubmit(false);
-  // };
-
-  // const deleteStudent = () => {
-  //   axios
-  //     .delete("https://lmsadmin.onrender.com/students", {
-  //       data: { slug: delStudent },
-  //     })
-  //     .then((res) => {
-  //       setisDelete(false);
-  //     });
-  //   const newStudent = students.filter(
-  //     (student) => student.slug !== delStudent
-  //   );
-  //   setStudents(newStudent);
   // };
 
   console.log("students", students);
@@ -135,7 +135,7 @@ function Students() {
               ) : (
                 <button
                   onClick={() => {
-                    // deleteStudent();
+                    deleteStudent();
                     setSubmit(true);
                   }}
                   className="w-full rounded-lg bg-red-600 px-4 py-3 text-sm font-semibold text-white hover:bg-red-400 hover:text-white md:w-auto md:py-2 "
@@ -193,7 +193,7 @@ function Students() {
                     </button>
                   )}
                 </div>
-                {userType === "admin" && (
+                {user?.role === "admin" && (
                   <div>
                     <Link
                       href="/addstudent"
@@ -225,7 +225,7 @@ function Students() {
                     <th className="p-4">Guardian Name</th>
                     <th className="p-4">Mobile Number</th>
                     <th className="p-4">Gender</th>
-                    {userType === "admin" && <th className="p-4">Action</th>}
+                    {user?.role === "admin" && <th className="p-4">Action</th>}
                   </tr>
                 </thead>
                 <tbody>
@@ -245,7 +245,7 @@ function Students() {
                       <td className="p-4">{student.parent}</td>
                       <td className="p-4">{student.phone}</td>
                       <td className="p-4">{student.gender}</td>
-                      {userType === "admin" && (
+                      {user?.role === "admin" && (
                         <td className="flex gap-2 p-4">
                           <Link href="/admin/addstudent">
                             <Image
