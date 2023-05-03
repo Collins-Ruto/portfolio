@@ -86,6 +86,7 @@ model Student {
     fees        Fee[]
     stream     Stream @relation(fields: [streamId], references: [id])
     streamId   String @db.ObjectId
+    createdAt DateTime @default(now())
 }
 model Teacher {
     id          String @id @default(auto()) @map("_id") @db.ObjectId
@@ -100,6 +101,7 @@ model Teacher {
     qualification String
     lessons     Lesson[]
     tasks       Task[]
+    createdAt DateTime @default(now())
 }
 
 model Admin {
@@ -109,6 +111,7 @@ model Admin {
     email       String
     password    String
     phone       String
+    createdAt DateTime @default(now())
 }
 
 model Exam {
@@ -120,6 +123,7 @@ model Exam {
     examDate    String
     student     Student @relation(fields: [studentId], references: [id])
     studentId   String @db.ObjectId
+    createdAt DateTime @default(now())
 }
 
 model Fee {
@@ -132,6 +136,7 @@ model Fee {
     payday      String
     student     Student @relation(fields: [studentId], references: [id])
     studentId   String @db.ObjectId
+    createdAt DateTime @default(now())
 }
 
 model Stream {
@@ -165,6 +170,7 @@ model Task {
     streamId    String @db.ObjectId
     teacher     Teacher @relation(fields: [teacherId], references: [id])
     teacherId   String @db.ObjectId
+    createdAt DateTime @default(now())
 }
 
 type Result {

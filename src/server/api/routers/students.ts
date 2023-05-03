@@ -7,10 +7,14 @@ import {
 } from "@/server/api/trpc";
 
 export const studentRouter = createTRPCRouter({
-  getAll: publicProcedure.query(({ ctx }) => {
+  getAll: protectedProcedure.query(({ ctx }) => {
     return ctx.prisma.student.findMany({
       include: {
         stream: true
+      },
+      take: 10,
+      orderBy: {
+        createdAt: 'desc'
       }
     });
   }),
@@ -32,7 +36,7 @@ export const studentRouter = createTRPCRouter({
     });
   }),
 
-  addStudent: publicProcedure.input(z.object({
+  addStudent: protectedProcedure.input(z.object({
     name: z.string(),
     slug: z.string(),
     email: z.string(),
@@ -50,7 +54,7 @@ export const studentRouter = createTRPCRouter({
     });
   }),
 
-  editStudent: publicProcedure.input(z.object({
+  editStudent: protectedProcedure.input(z.object({
     slug: z.string(),
     email: z.string(),
     password: z.string(),
@@ -69,6 +73,17 @@ export const studentRouter = createTRPCRouter({
     return ctx.prisma.student.delete({
       where: {
         slug: input
+      }
+    })
+  }),
+
+  search: protectedProcedure.input(z.string()).query(({ ctx, input }) => {
+    return ctx.prisma.student.findMany({
+      where: {
+        name: {contains: input}
+      },
+      include: {
+        stream: true
       }
     })
   }),

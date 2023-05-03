@@ -13,21 +13,23 @@ function Students() {
   const [isDelete, setisDelete] = useState(false);
   const [submit, setSubmit] = useState(false);
   const [delStudent, setDelStudent] = useState("");
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState<string>("");
   const [pages, setPages] = useState({
     hasNextPage: false,
     hasPreviousPage: false,
   });
+  const [students, setStudents] = useState<
+    (Student & { stream: Stream })[] | undefined
+  >();
 
+  const { data, isLoading, error } = api.student.getAll.useQuery();
   useEffect(() => {
     const user = session?.user as User;
     setUser(user);
-  }, [session]);
+    if (data) { setStudents(data) }
+  }, [data, session]);
 
-  const { data, isLoading, error } = api.student.getAll.useQuery();
-  const [students, setStudents] = useState<
-    (Student & { stream: Stream })[] | undefined
-  >(data);
+  
   if (error) {
     console.log(error);
   }
@@ -63,13 +65,15 @@ function Students() {
   //     });
   // };
 
-  // const searchSubmit = async () => {
-  //   const data = await axios.get(
-  //     `https://lmsadmin.onrender.com/students/search?name=${search}`
-  //   );
-  //   setStudents(data.data);
-  //   setSubmit(false);
-  // };
+  const searchStudents = api.student.search.useQuery(search);
+
+  const searchSubmit = () => {
+    console.log("search std", search)
+    const {data} = searchStudents
+    console.log("search data std", data)
+    setStudents(data);
+    setSubmit(false);
+  };
 
   console.log("students", students);
   console.log("pages", pages);
@@ -183,7 +187,7 @@ function Students() {
                   ) : (
                     <button
                       onClick={() => {
-                        // searchSubmit();
+                        searchSubmit();
                         setSubmit(true);
                       }}
                       type="button"
