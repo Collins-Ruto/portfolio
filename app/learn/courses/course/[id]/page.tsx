@@ -1,6 +1,6 @@
 import { appRouter } from "@/server/api/root";
 import { prisma } from "@/server/db";
-import type { Metadata, ResolvingMetadata } from "next";
+import type { Metadata } from "next";
 import type { Course } from "@prisma/client";
 
 export async function generateMetadata({
