@@ -6,23 +6,23 @@ import { Subjects } from "~/types/types";
 import { Button, DateTime, Loader } from "~/components";
 import StatusMsg from "~/components/StatusMsg";
 
-const dummyExams: Exam[] = [
-  {
-    id: "",
-    name: "",
-    slug: "",
-    term: "",
-    results: [
-      {
-        slug: "",
-        marks: "",
-      },
-    ],
-    createdAt: new Date(),
-    examDate: "",
-    studentId: "",
-  },
-];
+// const dummyExams: Exam[] = [
+//   {
+//     id: "",
+//     name: "",
+//     slug: "",
+//     term: "",
+//     results: [
+//       {
+//         slug: "",
+//         marks: "",
+//       },
+//     ],
+//     createdAt: new Date(),
+//     examDate: "",
+//     studentId: "",
+//   },
+// ];
 
 function AddExam() {
   const [exams, setExams] = useState<Exam[]>();
@@ -39,10 +39,10 @@ function AddExam() {
     const value = target.value;
     const name = target.name;
 
-    let emptyResults = [] as unknown as Result[];
+    const emptyResults = [] as unknown as Result[];
 
     setExams((prevExams: Exam[] | undefined) => {
-      let newExams = [] as unknown as Exam[];
+      const newExams = [] as unknown as Exam[];
       if (!prevExams) {
         students?.forEach((student) => {
           newExams.push({
@@ -89,7 +89,7 @@ function AddExam() {
               ],
             } as unknown as Exam);
           } else {
-            let emptyResults = [] as unknown as Result[];
+            const emptyResults = [] as unknown as Result[];
             console.log("hand chsng 3");
             newExams.push({
               studentId: student?.id,

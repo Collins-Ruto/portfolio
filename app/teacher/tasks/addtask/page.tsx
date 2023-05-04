@@ -1,12 +1,12 @@
 "use client";
 import React, { useState } from "react";
-import { Button, Editor, StatusMsg } from "~/components";
-import type { Task } from "@prisma/client";
+import { Button, Editor, Loader, StatusMsg } from "~/components";
+import type { Subject, Task } from "@prisma/client";
 import { api } from "@/utils/api";
 import { Subjects } from "~/types/types";
 
 interface IndexedTask extends Task {
-  [key: string]: any;
+  [key: string]: string | Date | Subject;
 }
 
 function CreateTask() {
@@ -189,7 +189,7 @@ function CreateTask() {
             message: `succesfully added ${fileTask?.name ?? ""} as a task`,
           });
           setTimeout(() => {
-             inputValidate("clear");
+            inputValidate("clear");
           }, 2000);
         },
       });
@@ -205,6 +205,7 @@ function CreateTask() {
       <div className="p-2 text-2xl font-semibold md:p-4">
         <h3>Add Tasks</h3>
       </div>
+      {isLoading && <Loader />}
       <div className="m-4 rounded-xl bg-[#F7F6FB] p-4 md:p-6">
         <form>
           <div className="flex grid-cols-3 flex-col gap-2 gap-y-4 md:grid md:gap-y-8">

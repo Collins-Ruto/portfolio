@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Button, StatusMsg } from "~/components";
-import type { Course } from "@prisma/client";
+import type { Course, Subject } from "@prisma/client";
 import { Subjects } from "~/types/types";
 import { api } from "@/utils/api";
 
@@ -38,7 +38,7 @@ import { api } from "@/utils/api";
 // };
 
 interface IndexedInput extends Course {
-  [key: string]: any;
+  [key: string]: string | Date | Subject;
 }
 
 function AddCourse() {
@@ -150,7 +150,7 @@ function AddCourse() {
 
     try {
       addCourseMutation.mutate(updatedCourse, {
-        onSuccess: (res) => {
+        onSuccess: () => {
           setSubmit(false);
           setStatus({
             type: "success",
@@ -159,7 +159,7 @@ function AddCourse() {
             } as a Course`,
           });
           setTimeout(() => {
-             inputValidate("clear");
+            inputValidate("clear");
           }, 2000);
         },
       });
