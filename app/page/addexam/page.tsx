@@ -28,11 +28,11 @@ function AddExam() {
   const [exams, setExams] = useState<Exam[]>();
   const [students, setStudents] = useState<(Student | undefined)[]>();
   const [stream, setStream] = useState<Stream>();
-  const [loading, setLoading] = useState(false);
   const [submit, setSubmit] = useState(false);
   const [status, setStatus] = useState({ message: "", type: "" });
-
+  
   const { data: streams, isLoading } = api.stream.getAll.useQuery();
+  const [loading, setLoading] = useState(isLoading);
 
   const handleInput = (event: React.SyntheticEvent) => {
     const target = event.target as HTMLInputElement;
@@ -120,7 +120,7 @@ function AddExam() {
               (result) => result.slug === name
             );
             console.log("exists ? ", existingResult);
-            if (prevExam.results.some((result) => result.slug !== name)) {
+            if (!existingResult) {
               console.log("add new", prevExam);
               return {
                 ...prevExam,
@@ -178,19 +178,7 @@ function AddExam() {
       return;
     }
     setSubmit(true);
-    const newExams = exams.map((exam) => {
-      return {
-        ...exam,
-        results: exam.results.map((result) => {
-          return {
-            results: {
-              slug: result.slug as string,
-              name: result.marks as string,
-            } as unknown as Result[],
-          };
-        }),
-      } as unknown as Exam;
-    });
+
     try {
       addExamMutation.mutate(exams, {
         onSuccess: () => {
