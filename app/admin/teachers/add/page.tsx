@@ -19,7 +19,7 @@ import { type Teacher } from "@prisma/client";
 // };
 
 interface IndexedInput extends Teacher {
-  [key: string]: any;
+  [key: string]: string | Date;
 }
 
 function AddTeacher() {
@@ -65,11 +65,11 @@ function AddTeacher() {
     if (action === "clear") {
       setTeacher(() => {
         let newInput = {} as unknown as Teacher;
-        fields.forEach((field) => { 
-          newInput = {...newInput, [field]: ""}
-        })
-        return newInput
-      })
+        fields.forEach((field) => {
+          newInput = { ...newInput, [field]: "" };
+        });
+        return newInput;
+      });
     }
     fields.forEach((field) => {
       if (input?.[field] === "" || input?.[field] === undefined) {
@@ -87,7 +87,7 @@ function AddTeacher() {
   const addTeacherMutation = api.teacher.addTeacher.useMutation();
 
   const handleSubmit = (e: React.SyntheticEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     if (inputValidate("") === false) {
       return;
     }

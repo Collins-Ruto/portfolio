@@ -19,7 +19,7 @@ import { Button, StatusMsg } from "~/components";
 // };
 
 interface IndexedInput extends Admin {
-  [key: string]: any;
+  [key: string]: string ;
 }
 
 function AddAdmin() {
@@ -83,7 +83,7 @@ function AddAdmin() {
     setSubmit(true);
     try {
       addAdminMutation.mutate(admin as Admin, {
-        onSuccess: (res) => {
+        onSuccess: () => {
           setSubmit(false);
           setStatus({
             type: "success",

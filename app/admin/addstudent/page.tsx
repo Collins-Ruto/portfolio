@@ -1,6 +1,6 @@
 "use client";
 import { api } from "@/utils/api";
-import { type Student } from "@prisma/client";
+import type { Subject, Student } from "@prisma/client";
 import React, { useState } from "react";
 import { Button, Loader, StatusMsg } from "~/components";
 
@@ -18,7 +18,7 @@ import { Button, Loader, StatusMsg } from "~/components";
 // };
 
 interface IndexedInput extends Student {
-  [key: string]: any;
+  [key: string]: string | Date | Subject[];
 }
 
 function AddStudent() {
@@ -43,7 +43,7 @@ function AddStudent() {
       const updatedStudent = {
         ...prevStudent,
         [name]: value,
-        password: "student"
+        password: "student",
       };
 
       return updatedStudent;
@@ -67,11 +67,11 @@ function AddStudent() {
     if (action === "clear") {
       setStudent(() => {
         let newStudent = {} as unknown as Student;
-        fields.forEach((field) => { 
-          newStudent = {...newStudent, [field]: ""}
-        })
-        return newStudent
-      })
+        fields.forEach((field) => {
+          newStudent = { ...newStudent, [field]: "" };
+        });
+        return newStudent;
+      });
     }
     fields.forEach((field) => {
       if (input?.[field] === "" || input?.[field] === undefined) {
@@ -86,7 +86,7 @@ function AddStudent() {
     }
   };
 
-  console.log("std", student)
+  console.log("std", student);
 
   //http://localhost:8000
   const addStudentMutation = api.student.addStudent.useMutation();
@@ -105,7 +105,7 @@ function AddStudent() {
             message: `succesfully added ${student?.name ?? ""} as a student`,
           });
           setTimeout(() => {
-            inputValidate("clear")
+            inputValidate("clear");
           }, 2000);
         },
       });
@@ -338,10 +338,10 @@ function AddStudent() {
                       <Button />
                     ) : (
                       <button
-                          onClick={(e) => {
-                            handleSubmit()
-                            e.preventDefault();
-                          }}
+                        onClick={(e) => {
+                          handleSubmit();
+                          e.preventDefault();
+                        }}
                         type="submit"
                         className="rounded bg-blue-500 px-10 py-2 font-bold text-white hover:bg-blue-700"
                       >

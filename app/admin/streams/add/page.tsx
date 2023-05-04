@@ -7,7 +7,7 @@ import { Button, StatusMsg } from "~/components";
 // eslint-disable-next-line no-unused-vars
 
 interface IndexedInput extends Stream {
-  [key: string]: any;
+  [key: string]: string;
 }
 
 function AddStream() {
@@ -70,7 +70,7 @@ function AddStream() {
     setSubmit(true);
     try {
       addStreamMutation.mutate(stream as Stream, {
-        onSuccess: (res) => {
+        onSuccess: () => {
           setSubmit(false);
           setStatus({
             type: "success",
