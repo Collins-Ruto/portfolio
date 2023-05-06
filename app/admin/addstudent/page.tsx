@@ -32,7 +32,7 @@ function AddStudent() {
 
     setStudent((prevStudent: Student | undefined) => {
       if (!prevStudent) {
-        return undefined; // or some default value if you have one
+        return { [name]: value } as unknown as Student; // or some default value if you have one
       }
 
       const updatedStudent = {

@@ -32,7 +32,7 @@ function AddExam() {
 
     setExam((prevExam: Exam | undefined) => {
       if (!prevExam) {
-        return undefined; // or some default value if you have one
+        return { [name]: value } as unknown as Exam; // or some default value if you have one
       }
 
       const updatedExam = {

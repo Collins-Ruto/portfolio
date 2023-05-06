@@ -31,7 +31,7 @@ function AddTeacher() {
 
     setTeacher((prevTeacher: Teacher | undefined) => {
       if (!prevTeacher) {
-        return { [name]: value } as Teacher; // or some default value if you have one
+        return { [name]: value } as unknown as Teacher; // or some default value if you have one
       }
 
       const updatedTeacher = {
