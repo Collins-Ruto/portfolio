@@ -48,7 +48,7 @@ function StatusMsg({ status }: Props) {
                 className="mr-2 h-8 w-8 cursor-pointer"
                 src={`${
                   status?.type === "success"
-                    ? "https://img.icons8.com/sf-regular/64/90EE90/ok.png"
+                    ? "https://img.icons8.com/sf-regular/24/90EE90/ok.png"
                     : "https://img.icons8.com/windows/32/FFFFFF/xbox-x.png"
                 }`}
                 alt="success"

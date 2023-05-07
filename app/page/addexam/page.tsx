@@ -56,7 +56,7 @@ function AddExam() {
     setExams((prevExams: Exam[] | undefined) => {
       const newExams = [] as unknown as Exam[]; // Create a new array for updated exams
 
-      if (!prevExams) {
+      if (!prevExams || prevExams[0]?.studentId) {
         // If there are no previous exams, create new exams for each student
         students?.forEach((student) => {
           newExams.push({
@@ -78,6 +78,7 @@ function AddExam() {
           [name]: value, // Set the specified name property to the provided value
         } as unknown as Exam);
       });
+      console.log("final inp exams", exams);
 
       return newExams; // Return the updated exams
     });
@@ -227,6 +228,10 @@ function AddExam() {
   const addExamMutation = api.exam.addManyExams.useMutation();
 
   const handleSubmit = () => {
+    // setStatus({
+    //   type: "success",
+    //   message: `successfully added ${exams?.[0]?.name ?? ""} exam`, // Set the success message
+    // });
     if (!exams) {
       return; // If exams is empty, return
     }
@@ -360,7 +365,7 @@ function AddExam() {
               onChange={(e) => {
                 handleInput(e);
               }}
-              value={exams?.[0]?.name}
+              value={clear ? "" : exams?.[0]?.name}
               className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
               type="text"
               placeholder="eg: End Term 1"
@@ -375,7 +380,7 @@ function AddExam() {
               onChange={(e) => {
                 handleInput(e);
               }}
-              value={exams?.[0]?.term}
+              value={clear ? "" : exams?.[0]?.term}
               className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
               type="text"
               placeholder="eg: 2020 II"
@@ -390,7 +395,7 @@ function AddExam() {
               onChange={(e) => {
                 handleInput(e);
               }}
-              value={exams?.[0]?.slug}
+              value={clear ? "" : exams?.[0]?.slug}
               className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
               type="text"
               placeholder="eg: 282021i"

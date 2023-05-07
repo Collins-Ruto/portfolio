@@ -87,12 +87,13 @@ export const examRouter = createTRPCRouter({
     studentId: z.string()
   }))).mutation(({ ctx, input }) => {
     console.log("trpc input", input)
-    for (const exam of input) {
+    const createExamPromises = input.map((exam) => {
       const newInput = { ...exam, createdAt: new Date() };
       return ctx.prisma.exam.create({
         data: newInput,
-      })
-    }
+      });
+    });
+    return Promise.all(createExamPromises);
   }),
 
   search: protectedProcedure.input(z.string()).query(({ ctx, input }) => {
