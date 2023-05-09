@@ -18,6 +18,15 @@ export const taskRouter = createTRPCRouter({
             }
         });
     }),
+
+    getIds: protectedProcedure.query(({ ctx }) => {
+        return ctx.prisma.task.findMany({
+            select: {
+                id: true,
+            },
+        });
+    }),
+
     getAllStream: protectedProcedure.input(z.string()).query(({ ctx, input }) => {
         return ctx.prisma.task.findMany({
             where: {

@@ -22,6 +22,14 @@ export const studentRouter = createTRPCRouter({
     });
   }),
 
+  getIds: protectedProcedure.query(({ ctx }) => {
+    return ctx.prisma.student.findMany({
+      select: {
+        id: true,
+      },
+    });
+  }),
+
   count: protectedProcedure.query(({ ctx }) => {
     return ctx.prisma.student.count();
   }),
