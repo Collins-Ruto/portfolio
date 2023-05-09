@@ -154,7 +154,7 @@ function Courses() {
             {
               <div>
                 <Link
-                  href="/page/courses/addcourse"
+                  href="/learn/courses/addcourse"
                   type="button"
                   className="flex w-fit items-center rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
                 >

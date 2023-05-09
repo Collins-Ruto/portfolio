@@ -11,9 +11,9 @@ export const courseRouter = createTRPCRouter({
     getAll: publicProcedure.query(({ ctx }) => {
         return ctx.prisma.course.findMany({
             take: 10,
-            // orderBy: {
-            //   createdAt: 'desc'
-            // }
+            orderBy: {
+              createdAt: 'desc'
+            }
         });
     }),
 
@@ -106,7 +106,10 @@ export const courseRouter = createTRPCRouter({
         };
         return ctx.prisma.course.findMany({
             where: searchQuery,
-
+            orderBy: {
+                createdAt: 'desc'
+            },
+            take: 20
         })
     }),
 

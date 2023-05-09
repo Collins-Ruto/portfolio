@@ -13,6 +13,9 @@ export const examRouter = createTRPCRouter({
       include: {
         student: true
       },
+      orderBy: {
+        createdAt: 'desc'
+      },
       take: 10,
       skip: input,
     });
@@ -49,6 +52,9 @@ export const examRouter = createTRPCRouter({
       where: {
         studentId: input,
       },
+      orderBy: {
+        createdAt: 'desc'
+      }
     });
   }),
 
@@ -80,7 +86,11 @@ export const examRouter = createTRPCRouter({
       where: searchQuery,
       include: {
         student: true
-      }
+      },
+      orderBy: {
+        createdAt: 'desc'
+      },
+      take: 20
     })
   }),
 });

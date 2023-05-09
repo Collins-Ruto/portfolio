@@ -106,7 +106,10 @@ export const studentRouter = createTRPCRouter({
       include: {
         stream: true
       },
-      take: 10
+      orderBy: {
+        createdAt: 'desc'
+      },
+      take: 20
     })
   }),
 

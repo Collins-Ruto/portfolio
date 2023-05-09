@@ -12,7 +12,7 @@ export const taskRouter = createTRPCRouter({
             include: {
                 teacher: true
             },
-            take: 5,
+            take: 20,
             orderBy: {
               createdAt: 'desc'
             }
@@ -36,6 +36,9 @@ export const taskRouter = createTRPCRouter({
                 stream: true,
                 teacher: true
             },
+            orderBy: {
+                createdAt: 'desc'
+            }
         });
     }),
     getAllTeacher: protectedProcedure.input(z.string()).query(({ ctx, input }) => {
@@ -47,6 +50,9 @@ export const taskRouter = createTRPCRouter({
                 stream: true,
                 teacher: true
             },
+            orderBy: {
+                createdAt: 'desc'
+            }
         });
     }),
 
@@ -125,7 +131,11 @@ export const taskRouter = createTRPCRouter({
             include: {
                 stream: true,
                 teacher: true
-            }
+            },
+            orderBy: {
+                createdAt: 'desc'
+            },
+            take: 20
         })
     }),
 

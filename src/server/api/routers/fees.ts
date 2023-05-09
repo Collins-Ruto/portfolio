@@ -19,6 +19,9 @@ export const feeRouter = createTRPCRouter({
       },
       take: 10,
       skip: input,
+      orderBy: {
+        createdAt: 'desc'
+      },
     });
   }),
 
@@ -48,6 +51,9 @@ export const feeRouter = createTRPCRouter({
       where: {
         studentId: input,
       },
+      orderBy: {
+        createdAt: 'desc'
+      }
     });
   }),
 
@@ -84,7 +90,11 @@ export const feeRouter = createTRPCRouter({
             stream: true
           }
         }
-      }
+      },
+      orderBy: {
+        createdAt: 'desc'
+      },
+      take: 20
     })
   }),
 
