@@ -16,6 +16,9 @@ export const studentRouter = createTRPCRouter({
       },
       take: 10,
       skip: input,
+      orderBy: {
+        createdAt: 'desc'
+      }
     });
   }),
 

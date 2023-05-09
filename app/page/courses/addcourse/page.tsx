@@ -144,7 +144,7 @@ function AddCourse() {
                   handleInput(e);
                 }}
                 value={course?.subject?.slug}
-                className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                 type="text"
                 placeholder="eg. geo"
                 name="subject"
@@ -159,7 +159,7 @@ function AddCourse() {
                   handleInput(e);
                 }}
                 value={course?.topic}
-                className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                 type="text"
                 placeholder="Refraction"
                 name="topic"
@@ -174,7 +174,7 @@ function AddCourse() {
                   handleInput(e);
                 }}
                 value={course?.form}
-                className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                 type="text"
                 placeholder="eg. 2"
                 name="form"
@@ -187,7 +187,7 @@ function AddCourse() {
                   handleInput(e);
                 }}
                 value={course?.unit_code}
-                className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                 type="text"
                 name="unit_code"
                 placeholder="eg. 2.4.2"
@@ -200,7 +200,7 @@ function AddCourse() {
                   handleInput(e);
                 }}
                 value={course?.video_url}
-                className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                 type="text"
                 name="video_url"
                 placeholder=""
@@ -213,7 +213,7 @@ function AddCourse() {
                   handleInput(e);
                 }}
                 value={course?.description}
-                className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                 placeholder="refraction of light"
                 name="description"
               />
@@ -227,7 +227,7 @@ function AddCourse() {
               ) : (
                 <div
                   onClick={() => void handleSubmit()}
-                  className="w-fit rounded bg-blue-500 py-2 px-10 font-bold text-white hover:bg-blue-700"
+                  className="w-fit cursor-pointer rounded bg-blue-500  px-10 py-2 font-bold text-white hover:bg-blue-700"
                 >
                   Submit
                 </div>

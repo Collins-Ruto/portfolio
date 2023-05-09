@@ -9,7 +9,11 @@ import {
 
 export const teacherRouter = createTRPCRouter({
   getAll: protectedProcedure.query(({ ctx }) => {
-    return ctx.prisma.teacher.findMany();
+    return ctx.prisma.teacher.findMany({
+      orderBy: {
+        createdAt: 'desc'
+      }
+    });
   }),
 
   getById: publicProcedure.input(z.string()).query(({ ctx, input }) => {

@@ -189,7 +189,7 @@ function Courses() {
                 <div className="flex flex-col p-1">
                   <span className="text-sm text-blue-500">{course?.title}</span>
                   <span className="text-green-700">{course?.topic}</span>
-                  <span className="">
+                  <span className="justify-end">
                     Form {course?.form} {course?.subject.name}
                   </span>
                   <div className=""></div>

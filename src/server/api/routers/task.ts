@@ -12,10 +12,10 @@ export const taskRouter = createTRPCRouter({
             include: {
                 teacher: true
             },
-            take: 10,
-            // orderBy: {
-            //   createdAt: 'desc'
-            // }
+            take: 5,
+            orderBy: {
+              createdAt: 'desc'
+            }
         });
     }),
     getAllStream: protectedProcedure.input(z.string()).query(({ ctx, input }) => {

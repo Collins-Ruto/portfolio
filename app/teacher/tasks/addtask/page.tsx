@@ -174,7 +174,7 @@ function CreateTask() {
                     handleInput(e);
                   }}
                   value={task?.name}
-                  className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                  className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                   type="text"
                   placeholder="eg. Assignmets 1"
                   name="name"
@@ -191,7 +191,7 @@ function CreateTask() {
                     handleInput(e);
                   }}
                   value={task?.subject?.slug}
-                  className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                  className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                   type="text"
                   placeholder="eg. geo"
                   name="subject"
@@ -206,7 +206,7 @@ function CreateTask() {
                     handleInput(e);
                   }}
                   value={task?.streamId}
-                  className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                  className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                   type="text"
                   placeholder="eg. 1n"
                   name="streamId"
@@ -222,7 +222,7 @@ function CreateTask() {
                   handleInput(e);
                 }}
                 value={task?.teacherId}
-                className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                 type="text"
                 placeholder="eg. 456erick"
                 name="teacherId"
@@ -235,7 +235,7 @@ function CreateTask() {
                   handleInput(e);
                 }}
                 value={task?.due}
-                className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                 type="date"
                 name="due"
               />
@@ -269,7 +269,7 @@ function CreateTask() {
               ) : (
                 <div
                   onClick={() => void handleSubmit()}
-                  className="w-fit rounded bg-blue-500 py-2 px-10 font-bold text-white hover:bg-blue-700"
+                  className="w-fit cursor-pointer rounded bg-blue-500  px-10 py-2 font-bold text-white hover:bg-blue-700"
                 >
                   Submit
                 </div>
