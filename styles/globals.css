@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.notification__progress {
+  position: absolute;
+  width: calc(100% - 0.5rem);
+
+  transform: scaleX(0);
+  transform-origin: left;
+  /* background: linear-gradient(to right, #313e2c, #aaec8a); */
+  border-radius: inherit;
+  animation: progress 3s 0.2s linear;
+}
+
+@keyframes progress {
+  to {
+    transform: scaleX(1);
+  }
+}
