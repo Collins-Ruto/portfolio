@@ -256,7 +256,7 @@ function AddCourse() {
           </div>
 
           <div className="mt-2">
-            <div className="opacity80 rounded text-xs text-red-500">
+            <div className="opacity80 rounded text-sm text-red-500">
               <span className="">{validInput}</span>
               <span className="text-transparent">.</span>
             </div>
