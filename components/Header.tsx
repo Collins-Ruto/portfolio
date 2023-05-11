@@ -73,7 +73,7 @@ function Header() {
                     </span>
                   </div>
                   <svg
-                    className="ml-2 h-5 w-5"
+                    className="ml-2 hidden h-5 w-5 sm:block"
                     viewBox="0 0 20 20"
                     fill="currentColor"
                     aria-hidden="true"
@@ -89,29 +89,28 @@ function Header() {
 
               {dropdown && (
                 <div
-                  className="absolute right-0 z-10 -mt-1 w-56 origin-top-right rounded-md bg-white px-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  className="absolute py-1 text-lg mt-1 right-0 z-10 w-56 origin-top-right rounded-md bg-white px-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                   role="menu"
                   aria-orientation="vertical"
                   aria-labelledby="menu-button"
                   tabIndex={-1}
                 >
-                  <div className="py-1" role="none">
-                    <Link
-                      onClick={() => {
-                        setDropdown(false);
-                      }}
-                      href={user ? `${user?.role}/account` : "#"}
-                      className="block cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      tabIndex={-1}
-                    />
-                    Account
-                  </div>
+                  <Link
+                    onClick={() => {
+                      setDropdown(false);
+                    }}
+                    href={user ? `${user?.role}/account` : "#"}
+                    className="block rounded cursor-pointer px-4 py-2 text-gray-700 hover:bg-gray-100"
+                    tabIndex={-1}
+                  >
+                    Account{" "}
+                  </Link>
                   <div
                     onClick={() => {
                       void signOut();
                       setDropdown(false);
                     }}
-                    className="block cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    className="block rounded cursor-pointer px-4 py-2 text-gray-700 hover:bg-gray-100"
                     tabIndex={-1}
                   >
                     Log Out
@@ -436,7 +435,7 @@ function Header() {
                 width={20}
                 height={20}
                 className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
-                src="https://img.icons8.com/material-rounded/24/000000/user.png"
+                src="https://img.icons8.com/ios-glyphs/24/logout-rounded--v1.png"
                 alt=""
               />
               <span className="text-lg">Log Out</span>
