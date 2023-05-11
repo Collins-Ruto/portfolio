@@ -2,6 +2,7 @@ import { z } from "zod";
 
 import {
     createTRPCRouter,
+    protectedProcedure,
     publicProcedure,
 } from "@/server/api/trpc";
 
@@ -31,7 +32,7 @@ export const lessonRouter = createTRPCRouter({
         });
     }),
 
-    addLesson: publicProcedure.input(z.object({
+    addLesson: protectedProcedure.input(z.object({
         startTime: z.string(),
         endTime: z.string(),
         day: z.string(),

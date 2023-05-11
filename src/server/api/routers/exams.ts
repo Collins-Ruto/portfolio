@@ -3,7 +3,6 @@ import { z } from "zod";
 import {
   createTRPCRouter,
   protectedProcedure,
-  publicProcedure,
 } from "@/server/api/trpc";
 import type{ Prisma } from "@prisma/client";
 
@@ -33,7 +32,7 @@ export const examRouter = createTRPCRouter({
     });
   }),
 
-  getById: publicProcedure.input(z.string()).query(({ ctx, input }) => {
+  getById: protectedProcedure.input(z.string()).query(({ ctx, input }) => {
     if (input === 'all') {
       return ctx.prisma.exam.findMany({
         where: {

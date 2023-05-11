@@ -2,6 +2,7 @@ import { z } from "zod";
 
 import {
     createTRPCRouter,
+    protectedProcedure,
     publicProcedure,
 } from "@/server/api/trpc";
 
@@ -18,7 +19,7 @@ export const streamRouter = createTRPCRouter({
         });
     }),
 
-    addStream: publicProcedure.input(z.object({
+    addStream: protectedProcedure.input(z.object({
         name: z.string(),
         slug: z.string(),
     })).mutation(({ ctx, input }) => {

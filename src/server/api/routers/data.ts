@@ -25,35 +25,5 @@ export const dataRouter = createTRPCRouter({
         console.log("data data", data)
         return data
     }),
-    getById: publicProcedure.input(z.string()).query(({ ctx, input }) => {
-        return ctx.prisma.fee.findUnique({
-            where: {
-                id: input
-            }
-        });
-    }),
-
-    studentFees: publicProcedure.input(z.string()).query(({ ctx, input }) => {
-        return ctx.prisma.fee.findMany({
-            where: {
-                studentId: input,
-            },
-        });
-    }),
-
-    addFee: publicProcedure.input(z.object({
-        name: z.string(),
-        slug: z.string(),
-        term: z.string(),
-        type: z.string(),
-        payday: z.string(),
-        amount: z.string(),
-        studentId: z.string()
-    })).mutation(({ ctx, input }) => {
-        console.log("trpc input", input)
-        return ctx.prisma.fee.create({
-            data: input,
-        });
-    }),
 
 });

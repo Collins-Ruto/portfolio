@@ -3,7 +3,6 @@ import { z } from "zod";
 import {
   createTRPCRouter,
   protectedProcedure,
-  publicProcedure,
 } from "@/server/api/trpc";
 import type { Prisma } from "@prisma/client";
 
@@ -38,7 +37,7 @@ export const feeRouter = createTRPCRouter({
   }),
 
   // :{ctx:Context, input:string}
-  getById: publicProcedure.input(z.string()).query(({ ctx, input }) => {
+  getById: protectedProcedure.input(z.string()).query(({ ctx, input }) => {
     return ctx.prisma.fee.findUnique({
       where: {
         id: input

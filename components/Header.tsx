@@ -25,9 +25,9 @@ function Header() {
   return (
     <div className="sticky top-0 z-40 mx-auto bg-[#F7F6FB] bg-blend-darken">
       <div className="pl-4">
-        <nav className="flex items-center justify-between">
+        <nav className="flex items-center justify-between p-1">
           <div
-            className="cursor-pointer space-y-1 p-2 md:space-y-2"
+            className="order-las w-1/3 cursor-pointer space-y-1 p-2 md:hidden md:space-y-2"
             onClick={() => {
               setOpened(!opened);
             }}
@@ -36,6 +36,16 @@ function Header() {
             <div className="h-1 w-6 rounded bg-blue-600 md:w-8"></div>
             <div className="h-1 w-6 rounded bg-blue-600 md:w-8"></div>
           </div>
+          <Link href="https://learnhqhome.vercel.app" className=" flex w-1/3">
+            <Image
+              width={90}
+              height={90}
+              src="/lhlogo.webp"
+              alt="learnhq"
+              className=""
+            />
+          </Link>
+
           <div>
             <div className="relative inline-block text-left">
               <div>
@@ -43,14 +53,14 @@ function Header() {
                   onClick={() => {
                     setDropdown(!dropdown);
                   }}
-                  className="inline-flex w-full cursor-pointer items-center justify-center bg-[#F7F6FB] py-1 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:border-2 focus:border-gray-500"
+                  className="inline-flex w-full cursor-pointer items-center justify-center bg-[#F7F6FB] px-4 py-1 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:border-2 focus:border-gray-500"
                   aria-expanded="true"
                   aria-haspopup="true"
                 >
                   <Image
                     width={20}
                     height={20}
-                    className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
+                    className="mr-2 hidden w-6 rounded-sm bg-[#F7F6FB] md:block"
                     src="https://img.icons8.com/material-rounded/24/000000/user.png"
                     alt=""
                   />
@@ -125,7 +135,7 @@ function Header() {
               setOpened(!opened);
             }}
             className="
-                md:pb-[3.5rem] absolute left-0 flex h-screen w-[60%] flex-col overflow-y-auto bg-[#F7F6FB] p-4 opacity-100 bg-blend-darken md:w-60 "
+                absolute left-0 flex h-screen w-[60%] flex-col overflow-y-auto bg-[#F7F6FB] p-4 opacity-100 bg-blend-darken md:w-60 md:pb-[3.5rem] "
           >
             <Link
               href={`/${user?.role || ""}`}
@@ -416,6 +426,21 @@ function Header() {
               />
               <span className="text-lg">Account</span>
             </Link>
+            <div
+              onClick={() => {
+                void signOut();
+              }}
+              className="mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700"
+            >
+              <Image
+                width={20}
+                height={20}
+                className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
+                src="https://img.icons8.com/material-rounded/24/000000/user.png"
+                alt=""
+              />
+              <span className="text-lg">Log Out</span>
+            </div>
           </div>
         </div>
       </div>
