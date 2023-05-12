@@ -13,7 +13,6 @@ function Account() {
   const [teacher, setTeacher] = useState<Teacher>();
   const [editUser, setEditUser] = useState<Teacher>(teacher as Teacher);
   const [passManager, setPassManager] = useState(false);
-  const [password, setPassword] = useState("");
   const [confPass, setConfPass] = useState("");
   const [validInput, setValidInput] = useState<boolean>(true);
   const [oldPassword, setOldPassword] = useState("");
@@ -47,10 +46,6 @@ function Account() {
     const target = event.target as HTMLInputElement;
     const value = target.value;
     const name = target.name;
-
-    if (name === "password") {
-      setPassword(value)
-    }
 
     setEditUser((prevEditUser) => {
       return {
