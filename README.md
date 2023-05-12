@@ -117,7 +117,20 @@ The LearnHQ web app has the following reusable components:
 
 ## API
 
-The LearnHQ web app communicates with a RESTful API to retrieve course information and user data. The API endpoints are located at [https://api.learnhq.com](https://api.learnhq.com).
+The app uses **trpc**, a modern RPC (Remote Procedure Call) framework for TypeScript, to communicate with the server. trpc provides a type-safe and flexible way to define APIs and automatically generate client and server code.
+
+The API endpoints are defined in the `api/trpc.ts` file, which uses the `trpcNext` function from the `@trpc/server/adapters/next` package to create an RPC server for Next.js. The endpoints use the Prisma client to interact with the database and return the results to the client.
+
+We also use **Prisma ORM**, a modern database toolkit for TypeScript and Node.js, to interact with the database. Prisma provides a type-safe and intuitive way to define database models and perform database operations.
+
+The database models are defined in the `prisma/schema.prisma` file, which uses the Prisma Schema Language to define the data model for the application. This file defines the tables, columns, relationships, and constraints for the database. To generate the Prisma client, we've installed the `@prisma/client` package using npm and run the `npx prisma generate` command.
+
+For input validation and schema definition, it utilizes **Zod**, a TypeScript-first schema validation library. Zod allows for defining strict and expressive schemas for validating API requests and responses.
+
+Zod is used to validate and ensure the correctness of incoming data, such as request payloads and API responses. It helps maintain data integrity and provides a type-safe approach to handling data validation.
+
+To customize the API endpoints, you can modify the `api/trpc.ts` file and the database models in the `prisma/schema.prisma` file. For more information on how to use trpc and Prisma, check out the official documentation at [trpc.io](https://trpc.io) and [prisma.io](https://prisma.io).
+
 
 The following endpoints are available:
 
@@ -138,7 +151,17 @@ To customize the authentication settings, you can modify the `pages/api/auth/[..
 
 ## Styling
 
-The LearnHQ web app uses CSS modules for styling. Each component has its own CSS file, which is imported into the component's JavaScript file. Global CSS styles are located in `styles/globals.css`.
+The LearnHQ web app uses Tailwind CSS for styling. Tailwind CSS is a utility-first CSS framework that provides pre-built CSS classes for common styles, making it easy to rapidly prototype and build responsive user interfaces.
+
+To use Tailwind CSS in the LearnHQ web app, we've installed it as a dependency using npm:
+
+```
+    npm install tailwindcss
+```
+We've also created a tailwind.config.js file in the root directory of the project, which contains the configuration settings for Tailwind CSS. This file allows us to customize the default configuration, such as the colors, fonts, and spacing. 
+
+For more information on how to use Tailwind CSS, check out the [official documentation](https://tailwindcss.com).
+
 
 ## Deployment
 
@@ -155,11 +178,9 @@ That's it for the LearnHQ web app documentation! If you have any questions or is
 
 ## Create T3 App
 
-LearnHq is a Fully fledged Learning and School Management system app.
-
 This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
 
-Deployed on vercel [learnhq](learnhq.vercel.app)
+Deployed on [Vercel](https://vercel.com): [learnhq](learnhq.vercel.app)
 
 ## What's next? How do I make an app with this?
 
