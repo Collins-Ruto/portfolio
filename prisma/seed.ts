@@ -2,7 +2,15 @@
 import { PrismaClient, type Prisma } from '@prisma/client'
 import { setTimeout } from 'timers/promises'
 
+import { appRouter } from "@/server/api/root";
+// import { prisma } from "@/server/db";
+
 const prisma = new PrismaClient()
+
+const caller = appRouter.createCaller({
+  session: null,
+  prisma: prisma,
+});
 
 const teacherData: Prisma.TeacherCreateInput[] = [
   {
@@ -401,12 +409,14 @@ async function main() {
   //   })
   //   console.log(`Created exam with id: ${exam.id}`)
   // }
-  for (const u of taskIds) {
-    const task = await prisma.task.update({
+
+  const data = await caller.course.getAll();
+  for (const u of data) {
+    const entry = await prisma.course.update({
       where: { id: u.id },
-      data: {createdAt: new Date()}
+      data: {deleted: false}
     })
-    console.log(`updated task with id: ${task.id}`)
+    console.log(`updated entry with id: ${entry.id}`)
     await setTimeout(2000)
   }
 

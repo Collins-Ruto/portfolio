@@ -12,7 +12,7 @@ export const courseRouter = createTRPCRouter({
         return ctx.prisma.course.findMany({
             take: 10,
             orderBy: {
-              createdAt: 'desc'
+                createdAt: 'desc'
             }
         });
     }),
@@ -111,6 +111,24 @@ export const courseRouter = createTRPCRouter({
             },
             take: 20
         })
+    }),
+
+    updateAll: protectedProcedure.query(async ({ ctx }) => {
+        const data = await ctx.prisma.course.findMany();
+        console.log("update data", data)
+        const updatePromises = data.map((entry) => {
+            console.log(`updating entry with id: ${entry.id}`)
+            return ctx.prisma.course.update({
+                where: {
+                    id: entry.id
+                },
+                data: {
+                    deleted: false
+                },
+            });
+        });
+        console.log(`update finished.`)
+        return Promise.all(updatePromises);
     }),
 
     hello: publicProcedure

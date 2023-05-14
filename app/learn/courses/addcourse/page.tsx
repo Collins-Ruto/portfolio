@@ -30,7 +30,7 @@ import { api } from "@/utils/api";
 // };
 
 interface IndexedInput extends Course {
-  [key: string]: string | Date | Subject;
+  [key: string]: string | Date | Boolean | Subject;
 }
 
 function AddCourse() {

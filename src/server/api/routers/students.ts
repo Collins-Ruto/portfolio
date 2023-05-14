@@ -114,16 +114,29 @@ export const studentRouter = createTRPCRouter({
   }),
 
   delete: protectedProcedure.input(z.string()).mutation(({ ctx, input }) => {
-    ctx.prisma.fee.deleteMany({
-      where: {
-        studentId: input
-      }
-    })
-    return ctx.prisma.student.delete({
+    return ctx.prisma.student.update({
       where: {
         id: input
-      }
+      },
+      data: {
+        deleted: true
+      },
     })
+  }),
+
+  totalDelete: protectedProcedure.input(z.string()).mutation(({ ctx, input }) => {
+    return Promise.all([
+      ctx.prisma.fee.deleteMany({
+        where: {
+          studentId: input
+        }
+      }),
+      ctx.prisma.student.delete({
+        where: {
+          id: input
+        }
+      })
+    ]);
   }),
 
   search: protectedProcedure.input(z.string()).query(({ ctx, input }) => {

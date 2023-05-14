@@ -85,8 +85,9 @@ model Student {
     subjects    Subject[]
     exams       Exam[]
     fees        Fee[]
-    stream     Stream? @relation(fields: [streamId], references: [id])
-    streamId   String? @db.ObjectId
+    stream     Stream @relation(fields: [streamId], references: [id])
+    streamId   String @db.ObjectId
+    deleted     Boolean     @default(false)
 }
 model Teacher {
     id          String @id @default(auto()) @map("_id") @db.ObjectId
@@ -102,6 +103,7 @@ model Teacher {
     qualification String
     lessons     Lesson[]
     tasks       Task[]
+    deleted     Boolean     @default(false)
 }
 
 model Admin {
@@ -121,10 +123,9 @@ model Exam {
     createdAt   DateTime   @default(now())
     results     Result[]
     examDate    String
-    student     Student? @relation(fields: [studentId], references: [id])
-    studentId   String? @db.ObjectId
-    // examinations Examimations @relation(fields: [examId], references: [id])
-    // examId      String @db.ObjectId
+    student     Student @relation(fields: [studentId], references: [id])
+    studentId   String @db.ObjectId
+    deleted     Boolean     @default(false)
 }
 
 
@@ -137,8 +138,9 @@ model Fee {
     type        String
     amount      String
     payday      String
-    student     Student? @relation(fields: [studentId], references: [id])
-    studentId   String? @db.ObjectId
+    student     Student @relation(fields: [studentId], references: [id])
+    studentId   String @db.ObjectId
+    deleted     Boolean     @default(false)
 }
 
 model Stream {
@@ -148,6 +150,7 @@ model Stream {
     lessons     Lesson[]
     tasks       Task[]
     students    Student[]
+    deleted     Boolean     @default(false)
 }
 
 model Lesson {
@@ -157,10 +160,11 @@ model Lesson {
     endTime     String
     subject     Subject
     attendance  String
-    stream      Stream? @relation(fields: [streamId], references: [id])
-    streamId    String? @db.ObjectId
-    teacher     Teacher? @relation(fields: [teacherId], references: [id])
-    teacherId   String? @db.ObjectId
+    stream      Stream @relation(fields: [streamId], references: [id])
+    streamId    String @db.ObjectId
+    teacher     Teacher @relation(fields: [teacherId], references: [id])
+    teacherId   String @db.ObjectId
+    deleted     Boolean     @default(false)
 }
 
 model Task {
@@ -175,10 +179,11 @@ model Task {
     posted      String
     due         String
     subject     Subject
-    stream      Stream? @relation(fields: [streamId], references: [id])
-    streamId    String? @db.ObjectId
-    teacher     Teacher? @relation(fields: [teacherId], references: [id])
-    teacherId   String? @db.ObjectId  
+    stream      Stream @relation(fields: [streamId], references: [id])
+    streamId    String @db.ObjectId
+    teacher     Teacher @relation(fields: [teacherId], references: [id])
+    teacherId   String @db.ObjectId 
+    deleted     Boolean     @default(false)
 }
 
 model Course {
@@ -192,6 +197,7 @@ model Course {
     video_url   String
     thumbnail_url String
     subject     Subject
+    deleted     Boolean     @default(false)
 }
 
 type Result {
