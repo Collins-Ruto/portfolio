@@ -45,7 +45,7 @@ function Students() {
       }));
     }
     // searchSubmit()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, session, count, pagesCount, search]);
 
   if (error) {
@@ -60,11 +60,14 @@ function Students() {
   const deleteStudent = () => {
     try {
       deleteMutation.mutate(delStudent);
-      setisDelete(false);
 
       const newStudent: (Student & { stream: Stream })[] | undefined =
         students?.filter((student) => student.id !== delStudent);
       setStudents(newStudent);
+
+      setSubmit(false);
+      setisDelete(false);
+
     } catch (error) {
       console.log(error);
     }
@@ -106,7 +109,7 @@ function Students() {
               alt=""
             />
             <div className="items-center md:flex md:flex-col">
-              <div className="mt-4 text-center md:mt-0 md:ml-6 ">
+              <div className="mt-4 text-center md:ml-6 md:mt-0 ">
                 <p className="text-xl font-bold">Confirm student deletion</p>
                 <p className="my-2 text-base text-gray-600">
                   Are you sure you want to delete this student from the school
@@ -142,8 +145,8 @@ function Students() {
               ) : (
                 <button
                   onClick={() => {
-                    deleteStudent();
                     setSubmit(true);
+                    deleteStudent();
                   }}
                   className="w-full rounded-lg bg-red-600 px-4 py-3 text-sm font-semibold text-white hover:bg-red-400 hover:text-white md:w-auto md:py-2 "
                 >
@@ -176,7 +179,7 @@ function Students() {
                 value={search}
                 name="name"
                 type="text"
-                className="focus:shadow-outline w-full appearance-none rounded border-[1px] bg-[#F7F6FB] py-2 px-3 leading-tight text-gray-800 shadow focus:outline-none"
+                className="focus:shadow-outline w-full appearance-none rounded border-[1px] bg-[#F7F6FB] px-3 py-2 leading-tight text-gray-800 shadow focus:outline-none"
                 placeholder="Search ID, name, username ..."
               />
             </div>
@@ -191,7 +194,7 @@ function Students() {
                       // setSubmit(true);
                     }}
                     type="button"
-                    className="rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
+                    className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
                   >
                     Search
                   </button>
@@ -202,7 +205,7 @@ function Students() {
                   <Link
                     href="/admin/addstudent"
                     type="button"
-                    className="flex w-fit items-center rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
+                    className="flex w-fit items-center rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
                   >
                     {" "}
                     <Image

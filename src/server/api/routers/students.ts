@@ -14,6 +14,9 @@ export const studentRouter = createTRPCRouter({
       include: {
         stream: true,
       },
+      where: {
+        deleted: false
+      },
       take: 10,
       skip: input,
       orderBy: {
@@ -39,15 +42,16 @@ export const studentRouter = createTRPCRouter({
   getAllStream: publicProcedure.input(z.string()).query(({ ctx, input }) => {
     return ctx.prisma.student.findMany({
       where: {
-        streamId: input
-      }
+        streamId: input,
+        deleted: false
+      },
     });
   }),
 
   getById: publicProcedure.input(z.string()).query(({ ctx, input }) => {
     return ctx.prisma.student.findUnique({
       where: {
-        slug: input
+        slug: input,
       }
     });
   }),
@@ -142,11 +146,16 @@ export const studentRouter = createTRPCRouter({
   search: protectedProcedure.input(z.string()).query(({ ctx, input }) => {
     console.log("search in", input)
     const searchQuery: Prisma.StudentWhereInput = {
-      OR: [
-        { name: { contains: input, mode: "insensitive" } },
-        { slug: { contains: input, mode: "insensitive" } },
-        { admissionId: { contains: input, mode: "insensitive" } },
-      ]
+      AND: [
+        { deleted: false },
+        {
+          OR: [
+
+            { name: { contains: input, mode: "insensitive" } },
+            { slug: { contains: input, mode: "insensitive" } },
+            { admissionId: { contains: input, mode: "insensitive" } },
+          ]
+        }]
     };
     return ctx.prisma.student.findMany({
       where: searchQuery,
@@ -159,6 +168,24 @@ export const studentRouter = createTRPCRouter({
       take: 20
     })
   }),
+
+  // updateAll: protectedProcedure.query(async ({ ctx }) => {
+  //     const data = await ctx.prisma.student.findMany();
+  //     console.log("update data", data)
+  //     const updatePromises = data.map((entry) => {
+  //         console.log(`updating entry with id: ${entry.id}`)
+  //         return ctx.prisma.student.update({
+  //             where: {
+  //                 id: entry.id
+  //             },
+  //             data: {
+  //                 deleted: false
+  //             },
+  //         });
+  //     });
+  //     console.log(`update finished.`)
+  //     return Promise.all(updatePromises);
+  // }),
 
   getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";

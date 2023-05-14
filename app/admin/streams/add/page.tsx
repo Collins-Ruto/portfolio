@@ -7,7 +7,7 @@ import { Button, StatusMsg } from "~/components";
 // eslint-disable-next-line no-unused-vars
 
 interface IndexedInput extends Stream {
-  [key: string]: string;
+  [key: string]: string | Boolean;
 }
 
 function AddStream() {
@@ -23,7 +23,7 @@ function AddStream() {
 
     setStream((prevStream: Stream | undefined) => {
       if (!prevStream) {
-        return { [name]: value } as Stream; // or some default value if you have one
+        return { [name]: value } as unknown as Stream; // or some default value if you have one
       }
 
       const updatedStream = {
