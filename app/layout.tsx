@@ -26,7 +26,8 @@ export default function RootLayout({
 }
 
 export const metadata: Metadata = {
-  title: "LearnHq",
+  title: "LearnHq School & Learning System",
+  metadataBase: new URL("https://learnhq.vercel.app"),
   description:
     "LearnHQ is a comprehensive learning management system that provides quality education and resources to students, teachers, and parents.",
   keywords: [
@@ -37,6 +38,9 @@ export const metadata: Metadata = {
     "learning management system",
     "lms",
   ],
+  alternates: {
+    canonical: "/",
+  },
   authors: [
     {
       name: "Collins Ruto",
@@ -66,8 +70,8 @@ export const metadata: Metadata = {
   manifest: "https://learnhq.vercel.app/site.webmanifest",
   openGraph: {
     type: "website",
-    title: "LearnHq",
-    siteName: "LearnHq",
+    title: "LearnHq School & Learning System",
+    siteName: "LearnHq School & Learning System",
     url: "https://learnhq.vercel.app",
     description:
       "LearnHQ is a comprehensive learning management system that provides quality education and resources to students, teachers, and parents.",
@@ -78,9 +82,17 @@ export const metadata: Metadata = {
     ],
   },
   twitter: {
+    title: "LearnHq School & Learning System",
+    description:
+      "LearnHQ is a comprehensive learning management system that provides quality education and resources to students, teachers, and parents.",
     card: "summary_large_image",
     site: "@learnhqafrica",
     creator: "@ruto_collins_",
     images: "https://learnhq.vercel.app/learnhq-cover.jpg",
+  },
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
   },
 };
