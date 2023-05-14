@@ -410,15 +410,15 @@ async function main() {
   //   console.log(`Created exam with id: ${exam.id}`)
   // }
 
-  const data = await caller.course.getAll();
-  for (const u of data) {
-    const entry = await prisma.course.update({
-      where: { id: u.id },
-      data: {deleted: false}
-    })
-    console.log(`updated entry with id: ${entry.id}`)
-    await setTimeout(2000)
-  }
+  // const data = await caller.course.getAll();
+  // for (const u of data) {
+  //   const entry = await prisma.course.update({
+  //     where: { id: u.id },
+  //     data: {deleted: false}
+  //   })
+  //   console.log(`updated entry with id: ${entry.id}`)
+  //   await setTimeout(2000)
+  // }
 
   console.log(`Seeding finished.`)
 }

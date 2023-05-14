@@ -55,7 +55,7 @@ function Login() {
     } else {
       return false;
     }
-  };
+  }
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
