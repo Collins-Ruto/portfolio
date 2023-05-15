@@ -1,7 +1,7 @@
 "use client";
 import { api } from "@/utils/api";
 import type { Student, Exam, Stream, Result } from "@prisma/client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Subjects } from "~/types/types";
 import { Button, DateTime, Loader } from "~/components";
 import StatusMsg from "~/components/StatusMsg";
@@ -29,20 +29,36 @@ interface IndexedInput extends Exam {
   [key: string]: string | Date | Result[];
 }
 
+type Students = { id: string; name: string; streamId: string }[];
+
 function AddExam() {
   const [exams, setExams] = useState<Exam[]>();
-  const [students, setStudents] = useState<(Student | undefined)[]>();
+  const [students, setStudents] = useState<Students>();
   const [submit, setSubmit] = useState(false);
   const [clear, setClear] = useState(false);
   const [status, setStatus] = useState({
-    message: "successfully added mid term 1 exam",
-    type: "success",
+    message: "",
+    type: "",
   });
   const [validInput, setValidInput] = useState("");
 
-  const { data: streams } = api.stream.getAll.useQuery();
+  const { data: streams, isLoading } = api.stream.getAll.useQuery();
+  const { data } = api.student.getIds.useQuery();
   const [stream, setStream] = useState<Stream | undefined>(streams?.[0]);
-  const [loading, setLoading] = useState<boolean>();
+  // const [loading, setLoading] = useState<boolean>();
+
+  useEffect(() => {
+    if (data) {
+      const streamStudents = data.filter(
+        (student) => student.streamId === stream?.id
+      );
+      setStudents(streamStudents);
+    }
+    if (streams) {
+      setStream(streams[0]);
+    }
+    // getStudents();
+  }, [streams]);
 
   // Handles input of the exam name, term and slug which is included in every exam
   const handleInput = (event: React.SyntheticEvent) => {
@@ -265,39 +281,52 @@ function AddExam() {
     }
   };
 
-  const getStudentsQuery = api.student.getAllStream.useQuery(
-    stream?.id || "621dd16f2eece6ce9587cb0d"
-  );
+  // const getStudentsQuery = api.student.getAllStream.useQuery(
+  //   stream?.id || "621dd16f2eece6ce9587cb0d"
+  // );
 
-  const getStudents = () => {
-    setSubmit(true);
-    const { data, error, isLoading } = getStudentsQuery;
-    try {
-      if (error) {
-        console.log("error", error);
-        setStatus({
-          type: "error",
-          message: "can,t find student, check your input",
-        });
-      }
-      if (data) {
-        setStudents(data);
-      }
-      setLoading(isLoading);
-      setSubmit(false);
-      console.log("add exam student data", data);
-    } catch (error) {
-      setSubmit(false);
-      setStatus({ type: "error", message: "error check your input" });
+  const getStudents = (slug: string) => {
+    console.log("slug", slug);
+    console.log("data", data);
+    if (data) {
+      const streamStudents = data.filter(
+        (student) => {
+          const myStream = streams?.find((item) => item.slug === slug);
+          return student.streamId === myStream?.id;
+        }
+      );
+      setStudents(streamStudents);
     }
+    // setSubmit(true);
+    // const { data, error, isLoading } = getStudentsQuery;
+    // try {
+    //   if (error) {
+    //     console.log("error", error);
+    //     setStatus({
+    //       type: "error",
+    //       message: "can,t find student, check your input",
+    //     });
+    //   }
+    //   if (data) {
+    //     setStudents(data);
+    //   }
+    //   setLoading(isLoading);
+    //   setSubmit(false);
+    //   console.log("add exam student data", data);
+    // } catch (error) {
+    //   setSubmit(false);
+    //   setStatus({ type: "error", message: "error check your input" });
+    // }
   };
+
+  console.log(clear);
   return (
     <div className="w-screen md:w-full">
       {<StatusMsg status={status} />}
       <div className="p-4 text-2xl font-semibold">
         <h3>Add Exam Results</h3>
       </div>
-      {loading && <Loader />}
+      {isLoading && <Loader />}
       <div className="px-4">
         <div className="my-2 flex flex-col items-center justify-between rounded-xl bg-[#F7F6FB] p-2 md:flex-row">
           <div className="flex w-full items-center justify-between gap-2 px-2 sm:justify-around md:w-1/2">
@@ -311,7 +340,7 @@ function AddExam() {
                     setStream(
                       streams?.find((item) => item.slug === e.target.value)
                     );
-                    getStudents();
+                    getStudents(e.target.value);
                     setClear(true);
                     setTimeout(() => {
                       setClear(false);

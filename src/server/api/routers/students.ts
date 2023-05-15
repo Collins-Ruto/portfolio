@@ -26,6 +26,8 @@ export const studentRouter = createTRPCRouter({
     return ctx.prisma.student.findMany({
       select: {
         id: true,
+        name: true,
+        streamId: true,
       },
     });
   }),
@@ -49,13 +51,13 @@ export const studentRouter = createTRPCRouter({
       }
     });
   }),
-  
+
   getByAdm: publicProcedure.input(z.string()).query(({ ctx, input }) => {
     return ctx.prisma.student.findUnique({
       where: {
         admissionId: input
       },
-      include: {stream: true}
+      include: { stream: true }
     });
   }),
 
