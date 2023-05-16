@@ -6,29 +6,23 @@ import { Button } from "~/components";
 import Image from "next/image";
 
 type userInput = {
-  group: string;
+  [group: string]: string;
   password: string;
   userName: string;
-  radio: boolean;
 };
-
-// type Props = {
-//   setLogin: React.Dispatch<React.SetStateAction<userInput | undefined>>;
-// };
 
 function Login() {
   const [user, setUser] = useState<userInput | undefined>();
   const [submit, setSubmit] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
   const [invalid, setInvalid] = useState("");
   const [passView, setPassView] = useState(false);
+  const [validInput, setValidInput] = useState("");
 
   const handleInput = (event: React.SyntheticEvent) => {
+    setValidInput("");
     const target = event.target as HTMLInputElement;
-    const value = target.type === "checkbox" ? target.checked : target.value;
+    const value = target.value;
     const name = target.name;
-
-    target.type === "checkbox" && setIsChecked(!isChecked);
 
     setUser((prevUser) => {
       if (!prevUser) {
@@ -46,10 +40,25 @@ function Login() {
 
   console.log("user input", user);
 
+  const inputValidate = () => {
+    const fields = ["group", "password", "userName"];
+    let message = "Please fill: ";
+    fields.forEach((field) => {
+      if (user?.[field] === "" || user?.[field] === undefined) {
+        message += `${field}, `;
+        setValidInput(message);
+      }
+    });
+    if (message === "Please fill: ") {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    if (!user?.userName || !user?.userName || !user?.group) {
-      setInvalid("fields");
+    if (inputValidate() === false) {
       return;
     }
     setSubmit(true);
@@ -76,8 +85,8 @@ function Login() {
   };
 
   return (
-    <div className="flex relative   min-h-screen w-full flex-col justify-center text-black">
-      <div className="mx-4 mt-[4rem] sm:mx-auto items-center rounded-lg bg-gray-200 p-2 sm:flex ">
+    <div className="relative flex   min-h-screen w-full flex-col justify-center text-black">
+      <div className="mx-4 mt-[4rem] items-center rounded-lg bg-gray-200 p-2 sm:mx-auto sm:flex ">
         <div className="px-4 md:p-4">
           <Image
             width={250}
@@ -98,12 +107,7 @@ function Login() {
           ) : (
             ""
           )}
-          <form
-            className="mt-4"
-            onClick={() => {
-              setInvalid("");
-            }}
-          >
+          <form className="mt-4">
             <div className="relative items-center">
               <label>
                 Log in as <span className="text-red-500">*</span>
@@ -118,7 +122,7 @@ function Login() {
                   value={user?.group}
                   className="focus:shadow-outline block w-full appearance-none rounded border border-gray-400 bg-white px-4 py-3 pr-8 leading-tight text-black shadow hover:border-gray-500 focus:outline-none"
                 >
-                  <option>Select group</option>
+                  <option value="">Select group</option>
                   <option value="student">student</option>
                   <option value="teacher">teacher</option>
                   <option value="admin">adminstrator</option>
@@ -160,7 +164,7 @@ function Login() {
                 </div>
               </div>
             </div>
-            <div className="mb-4 ">
+            <div className="mb-2 ">
               <label>
                 Password <span className="text-red-500">*</span>
               </label>
@@ -169,7 +173,6 @@ function Login() {
                   onChange={(e) => {
                     handleInput(e);
                   }}
-                  checked={isChecked}
                   name="password"
                   value={user?.password}
                   className="focus:shadow-outline pass-input w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
@@ -193,24 +196,15 @@ function Login() {
                 </div>
               </div>
             </div>
-            <div className="forgotpass">
-              <div className="remember-me">
-                <label>
-                  {" "}
-                  <input
-                    onChange={(e) => {
-                      handleInput(e);
-                    }}
-                    checked={user?.radio}
-                    className="mr-2 h-4 w-4"
-                    type="checkbox"
-                    name="radio"
-                  />
-                  Remember me
-                </label>
+
+            <div className="">
+              <div className="text-xs opacity80 rounded text-red-500">
+                {validInput}
+                <span className="text-transparent">.</span>
               </div>
             </div>
-            <div className="my-4">
+
+            <div className="my-2">
               {submit ? (
                 <Button />
               ) : (
@@ -234,10 +228,10 @@ function Login() {
           </form>
         </div>
       </div>
-      <div className="container mx-auto w-full p-4 mb-[4rem]">
+      <div className="container mx-auto mb-[4rem] w-full p-4">
         <div className="mx-auto w-fit ">
           <h1 className="text-3xl font-semibold">Login As Demo User</h1>
-          <div className="text-2xl flex flex-col md:flex-row gap-4">
+          <div className="flex flex-col gap-4 text-2xl md:flex-row">
             <div className="flex flex-col">
               <h2 className="py-2 underline underline-offset-2">
                 Log in as Admin
@@ -274,7 +268,7 @@ function Login() {
           </div>
         </div>
       </div>
-      <footer className="w-full absolute bottom-0 border-t border-gray-300 bg-gray-300 py-4">
+      <footer className="absolute bottom-0 w-full border-t border-gray-300 bg-gray-300 py-4">
         <div className="container mx-auto text-center text-gray-900">
           © 2023 LearnHq. All rights reserved | by{" "}
           <a
