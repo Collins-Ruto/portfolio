@@ -34,7 +34,10 @@ function AddExam() {
   const [students, setStudents] = useState<(Student | undefined)[]>();
   const [submit, setSubmit] = useState(false);
   const [clear, setClear] = useState(false);
-  const [status, setStatus] = useState({ message: "", type: "" });
+  const [status, setStatus] = useState({
+    message: "successfully added mid term 1 exam",
+    type: "success",
+  });
   const [validInput, setValidInput] = useState("");
 
   const { data: streams } = api.stream.getAll.useQuery();
@@ -43,6 +46,7 @@ function AddExam() {
 
   // Handles input of the exam name, term and slug which is included in every exam
   const handleInput = (event: React.SyntheticEvent) => {
+    setValidInput("");
     const target = event.target as HTMLInputElement;
     const value = target.value;
     const name = target.name;
@@ -78,7 +82,6 @@ function AddExam() {
       return newExams; // Return the updated exams
     });
   };
-
 
   // Handles input of results for every
   const handleResult = (event: React.SyntheticEvent, id: string) => {
@@ -196,48 +199,53 @@ function AddExam() {
     });
   };
 
-
   const inputValidate = () => {
-    const fields = ["name", "slug", "term"];
-    const input = exams?.[1] as IndexedInput;
-    let message = "Please fill: ";
+    const fields = ["name", "slug", "term"]; // Specify the required fields
+    const input = exams?.[1] as IndexedInput; // Access the input object
+    let message = "Please fill: "; // Initialize the message with a default value
 
     fields.forEach((field) => {
       if (input?.[field] === "" || input?.[field] === undefined) {
-        message += `${field}, `;
-        setValidInput(message);
+        // Check if the field is empty or undefined
+        message += `${field}, `; // Append the field to the message
+        setValidInput(message); // Set the validInput state with the message
       }
     });
+
     if (message === "Please fill: ") {
+      // If no fields are missing, return true
       return true;
     } else {
+      // If there are missing fields, return false
       return false;
     }
   };
 
   console.log("exams", exams);
 
+  // Define the trpc addExamMutation method
   const addExamMutation = api.exam.addManyExams.useMutation();
 
   const handleSubmit = () => {
     if (!exams) {
-      return;
+      return; // If exams is empty, return
     }
     if (inputValidate() === false) {
-      return;
+      return; // If input validation fails, return
     }
-    // setSubmit(true);
+    setSubmit(true);
 
-    const filteredExams = exams.filter((exam) => exam.results.length > 0);
-    console.log("subm exam ", filteredExams);
+    const filteredExams = exams.filter((exam) => exam.results.length > 0); // Filter exams to include only those with results
+    console.log("subm exam ", filteredExams); // Log the filtered exams
 
     try {
       addExamMutation.mutate(filteredExams, {
+        // Call the addExamMutation with the filtered exams
         onSuccess: () => {
           setSubmit(false);
           setStatus({
             type: "success",
-            message: `succesfully added ${exams?.[0]?.name ?? ""} exam`,
+            message: `successfully added ${exams?.[0]?.name ?? ""} exam`, // Set the success message
           });
 
           setClear(true);
@@ -248,7 +256,7 @@ function AddExam() {
       });
     } catch (error) {
       setSubmit(false);
-      setStatus({ type: "error", message: "error check your input" });
+      setStatus({ type: "error", message: "error check your input" }); // Set the error message
     }
   };
 
@@ -445,13 +453,14 @@ function AddExam() {
           </table>
         </div>
       </div>
-      <div className="mt-2">
-        <div className="opacity80 rounded text-xs text-red-500">
-          <span className="">{validInput}</span>
-          <span className="text-transparent">.</span>
-        </div>
-      </div>
       <div className=" mx-4 rounded-b-xl bg-[#F7F6FB] px-2 py-4">
+        <div className="mb-2">
+          <div className="opacity80 rounded text-sm text-red-500">
+            <span className="">{validInput}</span>
+            <span className="text-transparent">.</span>
+          </div>
+        </div>
+
         <div>
           {submit ? (
             <Button />
