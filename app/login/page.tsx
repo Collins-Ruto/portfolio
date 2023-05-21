@@ -79,15 +79,15 @@ function Login() {
   };
 
   return (
-    <div className="flex min-h-screen border-4 border-red-400 w-full flex-col justify-center text-black">
-      <div className="m-auto items-center rounded-lg bg-gray-200 p-2 sm:flex ">
-        <div className="p-4">
+    <div className="flex relative   min-h-screen w-full flex-col justify-center text-black">
+      <div className="mx-4 mt-[4rem] sm:mx-auto items-center rounded-lg bg-gray-200 p-2 sm:flex ">
+        <div className="px-4 md:p-4">
           <Image
             width={250}
             height={100}
-            className="cover mx-auto h-64 md:h-96"
+            className="cover mx-auto h-72 w-52 md:h-96 md:w-72"
             src={homepic}
-            alt="Logo"
+            alt="learnhq login"
           />
         </div>
         <div className="mx-0 p-4 ">
@@ -237,7 +237,7 @@ function Login() {
           </form>
         </div>
       </div>
-      <div className="container mx-auto w-full p-4">
+      <div className="container mx-auto w-full p-4 mb-[4rem]">
         <div className="mx-auto w-fit ">
           <h1 className="text-3xl font-semibold">Login As Demo User</h1>
           <div className="text-2xl flex flex-col md:flex-row gap-4">
@@ -277,9 +277,9 @@ function Login() {
           </div>
         </div>
       </div>
-      <footer className="w-full border-t border-gray-300 bg-gray-300 py-4">
+      <footer className="w-full absolute bottom-0 border-t border-gray-300 bg-gray-300 py-4">
         <div className="container mx-auto text-center text-gray-900">
-          © 2023 LearnHq. All rights reserved. by{" "}
+          © 2023 LearnHq. All rights reserved | by{" "}
           <a
             className="font-semibold text-blue-500"
             href="https://collinsruto.netlify.app"
