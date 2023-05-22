@@ -3,31 +3,48 @@ import React, { useState } from "react";
 import { Button, StatusMsg } from "~/components";
 import type { Task } from "@prisma/client";
 import { api } from "@/utils/api";
+import { Subjects } from "~/types/types";
 
-type Status = {
-  type: string;
-  message: string;
-};
+// type Status = {
+//   type: string;
+//   message: string;
+// };
 
 function CreateTask() {
-  const [task, setTask] = useState<Task>();
+  const [task, setTask] = useState<Task | undefined>();
   const [file, setFile] = useState<File>();
   const [submit, setSubmit] = useState(false);
-  const [status, setStatus] = useState<Status>();
+  const [status, setStatus] = useState({ message: "", type: "" });
 
   const handleInput = (event: React.SyntheticEvent) => {
     const target = event.target as HTMLInputElement;
     const name = target.name;
     const value = target.value;
-    setTask((prevTask: Task | undefined) => {
-      if (!prevTask) {
-        return undefined; // or some default value if you have one
-      }
 
+    console.log("input", value, task)
+    setTask((prevTask) => {
+      if (!prevTask) {
+        return {
+          [name]: value,
+        } as Task; // or some default value if you have one
+      }
+      if (target.name === "subject") {
+        return {
+          ...prevTask,
+          [name]: value,
+          subject: {
+            slug: value,
+            name:
+              Subjects.find((subject) => subject.slug === value)?.name || "",
+          },
+        };
+      }
       const updatedTask = {
         ...prevTask,
         [name]: value,
       };
+
+      console.log(updatedTask)
 
       return updatedTask;
     });
@@ -153,11 +170,11 @@ function CreateTask() {
                   onChange={(e) => {
                     handleInput(e);
                   }}
-                  value={task?.subject.slug}
+                  value={task?.subject?.slug}
                   className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
                   type="text"
                   placeholder="eg. geo"
-                  name="subjectId"
+                  name="subject"
                 />
               </div>
             </div>

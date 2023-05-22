@@ -47,7 +47,28 @@ export const taskRouter = createTRPCRouter({
     })).mutation(({ ctx, input }) => {
         console.log("trpc input", input)
         return ctx.prisma.task.create({
-            data: input,
+            data: {
+                name: input.name,
+                description: input.description,
+                file: input.file,
+                secure_url: input.secure_url,
+                asset_id: input.asset_id,
+                original_filename: input.original_filename,
+                subject: {
+                    slug: input.slug,
+                    name: input.name
+                },
+                stream: {
+                    connect: {
+                        slug: input.streamId
+                    }
+                },
+                teacher: {
+                    connect: {
+                        slug: input.teacherId
+                    }
+                }
+            },
         });
     }),
 

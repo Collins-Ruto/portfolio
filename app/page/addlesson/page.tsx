@@ -21,8 +21,7 @@ function AddLesson() {
 
     setLesson((prevLesson) => {
       if (!prevLesson) {
-        return;
-        undefined;
+        return undefined;
       }
 
       if (target.name === "subject") {
