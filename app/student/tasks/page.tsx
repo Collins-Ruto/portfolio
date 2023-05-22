@@ -76,10 +76,9 @@ function Task() {
                   <td className="p-4">{task.teacher}</td>
                   <td className="p-4 flex gap-2">
                     <div
-                      onClick={() => {
-                        // setisDelete(true);
-                        // setDeltask(task.slug);
-                      }}
+                      // onClick={() => {
+                       
+                      // }}
                     >
                       Download
                     </div>

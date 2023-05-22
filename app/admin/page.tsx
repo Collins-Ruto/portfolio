@@ -23,7 +23,6 @@ function Dashboard() {
 
   // console.log("students", studentQuery);
   console.log("user", userQuery);
-
   // console.log("students", studentQuery?.data && studentQuery?.data[0]?.name);
 
   useEffect(() => {

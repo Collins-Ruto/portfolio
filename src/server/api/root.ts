@@ -8,6 +8,7 @@ import { lessonRouter } from "./routers/lesson";
 import { adminRouter } from "./routers/admin";
 import { streamRouter } from "./routers/stream";
 import { dataRouter } from "./routers/data";
+import { taskRouter } from "./routers/task";
 
 /**
  * This is the primary router for your server.
@@ -23,6 +24,7 @@ export const appRouter = createTRPCRouter({
   admin: adminRouter,
   stream: streamRouter,
   data: dataRouter,
+  task: taskRouter,
   example: exampleRouter
 });
 
