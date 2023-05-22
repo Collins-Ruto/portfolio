@@ -40,6 +40,8 @@ function CreateTask() {
     setFile(file);
   };
 
+  console.log("task", task)
+
   const addTaskMutation = api.task.addTask.useMutation();
 
   async function handleSubmit() {
@@ -67,10 +69,12 @@ function CreateTask() {
     const updatedTask = {
       ...task,
       asset_id: json.asset_id,
-      file: json.file,
+      file: json.original_filename,
       original_filename: json.original_filename,
       secure_url: json.secure_url,
     };
+
+    console.log("updated task",updatedTask)
 
     try {
       addTaskMutation.mutate(updatedTask as Task, {
