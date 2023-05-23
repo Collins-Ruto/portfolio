@@ -39,8 +39,8 @@ export const taskRouter = createTRPCRouter({
         asset_id: z.string(),
         original_filename: z.string(),
         subject: z.object({
+            slug: z.string(),
             name: z.string(),
-            slug: z.string()
         }),
         teacherId: z.string(),
         streamId: z.string(),
@@ -55,8 +55,8 @@ export const taskRouter = createTRPCRouter({
                 asset_id: input.asset_id,
                 original_filename: input.original_filename,
                 subject: {
-                    slug: input.slug,
-                    name: input.name
+                    slug: input.subject.slug,
+                    name: input.subject.name,
                 },
                 stream: {
                     connect: {

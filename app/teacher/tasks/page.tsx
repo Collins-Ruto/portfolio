@@ -26,7 +26,7 @@ function CreateTask() {
       if (!prevTask) {
         return {
           [name]: value,
-        } as Task; // or some default value if you have one
+        } as unknown as Task; // or some default value if you have one
       }
       if (target.name === "subject") {
         return {
@@ -62,6 +62,7 @@ function CreateTask() {
   const addTaskMutation = api.task.addTask.useMutation();
 
   async function handleSubmit() {
+    setSubmit(true);
     const formdata = new FormData();
 
     formdata.append("file", file as Blob);
@@ -89,19 +90,19 @@ function CreateTask() {
       file: json.original_filename,
       original_filename: json.original_filename,
       secure_url: json.secure_url,
-    };
+    } as Task;
 
     console.log("updated task",updatedTask)
 
     try {
-      addTaskMutation.mutate(updatedTask as Task, {
+      addTaskMutation.mutate(updatedTask, {
         onSuccess: (res) => {
           setSubmit(false);
           setStatus({
             type: "success",
             message: `succesfully added ${
               updatedTask?.name ?? ""
-            } as a student`,
+            } as a task`,
           });
           setTimeout(() => {
             res && window.location.reload();
@@ -112,28 +113,7 @@ function CreateTask() {
       setSubmit(false);
       setStatus({ type: "error", message: "error check your input" });
     }
-
-    //   const res = await axios.post("http://localhost:8000/infos/addasset", formData);
-    //   console.log(res)
-
-    //   const taskData = {...task, fileId: res.data.id}
-
-    //   const resTask = await axios.post("http://localhost:8000/infos/addtask", taskData);
-    //   setSubmit(false);
-    //   // setStatus(
-    //   //   res.data.message === "success"
-    //   //     ? {
-    //   //         type: "success",
-    //   //         message: `succesfully Created a ${res.data.subject.name} lesson for ${res.data.stream.name} on ${res.data.day}`,
-    //   //       }
-    //   //     : { type: "error", message: res.data.message }
-    //   // );
-    //   // setTimeout(() => {
-    //   //   res.data.message === "success" && window.location.reload(true);
-    //   // }, 2000);
   }
-
-  console.log(task);
 
   return (
     <div>
