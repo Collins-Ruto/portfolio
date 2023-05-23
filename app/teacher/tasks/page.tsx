@@ -1,242 +1,115 @@
 "use client";
-import React, { useState } from "react";
-import { Button, StatusMsg } from "~/components";
-import type { Task } from "@prisma/client";
 import { api } from "@/utils/api";
-import { Subjects } from "~/types/types";
+import type { Stream, Task, Teacher, User } from "@prisma/client";
+import { useSession } from "next-auth/react";
+import React, { useEffect, useState } from "react";
 
-// type Status = {
-//   type: string;
-//   message: string;
-// };
+const dumt = [
+  {
+    name: "Refraction Assignmets",
+    stream: "1n",
+    teacher: "8797fredrick",
+    subject: "bio",
+    description: "some task for you",
+    url: "",
+  },
+  {
+    name: "Poetry Essay",
+    stream: "1e",
+    teacher: "8797fredrick",
+    subject: "eng",
+    description: "some task for you",
+    url: "",
+  },
+  {
+    name: "Rocks Assignmets",
+    stream: "1s",
+    teacher: "736judy",
+    subject: "geo",
+    description: "some task for you",
+    url: "",
+  },
+];
 
-function CreateTask() {
-  const [task, setTask] = useState<Task | undefined>();
-  const [file, setFile] = useState<File>();
-  const [submit, setSubmit] = useState(false);
-  const [status, setStatus] = useState({ message: "", type: "" });
-
-  const handleInput = (event: React.SyntheticEvent) => {
-    const target = event.target as HTMLInputElement;
-    const name = target.name;
-    const value = target.value;
-
-    console.log("input", value, task)
-    setTask((prevTask) => {
-      if (!prevTask) {
-        return {
-          [name]: value,
-        } as unknown as Task; // or some default value if you have one
-      }
-      if (target.name === "subject") {
-        return {
-          ...prevTask,
-          [name]: value,
-          subject: {
-            slug: value,
-            name:
-              Subjects.find((subject) => subject.slug === value)?.name || "",
-          },
-        };
-      }
-      const updatedTask = {
-        ...prevTask,
-        [name]: value,
-      };
-
-      console.log(updatedTask)
-
-      return updatedTask;
-    });
-  };
-
-  const handleFileInput = (event: React.SyntheticEvent) => {
-    const target = event.target as HTMLInputElement;
-    const file = target.files !== null ? target?.files[0] : undefined;
-
-    setFile(file);
-  };
-
-  console.log("task", task)
-
-  const addTaskMutation = api.task.addTask.useMutation();
-
-  async function handleSubmit() {
-    setSubmit(true);
-    const formdata = new FormData();
-
-    formdata.append("file", file as Blob);
-    formdata.append("cloud_name", "dhlbhtrym");
-    formdata.append("upload_preset", "learnhqdoc");
-
-    console.log("formdata", formdata);
-
-    const res = await fetch(
-      "https://api.cloudinary.com/v1_1/dhlbhtrym/auto/upload",
-      {
-        method: "post",
-        mode: "cors",
-        body: formdata,
-      }
+function Task() {
+    const { data: session } = useSession();
+    const [user, setUser] = useState<User | undefined>();
+    
+    const { data, isLoading, error } = api.task?.getAllTeacher.useQuery(
+      (user?.id as string) || "621dd16f2eece6ce9587cb0d"
     );
 
-    const json = (await res.json()) as Task;
-    console.log(json);
-    console.log(JSON.stringify(json.secure_url));
+    const tasks: (Task & { stream: Stream; teacher: Teacher })[] | undefined = data;
 
-    const updatedTask = {
-      ...task,
-      asset_id: json.asset_id,
-      file: json.original_filename,
-      original_filename: json.original_filename,
-      secure_url: json.secure_url,
-    } as Task;
+    useEffect(() => {
+      const user = session?.user as User;
+      setUser(user);
+    }, [session]);
 
-    console.log("updated task",updatedTask)
-
-    try {
-      addTaskMutation.mutate(updatedTask, {
-        onSuccess: (res) => {
-          setSubmit(false);
-          setStatus({
-            type: "success",
-            message: `succesfully added ${
-              updatedTask?.name ?? ""
-            } as a task`,
-          });
-          setTimeout(() => {
-            res && window.location.reload();
-          }, 2000);
-        },
-      });
-    } catch (error) {
-      setSubmit(false);
-      setStatus({ type: "error", message: "error check your input" });
+    if (error) {
+      console.log(error);
     }
-  }
+
+  // const downloadURI = (uri, name) => {
+  //   const link = document.createElement("a");
+  //   link.download = name;
+  //   link.href = uri;
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
+  // };
 
   return (
     <div>
-      {<StatusMsg status={status} />}
-      <div className="p-2 text-2xl font-semibold md:p-4">
-        <h3>Add Tasks</h3>
-      </div>
-      <div className="m-4 rounded-xl bg-[#F7F6FB] p-4 md:p-6">
-        <form>
-          <div className="flex grid-cols-3 flex-col gap-2 gap-y-4 md:grid md:gap-y-8">
-            <div>
-              <div>
-                <label>
-                  Task title <span className="text-red-500">*</span>
-                </label>
-                <input
-                  onChange={(e) => {
-                    handleInput(e);
-                  }}
-                  value={task?.name}
-                  className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
-                  type="text"
-                  placeholder="eg. Assignmets 1"
-                  name="name"
-                />
-              </div>
-            </div>
-            <div>
-              <div>
-                <label>
-                  Subject ID <span className="text-red-500">*</span>
-                </label>
-                <input
-                  onChange={(e) => {
-                    handleInput(e);
-                  }}
-                  value={task?.subject?.slug}
-                  className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
-                  type="text"
-                  placeholder="eg. geo"
-                  name="subject"
-                />
-              </div>
-            </div>
-            <div>
-              <div>
-                <label>Stream ID </label>
-                <input
-                  onChange={(e) => {
-                    handleInput(e);
-                  }}
-                  value={task?.streamId}
-                  className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
-                  type="text"
-                  placeholder="eg. 1n"
-                  name="streamId"
-                />
-              </div>
-            </div>
-            <div>
-              <label>
-                Teacher Username <span className="text-red-500">*</span>
-              </label>
-              <input
-                onChange={(e) => {
-                  handleInput(e);
-                }}
-                value={task?.teacherId}
-                className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
-                type="text"
-                placeholder="eg. 456erick"
-                name="teacherId"
-              />
-            </div>
-            <div>
-              <label>Task Description & rules</label>
-              <textarea
-                onChange={(e) => {
-                  handleInput(e);
-                }}
-                value={task?.description}
-                className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
-                placeholder="eg. assignments 1"
-                name="description"
-              />
-            </div>
-          </div>
-          <div>
-            <label className="mb-2 block font-medium" htmlFor="file_input">
-              Upload file
-            </label>
-            <input
-              onChange={(e) => {
-                handleFileInput(e);
-              }}
-              className="block w-fit cursor-pointer rounded bg-gray-500 text-lg leading-loose text-gray-900 focus:outline-none"
-              type="file"
-              name="file"
-              id="file_input"
-            />
-            <p className="mt-1 text-sm text-gray-600" id="file_input_help">
-              SVG, PNG, JPG or Any Document Type.
-            </p>
-          </div>
+      <div className="p-4 text-2xl font-semibold">Your Tasks</div>
 
-          <div className=" mt-4">
-            <div>
-              {submit ? (
-                <Button />
-              ) : (
-                <div
-                  onClick={() => void handleSubmit()}
-                  className="w-fit rounded bg-blue-500 py-2 px-10 font-bold text-white hover:bg-blue-700"
+      <div
+        onClick={() => {
+          // downloadURI(
+          //   "https://ccsuniversity.ac.in/bridge-library/pdf/Lecture-3-Engine.pdf", "lecture3.pdf"
+          // )
+        }}
+      >
+        download
+      </div>
+
+      <div className="">
+        <div className="m-4 overflow-auto rounded-xl bg-[#F7F6FB] p-4">
+          <table className=" w-full overflow-scroll text-justify">
+            <thead>
+              <tr>
+                <th className="p-4">Name</th>
+                <th className="p-4">Subject</th>
+                <th className="p-4">Teacher</th>
+                <th className="p-4">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tasks?.map((task, index) => (
+                <tr
+                  className={` p-4 ${index % 2 === 0 ? "bg-white" : ""}`}
+                  key={index}
                 >
-                  Submit
-                </div>
-              )}
-            </div>
-          </div>
-        </form>
+                  <td className="p-4">{task.name}</td>
+                  <td className="p-4">{task.subject.name}</td>
+                  <td className="p-4">{task.teacher.name}</td>
+                  <td className="flex gap-2 p-4">
+                    <div
+                    // onClick={() => {
+
+                    // }}
+                    >
+                      Download
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
 }
 
-export default CreateTask;
+export default Task;

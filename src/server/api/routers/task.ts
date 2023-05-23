@@ -18,6 +18,28 @@ export const taskRouter = createTRPCRouter({
             // }
         });
     }),
+    getAllStream: protectedProcedure.input(z.string()).query(({ ctx, input }) => {
+        return ctx.prisma.task.findMany({
+            where: {
+                streamId: input
+            },
+            include: {
+                stream: true,
+                teacher: true
+            },
+        });
+    }),
+    getAllTeacher: protectedProcedure.input(z.string()).query(({ ctx, input }) => {
+        return ctx.prisma.task.findMany({
+            where: {
+                teacherId: input
+            },
+            include: {
+                stream: true,
+                teacher: true
+            },
+        });
+    }),
 
     getById: publicProcedure.input(z.string()).query(({ ctx, input }) => {
         return ctx.prisma.task.findUnique({

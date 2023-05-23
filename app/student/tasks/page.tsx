@@ -1,5 +1,8 @@
 'use client'
-import React, { useState } from "react";
+import { api } from "@/utils/api";
+import type { Stream, Task, Teacher, User } from "@prisma/client";
+import { useSession } from "next-auth/react";
+import React, { useEffect, useState } from "react";
 
 const dumt = [
   {
@@ -29,7 +32,26 @@ const dumt = [
 ];
 
 function Task() {
-  const [tasks, setTasks] = useState(dumt);
+  const { data: session } = useSession();
+  const [user, setUser] = useState<User | undefined>();
+  // const [tasks, setTasks] = useState<Task | undefined>();
+
+  const { data, isLoading, error } = api.task?.getAllStream.useQuery(
+    (user?.streamId as string) || "621dd16f2eece6ce9587cb0d"
+  );
+
+  const tasks: (Task & { stream: Stream; teacher: Teacher })[] | undefined = data;
+
+  console.log("tasks", tasks);
+
+  useEffect(() => {
+    const user = session?.user as User;
+    setUser(user);
+  }, [session]);
+
+  if (error) {
+    console.log(error);
+  }
 
   // const downloadURI = (uri, name) => {
   //   const link = document.createElement("a");
@@ -72,8 +94,8 @@ function Task() {
                   key={index}
                 >
                   <td className="p-4">{task.name}</td>
-                  <td className="p-4">{task.subject}</td>
-                  <td className="p-4">{task.teacher}</td>
+                  <td className="p-4">{task.subject.name}</td>
+                  <td className="p-4">{task?.teacher.name}</td>
                   <td className="p-4 flex gap-2">
                     <div
                       // onClick={() => {
