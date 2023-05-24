@@ -88,25 +88,25 @@ function CreateTask() {
 
     console.log("updated task",updatedTask)
 
-    try {
-      addTaskMutation.mutate(updatedTask, {
-        onSuccess: (res) => {
-          setSubmit(false);
-          setStatus({
-            type: "success",
-            message: `succesfully added ${
-              updatedTask?.name ?? ""
-            } as a task`,
-          });
-          setTimeout(() => {
-            res && window.location.reload();
-          }, 2000);
-        },
-      });
-    } catch (error) {
-      setSubmit(false);
-      setStatus({ type: "error", message: "error check your input" });
-    }
+  //   try {
+  //     addTaskMutation.mutate(updatedTask, {
+  //       onSuccess: (res) => {
+  //         setSubmit(false);
+  //         setStatus({
+  //           type: "success",
+  //           message: `succesfully added ${
+  //             updatedTask?.name ?? ""
+  //           } as a task`,
+  //         });
+  //         setTimeout(() => {
+  //           res && window.location.reload();
+  //         }, 2000);
+  //       },
+  //     });
+  //   } catch (error) {
+  //     setSubmit(false);
+  //     setStatus({ type: "error", message: "error check your input" });
+  //   }
   }
 
   return (
