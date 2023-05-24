@@ -32,9 +32,9 @@ const dumt = [
   },
 ];
 
-function Task() {
+function TeacherTask() {
   const { data: session } = useSession();
-   const router = useRouter();
+  const router = useRouter();
   const [user, setUser] = useState<User | undefined>();
 
   const { data, isLoading, error } = api.task?.getAllTeacher.useQuery(
@@ -81,30 +81,33 @@ function Task() {
             <tbody>
               {tasks?.map((task, index) => (
                 <>
-                    <tr
-                      className={` p-4 ${index % 2 === 0 ? "bg-white" : ""}`}
-                      key={index}
-                      onClick={ ()  => void router.push(`/teacher/tasks/task/${task?.id ?? ""}`)}
-                    >
-                      <td className="p-4">{task.name}</td>
-                      <td className="p-4">{task.original_filename}</td>
-                      <td className="p-4">{task.subject.name}</td>
-                      <td className="p-4">{task.teacher.name}</td>
-                      <td className="p-4">{task.description}</td>
-                      <td className="flex gap-2 p-4">
-                        <div
-                          onClick={() => {
+                  <tr
+                    className={` p-4 ${index % 2 === 0 ? "bg-white" : ""}`}
+                    key={index}
+                    onClick={() =>
+                      void router.push(`/teacher/tasks/task/${task?.id ?? ""}`)
+                    }
+                  >
+                    <td className="p-4">{task.name}</td>
+                    <td className="p-4">{task.original_filename}</td>
+                    <td className="p-4">{task.subject.name}</td>
+                    <td className="p-4">{task.teacher.name}</td>
+                    <td className="p-4">{task.description}</td>
+                    <td className="flex gap-2 p-4">
+                      <div
+                        onClick={() => {
+                          task &&
                             downloadURI(
-                              task.secure_url,
-                              task.original_filename
+                              task.secure_url ?? "",
+                              task.original_filename ?? ""
                             );
-                          }}
-                          className="cursor-pointer rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
-                        >
-                          download
-                        </div>
-                      </td>
-                    </tr>
+                        }}
+                        className="cursor-pointer rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
+                      >
+                        download
+                      </div>
+                    </td>
+                  </tr>
                 </>
               ))}
             </tbody>
@@ -115,4 +118,4 @@ function Task() {
   );
 }
 
-export default Task;
+export default TeacherTask;

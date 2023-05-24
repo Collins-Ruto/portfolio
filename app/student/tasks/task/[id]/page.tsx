@@ -45,7 +45,7 @@ export default function Task({ params: { id } }: { params: { id: string } }) {
           <div className="py-4">
             <span className="rounded-3xl bg-gray-300 py-1 px-2">
               <span className="bold text-sm">To do: </span>
-              <span className="text-xs">review submissions</span>
+              <span className="text-xs">make a submission</span>
             </span>
           </div>
           <div className="flex flex-col border-y py-4">
