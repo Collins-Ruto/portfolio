@@ -1,49 +1,78 @@
 // Generate segments for [product] using the `params` passed from
-'use client'
+"use client";
 import { api } from "@/utils/api";
 import type { Task, Stream, Teacher } from "@prisma/client";
+import { Loader } from "~/components";
 
 // the parent segment's `generateStaticParams` function
 export default function Task({ params: { id } }: { params: { id: string } }) {
   const { data, isLoading, error } = api.task?.getById.useQuery(
-    (id) || "621dd16f2eece6ce9587cb0d"
+    id || "621dd16f2eece6ce9587cb0d"
   );
 
+  if (error) {
+    console.log(error)
+  }
+
   const tasks: (Task & { stream: Stream; teacher: Teacher })[] | undefined =
-      data;
+    data;
 
-  console.log("id task",tasks)
-    
-    const task = tasks?.[0]
+  console.log("id task", tasks);
 
-    const downloadURI = (uri: string, name: string) => {
-      const link = document.createElement("a");
-      link.download = name;
-      link.href = uri;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    };
+  const task = tasks?.[0];
 
+  const downloadURI = (uri: string, name: string) => {
+    const link = document.createElement("a");
+    link.download = name;
+    link.href = uri;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
-    return (
-      <div className="">
-        <div className="w-96">
-          
-            <div className="text-blue-500">
-              {task?.subject.name} / by {task?.teacher.name}
-            </div>
-            <div className="text-2xl">{task?.name}</div>
-            <div className="">{task?.description}</div>
-            <div
-              onClick={() => {
-                task && downloadURI(task.secure_url, task.original_filename);
-              }}
-              className="cursor-pointer rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
-            >
-              download
-            </div>
+  return (
+    <div className="w-screen md:w-full">
+      <div className="p-4 text-2xl font-semibold">
+        <h3>Your Task</h3>
+      </div>
+      {isLoading && <Loader />}
+      <div className="mx-auto w-96">
+        <div className="text-blue-500">
+          {task?.subject.name} / by {task?.teacher.name}
+        </div>
+        <div className="text-4xl text-bold py-2 text-orange-800">{task?.name}</div>
+        <div className="bg-[#F7F6FB] rounded-md p-4 mb-2">
+          <div className="py-4">
+            <span className="rounded-3xl bg-gray-300 py-1 px-2">
+              <span className="bold text-sm">To do: </span>
+              <span className="text-xs">make a submission</span>
+            </span>
+          </div>
+          <div className="flex flex-col border-y py-4">
+            <span className="">
+              <span className="bold text-sm">Posted: </span>
+              <span className="text-xs">
+                Wednesday, 15 December 2022, 1:00 AM
+              </span>
+            </span>
+            <span className="">
+              <span className="bold text-sm">To do: </span>
+              <span className="text-xs">Monday, 5 December 2022, 1:00 AM</span>
+            </span>
+          </div>
+
+          <div className="py-4">{task?.description}</div>
+        </div>
+        <span className="mb-2">File: { task?.original_filename}</span>
+        <div
+          onClick={() => {
+            task && downloadURI(task.secure_url, task.original_filename);
+          }}
+          className="cursor-pointer w-28 text-center rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
+        >
+          download
         </div>
       </div>
-    );
+    </div>
+  );
 }

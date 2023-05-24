@@ -56,10 +56,10 @@ export const taskRouter = createTRPCRouter({
     addTask: protectedProcedure.input(z.object({
         name: z.string(),
         description: z.string(),
-        file: z.string(),
-        secure_url: z.string(),
-        asset_id: z.string(),
-        original_filename: z.string(),
+        file: z.string().or(z.literal('')),
+        secure_url: z.string().or(z.literal('')),
+        asset_id: z.string().or(z.literal('')),
+        original_filename: z.string().or(z.literal('')),
         subject: z.object({
             slug: z.string(),
             name: z.string(),

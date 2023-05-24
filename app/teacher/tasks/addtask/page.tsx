@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Button, StatusMsg } from "~/components";
+import { Button, Editor, StatusMsg } from "~/components";
 import type { Task } from "@prisma/client";
 import { api } from "@/utils/api";
 import { Subjects } from "~/types/types";
@@ -38,7 +38,27 @@ function CreateTask() {
         [name]: value,
       };
 
-      console.log(updatedTask)
+      console.log(updatedTask);
+
+      return updatedTask;
+    });
+  };
+
+  const editorInput = (content: string) => {
+    const jsonContent: string = JSON.stringify(content);
+
+    setTask((prevTask) => {
+      if (!prevTask) {
+        return {
+          description: jsonContent,
+        } as unknown as Task; // or some default value if you have one
+      }
+      const updatedTask = {
+        ...prevTask,
+        description: jsonContent,
+      };
+
+      console.log(updatedTask);
 
       return updatedTask;
     });
@@ -51,12 +71,12 @@ function CreateTask() {
     setFile(file);
   };
 
-  console.log("task", task)
+  console.log("task", task);
 
   const addTaskMutation = api.task.addTask.useMutation();
 
-  async function handleSubmit() {
-    setSubmit(true);
+  console.log("file", file);
+  const fileSubmit = async (): Promise<Task> => {
     const formdata = new FormData();
 
     formdata.append("file", file as Blob);
@@ -86,27 +106,33 @@ function CreateTask() {
       secure_url: json.secure_url,
     } as Task;
 
-    console.log("updated task",updatedTask)
+    return updatedTask;
+  };
 
-  //   try {
-  //     addTaskMutation.mutate(updatedTask, {
-  //       onSuccess: (res) => {
-  //         setSubmit(false);
-  //         setStatus({
-  //           type: "success",
-  //           message: `succesfully added ${
-  //             updatedTask?.name ?? ""
-  //           } as a task`,
-  //         });
-  //         setTimeout(() => {
-  //           res && window.location.reload();
-  //         }, 2000);
-  //       },
-  //     });
-  //   } catch (error) {
-  //     setSubmit(false);
-  //     setStatus({ type: "error", message: "error check your input" });
-  //   }
+  async function handleSubmit() {
+    // setSubmit(true);
+
+    const fileTask = file ? await fileSubmit() : (task as Task);
+
+    console.log("updated task", fileTask);
+
+    try {
+      addTaskMutation.mutate(fileTask, {
+        onSuccess: (res) => {
+          setSubmit(false);
+          setStatus({
+            type: "success",
+            message: `succesfully added ${fileTask?.name ?? ""} as a task`,
+          });
+          setTimeout(() => {
+            res && window.location.reload();
+          }, 2000);
+        },
+      });
+    } catch (error) {
+      setSubmit(false);
+      setStatus({ type: "error", message: "error check your input" });
+    }
   }
 
   return (
@@ -182,8 +208,8 @@ function CreateTask() {
                 name="teacherId"
               />
             </div>
-            <div>
-              <label>Task Description & rules</label>
+            {/* <div>
+              <label>Task Description </label>
               <textarea
                 onChange={(e) => {
                   handleInput(e);
@@ -193,7 +219,11 @@ function CreateTask() {
                 placeholder="eg. assignments 1"
                 name="description"
               />
-            </div>
+            </div> */}
+          </div>
+          <div className="pt-4 md:pt-8">
+            <label>Task Description </label>
+            <Editor editorInput={editorInput} />
           </div>
           <div>
             <label className="mb-2 block font-medium" htmlFor="file_input">
