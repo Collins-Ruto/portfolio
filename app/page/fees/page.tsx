@@ -198,8 +198,8 @@ function FeeData() {
                   <td className="p-4">{balance}</td>
                   <td className="p-4">{fee.payday}</td>
                   <td className="p-4 text-end">
-                    <span>
-                      {balance < 1 ? "Paid" : "Arrears"}
+                    <span className={balance < 1 ? "text-green-500" : "text-orange-700"}>
+                      {balance < 1 ? "Cleared" : "Arrears"}
                     </span>
                   </td>
                 </tr>

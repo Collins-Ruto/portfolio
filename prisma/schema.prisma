@@ -164,10 +164,10 @@ model Task {
     id          String @id @default(auto()) @map("_id") @db.ObjectId
     name        String
     description String
-    file        String?
-    original_filename String?
-    secure_url  String?
-    asset_id    String?
+    file        String
+    original_filename String
+    secure_url  String
+    asset_id    String
     subject     Subject
     stream      Stream @relation(fields: [streamId], references: [id])
     streamId    String @db.ObjectId

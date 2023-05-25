@@ -76,6 +76,7 @@ function CreateTask() {
   const addTaskMutation = api.task.addTask.useMutation();
 
   console.log("file", file);
+
   const fileSubmit = async (): Promise<Task> => {
     const formdata = new FormData();
 

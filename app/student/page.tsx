@@ -63,7 +63,7 @@ function Dashboard() {
       <div className="flex flex-wrap justify-between gap-4 py-6">
         {datas.map((data) => (
           <div
-            className="min-w- flex min-w-[16rem] grow justify-between rounded-lg bg-[#F7F6FB] py-4 px-6 sm:max-w-[20rem]"
+            className="min-w- flex min-w-[14rem] grow justify-between rounded-lg bg-[#F7F6FB] py-4 px-6 sm:max-w-[20rem]"
             key={data?.title}
           >
             <div className="flex flex-col rounded-lg">

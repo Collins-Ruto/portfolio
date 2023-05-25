@@ -15,12 +15,11 @@ function Header() {
 
   const currentRoute = usePathname();
 
-  
   useEffect(() => {
-    const user = session?.user as User
+    const user = session?.user as User;
     setUser(user);
   }, [session]);
-  
+
   console.log("header user", session);
   // const logOut = () => {
   //   localStorage.setItem("saved", JSON.stringify(false));
@@ -153,7 +152,7 @@ function Header() {
               />
               <span className="text-lg">Dashboard</span>
             </Link>
-            {user?.role === ("admin" || "teacher") && (
+            {(user?.role === "teacher" || user?.role === "admin") && (
               <Link
                 href="/page/allstudents"
                 className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
@@ -197,7 +196,7 @@ function Header() {
               href={user?.role === "student" ? "/student/exams" : "/page/exams"}
               className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
                 currentRoute === "/page/exams" ||
-                currentRoute === "/student/exams" 
+                currentRoute === "/student/exams"
                   ? "hover:text bg-blue-700 text-white hover:text-white"
                   : ""
               }`}
@@ -232,7 +231,7 @@ function Header() {
             <Link
               href={user?.role === "student" ? "/student/fees" : "/page/fees"}
               className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
-                currentRoute === "/fee"
+                ["/student/fees", "/page/fees"].includes(currentRoute ?? "")
                   ? "hover:text bg-blue-700 text-white hover:text-white"
                   : ""
               }`}
@@ -246,28 +245,90 @@ function Header() {
               />
               <span className="text-lg">Finance</span>
             </Link>
-            {user?.role === "admin" && (
+            {(user?.role === "teacher" || user?.role === "student") && (
+              <Link
+                href={
+                  user?.role === "student" ? "/student/tasks" : "/teacher/tasks"
+                }
+                className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
+                  ["/student/tasks", "/teacher/tasks"].includes(
+                    currentRoute ?? ""
+                  )
+                    ? "hover:text bg-blue-700 text-white hover:text-white"
+                    : ""
+                }`}
+              >
+                <Image
+                  width={20}
+                  height={20}
+                  className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
+                  src="https://img.icons8.com/ios-filled/24/000000/task-completed.png"
+                  alt=""
+                />
+                <span className="text-lg">Tasks</span>
+              </Link>
+            )}
+            {(user?.role === "admin" || user?.role === "teacher") && (
               <div className="">
                 <h2 className="w-fit border-b px-2 pt-1 text-sm text-gray-600">
                   Data Management
                 </h2>
-                <Link
-                  href="/admin/admins/add"
-                  className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
-                    currentRoute === "/addadmin"
-                      ? "hover:text bg-blue-700 text-white hover:text-white"
-                      : ""
-                  }`}
-                >
-                  <Image
-                    width={20}
-                    height={20}
-                    className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
-                    src="https://img.icons8.com/ios-filled/50/000000/admin-settings-male.png"
-                    alt=""
-                  />
-                  <span className="text-lg">Add Admin</span>
-                </Link>
+                {user?.role === "admin" && (
+                  <div>
+                    <Link
+                      href="/admin/admins/add"
+                      className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
+                        currentRoute === "/addadmin"
+                          ? "hover:text bg-blue-700 text-white hover:text-white"
+                          : ""
+                      }`}
+                    >
+                      <Image
+                        width={20}
+                        height={20}
+                        className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
+                        src="https://img.icons8.com/ios-filled/50/000000/admin-settings-male.png"
+                        alt=""
+                      />
+                      <span className="text-lg">Add Admin</span>
+                    </Link>
+
+                    <Link
+                      href="/admin/streams/add"
+                      className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
+                        currentRoute === "/addstream"
+                          ? "hover:text bg-blue-700 text-white hover:text-white"
+                          : ""
+                      }`}
+                    >
+                      <Image
+                        width={20}
+                        height={20}
+                        className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
+                        src="https://img.icons8.com/material/24/000000/school-building.png"
+                        alt=""
+                      />
+                      <span className="text-lg">Add Stream</span>
+                    </Link>
+                    <Link
+                      href="/admin/subjects"
+                      className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
+                        currentRoute === "/addsubject"
+                          ? "hover:text bg-blue-700 text-white hover:text-white"
+                          : ""
+                      }`}
+                    >
+                      <Image
+                        width={20}
+                        height={20}
+                        className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
+                        src="https://img.icons8.com/ios-filled/50/000000/wordbook.png"
+                        alt=""
+                      />
+                      <span className="text-lg">Add Subject</span>
+                    </Link>
+                  </div>
+                )}
                 <Link
                   href="/page/addlesson"
                   className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
@@ -286,9 +347,9 @@ function Header() {
                   <span className="text-lg">Add Lessons</span>
                 </Link>
                 <Link
-                  href="/admin/streams/add"
+                  href="/teacher/tasks/addtask"
                   className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
-                    currentRoute === "/addstream"
+                    currentRoute === "/teacher/tasks/addtask"
                       ? "hover:text bg-blue-700 text-white hover:text-white"
                       : ""
                   }`}
@@ -297,27 +358,10 @@ function Header() {
                     width={20}
                     height={20}
                     className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
-                    src="https://img.icons8.com/material/24/000000/school-building.png"
+                    src="https://img.icons8.com/ios-filled/24/000000/task.png"
                     alt=""
                   />
-                  <span className="text-lg">Add Stream</span>
-                </Link>
-                <Link
-                  href="/admin/subjects"
-                  className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
-                    currentRoute === "/addsubject"
-                      ? "hover:text bg-blue-700 text-white hover:text-white"
-                      : ""
-                  }`}
-                >
-                  <Image
-                    width={20}
-                    height={20}
-                    className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
-                    src="https://img.icons8.com/ios-filled/50/000000/wordbook.png"
-                    alt=""
-                  />
-                  <span className="text-lg">Add Subject</span>
+                  <span className="text-lg">Add Task</span>
                 </Link>
               </div>
             )}
@@ -339,7 +383,7 @@ function Header() {
             <Link
               href={`${user?.role || ""}/account`}
               className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
-                currentRoute === `${user?.role || ""}/account`
+                currentRoute === `/${user?.role || ""}/account`
                   ? "hover:text bg-blue-700 text-white hover:text-white"
                   : ""
               }`}

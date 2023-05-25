@@ -157,79 +157,79 @@ const streamData: Prisma.StreamCreateInput[] =  [
         "slug": "3n"
       }
     ]
-const taskData: Prisma.TaskCreateInput[] = [
-      {
-        "name": "Geo Asg1",
-        "description": "Due next class",
-        "subject": {
-          "name": "Geography",
-          "slug": "geo"
-        },
-        "stream": {
-          "connect": {"id": "641ca7dbbe8caf6d48376e4d"}
-        },
-        "teacher": {
-          "connect": {"id": "641dd5f1590da608c00b4e78"}
-        }
-      },
-      {
-        "name": "English Asg 2",
-        "description": "Due next class",
-        "subject": {
-          "name": "English",
-          "slug": "eng"
-        },
-        "stream": {
-          "connect": {"id": "641ca7dcbe8caf6d48376e4e"}
-        },
-        "teacher": {
-          "connect": {"id": "641dd5f8590da608c00b4e7e"}
-        }
-      },
-      {
-        "name": "CRE Asg 4",
-        "description": "Due next week",
-        "subject": {
-          "name": "CRE",
-          "slug": "cre"
-        },
-        "stream": {
-          "connect": {"id": "641ca7debe8caf6d48376e4f"}
-        },
-        "teacher": {
-          "connect": {"id": "641dd5f5590da608c00b4e7b"}
-        }
-      },
-      {
-        "name": "agri Asg 5",
-        "description": "Due next week",
-        "subject": {
-          "name": "Agriculture",
-          "slug": "agri"
-        },
-        "stream": {
-          "connect": {"id": "641ca7dfbe8caf6d48376e50"}
-        },
-        "teacher": {
-          "connect": {"id": "641dd5fb590da608c00b4e80"}
-        }
-      },
+// const taskData: Prisma.TaskCreateInput[] = [
+//       {
+//         "name": "Geo Asg1",
+//         "description": "Due next class",
+//         "subject": {
+//           "name": "Geography",
+//           "slug": "geo"
+//         },
+//         "stream": {
+//           "connect": {"id": "641ca7dbbe8caf6d48376e4d"}
+//         },
+//         "teacher": {
+//           "connect": {"id": "641dd5f1590da608c00b4e78"}
+//         }
+//       },
+//       {
+//         "name": "English Asg 2",
+//         "description": "Due next class",
+//         "subject": {
+//           "name": "English",
+//           "slug": "eng"
+//         },
+//         "stream": {
+//           "connect": {"id": "641ca7dcbe8caf6d48376e4e"}
+//         },
+//         "teacher": {
+//           "connect": {"id": "641dd5f8590da608c00b4e7e"}
+//         }
+//       },
+//       {
+//         "name": "CRE Asg 4",
+//         "description": "Due next week",
+//         "subject": {
+//           "name": "CRE",
+//           "slug": "cre"
+//         },
+//         "stream": {
+//           "connect": {"id": "641ca7debe8caf6d48376e4f"}
+//         },
+//         "teacher": {
+//           "connect": {"id": "641dd5f5590da608c00b4e7b"}
+//         }
+//       },
+//       {
+//         "name": "agri Asg 5",
+//         "description": "Due next week",
+//         "subject": {
+//           "name": "Agriculture",
+//           "slug": "agri"
+//         },
+//         "stream": {
+//           "connect": {"id": "641ca7dfbe8caf6d48376e50"}
+//         },
+//         "teacher": {
+//           "connect": {"id": "641dd5fb590da608c00b4e80"}
+//         }
+//       },
       
-      {
-        "name": "Bio Asg 7",
-        "description": "Due next week",
-        "subject": {
-          "name": "Biology",
-          "slug": "bio"
-        },
-        "stream": {
-          "connect": {"id": "641ca7e0be8caf6d48376e51"}
-        },
-        "teacher": {
-          "connect": {"id": "641dd5fb590da608c00b4e80"}
-        }
-      }
-    ]
+//       {
+//         "name": "Bio Asg 7",
+//         "description": "Due next week",
+//         "subject": {
+//           "name": "Biology",
+//           "slug": "bio"
+//         },
+//         "stream": {
+//           "connect": {"id": "641ca7e0be8caf6d48376e51"}
+//         },
+//         "teacher": {
+//           "connect": {"id": "641dd5fb590da608c00b4e80"}
+//         }
+//       }
+//     ]
 const examData: Prisma.ExamCreateInput[] = [
       {
         "name": "End Term 1",

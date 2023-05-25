@@ -80,7 +80,6 @@ function TeacherTask() {
             </thead>
             <tbody>
               {tasks?.map((task, index) => (
-                <>
                   <tr
                     className={` p-4 ${index % 2 === 0 ? "bg-white" : ""}`}
                     key={index}
@@ -108,7 +107,6 @@ function TeacherTask() {
                       </div>
                     </td>
                   </tr>
-                </>
               ))}
             </tbody>
           </table>

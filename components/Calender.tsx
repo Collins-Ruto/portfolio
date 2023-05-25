@@ -91,7 +91,7 @@ export default function Calender({ full }: Props) {
       return lessons?.filter(
         (lesson) =>
           format(selectedDay, "EEE") === lesson.day &&
-          lesson.teacher.slug === user?.slug
+          lesson.teacher.id === user?.id
       );
     }
     if (user?.role === "student") {
