@@ -36,6 +36,7 @@ function CreateTask() {
       const updatedTask = {
         ...prevTask,
         [name]: value,
+        posted: (new Date()).toDateString()
       };
 
       console.log(updatedTask);
@@ -101,10 +102,10 @@ function CreateTask() {
 
     const updatedTask = {
       ...task,
-      asset_id: json.asset_id,
-      file: json.original_filename,
-      original_filename: json.original_filename,
-      secure_url: json.secure_url,
+      asset_id: json.asset_id ?? "",
+      file: json.original_filename ?? "",
+      original_filename: json.original_filename ?? "",
+      secure_url: json.secure_url ?? "",
     } as Task;
 
     return updatedTask;
@@ -113,9 +114,18 @@ function CreateTask() {
   async function handleSubmit() {
     // setSubmit(true);
 
-    const fileTask = file ? await fileSubmit() : (task as Task);
+    const newTask = {
+      ...task,
+      asset_id: "",
+      file: "",
+      original_filename: "",
+      secure_url: "",
+    } as Task;
 
-    console.log("updated task", fileTask);
+    const fileTask = file ? await fileSubmit() : newTask;
+
+    console.log("fileTask task", fileTask);
+    console.log("new task", newTask);
 
     try {
       addTaskMutation.mutate(fileTask, {
@@ -209,18 +219,18 @@ function CreateTask() {
                 name="teacherId"
               />
             </div>
-            {/* <div>
-              <label>Task Description </label>
-              <textarea
+            <div>
+              <label>Due </label>
+              <input
                 onChange={(e) => {
                   handleInput(e);
                 }}
-                value={task?.description}
+                value={task?.due}
                 className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
-                placeholder="eg. assignments 1"
-                name="description"
+                type="date"
+                name="due"
               />
-            </div> */}
+            </div>
           </div>
           <div className="pt-4 md:pt-8">
             <label>Task Description </label>

@@ -160,7 +160,11 @@ const streamData: Prisma.StreamCreateInput[] =  [
 // const taskData: Prisma.TaskCreateInput[] = [
 //       {
 //         "name": "Geo Asg1",
-//         "description": "Due next class",
+//     "description": "Due next class",
+//     "file": "",
+//     "secure_url": "",
+//     "asset_id": "",
+//     "original_filename": "",
 //         "subject": {
 //           "name": "Geography",
 //           "slug": "geo"
@@ -175,6 +179,10 @@ const streamData: Prisma.StreamCreateInput[] =  [
 //       {
 //         "name": "English Asg 2",
 //         "description": "Due next class",
+//         "file": "",
+//         "secure_url": "",
+//         "asset_id": "",
+//         "original_filename": "",
 //         "subject": {
 //           "name": "English",
 //           "slug": "eng"

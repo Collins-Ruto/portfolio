@@ -168,6 +168,8 @@ model Task {
     original_filename String
     secure_url  String
     asset_id    String
+    posted      String
+    due         String
     subject     Subject
     stream      Stream @relation(fields: [streamId], references: [id])
     streamId    String @db.ObjectId

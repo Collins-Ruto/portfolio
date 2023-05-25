@@ -52,7 +52,7 @@ const Editor: React.FC<EditorProps> = ({editorInput}) => {
       <ReactQuill
         modules={modules}
         formats={formats}
-        theme="snow"
+        theme={"snow"}
         bounds=".ql-container"
         value={content}
         onChange={handleQuillChange}

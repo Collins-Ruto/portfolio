@@ -53,13 +53,17 @@ export const taskRouter = createTRPCRouter({
         });
     }),
 
+    // .or(z.literal(''))
+
     addTask: protectedProcedure.input(z.object({
         name: z.string(),
         description: z.string(),
-        file: z.string().or(z.literal('')),
-        secure_url: z.string().or(z.literal('')),
-        asset_id: z.string().or(z.literal('')),
-        original_filename: z.string().or(z.literal('')),
+        due: z.string(),
+        posted: z.string(),
+        file: z.string(),
+        secure_url: z.string(),
+        asset_id: z.string(),
+        original_filename: z.string(),
         subject: z.object({
             slug: z.string(),
             name: z.string(),
@@ -72,6 +76,8 @@ export const taskRouter = createTRPCRouter({
             data: {
                 name: input.name,
                 description: input.description,
+                due: input.due,
+                posted: input.posted,
                 file: input.file,
                 secure_url: input.secure_url,
                 asset_id: input.asset_id,
