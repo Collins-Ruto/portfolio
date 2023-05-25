@@ -2,11 +2,12 @@ import { z } from "zod";
 
 import {
     createTRPCRouter,
+    protectedProcedure,
     publicProcedure,
 } from "@/server/api/trpc";
 
 export const adminRouter = createTRPCRouter({
-    getAll: publicProcedure.query(({ ctx }) => {
+    getAll: protectedProcedure.query(({ ctx }) => {
         return ctx.prisma.admin.findMany();
     }),
     // :{ctx:Context, input:string}
@@ -27,7 +28,7 @@ export const adminRouter = createTRPCRouter({
         });
     }),
 
-    addAdmin: publicProcedure.input(z.object({
+    addAdmin: protectedProcedure.input(z.object({
         name: z.string(),
         slug: z.string(),
         email: z.string(),
@@ -40,7 +41,7 @@ export const adminRouter = createTRPCRouter({
         });
     }),
 
-    editAdmin: publicProcedure.input(z.object({
+    editAdmin: protectedProcedure.input(z.object({
         slug: z.string(),
         email: z.string(),
         password: z.string(),
@@ -53,6 +54,14 @@ export const adminRouter = createTRPCRouter({
             },
             data: input,
         });
+    }),
+
+    delete: protectedProcedure.input(z.string()).mutation(({ ctx, input }) => {
+        return ctx.prisma.admin.delete({
+            where: {
+                slug: input
+            }
+        })
     }),
 
 });

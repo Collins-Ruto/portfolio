@@ -3,13 +3,12 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button, Loader } from "~/components";
 import Image from "next/image";
-import type { Search, Result, Student } from "~/types/types";
+import type { Search, Result } from "~/types/types";
 import { Subjects } from "~/types/types";
 import { api } from "@/utils/api";
 import { Exam } from "@prisma/client";
 
 function Exam() {
-  const [subjects, setSubjects] = useState([]);
   const [submit, setSubmit] = useState(false);
   const [search, setSearch] = useState<Search>();
   const [pages, setPages] = useState({
@@ -28,12 +27,11 @@ function Exam() {
   //     setPages(res.data.pageInfo);
   //   });
 
-  //   axios.get("https://lmsadmin.onrender.com/infos").then((res) => {
-  //     setSubjects(res.data.subjects);
-  //     setLoading(false);
-  //   });
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
+
+  if (error) {
+    console.log(error);
+  }
 
   // const changePage = (direction) => {
   //   const data = {

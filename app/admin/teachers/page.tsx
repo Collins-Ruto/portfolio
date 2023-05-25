@@ -7,7 +7,7 @@ import { api } from "@/utils/api";
 import { type Teacher } from "@prisma/client";
 
 function Teachers() {
-  // const [teachers, setTeachers] = useState<Teacher[] | undefined>();
+  const [teachers, setTeachers] = useState<Teacher[] | undefined>();
   const [isDelete, setisDelete] = useState(false);
   const [submit, setSubmit] = useState(false);
   const [delTeacher, setDelTeacher] = useState("");
@@ -17,19 +17,16 @@ function Teachers() {
     hasPreviousPage: false,
   });
 
-  // useEffect(() => {
-  //   axios.get<Teacher[] | undefined>("https://lmsadmin.onrender.com/teachers").then((res) => {
-  //     // setTeachers(res.data.edges);
-  //     // setPages(res.data.pageInfo);
-  //     setLoading(false);
-  //   }).catch(err => console.log(err))
-  //     .then(() => console.log('this will succeed'))
-  //     .catch(() => 'obligatory catch');
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
   const { data, isLoading, error } = api.teacher.getAll.useQuery();
-  const teachers: Teacher[] | undefined = data;
+  useEffect(() => {
+    if (data) {
+      setTeachers(data);
+    }
+  }, [data]);
+
+  if (error) {
+    console.log(error);
+  }
 
   // const changePage = (direction) => {
   //   const data = {
@@ -55,21 +52,21 @@ function Teachers() {
   //   setSubmit(false);
   // };
 
-  // const deleteTeacher = () => {
-  //   axios
-  //     .delete("https://lmsadmin.onrender.com/teachers", {
-  //       data: { slug: delTeacher },
-  //     })
-  //     .then((res) => {
-  //       setisDelete(false);
-  //       setSubmit(false);
-  //     });
-  //   const newTeachers = teachers.filter(
-  //     (teacher) => teacher.slug !== delTeacher
-  //   );
-  //   setTeachers(newTeachers);
-  // };
+  const deleteMutation = api.teacher.delete.useMutation();
 
+  const deleteTeacher = () => {
+    try {
+      deleteMutation.mutate(delTeacher);
+      setisDelete(false);
+
+      const newTeacher: Teacher[] | undefined = teachers?.filter(
+        (teacher) => teacher.slug !== delTeacher
+      );
+      setTeachers(newTeacher);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const ConfirmDel = () => {
     return (
       <div className="absolute z-20 h-screen w-full">
@@ -131,7 +128,7 @@ function Teachers() {
               ) : (
                 <button
                   onClick={() => {
-                    // deleteTeacher();
+                    deleteTeacher();
                     setSubmit(true);
                   }}
                   className="w-full rounded-lg bg-red-600 px-4 py-3 text-sm font-semibold text-white hover:bg-red-400 hover:text-white md:w-auto md:py-2 "
@@ -227,7 +224,7 @@ function Teachers() {
                   <td className="p-4">{teacher.slug}</td>
                   <td className="p-4">
                     <h2 className="table-avatar">
-                      <a href="student-details.html">{teacher.name}</a>
+                      <a href="teacher-details.html">{teacher.name}</a>
                     </h2>
                   </td>
                   <td className="p-4">{teacher.email?.substring(0, 29)}</td>
@@ -253,7 +250,7 @@ function Teachers() {
                     >
                       <Image
                         width={100}
-                    height={100}
+                        height={100}
                         src="https://img.icons8.com/ios-filled/50/000000/waste.png"
                         alt=""
                         className="w-6 cursor-pointer"

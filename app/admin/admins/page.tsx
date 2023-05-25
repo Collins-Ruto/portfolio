@@ -7,7 +7,7 @@ import { api } from "@/utils/api";
 import { type Admin } from "@prisma/client";
 
 function Admins() {
-  // const [admins, setAdmins] = useState<Admin[] | undefined>();
+  const [admins, setAdmins] = useState<Admin[] | undefined>();
   const [isDelete, setisDelete] = useState(false);
   const [submit, setSubmit] = useState(false);
   const [delAdmin, setDelAdmin] = useState("");
@@ -17,19 +17,16 @@ function Admins() {
     hasPreviousPage: false,
   });
 
-  // useEffect(() => {
-  //   axios.get<Admin[] | undefined>("https://lmsadmin.onrender.com/admins").then((res) => {
-  //     // setAdmins(res.data.edges);
-  //     // setPages(res.data.pageInfo);
-  //     setLoading(false);
-  //   }).catch(err => console.log(err))
-  //     .then(() => console.log('this will succeed'))
-  //     .catch(() => 'obligatory catch');
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
   const { data, isLoading, error } = api.admin.getAll.useQuery();
-  const admins: Admin[] | undefined = data;
+  useEffect(() => {
+    if (data) {
+      setAdmins(data);
+    }
+  }, [data]);
+
+  if (error) {
+    console.log(error);
+  }
 
   // const changePage = (direction) => {
   //   const data = {
@@ -55,20 +52,21 @@ function Admins() {
   //   setSubmit(false);
   // };
 
-  // const deleteAdmin = () => {
-  //   axios
-  //     .delete("https://lmsadmin.onrender.com/admins", {
-  //       data: { slug: delAdmin },
-  //     })
-  //     .then((res) => {
-  //       setisDelete(false);
-  //       setSubmit(false);
-  //     });
-  //   const newAdmins = admins.filter(
-  //     (admin) => admin.slug !== delAdmin
-  //   );
-  //   setAdmins(newAdmins);
-  // };
+  const deleteMutation = api.admin.delete.useMutation();
+
+  const deleteAdmin = () => {
+    try {
+      deleteMutation.mutate(delAdmin);
+      setisDelete(false);
+
+      const newAdmin: Admin[] | undefined = admins?.filter(
+        (admin) => admin.slug !== delAdmin
+      );
+      setAdmins(newAdmin);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const ConfirmDel = () => {
     return (
@@ -131,7 +129,7 @@ function Admins() {
               ) : (
                 <button
                   onClick={() => {
-                    // deleteAdmin();
+                    deleteAdmin();
                     setSubmit(true);
                   }}
                   className="w-full rounded-lg bg-red-600 px-4 py-3 text-sm font-semibold text-white hover:bg-red-400 hover:text-white md:w-auto md:py-2 "

@@ -78,9 +78,13 @@ export const studentRouter = createTRPCRouter({
   }),
 
   search: protectedProcedure.input(z.string()).query(({ ctx, input }) => {
+    console.log("search in", input)
     return ctx.prisma.student.findMany({
       where: {
-        name: { contains: input }
+        name: {
+          contains: input,
+          mode: "insensitive"
+        }
       },
       include: {
         stream: true

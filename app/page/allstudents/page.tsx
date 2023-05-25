@@ -189,7 +189,7 @@ function Students() {
                     <button
                       onClick={() => {
                         searchSubmit();
-                        setSubmit(true);
+                        // setSubmit(true);
                       }}
                       type="button"
                       className="rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
@@ -223,7 +223,8 @@ function Students() {
               <table className=" w-full overflow-scroll text-justify">
                 <thead>
                   <tr>
-                    <th className="p-4">ID</th>
+                    <th className="p-4">ADM</th>
+                    <th className="p-4">username</th>
                     <th className="p-4">Name</th>
                     <th className="p-4">Stream</th>
                     <th className="p-4">DOB</th>
@@ -239,6 +240,7 @@ function Students() {
                       className={` p-4 ${index % 2 === 0 ? "bg-white" : ""}`}
                       key={index}
                     >
+                      <td className="p-4">{student.admissionId}</td>
                       <td className="p-4">{student.slug}</td>
                       <td className="p-4">
                         <h2 className="table-avatar">

@@ -6,8 +6,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { Loader } from "~/components";
 
-// 8797fredrick 736judy
-
+// 8797fredrick 736judy 4535brenda
 
 function TeacherTask() {
   const { data: session } = useSession();
@@ -59,7 +58,9 @@ function TeacherTask() {
             <tbody>
               {tasks?.map((task, index) => (
                 <tr
-                  className={` cursor-pointer p-4 ${index % 2 === 0 ? "bg-white" : ""}`}
+                  className={` cursor-pointer p-4 ${
+                    index % 2 === 0 ? "bg-white" : ""
+                  }`}
                   key={index}
                   onClick={() =>
                     void router.push(`/teacher/tasks/task/${task?.id ?? ""}`)
@@ -71,18 +72,20 @@ function TeacherTask() {
                   <td className="p-4">{task.teacher.name}</td>
                   <td className="p-4">{task.due}</td>
                   <td className="flex gap-2 p-4">
-                    <div
-                      onClick={() => {
-                        task &&
-                          downloadURI(
-                            task.secure_url ?? "",
-                            task.original_filename ?? ""
-                          );
-                      }}
-                      className="cursor-pointer rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
-                    >
-                      download
-                    </div>
+                    {task.file !== "" && (
+                      <div
+                        onClick={() => {
+                          task &&
+                            downloadURI(
+                              task.secure_url ?? "",
+                              task.original_filename ?? ""
+                            );
+                        }}
+                        className="cursor-pointer rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
+                      >
+                        download
+                      </div>
+                    )}
                   </td>
                 </tr>
               ))}
