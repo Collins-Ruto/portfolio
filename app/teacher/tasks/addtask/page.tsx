@@ -232,7 +232,7 @@ function CreateTask() {
               />
             </div>
           </div>
-          <div className="pt-4 md:pt-8">
+          <div className="py-4 md:pt-8">
             <label>Task Description </label>
             <Editor handleQuillChange={handleQuillChange} />
           </div>
@@ -253,7 +253,6 @@ function CreateTask() {
               SVG, PNG, JPG or Any Document Type.
             </p>
           </div>
-
           <div className=" mt-4">
             <div>
               {submit ? (

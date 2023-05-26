@@ -177,7 +177,7 @@ function Students() {
                     name="name"
                     type="text"
                     className="focus:shadow-outline w-full appearance-none rounded border-[1px] bg-[#F7F6FB] py-2 px-3 leading-tight text-gray-800 shadow focus:outline-none"
-                    placeholder="Search by ID ..."
+                    placeholder="Search by name ..."
                   />
                 </div>
               </div>

@@ -9,7 +9,11 @@ export const feeRouter = createTRPCRouter({
   getAll: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.fee.findMany({
       include: {
-        student: true
+        student: {
+          include: {
+            stream: true
+          }
+        }
       }
     });
   }),

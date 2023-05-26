@@ -3,31 +3,29 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button, Loader } from "~/components";
 import Image from "next/image";
-import type { Search, Result } from "~/types/types";
+import type { Result } from "~/types/types";
 import { Subjects } from "~/types/types";
 import { api } from "@/utils/api";
-import { Exam } from "@prisma/client";
+import type { Exam, Student } from "@prisma/client";
 
 function Exam() {
   const [submit, setSubmit] = useState(false);
-  const [search, setSearch] = useState<Search>();
+  const [nameSearch, setNameSearch] = useState("");
+  const [termSearch, setTermSearch] = useState("");
   const [pages, setPages] = useState({
     hasNextPage: false,
     hasPreviousPage: false,
   });
 
+  const [exams, setExams] = useState<(Exam & { student: Student })[]>();
   const { data, isLoading, error } = api.exam.getAll.useQuery();
-  //  const [exam, setExam] = useState<Exam[]>(data);
-  const exams: Exam[] | undefined = data;
   console.log("exams", exams);
-  // https://lmsadmin.onrender.com
-  // useEffect(() => {
-  //   axios.get("https://lmsadmin.onrender.com/exams").then((res) => {
-  //     setExam(res.data.edges);
-  //     setPages(res.data.pageInfo);
-  //   });
 
-  // }, []);
+  useEffect(() => {
+    if (data) {
+      setExams(data);
+    }
+  }, [data]);
 
   if (error) {
     console.log(error);
@@ -45,56 +43,45 @@ function Exam() {
   //   });
   // };
 
-  // const handleInput = (event) => {
-  //   const target = event.target;
-  //   // const value = target.type === "checkbox" ? target.checked : target.value;
-  //   const value =
-  //     target.type === "number" ? parseInt(target.value) : target.value;
-  //   const name = target.name;
+  const searchExams =
+    nameSearch === ""
+      ? api.exam.termSearch.useQuery(termSearch)
+      : api.exam.nameSearch.useQuery(nameSearch);
 
-  //   setSearch({ ...search, [name]: value });
-  // };
-
-  // const searchSubmit = async () => {
-  //   const data = await axios.get(
-  //     `https://lmsadmin.onrender.com/exams/search?name=${search.name}&id=${search.id}`
-  //   );
-  //   const neData = data.data.examSearch.concat(
-  //     data.data.studentSearch.length
-  //       ? data.data.studentSearch[0].node.exams
-  //       : []
-  //   );
-  //   setExam(neData);
-  //   setSubmit(false);
-  //   setSearch({ name: "", id: "" });
-  // };
+  const searchSubmit = () => {
+    console.log("term sc exam", termSearch, "name sc", nameSearch);
+    const { data } = searchExams;
+    console.log("search data exam", data);
+    setExams(data);
+    setSubmit(false);
+  };
 
   return (
     <div className="w-screen md:w-full">
       <div className="p-4 text-2xl font-semibold">
-        <h3>exam</h3>
+        <h3>Exam Results</h3>
       </div>
       {isLoading && <Loader />}
       <div className="flex flex-col justify-between gap-4 p-4 md:flex-row">
         <div>
           <input
             onChange={(e) => {
-              // handleInput(e);
+              setTermSearch(e.target.value);
             }}
             name="id"
-            value={search?.id}
+            value={termSearch}
             type="text"
             className="focus:shadow-outline w-full appearance-none rounded border-[1px] bg-[#F7F6FB] py-2 px-3 leading-tight text-gray-800 shadow focus:outline-none"
-            placeholder="Search by exam ID ..."
+            placeholder="Search by exam Term ..."
           />
         </div>
         <div>
           <input
             onChange={(e) => {
-              // handleInput(e);
+              setNameSearch(e.target.value);
             }}
             name="name"
-            value={search?.name}
+            value={nameSearch}
             type="text"
             className="focus:shadow-outline w-full appearance-none rounded border bg-[#F7F6FB] py-2 px-3 leading-tight text-gray-800 shadow focus:outline-none"
             placeholder="Search by student Name ..."
@@ -107,8 +94,8 @@ function Exam() {
             ) : (
               <button
                 onClick={() => {
-                  // searchSubmit();
-                  setSubmit(true);
+                  searchSubmit();
+                  // setSubmit(true);
                 }}
                 type="button"
                 className="rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
@@ -139,13 +126,13 @@ function Exam() {
       <div className="m-4 overflow-auto rounded-xl bg-[#F7F6FB] p-4">
         <table className=" w-full text-justify">
           <thead>
-            <tr className="p-4 text-lg">
+            <tr className="p-4">
               <th className="p-4">Exam</th>
               <th className="p-4">Student</th>
               <th className="p-4">Term</th>
-              <th className="p-4">Date</th>
+              <th className="p-4 px-6">Date</th>
               {Subjects.map((subject, index) => (
-                <th className="border-x-2 p-4" key={index}>
+                <th className="border-x-2 p-2" key={index}>
                   {subject.slug}
                 </th>
               ))}
@@ -155,11 +142,11 @@ function Exam() {
             {exams?.map((exam, index) => {
               return (
                 <tr
-                  className={` p-4 ${index % 2 === 0 ? "bg-white" : ""}`}
+                  className={`p-4 text-sm ${index % 2 === 0 ? "bg-white" : ""}`}
                   key={index}
                 >
                   <td className="p-4">{exam.name}</td>
-                  {/* <td className="p-4">{exam?.student?.name}</td> */}
+                  <td className="p-4">{exam?.student?.name}</td>
                   <td className="p-4">{exam?.term}</td>
                   <td className="p-4">{exam.examDate}</td>
                   {Subjects.map((subject, index) => {

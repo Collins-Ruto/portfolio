@@ -82,6 +82,10 @@ export default function Task({ params: { id } }: { params: { id: string } }) {
             </div>
           </div>
         )}
+        {/* <div className="">
+          <h1 className="text-orange-600 text-3xl font-semibold">Submissions</h1>
+          <div className="mb-2 rounded-md bg-[#F7F6FB] p-4"></div>
+        </div> */}
       </div>
     </div>
   );
