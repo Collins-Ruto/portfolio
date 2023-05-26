@@ -160,26 +160,24 @@ function Students() {
     <div>
       <div className="w-screen md:w-full">
         {isDelete && <ConfirmDel />}
-        <div className="p-4 text-2xl font-semibold">
+        <div className="px-4 pt-4 text-2xl font-semibold">
           <h3>Students</h3>
         </div>
         {isLoading && <Loader />}
         <div>
           <div>
-            <div className="flex flex-col justify-between gap-4 p-4 md:flex-row">
-              <div>
-                <div>
-                  <input
-                    onChange={(e) => {
-                      setSearch(e.target.value);
-                    }}
-                    value={search}
-                    name="name"
-                    type="text"
-                    className="focus:shadow-outline w-full appearance-none rounded border-[1px] bg-[#F7F6FB] py-2 px-3 leading-tight text-gray-800 shadow focus:outline-none"
-                    placeholder="Search by name ..."
-                  />
-                </div>
+            <div className="flex flex-col justify-end gap-4 p-4 md:flex-row">
+              <div className="">
+                <input
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                  }}
+                  value={search}
+                  name="name"
+                  type="text"
+                  className="focus:shadow-outline w-full appearance-none rounded border-[1px] bg-[#F7F6FB] py-2 px-3 leading-tight text-gray-800 shadow focus:outline-none"
+                  placeholder="Search by ID, name, username ..."
+                />
               </div>
               <div className="flex justify-between gap-4">
                 <div>
