@@ -72,6 +72,10 @@ function Dashboard() {
       title: "Exams",
       path: "/page/addexam",
     },
+    {
+      title: "Tasks",
+      path: "/teacher/tasks/addtask",
+    },
   ];
 
   return (

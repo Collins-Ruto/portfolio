@@ -7,7 +7,7 @@ import "@/styles/globals.css";
 import { Header } from "components";
 import { Analytics } from "@vercel/analytics/react";
 import { usePathname } from "next/navigation";
-import { Providers } from "./redux/provider";
+// import { Providers } from "../../temps/redux/provider";
 
 function RootLayout({
   // Layouts must accept a children prop.
@@ -54,7 +54,7 @@ function RootLayout({
       </Head>
       <body>
         <SessionProvider>
-          <Providers>
+          {/* <Providers> */}
           {currentRoute !== "/" && currentRoute !== "/login" ? (
             <div>
               <Header />
@@ -69,7 +69,7 @@ function RootLayout({
               </div>
             </div>
             )}
-          </Providers>
+          {/* </Providers> */}
         </SessionProvider>
 
         <Analytics />

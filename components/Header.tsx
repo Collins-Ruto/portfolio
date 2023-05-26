@@ -346,7 +346,7 @@ function Header() {
                   />
                   <span className="text-lg">Add Lessons</span>
                 </Link>
-                <Link
+               {user?.role === "teacher" && <Link
                   href="/teacher/tasks/addtask"
                   className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
                     currentRoute === "/teacher/tasks/addtask"
@@ -362,7 +362,7 @@ function Header() {
                     alt=""
                   />
                   <span className="text-lg">Add Task</span>
-                </Link>
+                </Link>}
               </div>
             )}
             {/* <Link
