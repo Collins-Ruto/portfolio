@@ -1,8 +1,8 @@
-'use client'
-import React, { useState } from 'react';
+"use client";
+import React, { useState } from "react";
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
-import 'react-quill/dist/quill.snow.css';
+import "react-quill/dist/quill.snow.css";
 // { Quill }
 
 const modules = {
@@ -15,7 +15,6 @@ const modules = {
     ["blockquote", "code-block"],
     [{ list: "ordered" }, { list: "bullet" }],
     ["link", "image"],
-    
   ],
 };
 
@@ -37,13 +36,13 @@ const formats = [
 ];
 
 interface EditorProps {
-  editorInput: (content: string) => void;
+  handleQuillChange: (content: string) => void;
 }
 
-const Editor: React.FC<EditorProps> = ({editorInput}) => {
+const Editor: React.FC<EditorProps> = ({ handleQuillChange }) => {
   const [content, setContent] = useState<string>("");
 
-  const handleQuillChange = (newContent: string) => {
+  const handleChange = (newContent: string) => {
     setContent(newContent);
   };
 
@@ -55,17 +54,11 @@ const Editor: React.FC<EditorProps> = ({editorInput}) => {
         theme={"snow"}
         bounds=".ql-container"
         value={content}
-        onChange={handleQuillChange}
-      />
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          editorInput(content);
+        onChange={(content) => {
+          handleQuillChange(content);
+          handleChange(content);
         }}
-        className="mt-2 flex w-fit items-center rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
-      >
-        Save
-      </button>
+      />
     </div>
   );
 };

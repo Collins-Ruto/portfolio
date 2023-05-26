@@ -36,7 +36,7 @@ function CreateTask() {
       const updatedTask = {
         ...prevTask,
         [name]: value,
-        posted: (new Date()).toDateString()
+        posted: new Date().toDateString(),
       };
 
       console.log(updatedTask);
@@ -45,7 +45,7 @@ function CreateTask() {
     });
   };
 
-  const editorInput = (content: string) => {
+  const handleQuillChange = (content: string) => {
     const jsonContent: string = JSON.stringify(content);
 
     setTask((prevTask) => {
@@ -234,7 +234,7 @@ function CreateTask() {
           </div>
           <div className="pt-4 md:pt-8">
             <label>Task Description </label>
-            <Editor editorInput={editorInput} />
+            <Editor handleQuillChange={handleQuillChange} />
           </div>
           <div>
             <label className="mb-2 block font-medium" htmlFor="file_input">
