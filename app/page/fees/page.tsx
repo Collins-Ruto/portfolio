@@ -3,43 +3,37 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button, Loader } from "~/components";
 import Image from "next/image";
-import { DummyUser } from "~/types/types";
-import type { Search, User, Fee } from "~/types/types";
 import { api } from "@/utils/api";
+import { useSession } from "next-auth/react";
+import type { Fee, Stream, Student, User } from "@prisma/client";
 
 function FeeData() {
-  const [userType, setUserType] = useState("");
+  const { data: session } = useSession();
+  const [user, setUser] = useState<User | undefined>();
   const [submit, setSubmit] = useState(false);
-  const [search, setSearch] = useState<Search>();
+  const [search, setSearch] = useState("");
   const [pages, setPages] = useState({
     hasNextPage: false,
     hasPreviousPage: false,
   });
 
-  // https://lmsadmin.onrender.com
-
-  useEffect(() => {
-    const userFromLocalStorage = localStorage.getItem("user");
-    const user: User =
-      userFromLocalStorage !== null
-        ? (JSON.parse(userFromLocalStorage) as User)
-        : DummyUser;
-    setUserType(user.type);
-
-    // axios.get("https://lmsadmin.onrender.com/fees").then((res) => {
-    //   setFees(res.data.edges);
-    //   setPages(res.data.pageInfo);
-    //   setLoading(false);
-    // });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const [fees, setFees] = useState<
+    (Fee & { student: Student & { stream: Stream } })[] | undefined
+  >();
 
   const { data, isLoading, error } = api.fee.getAll.useQuery();
-  // const initialFees = data?.map((fee: Fee & { student: Student }) => ({
-  //   ...fee,
-  //   student: fee.student || undefined,
-  // })) as Fee[] | undefined;
-  const fees: Fee[] | undefined = data;
+  useEffect(() => {
+    const user = session?.user as User;
+    setUser(user);
+    if (data) {
+      setFees(data);
+    }
+  }, [data, session]);
+
+  if (error) {
+    console.log(error);
+  }
+
   console.log("fees", fees);
 
   // const changePage = (direction) => {
@@ -54,27 +48,15 @@ function FeeData() {
   //   });
   // };
 
-  // const handleInput = (event) => {
-  //   const target = event.target;
-  //   // const value = target.type === "checkbox" ? target.checked : target.value;
-  //   const value =
-  //     target.type === "number" ? parseInt(target.value) : target.value;
-  //   const name = target.name;
+  const searchFees = api.fee.search.useQuery(search);
 
-  //   setSearch({ ...search, [name]: value });
-  // };
-
-  // const searchSubmit = async () => {
-  //   const data = await axios.get(
-  //     `https://lmsadmin.onrender.com/fees/search?name=${search.name}&id=${search.id}`
-  //   );
-  //   const neData = data.data.feeSearch.concat(
-  //     data.data.studentSearch.length ? data.data.studentSearch[0].node.fees : []
-  //   );
-  //   setFees(neData);
-  //   setSubmit(false);
-  //   setSearch({ name: "", id: "" });
-  // };
+  const searchSubmit = () => {
+    console.log("search std", search);
+    const { data } = searchFees;
+    console.log("search data std", data);
+    setFees(data);
+    setSubmit(false);
+  };
 
   return (
     <div className="w-screen md:w-full md:pb-8">
@@ -82,34 +64,19 @@ function FeeData() {
         <h3>Fee Details</h3>
       </div>
       {isLoading && <Loader />}
-      <div className="flex flex-col justify-between gap-4 p-4 md:flex-row">
+      <div className="flex flex-col justify-end gap-4 p-4 md:flex-row">
         <div>
-          <div>
-            <input
-              onChange={(e) => {
-                // handleInput(e);
-              }}
-              name="id"
-              value={search?.id}
-              type="text"
-              className="focus:shadow-outline w-full appearance-none rounded border bg-[#F7F6FB] py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
-              placeholder="Search by ID ..."
-            />
-          </div>
-        </div>
-        <div>
-          <div>
-            <input
-              onChange={(e) => {
-                // handleInput(e);
-              }}
-              name="name"
-              value={search?.name}
-              type="text"
-              className="focus:shadow-outline w-full appearance-none rounded border bg-[#F7F6FB] py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
-              placeholder="Search by student Name ..."
-            />
-          </div>
+          <input
+            onChange={(e) => {
+              setSearch(e.target.value);
+              searchSubmit();
+            }}
+            name="name"
+            value={search}
+            type="text"
+            className="focus:shadow-outline w-full appearance-none rounded border bg-[#F7F6FB] py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+            placeholder="Search by student ID, Name ..."
+          />
         </div>
         <div className="flex justify-between gap-4">
           <div>
@@ -118,8 +85,8 @@ function FeeData() {
             ) : (
               <button
                 onClick={() => {
-                  // searchSubmit();
-                  setSubmit(true);
+                  searchSubmit();
+                  // setSubmit(true);
                 }}
                 type="button"
                 className="rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
@@ -128,7 +95,7 @@ function FeeData() {
               </button>
             )}
           </div>
-          {userType === "admin" && (
+          {user?.role === "admin" && (
             <div>
               <Link
                 href="admin/addfee"
@@ -198,7 +165,11 @@ function FeeData() {
                   <td className="p-4">{balance}</td>
                   <td className="p-4">{fee.payday}</td>
                   <td className="p-4 text-end">
-                    <span className={balance < 1 ? "text-green-500" : "text-orange-700"}>
+                    <span
+                      className={
+                        balance < 1 ? "text-green-500" : "text-orange-700"
+                      }
+                    >
                       {balance < 1 ? "Cleared" : "Arrears"}
                     </span>
                   </td>

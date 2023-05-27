@@ -2,11 +2,13 @@ import { z } from "zod";
 
 import {
   createTRPCRouter,
+  protectedProcedure,
   publicProcedure,
 } from "@/server/api/trpc";
+import type { Prisma } from "@prisma/client";
 
 export const feeRouter = createTRPCRouter({
-  getAll: publicProcedure.query(({ ctx }) => {
+  getAll: protectedProcedure.query(({ ctx }) => {
     return ctx.prisma.fee.findMany({
       include: {
         student: {
@@ -26,7 +28,7 @@ export const feeRouter = createTRPCRouter({
     });
   }),
 
-  studentFees: publicProcedure.input(z.string()).query(({ ctx, input }) => {
+  studentFees: protectedProcedure.input(z.string()).query(({ ctx, input }) => {
     return ctx.prisma.fee.findMany({
       where: {
         studentId: input,
@@ -34,7 +36,7 @@ export const feeRouter = createTRPCRouter({
     });
   }),
 
-  addFee: publicProcedure.input(z.object({
+  addFee: protectedProcedure.input(z.object({
     name: z.string(),
     slug: z.string(),
     term: z.string(),
@@ -47,6 +49,28 @@ export const feeRouter = createTRPCRouter({
     return ctx.prisma.fee.create({
       data: input,
     });
+  }),
+
+  search: protectedProcedure.input(z.string()).query(({ ctx, input }) => {
+    console.log("search in", input)
+    const searchQuery: Prisma.FeeWhereInput = {
+      OR: [
+        { student: {name: { contains: input, mode: "insensitive" }} },
+        { student: {slug: { contains: input, mode: "insensitive" }} },
+        { student: {admissionId: { contains: input, mode: "insensitive" }} },
+        // Add additional conditions using the OR operator if needed
+      ]
+    };
+    return ctx.prisma.fee.findMany({
+      where: searchQuery,
+      include: {
+        student: {
+          include: {
+            stream: true
+          }
+        }
+      }
+    })
   }),
 
 });

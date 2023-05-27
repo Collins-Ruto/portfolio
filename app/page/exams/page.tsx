@@ -8,10 +8,9 @@ import { Subjects } from "~/types/types";
 import { api } from "@/utils/api";
 import type { Exam, Student } from "@prisma/client";
 
-function Exam() {
+function Exams() {
   const [submit, setSubmit] = useState(false);
-  const [nameSearch, setNameSearch] = useState("");
-  const [termSearch, setTermSearch] = useState("");
+  const [search, setSearch] = useState("");
   const [pages, setPages] = useState({
     hasNextPage: false,
     hasPreviousPage: false,
@@ -43,13 +42,10 @@ function Exam() {
   //   });
   // };
 
-  const searchExams =
-    nameSearch === ""
-      ? api.exam.termSearch.useQuery(termSearch)
-      : api.exam.nameSearch.useQuery(nameSearch);
+  const searchExams = api.exam.search.useQuery(search);
 
   const searchSubmit = () => {
-    console.log("term sc exam", termSearch, "name sc", nameSearch);
+    console.log("term sc exam", search);
     const { data } = searchExams;
     console.log("search data exam", data);
     setExams(data);
@@ -62,31 +58,21 @@ function Exam() {
         <h3>Exam Results</h3>
       </div>
       {isLoading && <Loader />}
-      <div className="flex flex-col justify-between gap-4 p-4 md:flex-row">
+      <div className="flex flex-col justify-end gap-4 p-4 md:flex-row">
         <div>
           <input
             onChange={(e) => {
-              setTermSearch(e.target.value);
+              setSearch(e.target.value);
+              // searchSubmit();
             }}
             name="id"
-            value={termSearch}
+            value={search}
             type="text"
             className="focus:shadow-outline w-full appearance-none rounded border-[1px] bg-[#F7F6FB] py-2 px-3 leading-tight text-gray-800 shadow focus:outline-none"
-            placeholder="Search by exam Term ..."
+            placeholder="Search student, Name, Term ..."
           />
         </div>
-        <div>
-          <input
-            onChange={(e) => {
-              setNameSearch(e.target.value);
-            }}
-            name="name"
-            value={nameSearch}
-            type="text"
-            className="focus:shadow-outline w-full appearance-none rounded border bg-[#F7F6FB] py-2 px-3 leading-tight text-gray-800 shadow focus:outline-none"
-            placeholder="Search by student Name ..."
-          />
-        </div>
+        
         <div className="flex justify-between gap-4">
           <div>
             {submit ? (
@@ -222,4 +208,4 @@ function Exam() {
   );
 }
 
-export default Exam;
+export default Exams;

@@ -5,7 +5,7 @@ import {
   publicProcedure,
   protectedProcedure,
 } from "@/server/api/trpc";
-import { Prisma } from "@prisma/client";
+import type { Prisma } from "@prisma/client";
 
 export const studentRouter = createTRPCRouter({
   getAll: protectedProcedure.query(({ ctx }) => {

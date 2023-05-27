@@ -5,6 +5,7 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "@/server/api/trpc";
+import type{ Prisma } from "@prisma/client";
 
 export const examRouter = createTRPCRouter({
   getAll: protectedProcedure.query(({ ctx }) => {
@@ -50,32 +51,19 @@ export const examRouter = createTRPCRouter({
     });
   }),
 
-  termSearch: protectedProcedure.input(z.string()).query(({ ctx, input }) => {
+  search: protectedProcedure.input(z.string()).query(({ ctx, input }) => {
     console.log("search in", input)
+    const searchQuery: Prisma.ExamWhereInput = {
+      OR: [
+        { name: { contains: input, mode: "insensitive" } },
+        { student:{name: { contains: input, mode: "insensitive" }} },
+        { slug: { contains: input, mode: "insensitive" } },
+        { term: { contains: input, mode: "insensitive" } },
+        // Add additional conditions using the OR operator if needed
+      ]
+    };
     return ctx.prisma.exam.findMany({
-      where: {
-        term: {
-          contains: input,
-          mode: "insensitive"
-        }
-      },
-      include: {
-        student: true
-      }
-    })
-  }),
-
-  nameSearch: protectedProcedure.input(z.string()).query(({ ctx, input }) => {
-    console.log("search in", input)
-    return ctx.prisma.exam.findMany({
-      where: {
-        student: {
-          name: {
-            contains: input,
-            mode: "insensitive"
-          }
-        }
-      },
+      where: searchQuery,
       include: {
         student: true
       }
