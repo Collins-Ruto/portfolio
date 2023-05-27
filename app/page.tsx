@@ -28,7 +28,7 @@ const HomePage = async () => {
           <nav className="text-gray-700">
             <ul className="flex space-x-4">
               <li>
-                <Link href={`/${user.role ?? "#"}`} className="hover:text-blue-500">
+                <Link href={`/${user?.role ?? "#"}`} className="hover:text-blue-500">
                   Dashboard
                 </Link>
               </li>
@@ -60,7 +60,7 @@ const HomePage = async () => {
         </div>
       </header>
       <main className="container mx-auto px-4 py-4 md:flex">
-        <div className="">
+        <div className="md:pt-16">
           <h2 className="mb-8 text-center text-5xl font-bold text-blue-500 md:text-start">
             Welcome to LearnHQ
           </h2>

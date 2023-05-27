@@ -30,7 +30,7 @@ function FeeData() {
     if (data) {
       setFees(data);
     }
-    if (count) {
+    if (count && count > 10) {
       setPages((pages) => ({
         ...pages,
         hasNextPage: count - 10 > pagesCount,
@@ -47,18 +47,6 @@ function FeeData() {
   }
 
   console.log("fees", fees);
-
-  // const changePage = (direction) => {
-  //   const data = {
-  //     ...pages,
-  //     direction: direction,
-  //     cursor: direction === "after" ? pages.endCursor : pages.startCursor,
-  //   };
-  //   axios.post("https://lmsadmin.onrender.com/fees/page", data).then((res) => {
-  //     setPages(res.data.pageInfo);
-  //     setFees(res.data.edges);
-  //   });
-  // };
 
   const searchFees = api.fee.search.useQuery(search);
 

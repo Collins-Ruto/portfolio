@@ -34,7 +34,8 @@
     "**/*.tsx",
     "**/*.cjs",
     "**/*.mjs",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "middleware.ts"
   ],
   "exclude": ["node_modules"],
   "ts-node": {

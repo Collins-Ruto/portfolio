@@ -32,7 +32,7 @@ function Students() {
       setStudents(data);
     }
 
-    if (count) {
+    if (count && count > 10) {
       setPages((pages) => ({
         ...pages,
         hasNextPage: count - 10 > pagesCount,

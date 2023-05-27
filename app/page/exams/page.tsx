@@ -20,14 +20,14 @@ function Exams() {
   const [exams, setExams] = useState<(Exam & { student: Student })[]>();
   const { data, isLoading, error } = api.exam.getAll.useQuery(pagesCount);
   const { data: count } = api.exam.count.useQuery();
-  
+
   console.log("exams", exams);
 
   useEffect(() => {
     if (data) {
       setExams(data);
     }
-    if (count) {
+    if (count && count > 10) {
       setPages((pages) => ({
         ...pages,
         hasNextPage: count - 10 > pagesCount,
@@ -73,7 +73,7 @@ function Exams() {
             placeholder="Search student, Name, Term ..."
           />
         </div>
-        
+
         <div className="flex justify-between gap-4">
           <div>
             {submit ? (
