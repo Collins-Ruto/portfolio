@@ -18,6 +18,7 @@ function Exams() {
 
   const [exams, setExams] = useState<(Exam & { student: Student })[]>();
   const { data, isLoading, error } = api.exam.getAll.useQuery();
+  
   console.log("exams", exams);
 
   useEffect(() => {

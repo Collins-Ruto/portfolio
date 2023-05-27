@@ -14,6 +14,7 @@ function Students() {
   const [submit, setSubmit] = useState(false);
   const [delStudent, setDelStudent] = useState("");
   const [search, setSearch] = useState<string>("");
+  const [pagesCount, setPagesCount] = useState(0);
   const [pages, setPages] = useState({
     hasNextPage: false,
     hasPreviousPage: false,
@@ -22,20 +23,43 @@ function Students() {
     (Student & { stream: Stream })[] | undefined
   >();
 
-  const { data, isLoading, error } = api.student.getAll.useQuery();
+  const { data, isLoading, error } = api.student.getAll.useQuery(pagesCount);
+  const { data: count } = api.student.count.useQuery();
   useEffect(() => {
     const user = session?.user as User;
     setUser(user);
     if (data) {
       setStudents(data);
     }
-  }, [data, session]);
+
+    if (count) {
+      if (count - 10 > pagesCount) {
+        setPages((pages) => {
+          return { ...pages, hasNextPage: true };
+        });
+      } else {
+        setPages((pages) => {
+          return { ...pages, hasNextPage: false };
+        });
+      }
+      if (pagesCount + 10 > count) {
+        setPages((pages) => {
+          return { ...pages, hasPreviousPage: true };
+        });
+      } else {
+        setPages((pages) => {
+          return { ...pages, hasPreviousPage: false };
+        });
+      }
+    }
+  }, [data, session, count, pagesCount]);
 
   if (error) {
     console.log(error);
   }
 
   console.log("del Stdt", delStudent);
+  console.log("count Stdt", pagesCount);
 
   const deleteMutation = api.student.delete.useMutation();
 
@@ -51,20 +75,6 @@ function Students() {
       console.log(error);
     }
   };
-
-  // const changePage = (direction) => {
-  //   const data = {
-  //     ...pages,
-  //     direction: direction,
-  //     cursor: direction === "after" ? pages.endCursor : pages.startCursor,
-  //   };
-  //   axios
-  //     .post("https://lmsadmin.onrender.com/students/page", data)
-  //     .then((res) => {
-  //       setPages(res.data.pageInfo);
-  //       setStudents(res.data.edges);
-  //     });
-  // };
 
   const searchStudents = api.student.search.useQuery(search);
 
@@ -285,6 +295,7 @@ function Students() {
             <div className="flex justify-center pb-10 align-middle md:pb-8">
               <div
                 onClick={() => {
+                  setPagesCount(pagesCount - 10);
                   // pages.hasPreviousPage && changePage("before");
                 }}
                 className={` ${
@@ -310,6 +321,7 @@ function Students() {
               </div>
               <div
                 onClick={() => {
+                  setPagesCount(pagesCount + 10);
                   // pages.hasNextPage && changePage("after");
                 }}
                 className={` ${
