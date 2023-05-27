@@ -8,7 +8,7 @@ import {
 import type { Prisma } from "@prisma/client";
 
 export const feeRouter = createTRPCRouter({
-  getAll: protectedProcedure.query(({ ctx }) => {
+  getAll: protectedProcedure.input(z.number()).query(({ ctx, input }) => {
     return ctx.prisma.fee.findMany({
       include: {
         student: {
@@ -16,9 +16,16 @@ export const feeRouter = createTRPCRouter({
             stream: true
           }
         }
-      }
+      },
+      take: 10,
+      skip: input,
     });
   }),
+
+  count: protectedProcedure.query(({ ctx }) => {
+    return ctx.prisma.fee.count();
+  }),
+
   // :{ctx:Context, input:string}
   getById: publicProcedure.input(z.string()).query(({ ctx, input }) => {
     return ctx.prisma.fee.findUnique({

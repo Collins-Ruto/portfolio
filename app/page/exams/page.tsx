@@ -11,13 +11,15 @@ import type { Exam, Student } from "@prisma/client";
 function Exams() {
   const [submit, setSubmit] = useState(false);
   const [search, setSearch] = useState("");
+  const [pagesCount, setPagesCount] = useState(0);
   const [pages, setPages] = useState({
     hasNextPage: false,
     hasPreviousPage: false,
   });
 
   const [exams, setExams] = useState<(Exam & { student: Student })[]>();
-  const { data, isLoading, error } = api.exam.getAll.useQuery();
+  const { data, isLoading, error } = api.exam.getAll.useQuery(pagesCount);
+  const { data: count } = api.exam.count.useQuery();
   
   console.log("exams", exams);
 
@@ -25,23 +27,21 @@ function Exams() {
     if (data) {
       setExams(data);
     }
-  }, [data]);
+    if (count) {
+      setPages((pages) => ({
+        ...pages,
+        hasNextPage: count - 10 > pagesCount,
+      }));
+      setPages((pages) => ({
+        ...pages,
+        hasPreviousPage: pagesCount + 10 > count,
+      }));
+    }
+  }, [count, data, pagesCount]);
 
   if (error) {
     console.log(error);
   }
-
-  // const changePage = (direction) => {
-  //   const data = {
-  //     ...pages,
-  //     direction: direction,
-  //     cursor: direction === "after" ? pages.endCursor : pages.startCursor,
-  //   };
-  //   axios.post("https://lmsadmin.onrender.com/exams/page", data).then((res) => {
-  //     setPages(res.data.pageInfo);
-  //     setExam(res.data.edges);
-  //   });
-  // };
 
   const searchExams = api.exam.search.useQuery(search);
 
@@ -155,7 +155,7 @@ function Exams() {
         <div className="flex justify-center pt-2 pb-10 align-middle md:pb-0">
           <div
             onClick={() => {
-              // pages.hasPreviousPage && changePage("before");
+              setPagesCount(pagesCount - 10);
             }}
             className={` ${
               pages.hasPreviousPage
@@ -180,7 +180,7 @@ function Exams() {
           </div>
           <div
             onClick={() => {
-              // pages.hasNextPage && changePage("after");
+              setPagesCount(pagesCount + 10);
             }}
             className={` ${
               pages.hasNextPage

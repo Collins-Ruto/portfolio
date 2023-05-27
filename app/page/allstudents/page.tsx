@@ -33,24 +33,14 @@ function Students() {
     }
 
     if (count) {
-      if (count - 10 > pagesCount) {
-        setPages((pages) => {
-          return { ...pages, hasNextPage: true };
-        });
-      } else {
-        setPages((pages) => {
-          return { ...pages, hasNextPage: false };
-        });
-      }
-      if (pagesCount + 10 > count) {
-        setPages((pages) => {
-          return { ...pages, hasPreviousPage: true };
-        });
-      } else {
-        setPages((pages) => {
-          return { ...pages, hasPreviousPage: false };
-        });
-      }
+      setPages((pages) => ({
+        ...pages,
+        hasNextPage: count - 10 > pagesCount,
+      }));
+      setPages((pages) => ({
+        ...pages,
+        hasPreviousPage: pagesCount + 10 > count,
+      }));
     }
   }, [data, session, count, pagesCount]);
 

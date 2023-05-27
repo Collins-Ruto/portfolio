@@ -12,6 +12,7 @@ function FeeData() {
   const [user, setUser] = useState<User | undefined>();
   const [submit, setSubmit] = useState(false);
   const [search, setSearch] = useState("");
+  const [pagesCount, setPagesCount] = useState(0);
   const [pages, setPages] = useState({
     hasNextPage: false,
     hasPreviousPage: false,
@@ -21,14 +22,25 @@ function FeeData() {
     (Fee & { student: Student & { stream: Stream } })[] | undefined
   >();
 
-  const { data, isLoading, error } = api.fee.getAll.useQuery();
+  const { data, isLoading, error } = api.fee.getAll.useQuery(pagesCount);
+  const { data: count } = api.fee.count.useQuery();
   useEffect(() => {
     const user = session?.user as User;
     setUser(user);
     if (data) {
       setFees(data);
     }
-  }, [data, session]);
+    if (count) {
+      setPages((pages) => ({
+        ...pages,
+        hasNextPage: count - 10 > pagesCount,
+      }));
+      setPages((pages) => ({
+        ...pages,
+        hasPreviousPage: pagesCount + 10 > count,
+      }));
+    }
+  }, [count, data, pagesCount, session]);
 
   if (error) {
     console.log(error);
@@ -182,7 +194,7 @@ function FeeData() {
       <div className="flex justify-center pb-10 align-middle md:pb-0">
         <div
           onClick={() => {
-            // pages.hasPreviousPage && changePage("before");
+            setPagesCount(pagesCount - 10);
           }}
           className={` ${
             pages.hasPreviousPage
@@ -207,7 +219,7 @@ function FeeData() {
         </div>
         <div
           onClick={() => {
-            // pages?.hasNextPage && changePage("after");
+            setPagesCount(pagesCount + 10);
           }}
           className={` ${
             pages?.hasNextPage

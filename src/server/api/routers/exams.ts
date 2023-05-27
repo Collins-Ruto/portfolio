@@ -8,12 +8,18 @@ import {
 import type{ Prisma } from "@prisma/client";
 
 export const examRouter = createTRPCRouter({
-  getAll: protectedProcedure.query(({ ctx }) => {
+  getAll: protectedProcedure.input(z.number()).query(({ ctx, input }) => {
     return ctx.prisma.exam.findMany({
       include: {
         student: true
-      }
+      },
+      take: 10,
+      skip: input,
     });
+  }),
+
+  count: protectedProcedure.query(({ ctx }) => {
+    return ctx.prisma.exam.count();
   }),
 
   getById: publicProcedure.input(z.string()).query(({ ctx, input }) => {
