@@ -49,6 +49,15 @@ function AddCourse() {
 
     setCourse((prevCourse) => {
       if (!prevCourse) {
+        if (target.name === "subject") {
+          return {
+            subject: {
+              slug: value,
+              name:
+                Subjects.find((subject) => subject.slug === value)?.name || "",
+            },
+          } as unknown as Course;
+        }
         return {
           [name]: value,
         } as unknown as Course; // or some default value if you have one
@@ -153,7 +162,7 @@ function AddCourse() {
                 className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
                 type="text"
                 placeholder="Refraction"
-                name="name"
+                name="topic"
               />
             </div>
             <div>

@@ -18,6 +18,15 @@ function CreateTask() {
 
     setTask((prevTask) => {
       if (!prevTask) {
+        if (target.name === "subject") {
+          return {
+            subject: {
+              slug: value,
+              name:
+                Subjects.find((subject) => subject.slug === value)?.name || "",
+            },
+          } as unknown as Task;
+        }
         return {
           [name]: value,
         } as unknown as Task; // or some default value if you have one

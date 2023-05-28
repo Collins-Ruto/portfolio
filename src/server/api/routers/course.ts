@@ -32,7 +32,7 @@ export const courseRouter = createTRPCRouter({
             },
         });
     }),
-    
+
     getAllForm: protectedProcedure.input(z.string()).query(({ ctx, input }) => {
         return ctx.prisma.course.findMany({
             where: {
@@ -51,7 +51,7 @@ export const courseRouter = createTRPCRouter({
 
     // .or(z.literal(''))
 
-    addCourse: protectedProcedure.input(z.object({
+    addCourse: publicProcedure.input(z.object({
         title: z.string(),
         topic: z.string(),
         description: z.string(),
