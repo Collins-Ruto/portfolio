@@ -173,6 +173,18 @@ model Task {
     teacherId   String @db.ObjectId  
 }
 
+model Course {
+    id          String @id @default(auto()) @map("_id") @db.ObjectId
+    title       String
+    topic       String
+    description String
+    form        String
+    unit_code   String
+    video_url   String
+    thumbnail_url String
+    subject     Subject
+}
+
 type Result {
     slug   String
     marks  String
