@@ -1,7 +1,8 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import React, { useState } from 'react'
-import { Button, Loader } from '~/components';
+"use client";
+import Image from "next/image";
+import Link from "next/link";
+import React, { useState } from "react";
+import { Button, Loader } from "~/components";
 
 const course = {
   subject: {
@@ -12,7 +13,7 @@ const course = {
   title: "Refraction of Light - Introduction",
   description:
     "This course will introduce you to the basics of refraction of light",
-  topic: "2.4",
+  topic: "2.4 Refraction",
   url: "https://www.youtube.com/watch?v=v5SuSB_93FM&pp=ygUUcmVmcmFjdGlvbiBvZiBsaWdodCA%3D",
   thumbnail_url: "https://i.ytimg.com/vi/v5SuSB_93FM/hqdefault.jpg",
 };
@@ -33,6 +34,8 @@ const video = {
   html: "\u003ciframe width=\u0022200\u0022 height=\u0022113\u0022 src=\u0022https://www.youtube.com/embed/v5SuSB_93FM?feature=oembed\u0022 frameborder=\u00220\u0022 allow=\u0022accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\u0022 allowfullscreen title=\u0022Refraction of Light - Introduction | Don\u0026#39;t Memorise\u0022\u003e\u003c/iframe\u003e",
 };
 
+const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+
 function Courses() {
   const [submit, setSubmit] = useState(false);
   const [search, setSearch] = useState("");
@@ -42,7 +45,7 @@ function Courses() {
         <h3>Courses</h3>
       </div>
       {/* {isLoading && <Loader />} */}
-      <div className="">
+      <div className="p-4">
         <div className="flex flex-col justify-end gap-4 p-4 md:flex-row">
           <div className="">
             <input
@@ -95,20 +98,33 @@ function Courses() {
             }
           </div>
         </div>
-        <div className="">
-          <div className="">
-            <Image
-              width={500}
-              height={500}
-              src={video.thumbnail_url}
-              className="mr-1 w-5 text-white"
-              alt={video.title}
-            />
-          </div>
+        <div className="flex mx-auto gap-2 flex-wrap">
+          {arr.map((_, index) => (
+            <div
+              key={index}
+              className="flex min-w-[12rem] max-w-[20rem] mb-2 flex-col rounded-md bg-[#F7F6FB]"
+            >
+              <img
+                // width={500}
+                // height={500}
+                src={video.thumbnail_url}
+                className="h-[7rem] w-full rounded-t-md object-cover text-white"
+                alt={video.title}
+              />
+              <div className="flex flex-col p-1">
+                <span className="text-sm text-blue-500">{video.title}</span>
+                <span className="text-green-700">{course.topic}</span>
+                <span className="">
+                  Form {course.form} {course.subject.name}
+                </span>
+                <div className=""></div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
   );
 }
 
-export default Courses
+export default Courses;
