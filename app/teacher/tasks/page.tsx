@@ -38,6 +38,23 @@ function TeacherTask() {
     document.body.removeChild(link);
   };
 
+  // const createQueryString = (task: Task): string => {
+  //   console.log("queryString", task);
+  //   const queryString = Object.entries(task)
+  //     .map(([key, value]) => {
+  //       if (value === task.subject) {
+  //         return Object.entries(value)
+  //           .map(([key, value]) => `${key}=${value}`)
+  //           .join("&");
+  //       } else {
+  //         return `${key}=${value as string}`;
+  //       }
+  //     })
+  //     .join("&");
+  //   console.log(queryString);
+  //   return queryString;
+  // };
+
   return (
     <div>
       <div className="p-4 text-2xl font-semibold">Your Tasks</div>

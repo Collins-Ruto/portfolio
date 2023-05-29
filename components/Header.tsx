@@ -346,10 +346,10 @@ function Header() {
                   />
                   <span className="text-lg">Add Lessons</span>
                 </Link>
-               {user?.role === "teacher" && <Link
-                  href="/teacher/tasks/addtask"
+                <Link
+                  href="/page/courses/addCourse"
                   className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
-                    currentRoute === "/teacher/tasks/addtask"
+                    currentRoute === "/page/courses/addCourse"
                       ? "hover:text bg-blue-700 text-white hover:text-white"
                       : ""
                   }`}
@@ -358,11 +358,30 @@ function Header() {
                     width={20}
                     height={20}
                     className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
-                    src="https://img.icons8.com/ios-filled/24/000000/task.png"
+                    src="https://img.icons8.com/external-vitaliy-gorbachev-fill-vitaly-gorbachev/60/000000/external-lesson-university-vitaliy-gorbachev-fill-vitaly-gorbachev-1.png"
                     alt=""
                   />
-                  <span className="text-lg">Add Task</span>
-                </Link>}
+                  <span className="text-lg">Add Course</span>
+                </Link>
+                {user?.role === "teacher" && (
+                  <Link
+                    href="/teacher/tasks/addtask"
+                    className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
+                      currentRoute === "/teacher/tasks/addtask"
+                        ? "hover:text bg-blue-700 text-white hover:text-white"
+                        : ""
+                    }`}
+                  >
+                    <Image
+                      width={20}
+                      height={20}
+                      className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
+                      src="https://img.icons8.com/ios-filled/24/000000/task.png"
+                      alt=""
+                    />
+                    <span className="text-lg">Add Task</span>
+                  </Link>
+                )}
               </div>
             )}
             {/* <Link

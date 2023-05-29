@@ -10,6 +10,8 @@ export default function Task({ params: { id } }: { params: { id: string } }) {
     id || "621dd16f2eece6ce9587cb0d"
   );
 
+  console.log("task pars",id)
+
   if (error) {
     console.log(error);
   }
