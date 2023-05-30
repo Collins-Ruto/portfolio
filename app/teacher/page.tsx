@@ -76,6 +76,10 @@ function Dashboard() {
       title: "Tasks",
       path: "/teacher/tasks/addtask",
     },
+    {
+      title: "Course",
+      path: "/page/courses/addcourse",
+    },
   ];
 
   return (

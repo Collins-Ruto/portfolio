@@ -41,7 +41,7 @@ const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 const forms = ["1", "2", "3", "4"];
 
 const searchOrg = {
-  form: forms,
+  form: "",
   subject: {
     slug: "all",
     name: "",
@@ -101,9 +101,9 @@ function Courses() {
           <div className="flex cursor-pointer items-center">
             <select
               onChange={(e) => {
-                setSearch((search) => ({ ...search, form: [e.target.value] }));
+                setSearch((search) => ({ ...search, form: e.target.value }));
               }}
-              value={search.form[0]}
+              value={search.form}
               className="focus:shadow-outline block w-full appearance-none rounded border border-gray-400 bg-white px-4 py-2 pr-8 leading-tight shadow hover:border-gray-500 focus:outline-none"
               name="stream_slug"
             >
@@ -211,9 +211,9 @@ function Courses() {
               key={index}
               className="mb-2 flex min-w-[14rem] max-w-[18rem] flex-col rounded-md bg-[#F7F6FB]"
             >
-              <img
-                // width={500}
-                // height={500}
+              <Image
+                width={500}
+                height={500}
                 src={video.thumbnail_url}
                 className="h-[7rem] w-full rounded-t-md object-cover text-white"
                 alt={video.title}

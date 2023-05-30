@@ -16,6 +16,7 @@ const nextConfig = {
       "cdn-icons-png.flaticon.com",
       "preschool.dreamguystech.com",
       "icons-for-free.com",
+      "i.ytimg.com"
     ],
   },
 };

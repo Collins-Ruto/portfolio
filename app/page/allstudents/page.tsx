@@ -25,6 +25,8 @@ function Students() {
 
   const { data, isLoading, error } = api.student.getAll.useQuery(pagesCount);
   const { data: count } = api.student.count.useQuery();
+  const searchStudents = api.student.search.useQuery(search);
+
   useEffect(() => {
     const user = session?.user as User;
     setUser(user);
@@ -42,7 +44,9 @@ function Students() {
         hasPreviousPage: pagesCount + 10 > count,
       }));
     }
-  }, [data, session, count, pagesCount]);
+    // searchSubmit()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, session, count, pagesCount, search]);
 
   if (error) {
     console.log(error);
@@ -65,8 +69,6 @@ function Students() {
       console.log(error);
     }
   };
-
-  const searchStudents = api.student.search.useQuery(search);
 
   const searchSubmit = () => {
     console.log("search std", search);

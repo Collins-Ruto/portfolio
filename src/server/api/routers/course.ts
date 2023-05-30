@@ -17,6 +17,11 @@ export const courseRouter = createTRPCRouter({
             // }
         });
     }),
+
+    count: protectedProcedure.query(({ ctx }) => {
+        return ctx.prisma.course.count();
+    }),
+
     getAllSubject: protectedProcedure.input(z.object({
         slug: z.string(),
         name: z.string(),
@@ -65,19 +70,7 @@ export const courseRouter = createTRPCRouter({
     })).mutation(({ ctx, input }) => {
         console.log("trpc input", input)
         return ctx.prisma.course.create({
-            data: {
-                title: input.title,
-                topic: input.description,
-                description: input.description,
-                form: input.form,
-                unit_code: input.unit_code,
-                video_url: input.video_url,
-                thumbnail_url: input.thumbnail_url,
-                subject: {
-                    slug: input.subject.slug,
-                    name: input.subject.name,
-                },
-            },
+            data: input,
         });
     }),
 
@@ -90,7 +83,7 @@ export const courseRouter = createTRPCRouter({
     }),
 
     search: protectedProcedure.input(z.object({
-        form: z.array(z.string()),
+        form: z.string(),
         subject: z.object({
             slug: z.string(),
             name: z.string(),
@@ -100,7 +93,7 @@ export const courseRouter = createTRPCRouter({
         console.log("search in", input)
         const searchQuery: Prisma.CourseWhereInput = {
             AND: [
-                { form: { in: input.form } },
+                input.form !== "" ?{ form: input.form } : {},
                 { title: { contains: input.search, mode: "insensitive" } },
                 input.subject.slug !== "all" ? {
                     subject: {

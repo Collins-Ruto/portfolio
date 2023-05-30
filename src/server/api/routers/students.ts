@@ -94,7 +94,8 @@ export const studentRouter = createTRPCRouter({
       where: searchQuery,
       include: {
         stream: true
-      }
+      },
+      take: 10
     })
   }),
 

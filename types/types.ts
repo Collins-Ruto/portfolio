@@ -99,7 +99,7 @@ export type Stream = {
 }
 
 export type Search = {
-  form: string[],
+  form: string,
   subject: Subject,
   search: string
 }

@@ -268,6 +268,27 @@ function Header() {
                 <span className="text-lg">Tasks</span>
               </Link>
             )}
+            <Link
+              href={
+                user?.role === "student" ? "/page/courses" : "/page/courses"
+              }
+              className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
+                ["/page/courses", "/student/courses"].includes(
+                  currentRoute ?? ""
+                )
+                  ? "hover:text bg-blue-700 text-white hover:text-white"
+                  : ""
+              }`}
+            >
+              <Image
+                width={20}
+                height={20}
+                className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
+                src="https://img.icons8.com/external-sbts2018-outline-sbts2018/58/external-course-basic-ui-elements-2.3-sbts2018-outline-sbts2018.png"
+                alt=""
+              />
+              <span className="text-lg">Courses</span>
+            </Link>
             {(user?.role === "admin" || user?.role === "teacher") && (
               <div className="">
                 <h2 className="w-fit border-b px-2 pt-1 text-sm text-gray-600">
@@ -358,7 +379,7 @@ function Header() {
                     width={20}
                     height={20}
                     className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
-                    src="https://img.icons8.com/external-vitaliy-gorbachev-fill-vitaly-gorbachev/60/000000/external-lesson-university-vitaliy-gorbachev-fill-vitaly-gorbachev-1.png"
+                    src="https://img.icons8.com/fluency-systems-regular/24/online-group-studying.png"
                     alt=""
                   />
                   <span className="text-lg">Add Course</span>
