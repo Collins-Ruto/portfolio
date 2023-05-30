@@ -184,7 +184,7 @@ function Teachers() {
             )}
             <div>
               <Link
-                href="/addteacher"
+                href="/admin/addteacher"
                 type="button"
                 className="flex items-center rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
               >
