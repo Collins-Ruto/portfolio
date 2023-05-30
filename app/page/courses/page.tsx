@@ -98,7 +98,7 @@ function Courses() {
       {isLoading && <Loader />}
       <div className="p-4">
         <div className="flex flex-col justify-end gap-4 p-4 md:flex-row">
-          <div className="flex cursor-pointer items-center">
+          <div className="relative flex cursor-pointer items-center">
             <select
               onChange={(e) => {
                 setSearch((search) => ({ ...search, form: e.target.value }));
@@ -118,7 +118,7 @@ function Courses() {
             </select>
             <div className="pointer-events-none absolute right-0 flex items-center px-2 text-gray-700">
               <svg
-                className="h-4 w-4 fill-current"
+                className="h-5 w-5 fill-current"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
               >
@@ -126,7 +126,7 @@ function Courses() {
               </svg>
             </div>
           </div>
-          <div className="flex cursor-pointer items-center">
+          <div className="relative flex cursor-pointer items-center">
             <select
               onChange={(e) => {
                 handleSubject(e.target.value);
@@ -146,7 +146,7 @@ function Courses() {
             </select>
             <div className="pointer-events-none absolute right-0 flex items-center px-2 text-gray-700">
               <svg
-                className="h-4 w-4 fill-current"
+                className="h-5 w-5 fill-current"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
               >

@@ -368,9 +368,9 @@ function Header() {
                   <span className="text-lg">Add Lessons</span>
                 </Link>
                 <Link
-                  href="/page/courses/addCourse"
+                  href="/page/courses/addcourse"
                   className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
-                    currentRoute === "/page/courses/addCourse"
+                    currentRoute === "/page/courses/addcourse"
                       ? "hover:text bg-blue-700 text-white hover:text-white"
                       : ""
                   }`}

@@ -56,7 +56,7 @@ function TeacherTask() {
   // };
 
   return (
-    <div>
+    <div className="w-screen md:w-full md:pb-8">
       <div className="p-4 text-2xl font-semibold">Your Tasks</div>
       {isLoading && <Loader />}
       <div className="">
