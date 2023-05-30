@@ -2,7 +2,7 @@
 import { api } from "@/utils/api";
 import { type Student } from "@prisma/client";
 import React, { useState } from "react";
-import { Button, StatusMsg } from "~/components";
+import { Button, Loader, StatusMsg } from "~/components";
 
 // eslint-disable-next-line no-unused-vars
 // const dum2 = {
@@ -17,10 +17,13 @@ import { Button, StatusMsg } from "~/components";
 //   stream_slug: "1e",
 // };
 
+
 function AddStudent() {
   const [student, setStudent] = useState<Student | undefined>();
   const [submit, setSubmit] = useState(false);
   const [status, setStatus] = useState({ message: "", type: "" });
+
+  const { data: streams, isLoading } = api.stream.getAll.useQuery();
 
   const handleInput = (event: React.SyntheticEvent) => {
     const target = event.target as HTMLInputElement;
@@ -70,6 +73,7 @@ function AddStudent() {
       <div className="p-4 text-2xl font-semibold">
         <h3>Add Students</h3>
       </div>
+      {isLoading && <Loader />}
       <div className="row">
         <div className="col-sm-12">
           <div className="m-4 rounded-xl bg-[#F7F6FB] p-4 md:p-6">
@@ -218,16 +222,34 @@ function AddStudent() {
                     <label>
                       Stream ID<span className="text-red-500">*</span>
                     </label>
-                    <input
-                      onChange={(e) => {
-                        handleInput(e);
-                      }}
-                      value={student?.streamId}
-                      className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
-                      type="text"
-                      placeholder="Sream ID:  eg. 1w"
-                      name="streamId"
-                    />
+                    <div className="flex cursor-pointer items-center">
+                      <select
+                        onChange={(e) => {
+                          handleInput(e);
+                        }}
+                        value={student?.streamId}
+                        className="focus:shadow-outline block w-full appearance-none rounded border border-gray-400 bg-white px-4 py-3 pr-8 leading-tight shadow hover:border-gray-500 focus:outline-none"
+                        name="stream_slug"
+                      >
+                        <option>Select Stream</option>
+                        {streams?.map((stream, index) => {
+                          return (
+                            <option key={index} value={stream.slug}>
+                              {stream.name}
+                            </option>
+                          );
+                        })}
+                      </select>
+                      <div className="pointer-events-none absolute right-0 flex items-center px-2 text-gray-700">
+                        <svg
+                          className="h-4 w-4 fill-current"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                        >
+                          <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                        </svg>
+                      </div>
+                    </div>
                   </div>
 
                   <div>

@@ -10,9 +10,7 @@ import type { Prisma } from "@prisma/client";
 export const courseRouter = createTRPCRouter({
     getAll: protectedProcedure.query(({ ctx }) => {
         return ctx.prisma.course.findMany({
-            include: {
-                stream: true
-            },
+
             take: 10,
             // orderBy: {
             //   createdAt: 'desc'
@@ -20,8 +18,8 @@ export const courseRouter = createTRPCRouter({
         });
     }),
     getAllSubject: protectedProcedure.input(z.object({
-            slug: z.string(),
-            name: z.string(),
+        slug: z.string(),
+        name: z.string(),
     })).query(({ ctx, input }) => {
         return ctx.prisma.course.findMany({
             where: {
@@ -91,21 +89,31 @@ export const courseRouter = createTRPCRouter({
         })
     }),
 
-    search: protectedProcedure.input(z.string()).query(({ ctx, input }) => {
+    search: protectedProcedure.input(z.object({
+        form: z.array(z.string()),
+        subject: z.object({
+            slug: z.string(),
+            name: z.string(),
+        }),
+        search: z.string()
+    })).query(({ ctx, input }) => {
         console.log("search in", input)
         const searchQuery: Prisma.CourseWhereInput = {
-            OR: [
-                { title: { contains: input, mode: "insensitive" } },
-                { topic: { contains: input, mode: "insensitive" } },
-                { description: { contains: input, mode: "insensitive" } },
+            AND: [
+                { form: { in: input.form } },
+                { title: { contains: input.search, mode: "insensitive" } },
+                input.subject.slug !== "all" ? {
+                    subject: {
+                        slug: input.subject.slug,
+                        name: input.subject.name
+                    },
+                } : {},
                 // Add additional conditions using the OR operator if needed
             ]
         };
-        return ctx.prisma.exam.findMany({
+        return ctx.prisma.course.findMany({
             where: searchQuery,
-            include: {
-                student: true
-            }
+
         })
     }),
 
