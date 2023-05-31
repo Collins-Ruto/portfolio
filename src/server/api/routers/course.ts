@@ -44,7 +44,7 @@ export const courseRouter = createTRPCRouter({
         });
     }),
 
-    getById: protectedProcedure.input(z.string()).query(({ ctx, input }) => {
+    getById: publicProcedure.input(z.string()).query(({ ctx, input }) => {
         return ctx.prisma.course.findMany({
             where: {
                 id: input

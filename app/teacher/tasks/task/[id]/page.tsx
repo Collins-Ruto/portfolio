@@ -1,8 +1,6 @@
 // Generate segments for [product] using the `params` passed from
 // "use client";
-import { api } from "@/utils/api";
 import type { Task, Stream, Teacher } from "@prisma/client";
-import { Loader } from "~/components";
 
 import { appRouter } from "@/server/api/root";
 import { prisma } from "@/server/db";
@@ -26,10 +24,6 @@ export default async function Task({ params: { id } }: { params: { id: string } 
 
   console.log("task pars", id);
 
-  // if (error) {
-  //   console.log(error);
-  // }
-
   const tasks: (Task & { stream: Stream; teacher: Teacher })[] | undefined =
     data;
 
@@ -51,7 +45,6 @@ export default async function Task({ params: { id } }: { params: { id: string } 
       <div className="mb-4 text-2xl font-semibold">
         <h3>Your Task</h3>
       </div>
-      {/* {isLoading && <Loader />} */}
       <div className="mx-auto ">
         <div className="text-blue-500">
           {task?.subject.name} / by {task?.teacher.name}
