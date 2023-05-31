@@ -2,6 +2,41 @@
 import { appRouter } from "@/server/api/root";
 import { prisma } from "@/server/db";
 import type { Course } from "@prisma/client";
+import type { Metadata, ResolvingMetadata } from "next";
+
+export async function generateMetadata(
+  {
+    params: { id },
+  }: {
+    params: { id: string };
+  },
+  parent?: ResolvingMetadata
+): Promise<Metadata> {
+  const caller = appRouter.createCaller({
+    session: null,
+    prisma: prisma,
+  });
+
+  const data = await caller.course.getById(id || "621dd16f2eece6ce9587cb0d");
+  const course = data[0] as Course;
+
+  const previousImages = (await parent)?.openGraph?.images || [];
+ 
+  return {
+    title: course.topic,
+    openGraph: {
+      images: [course.thumbnail_url, ...previousImages],
+    },
+    authors: [
+      {
+        name: "Collins Ruto",
+        url: "https://collinsruto.netlify.app/",
+      },
+    ],
+    keywords: ["learnhq", course.subject.name, course.topic],
+    twitter:{creator: "@ruto_collins_"}
+  };
+}
 
 export default async function CoursePage({
   params: { id },
@@ -38,11 +73,12 @@ export default async function CoursePage({
 
   return (
     <div className="w-screen p-4 md:w-full">
-      <div className="mb-4 text-2xl font-semibold">
-        <span className="text-orange-800 ">{`Chapter ${course.unit_code}: ${course.topic}`}</span>
+      <div className="mb-4  flex flex-col">
+        <span className="text-lg font-medium text-gray-500 ">{`Form ${course.form} : ${course.subject.name}`}</span>
+        <span className="text-2xl font-semibold text-orange-800 ">{`Chapter ${course.unit_code}: ${course.topic}`}</span>
       </div>
       <div className="">
-        <div className="lg:w-[70%] mx-auto">
+        <div className="lg:w-[70%] mx-auto flex flex-col">
           <div className="relative h-0 overflow-hidden pb-[56.25%]">
             <iframe
               className="absolute left-0 top-0 h-full w-full"
@@ -55,6 +91,7 @@ export default async function CoursePage({
             ></iframe>
           </div>
         <span className="text-blue-600 mt-2 text-xl">{ course.title}</span>
+        <span className="text-gray-700 mt-2 text-xl">{ course.description}</span>
         </div>
       </div>
     </div>

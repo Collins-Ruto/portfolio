@@ -1,15 +1,44 @@
 // Generate segments for [product] using the `params` passed from
-// "use client";
 import type { Task, Stream, Teacher } from "@prisma/client";
-
 import { appRouter } from "@/server/api/root";
 import { prisma } from "@/server/db";
+import type { Metadata, ResolvingMetadata } from "next";
 
-// the parent segment's `generateStaticParams` function
+export async function generateMetadata(
+  {
+    params: { id },
+  }: {
+    params: { id: string };
+  },
+  parent?: ResolvingMetadata
+): Promise<Metadata> {
+  const caller = appRouter.createCaller({
+    session: null,
+    prisma: prisma,
+  });
+
+  const data = await caller.task.getById(id || "621dd16f2eece6ce9587cb0d");
+  const task = data[0] as Task;
+
+  const previousImages = (await parent)?.openGraph?.images || [];
+
+  return {
+    title: task.name,
+    openGraph: {
+      images: [ ...previousImages],
+    },
+    authors: [
+      {
+        name: "Collins Ruto",
+        url: "https://collinsruto.netlify.app/",
+      },
+    ],
+    keywords: ["learnhq", task.subject.name, task.name],
+    twitter: { creator: "@ruto_collins_" },
+  };
+}
+
 export default async function Task({ params: { id } }: { params: { id: string } }) {
-  // const { data, isLoading, error } = api.task?.getById.useQuery(
-  //   id || "621dd16f2eece6ce9587cb0d"
-  // );
 
   const caller = appRouter.createCaller({
     session: null,
