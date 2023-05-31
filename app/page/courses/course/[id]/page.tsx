@@ -9,6 +9,7 @@ function CoursePage({ params: { id } }: { params: { id: string } }) {
     );
 
     console.log("task pars", id);
+    console.log("course", data);
 
     if (error) {
       console.log(error);

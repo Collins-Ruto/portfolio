@@ -41,7 +41,7 @@ export const taskRouter = createTRPCRouter({
         });
     }),
 
-    getById: protectedProcedure.input(z.string()).query(({ ctx, input }) => {
+    getById: publicProcedure.input(z.string()).query(({ ctx, input }) => {
         return ctx.prisma.task.findMany({
             where: {
                 id: input

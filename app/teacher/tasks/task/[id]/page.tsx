@@ -1,20 +1,34 @@
 // Generate segments for [product] using the `params` passed from
-"use client";
+// "use client";
 import { api } from "@/utils/api";
 import type { Task, Stream, Teacher } from "@prisma/client";
 import { Loader } from "~/components";
 
+import { appRouter } from "@/server/api/root";
+import { prisma } from "@/server/db";
+
 // the parent segment's `generateStaticParams` function
-export default function Task({ params: { id } }: { params: { id: string } }) {
-  const { data, isLoading, error } = api.task?.getById.useQuery(
+export default async function Task({ params: { id } }: { params: { id: string } }) {
+  // const { data, isLoading, error } = api.task?.getById.useQuery(
+  //   id || "621dd16f2eece6ce9587cb0d"
+  // );
+
+  const caller = appRouter.createCaller({
+    session: null,
+    prisma: prisma
+  });
+
+  const data = await caller.task.getById(
     id || "621dd16f2eece6ce9587cb0d"
   );
 
-  console.log("task pars",id)
+  console.log("server task", data);
 
-  if (error) {
-    console.log(error);
-  }
+  console.log("task pars", id);
+
+  // if (error) {
+  //   console.log(error);
+  // }
 
   const tasks: (Task & { stream: Stream; teacher: Teacher })[] | undefined =
     data;
@@ -33,11 +47,11 @@ export default function Task({ params: { id } }: { params: { id: string } }) {
   };
 
   return (
-    <div className="p-4 w-screen md:w-full">
+    <div className="w-screen p-4 md:w-full">
       <div className="mb-4 text-2xl font-semibold">
         <h3>Your Task</h3>
       </div>
-      {isLoading && <Loader />}
+      {/* {isLoading && <Loader />} */}
       <div className="mx-auto ">
         <div className="text-blue-500">
           {task?.subject.name} / by {task?.teacher.name}
@@ -67,7 +81,7 @@ export default function Task({ params: { id } }: { params: { id: string } }) {
             dangerouslySetInnerHTML={{ __html: task?.description ?? "" }}
           ></div>
         </div>
-        {(task?.secure_url !== "") && (
+        {task?.secure_url !== "" && (
           <div>
             <span className="mb-2">File: {task?.original_filename}</span>
             <div

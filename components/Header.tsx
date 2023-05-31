@@ -21,12 +21,6 @@ function Header() {
   }, [session]);
 
   console.log("header user", session);
-  // const logOut = () => {
-  //   localStorage.setItem("saved", JSON.stringify(false));
-  //   localStorage.removeItem("user");
-  //   delete axios.defaults.headers.common["Authorization"];
-  //   window.location.reload();
-  // };
 
   return (
     <div className="sticky top-0 z-40 mx-auto bg-[#F7F6FB] bg-blend-darken">
@@ -284,7 +278,7 @@ function Header() {
                 width={20}
                 height={20}
                 className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
-                src="https://img.icons8.com/external-sbts2018-outline-sbts2018/58/external-course-basic-ui-elements-2.3-sbts2018-outline-sbts2018.png"
+                src="https://img.icons8.com/external-sbts2018-outline-sbts2018/24/external-course-basic-ui-elements-2.3-sbts2018-outline-sbts2018.png"
                 alt=""
               />
               <span className="text-lg">Courses</span>
@@ -299,7 +293,7 @@ function Header() {
                     <Link
                       href="/admin/admins/add"
                       className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
-                        currentRoute === "/addadmin"
+                        currentRoute === "/admin/admins/add"
                           ? "hover:text bg-blue-700 text-white hover:text-white"
                           : ""
                       }`}
@@ -308,7 +302,7 @@ function Header() {
                         width={20}
                         height={20}
                         className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
-                        src="https://img.icons8.com/ios-filled/50/000000/admin-settings-male.png"
+                        src="https://img.icons8.com/ios-filled/24/000000/admin-settings-male.png"
                         alt=""
                       />
                       <span className="text-lg">Add Admin</span>
@@ -317,7 +311,7 @@ function Header() {
                     <Link
                       href="/admin/streams/add"
                       className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
-                        currentRoute === "/addstream"
+                        currentRoute === "/admin/streams/add"
                           ? "hover:text bg-blue-700 text-white hover:text-white"
                           : ""
                       }`}
@@ -334,7 +328,7 @@ function Header() {
                     <Link
                       href="/admin/subjects"
                       className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
-                        currentRoute === "/addsubject"
+                        currentRoute === "/admin/subjects"
                           ? "hover:text bg-blue-700 text-white hover:text-white"
                           : ""
                       }`}
@@ -343,7 +337,7 @@ function Header() {
                         width={20}
                         height={20}
                         className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
-                        src="https://img.icons8.com/ios-filled/50/000000/wordbook.png"
+                        src="https://img.icons8.com/ios-filled/24/000000/wordbook.png"
                         alt=""
                       />
                       <span className="text-lg">Add Subject</span>
@@ -362,7 +356,7 @@ function Header() {
                     width={20}
                     height={20}
                     className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
-                    src="https://img.icons8.com/external-vitaliy-gorbachev-fill-vitaly-gorbachev/60/000000/external-lesson-university-vitaliy-gorbachev-fill-vitaly-gorbachev-1.png"
+                    src="https://img.icons8.com/external-vitaliy-gorbachev-fill-vitaly-gorbachev/24/000000/external-lesson-university-vitaliy-gorbachev-fill-vitaly-gorbachev-1.png"
                     alt=""
                   />
                   <span className="text-lg">Add Lessons</span>
