@@ -1,3 +1,5 @@
+import type { User } from "@prisma/client"
+
 export type Lesson = {
   startTime: string
   endTime: string
@@ -15,18 +17,6 @@ export type Lesson = {
     name: string
   }
 }
-
-export type User = {
-  slug: string
-  name: string
-  type: string
-  email: string
-  phone: string
-  password: string
-  oldPassword?: string
-  stream?: Stream
-}
-
 
 export type Admin = {
   name: string
@@ -110,18 +100,15 @@ export type Result = {
 }
 
 export const DummyUser: User = {
+  id:"",
   slug: "",
   name: "",
-  type: "admin",
+  role: "",
   email: "",
   phone: "",
-  password: "",
-  oldPassword: "",
-  stream: {
-    id: "",
-    name: "",
-    slug: "",
-  }
+  streamId: "",
+  emailVerified: ("") as unknown as Date,
+  image: ""
 }
 
 export type Subject = {
