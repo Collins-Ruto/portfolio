@@ -209,7 +209,7 @@ function Courses() {
           {arr.map((_, index) => (
             <div
               key={index}
-              className="mb-2 flex min-w-[14rem] max-w-[18rem] flex-col rounded-md bg-[#F7F6FB]"
+              className="cursor-pointer mb-2 flex min-w-[14rem] max-w-[18rem] flex-col rounded-md bg-[#F7F6FB]"
             >
               <Image
                 width={500}

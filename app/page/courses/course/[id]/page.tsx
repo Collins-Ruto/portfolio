@@ -1,4 +1,3 @@
-
 import { appRouter } from "@/server/api/root";
 import { prisma } from "@/server/db";
 import type { Course } from "@prisma/client";
@@ -10,7 +9,7 @@ export async function generateMetadata(
   }: {
     params: { id: string };
   },
-  parent?: ResolvingMetadata
+  parent: ResolvingMetadata
 ): Promise<Metadata> {
   const caller = appRouter.createCaller({
     session: null,
@@ -21,7 +20,7 @@ export async function generateMetadata(
   const course = data[0] as Course;
 
   const previousImages = (await parent)?.openGraph?.images || [];
- 
+
   return {
     title: course.topic,
     openGraph: {
@@ -34,7 +33,7 @@ export async function generateMetadata(
       },
     ],
     keywords: ["learnhq", course.subject.name, course.topic],
-    twitter:{creator: "@ruto_collins_"}
+    twitter: { creator: "@ruto_collins_" },
   };
 }
 
@@ -49,7 +48,7 @@ export default async function CoursePage({
   });
 
   const data = await caller.course.getById(id || "621dd16f2eece6ce9587cb0d");
-  const course = data[0] as Course
+  const course = data[0] as Course;
   console.log("course", data);
 
   function convertYouTubeURL(url: string): string {
@@ -78,7 +77,7 @@ export default async function CoursePage({
         <span className="text-2xl font-semibold text-orange-800 ">{`Chapter ${course.unit_code}: ${course.topic}`}</span>
       </div>
       <div className="">
-        <div className="lg:w-[70%] mx-auto flex flex-col">
+        <div className="mx-auto flex flex-col lg:w-[70%]">
           <div className="relative h-0 overflow-hidden pb-[56.25%]">
             <iframe
               className="absolute left-0 top-0 h-full w-full"
@@ -90,8 +89,10 @@ export default async function CoursePage({
               allowFullScreen
             ></iframe>
           </div>
-        <span className="text-blue-600 mt-2 text-xl">{ course.title}</span>
-        <span className="text-gray-700 mt-2 text-xl">{ course.description}</span>
+          <span className="mt-2 text-xl text-blue-600">{course.title}</span>
+          <span className="mt-2 text-xl text-gray-700">
+            {course.description}
+          </span>
         </div>
       </div>
     </div>
