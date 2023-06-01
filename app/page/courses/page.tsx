@@ -20,7 +20,7 @@ const searchOrg = {
 };
 
 function Courses() {
-  const [courses, setCourses] = useState<Course[] | undefined>()
+  const [courses, setCourses] = useState<Course[] | undefined>();
   const [submit, setSubmit] = useState(false);
   const [search, setSearch] = useState<Search>(searchOrg);
   const searchCourses = api.course.search.useQuery(search);
@@ -32,14 +32,14 @@ function Courses() {
       setCourses(data);
     }
     searchSubmit();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, search]);
 
   if (error) {
     console.log(error);
   }
 
-  console.log("course", courses)
+  console.log("course", courses);
 
   const searchSubmit = () => {
     console.log("search crs", search);
@@ -49,19 +49,17 @@ function Courses() {
     setSubmit(false);
   };
 
-  const course = data?.[0]
+  const course = data?.[0];
 
   const handleSubject = (value: string) => {
     setSearch((search) => ({
       ...search,
       subject: {
         slug: value,
-        name:
-          Subjects.find((subject) => subject.slug === value)?.name ||
-          "",
+        name: Subjects.find((subject) => subject.slug === value)?.name || "",
       },
     }));
-  }
+  };
   return (
     <div>
       <div className="px-4 pt-4 text-2xl font-semibold">
@@ -134,7 +132,7 @@ function Courses() {
               value={search.search}
               name="name"
               type="text"
-              className="focus:shadow-outline w-full appearance-none rounded border-[1px] bg-[#F7F6FB] py-2 px-3 leading-tight text-gray-800 shadow focus:outline-none"
+              className="focus:shadow-outline w-full appearance-none rounded border-[1px] bg-[#F7F6FB] px-3 py-2 leading-tight text-gray-800 shadow focus:outline-none"
               placeholder="Search Topic, Title, subject ..."
             />
           </div>
@@ -149,7 +147,7 @@ function Courses() {
                     // setSubmit(true);
                   }}
                   type="button"
-                  className="rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
+                  className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
                 >
                   Search
                 </button>
@@ -161,7 +159,7 @@ function Courses() {
                 <Link
                   href="/page/courses/addcourse"
                   type="button"
-                  className="flex w-fit items-center rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
+                  className="flex w-fit items-center rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
                 >
                   {" "}
                   <Image
@@ -181,7 +179,7 @@ function Courses() {
           {arr.map((_, index) => (
             <div
               key={index}
-              className="cursor-pointer mb-2 flex min-w-[14rem] max-w-[18rem] flex-col rounded-md bg-[#F7F6FB]"
+              className="flex-basis mb-2 flex max-w-[22rem] grow basis-[16rem] cursor-pointer flex-col rounded-md bg-[#F7F6FB]"
             >
               <Image
                 width={500}
