@@ -2,12 +2,13 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "~/components";
 import StatusMsg from "~/components/StatusMsg";
-import { DummyUser, type User } from "~/types/types";
 import Image from "next/image";
 import { api } from "@/utils/api";
-import { type Teacher } from "@prisma/client";
+import type { User, Teacher } from "@prisma/client";
+import { useSession } from "next-auth/react";
 
 function Account() {
+  const { data: session } = useSession();
   const [user, setUser] = useState<User | undefined>();
   const [editUser, setEditUser] = useState<Teacher>();
   const [passManager, setPassManager] = useState(false);
@@ -17,13 +18,9 @@ function Account() {
   const [status, setStatus] = useState({ message: "", type: "" });
 
   useEffect(() => {
-    const userFromLocalStorage = localStorage.getItem("user");
-    const user: User =
-      userFromLocalStorage !== null
-        ? (JSON.parse(userFromLocalStorage) as User)
-        : DummyUser;
+    const user = session?.user as User;
     setUser(user);
-  }, []);
+  }, [session]);
 
   const handleInput = (event: React.SyntheticEvent) => {
     const target = event.target as HTMLInputElement;
@@ -133,7 +130,7 @@ function Account() {
               src="https://img.icons8.com/ios-glyphs/120/000000/user--v1.png"
               alt=""
             />
-            <div className="pb-4 pt-2 text-blue-600">{user?.type}</div>
+            <div className="pb-4 pt-2 text-blue-600">{user?.role}</div>
             <div className="flex flex-col gap-2 p-2 text-start text-slate-800">
               <div className="p-1">Name: {user?.name} </div>
               <div className="p-1">Phone: {user?.phone} </div>
@@ -143,7 +140,7 @@ function Account() {
               onClick={() => {
                 logOut();
               }}
-              className="rounded bg-blue-500 py-2 px-10 font-bold text-white hover:bg-blue-700"
+              className="rounded bg-blue-500 px-10 py-2 font-bold text-white hover:bg-blue-700"
             >
               Log Out
             </div>
@@ -190,7 +187,7 @@ function Account() {
                           value={oldPassword}
                           name="oldPassword"
                           type="password"
-                          className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                          className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                           placeholder="Enter Old Password"
                           required
                         />
@@ -208,7 +205,7 @@ function Account() {
                           value={editUser?.password}
                           name="password"
                           type="password"
-                          className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                          className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                           placeholder="Enter New Password"
                           required
                         />
@@ -227,7 +224,7 @@ function Account() {
                           value={confPass}
                           name="password"
                           type="password"
-                          className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                          className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                           placeholder="Confirm Password"
                           required
                         />
@@ -245,7 +242,7 @@ function Account() {
                         <button
                           onClick={() => handleSubmit()}
                           type="submit"
-                          className="rounded bg-blue-500 py-2 px-10 font-bold text-white hover:bg-blue-700"
+                          className="rounded bg-blue-500 px-10 py-2 font-bold text-white hover:bg-blue-700"
                         >
                           Submit
                         </button>
@@ -271,7 +268,7 @@ function Account() {
                           handleInput(e);
                         }}
                         value={editUser?.email}
-                        className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                        className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                         type="text"
                         placeholder="Enter Email Address"
                         name="email"
@@ -286,7 +283,7 @@ function Account() {
                           handleInput(e);
                         }}
                         value={editUser?.phone}
-                        className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                        className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                         type="number"
                         placeholder="Enter Phone Number"
                         name="phone"
@@ -300,7 +297,7 @@ function Account() {
                       <button
                         onClick={() => handleSubmit()}
                         type="submit"
-                        className="rounded bg-blue-500 py-2 px-10 font-bold text-white hover:bg-blue-700"
+                        className="rounded bg-blue-500 px-10 py-2 font-bold text-white hover:bg-blue-700"
                       >
                         Submit
                       </button>

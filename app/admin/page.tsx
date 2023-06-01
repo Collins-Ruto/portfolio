@@ -3,52 +3,33 @@
 import React, { useEffect, useState } from "react";
 import { Calender, Loader } from "~/components";
 import Image from "next/image";
-import { DummyUser, type User } from "~/types/types";
+import { Subjects } from "~/types/types";
 import Link from "next/link";
 import { api } from "@/utils/api";
-import axios from "axios";
-
-type Data = {
-  subjects: number;
-  students: number;
-  teachers: number;
-};
+import type { User } from "@prisma/client";
+import { useSession } from "next-auth/react";
 
 function Dashboard() {
-  const [data, setData] = useState<Data | undefined>();
-  const [loading, setLoading] = useState(true);
+  const { data: session } = useSession();
+  const [user, setUser] = useState<User | undefined>();
 
-  // const studentQuery = api.student.getAll.useQuery();
-  const userQuery = api.student.getById.useQuery("all");
-
-  // console.log("students", studentQuery);
-  console.log("user", userQuery);
-  // console.log("students", studentQuery?.data && studentQuery?.data[0]?.name);
-
+  const {
+    data: count,
+    isLoading,
+    error,
+  } = api.data?.getCount.useQuery(
+    (user?.id as string) || "621dd16f2eece6ce9587cb0d"
+  );
   useEffect(() => {
-    const userFromLocalStorage = localStorage.getItem("user");
-    const user: User =
-      userFromLocalStorage !== null
-        ? (JSON.parse(userFromLocalStorage) as User)
-        : DummyUser;
+    const user = session?.user as User;
+    setUser(user);
     // Do something with the user object
+  }, [session]);
 
-    axios
-      .post<Data | undefined>("https://lmsadmin.onrender.com/data", {
-        slug: user?.slug,
-      })
-      .then((res) => {
-        if (res.data) {
-          setData(res.data);
-          setLoading(false);
-        } else {
-          setData(undefined);
-        }
-      })
-      .catch((err) => console.log(err))
-      .then(() => console.log("this will succeed"))
-      .catch(() => "obligatory catch");
-  }, []);
+  if (error) {
+    console.log(error);
+  }
+
   const termVvalue = "II";
 
   const datas = [
@@ -59,17 +40,17 @@ function Dashboard() {
     },
     {
       title: "Subjects offered",
-      value: data?.subjects || "...",
+      value: Subjects.length || "...",
       url: "https://cdn-icons-png.flaticon.com/512/3426/3426653.png",
     },
     {
       title: "Students",
-      value: data?.students || "...",
+      value: count?.students || "...",
       url: "https://preschool.dreamguystech.com/template/assets/img/icons/dash-icon-01.svg",
     },
     {
       title: "Teachers",
-      value: data?.teachers || "...",
+      value: count?.teachers || "...",
       url: "https://cdn-icons-png.flaticon.com/512/194/194936.png",
     },
   ];
@@ -107,11 +88,11 @@ function Dashboard() {
         <div className=" text-2xl font-semibold">
           <h3>Admin Dashboard</h3>
         </div>
-        {loading && <Loader />}
+        {isLoading && <Loader />}
         <div className="flex flex-wrap justify-between gap-4  py-6 ">
           {datas.map((data) => (
             <div
-              className="min-w- flex min-w-[14rem] grow justify-between rounded-lg bg-[#F7F6FB] py-4 px-6 sm:max-w-[20rem]"
+              className="min-w- flex min-w-[14rem] grow justify-between rounded-lg bg-[#F7F6FB] px-6 py-4 sm:max-w-[20rem]"
               key={data.title}
             >
               <div className="flex flex-col rounded-lg">
@@ -134,12 +115,12 @@ function Dashboard() {
           <div className="mb-4 bg-[#F7F6FB] p-4 lg:m-0">
             <span className="text-xl">Manage Data</span>
             {editInfo.map((data) => (
-              <div className="mt-4 flex justify-between p-1" key={data.title}>
+              <div className="mt-3 flex justify-between p-1" key={data.title}>
                 <span className="text-lg">{data.title}</span>
                 <Link
                   href={data.path}
                   type="button"
-                  className="flex items-center rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
+                  className="flex items-center rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
                 >
                   {" "}
                   <Image

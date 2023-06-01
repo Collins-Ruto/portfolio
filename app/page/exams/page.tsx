@@ -3,8 +3,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button, Loader } from "~/components";
 import Image from "next/image";
-import type { Result } from "~/types/types";
-import { Subjects } from "~/types/types";
+import { type Result, Subjects } from "~/types/types";
 import { api } from "@/utils/api";
 import type { Exam, Student } from "@prisma/client";
 
@@ -69,7 +68,7 @@ function Exams() {
             name="id"
             value={search}
             type="text"
-            className="focus:shadow-outline w-full appearance-none rounded border-[1px] bg-[#F7F6FB] py-2 px-3 leading-tight text-gray-800 shadow focus:outline-none"
+            className="focus:shadow-outline w-full appearance-none rounded border-[1px] bg-[#F7F6FB] px-3 py-2 leading-tight text-gray-800 shadow focus:outline-none"
             placeholder="Search student, Name, Term ..."
           />
         </div>
@@ -85,7 +84,7 @@ function Exams() {
                   // setSubmit(true);
                 }}
                 type="button"
-                className="rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
+                className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
               >
                 Search
               </button>
@@ -95,7 +94,7 @@ function Exams() {
             <Link
               href="/page/addexam"
               type="button"
-              className="flex items-center rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
+              className="flex items-center rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
             >
               {" "}
               <Image
@@ -152,7 +151,7 @@ function Exams() {
             })}
           </tbody>
         </table>
-        <div className="flex justify-center pt-2 pb-10 align-middle md:pb-0">
+        <div className="flex justify-center pb-10 pt-2 align-middle md:pb-0">
           <div
             onClick={() => {
               setPagesCount(pagesCount - 10);
