@@ -126,7 +126,7 @@ export default function Calender({ full }: Props) {
               >
                 <Image
                   width={20}
-                  height={16}
+                  height={20}
                   src="https://img.icons8.com/ios-filled/50/000000/less-than.png"
                   alt=""
                 />

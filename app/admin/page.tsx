@@ -62,7 +62,7 @@ function Dashboard() {
     },
     {
       title: "Teachers",
-      path: "/admin/teacher/add",
+      path: "/admin/teachers/add",
     },
     {
       title: "Fees",
@@ -70,7 +70,7 @@ function Dashboard() {
     },
     {
       title: "Lessons",
-      path: "/page/page/addlesson",
+      path: "/page/addlesson",
     },
     {
       title: "Exams",

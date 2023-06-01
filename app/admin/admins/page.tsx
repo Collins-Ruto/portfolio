@@ -12,10 +12,6 @@ function Admins() {
   const [submit, setSubmit] = useState(false);
   const [delAdmin, setDelAdmin] = useState("");
   const [search, setSearch] = useState("");
-  const [pages, setPages] = useState({
-    hasNextPage: false,
-    hasPreviousPage: false,
-  });
 
   const { data, isLoading, error } = api.admin.getAll.useQuery();
   useEffect(() => {
@@ -27,30 +23,6 @@ function Admins() {
   if (error) {
     console.log(error);
   }
-
-  // const changePage = (direction) => {
-  //   const data = {
-  //     ...pages,
-  //     direction: direction,
-  //     cursor: direction === "after" ? pages.endCursor : pages.startCursor,
-  //   };
-  //   axios
-  //     .post("https://lmsadmin.onrender.com/admins/page", data)
-  //     .then((res) => {
-  //       setPages(res.data.pageInfo);
-  //       setAdmins(res.data.edges);
-  //     });
-  // };
-
-  console.log("pages", pages);
-
-  // const searchSubmit = async () => {
-  //   const data = await axios.get(
-  //     `https://lmsadmin.onrender.com/admins/admin?name=${search}`
-  //   );
-  //   setAdmins(data.data);
-  //   setSubmit(false);
-  // };
 
   const deleteMutation = api.admin.delete.useMutation();
 
@@ -93,7 +65,7 @@ function Admins() {
               alt=""
             />
             <div className="items-center md:flex md:flex-col">
-              <div className="mt-4 text-center md:mt-0 md:ml-6 ">
+              <div className="mt-4 text-center md:ml-6 md:mt-0 ">
                 <p className="text-xl font-bold">Confirm admin deletion</p>
                 <p className="my-2 text-base text-gray-600">
                   Are you sure you want to delete this admin from the school
@@ -163,7 +135,7 @@ function Admins() {
               value={search}
               name="name"
               type="text"
-              className="focus:shadow-outline w-full appearance-none rounded border bg-[#F7F6FB] py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+              className="focus:shadow-outline w-full appearance-none rounded border bg-[#F7F6FB] px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
               placeholder="Search by Name ..."
             />
           </div>
@@ -178,7 +150,7 @@ function Admins() {
                   setSubmit(true);
                 }}
                 type="button"
-                className="rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
+                className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
               >
                 Search
               </button>
@@ -187,7 +159,7 @@ function Admins() {
               <Link
                 href="/addadmin"
                 type="button"
-                className="flex items-center rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
+                className="flex items-center rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
               >
                 {" "}
                 <Image
@@ -256,58 +228,6 @@ function Admins() {
               ))}
             </tbody>
           </table>
-        </div>
-        <div className="flex justify-center pb-10 align-middle md:pb-0">
-          <div
-            onClick={() => {
-              // pages.hasPreviousPage && changePage("before");
-            }}
-            className={` ${
-              pages.hasPreviousPage
-                ? "cursor-pointer bg-slate-700 text-gray-100 hover:bg-gray-600 hover:text-white"
-                : "bg-gray-300 text-gray-800"
-            }  mr-3 inline-flex items-center rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium `}
-          >
-            <svg
-              aria-hidden="true"
-              className="mr-2 h-5 w-5"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fillRule="evenodd"
-                d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z"
-                clipRule="evenodd"
-              ></path>
-            </svg>
-            Previous
-          </div>
-          <div
-            onClick={() => {
-              // pages.hasNextPage && changePage("after");
-            }}
-            className={` ${
-              pages.hasNextPage
-                ? "cursor-pointer bg-slate-700 text-gray-100 hover:bg-gray-600 hover:text-white"
-                : "bg-gray-300 text-gray-800"
-            }  mr-3 inline-flex items-center rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium `}
-          >
-            Next
-            <svg
-              aria-hidden="true"
-              className="ml-2 h-5 w-5"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fillRule="evenodd"
-                d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
-                clipRule="evenodd"
-              ></path>
-            </svg>
-          </div>
         </div>
       </div>
     </div>

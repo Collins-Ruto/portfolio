@@ -7,36 +7,6 @@ import React, { useEffect, useState } from "react";
 import { Button, Loader } from "~/components";
 import { type Search, Subjects } from "~/types/types";
 
-const course = {
-  subject: {
-    name: "Physics",
-    slug: "phy",
-  },
-  form: "2",
-  title: "Refraction of Light - Introduction",
-  description:
-    "This course will introduce you to the basics of refraction of light",
-  topic: "2.4 Refraction",
-  url: "https://www.youtube.com/watch?v=v5SuSB_93FM&pp=ygUUcmVmcmFjdGlvbiBvZiBsaWdodCA%3D",
-  thumbnail_url: "https://i.ytimg.com/vi/v5SuSB_93FM/hqdefault.jpg",
-};
-
-const video = {
-  title: "Refraction of Light - Introduction | Don\u0027t Memorise",
-  author_name: "Infinity Learn Class 9\u002610",
-  author_url: "https://www.youtube.com/@InfinityLearn9-10",
-  type: "video",
-  height: 113,
-  width: 200,
-  version: "1.0",
-  provider_name: "YouTube",
-  provider_url: "https://www.youtube.com/",
-  thumbnail_height: 360,
-  thumbnail_width: 480,
-  thumbnail_url: "https://i.ytimg.com/vi/v5SuSB_93FM/hqdefault.jpg",
-  html: "\u003ciframe width=\u0022200\u0022 height=\u0022113\u0022 src=\u0022https://www.youtube.com/embed/v5SuSB_93FM?feature=oembed\u0022 frameborder=\u00220\u0022 allow=\u0022accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\u0022 allowfullscreen title=\u0022Refraction of Light - Introduction | Don\u0026#39;t Memorise\u0022\u003e\u003c/iframe\u003e",
-};
-
 const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 const forms = ["1", "2", "3", "4"];
 
@@ -78,6 +48,8 @@ function Courses() {
     setCourses(data);
     setSubmit(false);
   };
+
+  const course = data?.[0]
 
   const handleSubject = (value: string) => {
     setSearch((search) => ({
@@ -214,15 +186,15 @@ function Courses() {
               <Image
                 width={500}
                 height={500}
-                src={video.thumbnail_url}
+                src={course?.thumbnail_url ?? ""}
                 className="h-[7rem] w-full rounded-t-md object-cover text-white"
-                alt={video.title}
+                alt={course?.title ?? ""}
               />
               <div className="flex flex-col p-1">
-                <span className="text-sm text-blue-500">{video.title}</span>
-                <span className="text-green-700">{course.topic}</span>
+                <span className="text-sm text-blue-500">{course?.title}</span>
+                <span className="text-green-700">{course?.topic}</span>
                 <span className="">
-                  Form {course.form} {course.subject.name}
+                  Form {course?.form} {course?.subject.name}
                 </span>
                 <div className=""></div>
               </div>

@@ -5,37 +5,37 @@ import type { Course } from "@prisma/client";
 import { Subjects } from "~/types/types";
 import { api } from "@/utils/api";
 
-const course1 = {
-  subject: {
-    name: "Physics",
-    slug: "phy",
-  },
-  title: "Refraction of Light - Introduction",
-  topic: "Refraction",
-  form: "2",
-  description:
-    "This course will introduce you to the basics of refraction of light",
-  unit_code: "2.4",
-  video_url:
-    "https://www.youtube.com/watch?v=v5SuSB_93FM&pp=ygUUcmVmcmFjdGlvbiBvZiBsaWdodCA%3D",
-  thumbnail_url: "https://i.ytimg.com/vi/v5SuSB_93FM/hqdefault.jpg",
-};
+// const course1 = {
+//   subject: {
+//     name: "Physics",
+//     slug: "phy",
+//   },
+//   title: "Refraction of Light - Introduction",
+//   topic: "Refraction",
+//   form: "2",
+//   description:
+//     "This course will introduce you to the basics of refraction of light",
+//   unit_code: "2.4",
+//   video_url:
+//     "https://www.youtube.com/watch?v=v5SuSB_93FM&pp=ygUUcmVmcmFjdGlvbiBvZiBsaWdodCA%3D",
+//   thumbnail_url: "https://i.ytimg.com/vi/v5SuSB_93FM/hqdefault.jpg",
+// };
 
-const video = {
-  title: "Refraction of Light - Introduction | Don\u0027t Memorise",
-  author_name: "Infinity Learn Class 9\u002610",
-  author_url: "https://www.youtube.com/@InfinityLearn9-10",
-  type: "video",
-  height: 113,
-  width: 200,
-  version: "1.0",
-  provider_name: "YouTube",
-  provider_url: "https://www.youtube.com/",
-  thumbnail_height: 360,
-  thumbnail_width: 480,
-  thumbnail_url: "https://i.ytimg.com/vi/v5SuSB_93FM/hqdefault.jpg",
-  html: "\u003ciframe width=\u0022200\u0022 height=\u0022113\u0022 src=\u0022https://www.youtube.com/embed/v5SuSB_93FM?feature=oembed\u0022 frameborder=\u00220\u0022 allow=\u0022accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\u0022 allowfullscreen title=\u0022Refraction of Light - Introduction | Don\u0026#39;t Memorise\u0022\u003e\u003c/iframe\u003e",
-};
+// const video = {
+//   title: "Refraction of Light - Introduction | Don\u0027t Memorise",
+//   author_name: "Infinity Learn Class 9\u002610",
+//   author_url: "https://www.youtube.com/@InfinityLearn9-10",
+//   type: "video",
+//   height: 113,
+//   width: 200,
+//   version: "1.0",
+//   provider_name: "YouTube",
+//   provider_url: "https://www.youtube.com/",
+//   thumbnail_height: 360,
+//   thumbnail_width: 480,
+//   thumbnail_url: "https://i.ytimg.com/vi/v5SuSB_93FM/hqdefault.jpg",
+//   html: "\u003ciframe width=\u0022200\u0022 height=\u0022113\u0022 src=\u0022https://www.youtube.com/embed/v5SuSB_93FM?feature=oembed\u0022 frameborder=\u00220\u0022 allow=\u0022accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\u0022 allowfullscreen title=\u0022Refraction of Light - Introduction | Don\u0026#39;t Memorise\u0022\u003e\u003c/iframe\u003e",
+// };
 
 function AddCourse() {
   const [course, setCourse] = useState<Course | undefined>();
