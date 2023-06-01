@@ -10,7 +10,7 @@ export async function generateMetadata(
   }: {
     params: { id: string };
   },
-  parent?: ResolvingMetadata
+  parent: ResolvingMetadata
 ): Promise<Metadata> {
   const caller = appRouter.createCaller({
     session: null,
