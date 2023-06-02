@@ -125,7 +125,7 @@ function Header() {
               setOpened(!opened);
             }}
             className="
-                absolute left-0 flex h-screen w-[60%] flex-col overflow-y-auto bg-[#F7F6FB] p-4 opacity-100 bg-blend-darken md:w-60 "
+                md:pb-[3.5rem] absolute left-0 flex h-screen w-[60%] flex-col overflow-y-auto bg-[#F7F6FB] p-4 opacity-100 bg-blend-darken md:w-60 "
           >
             <Link
               href={`/${user?.role || ""}`}
@@ -399,21 +399,6 @@ function Header() {
                 )}
               </div>
             )}
-            {/* <Link
-                href="/class"
-                className={
-                  `mt-4 align-middle p-2 rounded-md flex items-center text-gray-800 hover:text-blue-700 cursor-pointer ${
-                    currentRoute === "/class"
-                      ? "bg-blue-700 text-white hover:text hover:text-white"
-                      : ""
-                  }`
-                }
-              >
-                <Image
-                width={20} className="w-6 mr-2 bg-[#F7F6FB] rounded-sm" src="https://img.icons8.com/material-rounded/24/000000/user.png" alt="" />
-                height={20}
-                <span className="text-lg">Assignments</span>
-              </Link> */}
             <Link
               href={`${user?.role || ""}/account`}
               className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${

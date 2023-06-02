@@ -77,14 +77,13 @@ function Login() {
   }
 
   return (
-    <div className="flex h-screen w-full justify-center p-2 text-black">
-      <div className="m-auto items-center rounded-lg bg-[#F7F6FB] sm:flex ">
+    <div className="flex flex-col h-screen w-full justify-center text-black">
+      <div className="m-auto items-center rounded-lg bg-gray-200 p-2 sm:flex ">
         <div className="p-4">
           <Image
             width={250}
             height={100}
             className="cover mx-auto h-96"
-            // src="https://preschool.dreamguystech.com/template/assets/img/login.png"
             src={homepic}
             alt="Logo"
           />
@@ -95,10 +94,12 @@ function Login() {
           </h1>
           {invalid === "password" ? (
             <div className="text-red-500">Invalid username or password</div>
-            ) : invalid === "fields" ? (<div className="text-red-500">All fields are required</div>
-          ) : ("")}
+          ) : invalid === "fields" ? (
+            <div className="text-red-500">All fields are required</div>
+          ) : (
+            ""
+          )}
           <form
-            // action="index.html"
             className="mt-4"
             onClick={() => {
               setInvalid("");
@@ -145,7 +146,7 @@ function Login() {
                   }}
                   name="userName"
                   value={user?.userName}
-                  className="focus:shadow-outline block w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                  className="focus:shadow-outline block w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                   type="text"
                   placeholder="eg: 01john"
                 />
@@ -172,7 +173,7 @@ function Login() {
                   checked={isChecked}
                   name="password"
                   value={user?.password}
-                  className="focus:shadow-outline pass-input w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                  className="focus:shadow-outline pass-input w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                   type={`${passView ? "text" : "password"}`}
                 />
                 <div className="absolute right-0 cursor-pointer px-2 text-gray-700">
@@ -234,6 +235,12 @@ function Login() {
           </form>
         </div>
       </div>
+      <footer className="w-full border-t border-gray-300 bg-gray-300 py-4">
+        <div className="container mx-auto text-center text-gray-900">
+          © 2023 LearnHq. All rights reserved. by{" "}
+          <a className="text-blue-500 font-semibold" href="https://collinsruto.netlify.app">Collins Ruto</a>
+        </div>
+      </footer>
     </div>
   );
 }
