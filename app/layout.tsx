@@ -41,6 +41,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  verification: {
+    google: process.env.GOOGLE_VERIFICATION
+  },
   authors: [
     {
       name: "Collins Ruto",
