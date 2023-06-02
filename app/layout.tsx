@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
 import { ClientProvider } from "@/utils/trpc-provider";
 import { LayoutProvider } from "./LayoutProvider";
+import GoogleAnalytics from "~/components/GoogleAnalytics";
 
 export default function RootLayout({
   // Layouts must accept a children prop.
@@ -17,6 +18,9 @@ export default function RootLayout({
     <ClientProvider>
       <html lang="en">
         <body>
+          {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
+            <GoogleAnalytics ga_id={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
+          ) : null}
           <LayoutProvider>{children}</LayoutProvider>
           <Analytics />
         </body>
