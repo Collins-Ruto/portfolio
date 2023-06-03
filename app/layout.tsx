@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   verification: {
-    google: process.env.GOOGLE_VERIFICATION
+    google: process.env.GOOGLE_VERIFICATION,
   },
   authors: [
     {

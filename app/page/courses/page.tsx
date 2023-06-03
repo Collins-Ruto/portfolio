@@ -181,21 +181,23 @@ function Courses() {
               key={index}
               className="flex-basis mb-2 flex max-w-[22rem] grow basis-[16rem] cursor-pointer flex-col rounded-md bg-[#F7F6FB]"
             >
-              <Image
-                width={500}
-                height={500}
-                src={course?.thumbnail_url ?? ""}
-                className="h-[7rem] w-full rounded-t-md object-cover text-white"
-                alt={course?.title ?? ""}
-              />
-              <div className="flex flex-col p-1">
-                <span className="text-sm text-blue-500">{course?.title}</span>
-                <span className="text-green-700">{course?.topic}</span>
-                <span className="">
-                  Form {course?.form} {course?.subject.name}
-                </span>
-                <div className=""></div>
-              </div>
+              <Link href={`/page/courses/course/${course?.id ?? ""}`}>
+                <Image
+                  width={500}
+                  height={500}
+                  src={course?.thumbnail_url ?? ""}
+                  className="h-[7rem] w-full rounded-t-md object-cover text-white"
+                  alt={course?.title ?? ""}
+                />
+                <div className="flex flex-col p-1">
+                  <span className="text-sm text-blue-500">{course?.title}</span>
+                  <span className="text-green-700">{course?.topic}</span>
+                  <span className="">
+                    Form {course?.form} {course?.subject.name}
+                  </span>
+                  <div className=""></div>
+                </div>
+              </Link>
             </div>
           ))}
         </div>
