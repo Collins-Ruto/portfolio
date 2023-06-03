@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Button } from "~/components";
+import { Button, Loader } from "~/components";
 import StatusMsg from "~/components/StatusMsg";
 import Image from "next/image";
 import { api } from "@/utils/api";
@@ -10,40 +10,45 @@ import { useSession } from "next-auth/react";
 function Account() {
   const { data: session } = useSession();
   const [user, setUser] = useState<User | undefined>();
-  const [editUser, setEditUser] = useState<Teacher>();
+  const [teacher, setTeacher] = useState<Teacher>();
+  const [editUser, setEditUser] = useState<Teacher>(teacher as Teacher);
   const [passManager, setPassManager] = useState(false);
   const [confPass, setConfPass] = useState("");
   const [oldPassword, setOldPassword] = useState("");
   const [submit, setSubmit] = useState(false);
   const [status, setStatus] = useState({ message: "", type: "" });
 
+  const { data, isLoading, error } = api.teacher.getById.useQuery(
+    user?.id || "621dd16f2eece6ce9587cb0d"
+  );
+
   useEffect(() => {
     const user = session?.user as User;
     setUser(user);
-  }, [session]);
+    if (data) {
+      setTeacher(data);
+    }
+  }, [data, session]);
+
+  if (error) {
+    console.log(error);
+  }
 
   const handleInput = (event: React.SyntheticEvent) => {
     const target = event.target as HTMLInputElement;
     // const value = target.type === "checkbox" ? target.checked : target.value;
-    const value =
-      target.type === "number"
-        ? Number(target.value).toFixed(
-            Math.max(target?.value.split(".")[1]?.length ?? 0, 2) || 2
-          )
-        : target.value;
+    const value = target.value;
     const name = target.name;
 
     setEditUser((prevEditUser) => {
-      if (!prevEditUser) {
-        return undefined;
-      }
-
       return {
         ...prevEditUser,
         [name]: value,
       };
     });
   };
+
+  console.log("tech user edt",editUser);
 
   const editTeacherMutation = api.teacher.editTeacher.useMutation();
 
@@ -52,7 +57,7 @@ function Account() {
 
     try {
       console.log("edit teacher", editUser);
-      const data = editTeacherMutation.mutate(editUser as Teacher);
+      const data = editTeacherMutation.mutate(editUser);
 
       setSubmit(false);
       console.log("add editUser data", data);
@@ -68,36 +73,6 @@ function Account() {
       setStatus({ type: "error", message: "error check your input" });
     }
   };
-
-  // const handleSubmit = (inputType) => {
-  //   setSubmit(true);
-  //   axios
-  //     .post(`https://lmsteacher.onrender.com/${user.type}s/${inputType}`, {
-  //       slug: user.slug,
-  //       data: editUser,
-  //     })
-  //     .then((res) => {
-  //       setSubmit(false);
-  //       console.log("res", res.data.message);
-  //       res.data.message === "success" && setConfPass("");
-  //       setEditUser({
-  //         password: "",
-  //         oldPassword: "",
-  //       });
-  //       console.log(res.data);
-  //       setStatus(
-  //         res.data.message === "success"
-  //           ? {
-  //               type: "success",
-  //               message: `succesfully updated your credidentials`,
-  //             }
-  //           : { type: "error", message: res.data.message }
-  //       );
-  //       setTimeout(() => {
-  //         res.data.message === "success" && window.location.reload(true);
-  //       }, 2000);
-  //     });
-  // };
 
   const logOut = () => {
     localStorage.setItem("saved", JSON.stringify(false));
@@ -115,6 +90,7 @@ function Account() {
   return (
     <div>
       {<StatusMsg status={status} />}
+      {isLoading && <Loader />}
       <div className="flex h-[100vh_-_4rem] flex-col gap-4">
         <div className="h-60 w-full bg-[url('https://b1311116.smushcdn.com/1311116/wp-content/uploads/2021/12/great-school-website-01.png?size=912x479&lossy=1&strip=1&webp=1')] bg-cover bg-center">
           <div className="flex h-full min-w-full items-center justify-center text-2xl font-semibold text-white backdrop-brightness-50">
@@ -133,7 +109,7 @@ function Account() {
             <div className="pb-4 pt-2 text-blue-600">{user?.role}</div>
             <div className="flex flex-col gap-2 p-2 text-start text-slate-800">
               <div className="p-1">Name: {user?.name} </div>
-              <div className="p-1">Phone: {user?.phone} </div>
+              <div className="p-1">Phone: {teacher?.phone} </div>
               <div className="p-1">Email: {user?.email} </div>
             </div>
             <div
@@ -284,7 +260,7 @@ function Account() {
                         }}
                         value={editUser?.phone}
                         className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
-                        type="number"
+                        type="text"
                         placeholder="Enter Phone Number"
                         name="phone"
                       />

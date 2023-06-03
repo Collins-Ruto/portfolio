@@ -42,6 +42,7 @@ export const adminRouter = createTRPCRouter({
     }),
 
     editAdmin: protectedProcedure.input(z.object({
+        name: z.string(),
         slug: z.string(),
         email: z.string(),
         password: z.string(),

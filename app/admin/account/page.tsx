@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Button } from "~/components";
+import { Button, Loader } from "~/components";
 import StatusMsg from "~/components/StatusMsg";
 import Image from "next/image";
 import { api } from "@/utils/api";
@@ -10,17 +10,29 @@ import { useSession } from "next-auth/react";
 function Account() {
   const { data: session } = useSession();
   const [user, setUser] = useState<User | undefined>();
-  const [editUser, setEditUser] = useState<Admin>();
+  const [admin, setAdmin] = useState<Admin>();
+  const [editUser, setEditUser] = useState<Admin>(admin as Admin);
   const [passManager, setPassManager] = useState(false);
   const [confPass, setConfPass] = useState("");
   const [oldPassword, setOldPassword] = useState("");
   const [submit, setSubmit] = useState(false);
   const [status, setStatus] = useState({ message: "", type: "" });
 
+  const { data, isLoading, error } = api.admin.getById.useQuery(
+    user?.id || "621dd16f2eece6ce9587cb0d"
+  );
+
   useEffect(() => {
     const user = session?.user as User;
     setUser(user);
-  }, [session]);
+    if (data) {
+      setAdmin(data);
+    }
+  }, [data, session]);
+
+  if (error) {
+    console.log(error);
+  }
 
   const handleInput = (event: React.SyntheticEvent) => {
     const target = event.target as HTMLInputElement;
@@ -33,10 +45,6 @@ function Account() {
     const name = target.name;
 
     setEditUser((prevEditUser) => {
-      if (!prevEditUser) {
-        return undefined;
-      }
-
       return {
         ...prevEditUser,
         [name]: value,
@@ -51,7 +59,7 @@ function Account() {
 
     try {
       console.log("edit admin", editUser);
-      const data = editAdminMutation.mutate(editUser as Admin);
+      const data = editAdminMutation.mutate(editUser);
 
       setSubmit(false);
       console.log("add editUser data", data);
@@ -67,36 +75,6 @@ function Account() {
       setStatus({ type: "error", message: "error check your input" });
     }
   };
-
-  // const handleSubmit = (inputType) => {
-  //   setSubmit(true);
-  //   axios
-  //     .post(`https://lmsadmin.onrender.com/${user.type}s/${inputType}`, {
-  //       slug: user.slug,
-  //       data: editUser,
-  //     })
-  //     .then((res) => {
-  //       setSubmit(false);
-  //       console.log("res", res.data.message);
-  //       res.data.message === "success" && setConfPass("");
-  //       setEditUser({
-  //         password: "",
-  //         oldPassword: "",
-  //       });
-  //       console.log(res.data);
-  //       setStatus(
-  //         res.data.message === "success"
-  //           ? {
-  //               type: "success",
-  //               message: `succesfully updated your credidentials`,
-  //             }
-  //           : { type: "error", message: res.data.message }
-  //       );
-  //       setTimeout(() => {
-  //         res.data.message === "success" && window.location.reload(true);
-  //       }, 2000);
-  //     });
-  // };
 
   const logOut = () => {
     localStorage.setItem("saved", JSON.stringify(false));
@@ -114,6 +92,7 @@ function Account() {
   return (
     <div>
       {<StatusMsg status={status} />}
+      {isLoading && <Loader />}
       <div className="flex h-[100vh_-_4rem] flex-col gap-4">
         <div className="h-60 w-full bg-[url('https://b1311116.smushcdn.com/1311116/wp-content/uploads/2021/12/great-school-website-01.png?size=912x479&lossy=1&strip=1&webp=1')] bg-cover bg-center">
           <div className="flex h-full min-w-full items-center justify-center text-2xl font-semibold text-white backdrop-brightness-50">
@@ -139,7 +118,7 @@ function Account() {
               onClick={() => {
                 logOut();
               }}
-              className="rounded bg-blue-500 py-2 px-10 font-bold text-white hover:bg-blue-700"
+              className="rounded bg-blue-500 px-10 py-2 font-bold text-white hover:bg-blue-700"
             >
               Log Out
             </div>
@@ -186,7 +165,7 @@ function Account() {
                           value={oldPassword}
                           name="oldPassword"
                           type="password"
-                          className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                          className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                           placeholder="Enter Old Password"
                           required
                         />
@@ -204,7 +183,7 @@ function Account() {
                           value={editUser?.password}
                           name="password"
                           type="password"
-                          className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                          className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                           placeholder="Enter New Password"
                           required
                         />
@@ -223,7 +202,7 @@ function Account() {
                           value={confPass}
                           name="password"
                           type="password"
-                          className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                          className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                           placeholder="Confirm Password"
                           required
                         />
@@ -241,7 +220,7 @@ function Account() {
                         <button
                           onClick={() => handleSubmit()}
                           type="submit"
-                          className="rounded bg-blue-500 py-2 px-10 font-bold text-white hover:bg-blue-700"
+                          className="rounded bg-blue-500 px-10 py-2 font-bold text-white hover:bg-blue-700"
                         >
                           Submit
                         </button>
@@ -267,7 +246,7 @@ function Account() {
                           handleInput(e);
                         }}
                         value={editUser?.email}
-                        className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                        className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                         type="text"
                         placeholder="Enter Email Address"
                         name="email"
@@ -282,8 +261,8 @@ function Account() {
                           handleInput(e);
                         }}
                         value={editUser?.phone}
-                        className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
-                        type="number"
+                        className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
+                        type="text"
                         placeholder="Enter Phone Number"
                         name="phone"
                       />
@@ -296,7 +275,7 @@ function Account() {
                       <button
                         onClick={() => handleSubmit()}
                         type="submit"
-                        className="rounded bg-blue-500 py-2 px-10 font-bold text-white hover:bg-blue-700"
+                        className="rounded bg-blue-500 px-10 py-2 font-bold text-white hover:bg-blue-700"
                       >
                         Submit
                       </button>
