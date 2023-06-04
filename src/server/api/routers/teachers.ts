@@ -1,4 +1,5 @@
 import { z } from "zod";
+import bcrypt from "bcryptjs";
 
 import {
   createTRPCRouter,
@@ -14,15 +15,7 @@ export const teacherRouter = createTRPCRouter({
   getById: publicProcedure.input(z.string()).query(({ ctx, input }) => {
     return ctx.prisma.teacher.findUnique({
       where: {
-        slug: input
-      },
-      select: {
-        id: true,
-        name: true,
-        slug: true,
-        email: true,
-        phone: true,
-        password: true
+        id: input
       }
     });
   }),
@@ -45,11 +38,18 @@ export const teacherRouter = createTRPCRouter({
   }),
 
   editTeacher: protectedProcedure.input(z.object({
+    name: z.string(),
     slug: z.string(),
     email: z.string(),
     password: z.string(),
     phone: z.string(),
-  })).mutation(({ ctx, input }) => {
+    joiningDate: z.string(),
+    gender: z.string(),
+    qualification: z.string(),
+    dateOfBirth: z.string(),
+  })).mutation(async ({ ctx, input }) => {
+    const encrypterPass = await bcrypt.hash(input.password, 10)
+    input.password = encrypterPass
     console.log("trpc input", input)
     return ctx.prisma.teacher.update({
       where: {

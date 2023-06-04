@@ -7,7 +7,6 @@ import React, { useEffect, useState } from "react";
 import { Button, Loader } from "~/components";
 import { type Search, Subjects } from "~/types/types";
 
-const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 const forms = ["1", "2", "3", "4"];
 
 const searchOrg = {
@@ -48,8 +47,6 @@ function Courses() {
     setCourses(data);
     setSubmit(false);
   };
-
-  const course = data?.[0];
 
   const handleSubject = (value: string) => {
     setSearch((search) => ({
@@ -176,7 +173,7 @@ function Courses() {
           </div>
         </div>
         <div className="mx-auto flex flex-wrap justify-center gap-2 border-blue-500 p-2">
-          {arr.map((_, index) => (
+          {courses?.map((course, index) => (
             <div
               key={index}
               className="flex-basis mb-2 flex max-w-[22rem] grow basis-[16rem] cursor-pointer flex-col rounded-md bg-[#F7F6FB]"

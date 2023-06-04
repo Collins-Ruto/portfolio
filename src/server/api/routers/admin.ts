@@ -1,4 +1,5 @@
 import { z } from "zod";
+import bcrypt from "bcryptjs";
 
 import {
     createTRPCRouter,
@@ -42,11 +43,14 @@ export const adminRouter = createTRPCRouter({
     }),
 
     editAdmin: protectedProcedure.input(z.object({
+        name: z.string(),
         slug: z.string(),
         email: z.string(),
         password: z.string(),
         phone: z.string(),
-    })).mutation(({ ctx, input }) => {
+    })).mutation(async ({ ctx, input }) => {
+        const encrypterPass = await bcrypt.hash(input.password, 10)
+        input.password = encrypterPass
         console.log("trpc input", input)
         return ctx.prisma.admin.update({
             where: {
