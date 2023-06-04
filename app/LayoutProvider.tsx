@@ -14,22 +14,23 @@ export const LayoutProvider = ({
 }) => {
   const pathname = usePathname();
   // min-h-[calc(100vh_-_2.5rem)]
+  // ["/"]
   return (
     <>
-      {pathname !== "/" && pathname !== "/login" ? (
+      {pathname !== "/" && pathname !== "/login" && !pathname?.startsWith("/learn") ? (
         <div>
           <Header />
-          <div className="flex flex-col min-h-[100vh]">
+          <div className="flex min-h-[100vh] flex-col">
             <div className="flex md:ml-60">
               <div className="grow">{children}</div>
             </div>
-            <footer className="border-t mt-auto border-gray-300 bg-gray-800 py-4 md:ml-60">
+            <footer className="mt-auto border-t border-gray-300 bg-gray-800 py-4 md:ml-60">
               <div className=" mx-auto text-center text-gray-200">
                 © 2023 LearnHq. All rights reserved. by{" "}
                 <a href="https://collinsruto.netlify.app">Collins Ruto</a>
               </div>
             </footer>
-            </div>
+          </div>
         </div>
       ) : (
         <div className="">

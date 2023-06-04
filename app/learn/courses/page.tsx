@@ -178,7 +178,7 @@ function Courses() {
               key={index}
               className="flex-basis mb-2 flex max-w-[22rem] grow basis-[16rem] cursor-pointer flex-col rounded-md bg-[#F7F6FB]"
             >
-              <Link href={`/page/courses/course/${course?.id ?? ""}`}>
+              <Link href={`/learn/courses/course/${course?.id ?? ""}`}>
                 <Image
                   width={500}
                   height={500}
