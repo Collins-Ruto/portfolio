@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Button } from "~/components";
+import { Button, Loader } from "~/components";
 import StatusMsg from "~/components/StatusMsg";
 import Image from "next/image";
 import { api } from "@/utils/api";
@@ -10,17 +10,30 @@ import { useSession } from "next-auth/react";
 function Account() {
   const { data: session } = useSession();
   const [user, setUser] = useState<User | undefined>();
-  const [editUser, setEditUser] = useState<Student>();
+  const [student, setStudent] = useState<Student>();
+  const [editUser, setEditUser] = useState<Student>(student as Student);
   const [passManager, setPassManager] = useState(false);
   const [confPass, setConfPass] = useState("");
   const [oldPassword, setOldPassword] = useState("");
   const [submit, setSubmit] = useState(false);
   const [status, setStatus] = useState({ message: "", type: "" });
 
+  const { data, isLoading, error } = api.student.getById.useQuery(
+    user?.id || "621dd16f2eece6ce9587cb0d"
+  );
+
   useEffect(() => {
     const user = session?.user as User;
     setUser(user);
-  }, [session]);
+    if (data) {
+      setEditUser(data);
+      setStudent(data);
+    }
+  }, [data, session]);
+
+   if (error) {
+     console.log(error);
+   }
 
   const handleInput = (event: React.SyntheticEvent) => {
     const target = event.target as HTMLInputElement;
@@ -34,9 +47,6 @@ function Account() {
     const name = target.name;
 
     setEditUser((prevEditUser) => {
-      if (!prevEditUser) {
-        return undefined;
-      }
 
       return {
         ...prevEditUser,
@@ -52,7 +62,7 @@ function Account() {
 
     try {
       console.log("edit student", editUser);
-      const data = editStudentMutation.mutate(editUser as Student);
+      const data = editStudentMutation.mutate(editUser);
 
       setSubmit(false);
       console.log("add editUser data", data);
@@ -115,6 +125,7 @@ function Account() {
   return (
     <div>
       {<StatusMsg status={status} />}
+      {isLoading && <Loader />}
       <div className="flex h-[100vh_-_4rem] flex-col gap-4">
         <div className="h-60 w-full bg-[url('https://b1311116.smushcdn.com/1311116/wp-content/uploads/2021/12/great-school-website-01.png?size=912x479&lossy=1&strip=1&webp=1')] bg-cover bg-center">
           <div className="flex h-full min-w-full items-center justify-center text-2xl font-semibold text-white backdrop-brightness-50">
@@ -133,7 +144,7 @@ function Account() {
             <div className="pb-4 pt-2 text-blue-600">{user?.role}</div>
             <div className="flex flex-col gap-2 p-2 text-start text-slate-800">
               <div className="p-1">Name: {user?.name} </div>
-              <div className="p-1">Phone: {user?.phone} </div>
+              <div className="p-1">Phone: {student?.phone} </div>
               <div className="p-1">Email: {user?.email} </div>
             </div>
             <div

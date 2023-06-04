@@ -7,10 +7,10 @@ import {
 } from "@/server/api/trpc";
 
 export const taskRouter = createTRPCRouter({
-    getAll: protectedProcedure.query(({ ctx }) => {
+    getAll: publicProcedure.query(({ ctx }) => {
         return ctx.prisma.task.findMany({
             include: {
-                stream: true
+                teacher: true
             },
             take: 10,
             // orderBy: {
@@ -108,7 +108,7 @@ export const taskRouter = createTRPCRouter({
         })
     }),
 
-    search: protectedProcedure.input(z.string()).query(({ ctx, input }) => {
+    search: publicProcedure.input(z.string()).query(({ ctx, input }) => {
         return ctx.prisma.task.findMany({
             where: {
                 name: { contains: input }

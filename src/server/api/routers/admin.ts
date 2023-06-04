@@ -54,7 +54,7 @@ export const adminRouter = createTRPCRouter({
         console.log("trpc input", input)
         return ctx.prisma.admin.update({
             where: {
-                slug: input.slug
+                id: input.slug
             },
             data: input,
         });
