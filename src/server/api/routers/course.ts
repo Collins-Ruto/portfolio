@@ -8,7 +8,7 @@ import {
 import type { Prisma } from "@prisma/client";
 
 export const courseRouter = createTRPCRouter({
-    getAll: protectedProcedure.query(({ ctx }) => {
+    getAll: publicProcedure.query(({ ctx }) => {
         return ctx.prisma.course.findMany({
 
             take: 10,
@@ -18,7 +18,7 @@ export const courseRouter = createTRPCRouter({
         });
     }),
 
-    count: protectedProcedure.query(({ ctx }) => {
+    count: publicProcedure.query(({ ctx }) => {
         return ctx.prisma.course.count();
     }),
 
@@ -82,7 +82,7 @@ export const courseRouter = createTRPCRouter({
         })
     }),
 
-    search: protectedProcedure.input(z.object({
+    search: publicProcedure.input(z.object({
         form: z.string(),
         subject: z.object({
             slug: z.string(),
@@ -93,7 +93,7 @@ export const courseRouter = createTRPCRouter({
         console.log("search in", input)
         const searchQuery: Prisma.CourseWhereInput = {
             AND: [
-                input.form !== "" ?{ form: input.form } : {},
+                input.form !== "" ? { form: input.form } : {},
                 { title: { contains: input.search, mode: "insensitive" } },
                 input.subject.slug !== "all" ? {
                     subject: {
