@@ -13,6 +13,7 @@ function Account() {
   const [teacher, setTeacher] = useState<Teacher>();
   const [editUser, setEditUser] = useState<Teacher>(teacher as Teacher);
   const [passManager, setPassManager] = useState(false);
+  const [password, setPassword] = useState("");
   const [confPass, setConfPass] = useState("");
   const [oldPassword, setOldPassword] = useState("");
   const [submit, setSubmit] = useState(false);
@@ -25,7 +26,9 @@ function Account() {
   useEffect(() => {
     const user = session?.user as User;
     setUser(user);
+    console.log("teach data", data);
     if (data) {
+      setEditUser(data);
       setTeacher(data);
     }
   }, [data, session]);
@@ -36,9 +39,12 @@ function Account() {
 
   const handleInput = (event: React.SyntheticEvent) => {
     const target = event.target as HTMLInputElement;
-    // const value = target.type === "checkbox" ? target.checked : target.value;
     const value = target.value;
     const name = target.name;
+
+    if (name === "password") {
+      setPassword(value)
+    }
 
     setEditUser((prevEditUser) => {
       return {
@@ -49,6 +55,7 @@ function Account() {
   };
 
   console.log("tech user edt",editUser);
+  console.log("techer",teacher);
 
   const editTeacherMutation = api.teacher.editTeacher.useMutation();
 
@@ -178,7 +185,7 @@ function Account() {
                           onChange={(e) => {
                             handleInput(e);
                           }}
-                          value={editUser?.password}
+                          value={password}
                           name="password"
                           type="password"
                           className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
