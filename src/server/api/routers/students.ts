@@ -12,7 +12,7 @@ export const studentRouter = createTRPCRouter({
   getAll: protectedProcedure.input(z.number()).query(({ ctx, input }) => {
     return ctx.prisma.student.findMany({
       include: {
-        stream: true
+        stream: true,
       },
       take: 10,
       skip: input,
