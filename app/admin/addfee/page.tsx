@@ -28,7 +28,7 @@ function AddFee() {
         return {
           [name]: value,
           slug: `${type}${Math.floor(Date.now() / 1000)}`,
-        } as Fee;
+        } as unknown as Fee;
       }
 
       return {
