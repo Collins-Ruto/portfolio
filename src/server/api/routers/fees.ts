@@ -26,6 +26,14 @@ export const feeRouter = createTRPCRouter({
     return ctx.prisma.fee.count();
   }),
 
+  getIds: protectedProcedure.query(({ ctx }) => {
+    return ctx.prisma.fee.findMany({
+      select: {
+        id: true,
+      },
+    });
+  }),
+
   // :{ctx:Context, input:string}
   getById: publicProcedure.input(z.string()).query(({ ctx, input }) => {
     return ctx.prisma.fee.findUnique({
