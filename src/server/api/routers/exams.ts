@@ -22,6 +22,14 @@ export const examRouter = createTRPCRouter({
     return ctx.prisma.exam.count();
   }),
 
+  getIds: protectedProcedure.query(({ ctx }) => {
+    return ctx.prisma.exam.findMany({
+      select: {
+        id: true,
+      },
+    });
+  }),
+
   getById: publicProcedure.input(z.string()).query(({ ctx, input }) => {
     if (input === 'all') {
       return ctx.prisma.exam.findMany({

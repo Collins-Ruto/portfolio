@@ -12,6 +12,15 @@ export const teacherRouter = createTRPCRouter({
     return ctx.prisma.teacher.findMany();
   }),
 
+  getIds: protectedProcedure.query(({ ctx }) => {
+    return ctx.prisma.teacher.findMany({
+      select: {
+        id: true,
+      },
+    });
+  }),
+
+
   getById: publicProcedure.input(z.string()).query(({ ctx, input }) => {
     return ctx.prisma.teacher.findUnique({
       where: {
