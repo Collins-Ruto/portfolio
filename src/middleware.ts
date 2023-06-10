@@ -33,7 +33,7 @@ export default withAuth(
         if (req.nextUrl.pathname === "/") {
             console.log("nidel 2")
             return NextResponse.redirect(
-                new URL("/", req.url)
+                new URL("/login", req.url)
             )
         }
         // message=You Are Not Authorized!
@@ -49,6 +49,6 @@ export default withAuth(
 );
 
 export const config = {
-    matcher: [ "/admin/:path*", "/student/:path*", "/teacher/:path*", "/page/:path*"],
+    matcher: ["/", "/admin/:path*", "/student/:path*", "/teacher/:path*", "/page/:path*"],
 };
 
