@@ -20,7 +20,7 @@ function Header() {
     setUser(user);
   }, [session]);
 
-  console.log("header user", session);
+  // console.log("header user", session);
 
   return (
     <div className="sticky top-0 z-40 mx-auto bg-[#F7F6FB] bg-blend-darken">
@@ -36,7 +36,7 @@ function Header() {
             <div className="h-1 w-6 rounded bg-blue-600 md:w-8"></div>
             <div className="h-1 w-6 rounded bg-blue-600 md:w-8"></div>
           </div>
-          <Link href="https://learnhqhome.vercel.app" className=" flex w-1/3">
+          <Link href="https://learnhqhome.vercel.app" className=" flex w-1/3 md:w-max">
             <Image
               width={90}
               height={90}

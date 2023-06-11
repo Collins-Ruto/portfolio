@@ -47,7 +47,7 @@ export default async function CoursePage({
 
   const data = await caller.course.getById(id || "621dd16f2eece6ce9587cb0d");
   const course = data[0] as Course;
-  console.log("course", data);
+  // console.log("course", data);
 
   function convertYouTubeURL(url: string): string {
     let videoId = "";
@@ -66,7 +66,7 @@ export default async function CoursePage({
   }
 
   const videoUrl = convertYouTubeURL(course.video_url);
-  console.log(videoUrl);
+  // console.log(videoUrl);
 
   return (
     <div className="w-screen p-4 md:w-full">
