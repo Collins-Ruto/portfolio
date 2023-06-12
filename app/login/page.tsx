@@ -4,6 +4,7 @@ import { signIn } from "next-auth/react";
 import homepic from "~/assets/homepic1.webp";
 import { Button } from "~/components";
 import Image from "next/image";
+import Link from "next/link";
 
 type userInput = {
   [group: string]: string;
@@ -198,8 +199,8 @@ function Login() {
             </div>
 
             <div className="">
-              <div className="text-xs opacity80 rounded text-red-500">
-                {validInput}
+              <div className="opacity80 rounded text-xs text-red-500">
+                <span className="">{validInput}</span>
                 <span className="text-transparent">.</span>
               </div>
             </div>
@@ -271,12 +272,12 @@ function Login() {
       <footer className="absolute bottom-0 w-full border-t border-gray-300 bg-gray-300 py-4">
         <div className="container mx-auto text-center text-gray-900">
           © 2023 LearnHq. All rights reserved | by{" "}
-          <a
+          <Link
             className="font-semibold text-blue-500"
             href="https://collinsruto.netlify.app"
           >
             Collins Ruto
-          </a>
+          </Link>
         </div>
       </footer>
     </div>

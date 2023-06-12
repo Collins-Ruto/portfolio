@@ -37,10 +37,15 @@ import { api } from "@/utils/api";
 //   html: "\u003ciframe width=\u0022200\u0022 height=\u0022113\u0022 src=\u0022https://www.youtube.com/embed/v5SuSB_93FM?feature=oembed\u0022 frameborder=\u00220\u0022 allow=\u0022accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\u0022 allowfullscreen title=\u0022Refraction of Light - Introduction | Don\u0026#39;t Memorise\u0022\u003e\u003c/iframe\u003e",
 // };
 
+interface IndexedCourse extends Course {
+  [key: string]: any;
+}
+
 function AddCourse() {
   const [course, setCourse] = useState<Course | undefined>();
   const [submit, setSubmit] = useState(false);
   const [status, setStatus] = useState({ message: "", type: "" });
+  const [validInput, setValidInput] = useState("");
 
   const handleInput = (event: React.SyntheticEvent) => {
     const target = event.target as HTMLInputElement;
@@ -85,10 +90,38 @@ function AddCourse() {
     });
   };
 
+  const inputValidate = () => {
+    const fields = [
+      "topic",
+      "description",
+      "form",
+      "unit_code",
+      "video_url",
+      "subject",
+    ];
+    const inputCourse = course as IndexedCourse;
+    let message = "Please fill: ";
+    fields.forEach((field) => {
+      if (inputCourse?.[field] === "" || inputCourse?.[field] === undefined) {
+        message += `${field}, `;
+        setValidInput(message);
+      }
+    });
+    if (message === "Please fill: ") {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const addCourseMutation = api.course.addCourse.useMutation();
 
-  async function handleSubmit() {
-    // setSubmit(true);
+  const handleSubmit = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    if (inputValidate() === false) {
+      return;
+    }
+    setSubmit(true);
 
     const res = await fetch(
       `https://youtube.com/oembed?url=${course?.video_url ?? ""}&format=json`
@@ -124,7 +157,7 @@ function AddCourse() {
       setSubmit(false);
       setStatus({ type: "error", message: "error check your input" });
     }
-  }
+  };
 
   return (
     <div>
@@ -220,17 +253,24 @@ function AddCourse() {
             </div>
           </div>
 
-          <div className=" mt-4">
+          <div className="mt-2">
+            <div className="opacity80 rounded text-xs text-red-500">
+              <span className="">{validInput}</span>
+              <span className="text-transparent">.</span>
+            </div>
+          </div>
+
+          <div className=" my-2">
             <div>
               {submit ? (
                 <Button />
               ) : (
-                <div
-                  onClick={() => void handleSubmit()}
+                <button
+                  onClick={(e) => void handleSubmit(e)}
                   className="w-fit cursor-pointer rounded  bg-blue-500 px-10 py-2 font-bold text-white hover:bg-blue-700"
                 >
                   Submit
-                </div>
+                </button>
               )}
             </div>
           </div>

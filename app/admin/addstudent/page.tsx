@@ -100,7 +100,7 @@ function AddStudent() {
                           handleInput(e);
                         }}
                         value={student?.name}
-                        className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                        className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                         type="text"
                         placeholder="Enter Full Names"
                         name="name"
@@ -115,7 +115,7 @@ function AddStudent() {
                           handleInput(e);
                         }}
                         value={student?.admissionId}
-                        className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                        className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                         type="text"
                         placeholder="eg. 49"
                         name="admissionId"
@@ -132,7 +132,7 @@ function AddStudent() {
                           handleInput(e);
                         }}
                         value={student?.parent}
-                        className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                        className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                         type="text"
                         placeholder="Enter Guardian Name"
                         name="parent"
@@ -178,7 +178,7 @@ function AddStudent() {
                           handleInput(e);
                         }}
                         value={student?.dateOfBirth}
-                        className="focus:shadow-outline datetimepicker w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                        className="focus:shadow-outline datetimepicker w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                         type="text"
                         placeholder="DD-MM-YYYY"
                         name="dateOfBirth"
@@ -193,7 +193,7 @@ function AddStudent() {
                           handleInput(e);
                         }}
                         value={student?.slug?.toLowerCase()}
-                        className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                        className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                         type="text"
                         placeholder="eg. 49mike"
                         name="slug"
@@ -211,7 +211,7 @@ function AddStudent() {
                           handleInput(e);
                         }}
                         value={student?.email}
-                        className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                        className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                         type="text"
                         placeholder="eg. example@gmail.com"
                         name="email"
@@ -229,7 +229,7 @@ function AddStudent() {
                         }}
                         value={student?.streamId}
                         className="focus:shadow-outline block w-full appearance-none rounded border border-gray-400 bg-white px-4 py-3 pr-8 leading-tight shadow hover:border-gray-500 focus:outline-none"
-                        name="stream_slug"
+                        name="streamId"
                       >
                         <option>Select Stream</option>
                         {streams?.map((stream, index) => {
@@ -260,7 +260,7 @@ function AddStudent() {
                           handleInput(e);
                         }}
                         value={student?.phone}
-                        className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                        className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                         type="number"
                         placeholder="eg. 722123456"
                         name="phone"
@@ -287,7 +287,7 @@ function AddStudent() {
                       <button
                         onClick={() => handleSubmit()}
                         type="submit"
-                        className="rounded bg-blue-500 py-2 px-10 font-bold text-white hover:bg-blue-700"
+                        className="rounded bg-blue-500 px-10 py-2 font-bold text-white hover:bg-blue-700"
                       >
                         Submit
                       </button>

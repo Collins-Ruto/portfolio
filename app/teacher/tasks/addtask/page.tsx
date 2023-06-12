@@ -5,13 +5,21 @@ import type { Task } from "@prisma/client";
 import { api } from "@/utils/api";
 import { Subjects } from "~/types/types";
 
+interface IndexedTask extends Task {
+  [key: string]: any;
+}
+
 function CreateTask() {
   const [task, setTask] = useState<Task | undefined>();
   const [file, setFile] = useState<File>();
   const [submit, setSubmit] = useState(false);
   const [status, setStatus] = useState({ message: "", type: "" });
+  const [validInput, setValidInput] = useState("");
+
+  const { data: streams, isLoading } = api.stream.getAll.useQuery();
 
   const handleInput = (event: React.SyntheticEvent) => {
+    setValidInput("");
     const target = event.target as HTMLInputElement;
     const name = target.name;
     const value = target.value;
@@ -52,6 +60,30 @@ function CreateTask() {
 
       return updatedTask;
     });
+  };
+
+  const inputValidate = () => {
+    const fields = [
+      "name",
+      "description",
+      "due",
+      "subject",
+      "streamId",
+      "teacherId",
+    ];
+    const inputTask = task as IndexedTask;
+    let message = "Please fill: ";
+    fields.forEach((field) => {
+      if (inputTask?.[field] === "" || inputTask?.[field] === undefined) {
+        message += `${field}, `;
+        setValidInput(message);
+      }
+    });
+    if (message === "Please fill: ") {
+      return true;
+    } else {
+      return false;
+    }
   };
 
   const handleQuillChange = (content: string) => {
@@ -121,7 +153,10 @@ function CreateTask() {
   };
 
   async function handleSubmit() {
-    // setSubmit(true);
+    if (inputValidate() === false) {
+      return;
+    }
+    setSubmit(true);
 
     const newTask = {
       ...task,
@@ -167,7 +202,7 @@ function CreateTask() {
             <div>
               <div>
                 <label>
-                  Task title <span className="text-red-500">*</span>
+                  Task Name <span className="text-red-500">*</span>
                 </label>
                 <input
                   onChange={(e) => {
@@ -198,19 +233,37 @@ function CreateTask() {
                 />
               </div>
             </div>
-            <div>
-              <div>
-                <label>Stream ID </label>
-                <input
+            <div className="relative inline-block items-center">
+              <label>
+                Stream ID<span className="text-red-500">*</span>
+              </label>
+              <div className="flex cursor-pointer items-center">
+                <select
                   onChange={(e) => {
                     handleInput(e);
                   }}
                   value={task?.streamId}
-                  className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
-                  type="text"
-                  placeholder="eg. 1n"
+                  className="focus:shadow-outline block w-full appearance-none rounded border border-gray-400 bg-white px-4 py-3 pr-8 leading-tight shadow hover:border-gray-500 focus:outline-none"
                   name="streamId"
-                />
+                >
+                  <option>Select Stream</option>
+                  {streams?.map((stream, index) => {
+                    return (
+                      <option key={index} value={stream.slug}>
+                        {stream.name}
+                      </option>
+                    );
+                  })}
+                </select>
+                <div className="pointer-events-none absolute right-0 flex items-center px-2 text-gray-700">
+                  <svg
+                    className="h-4 w-4 fill-current"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                  </svg>
+                </div>
               </div>
             </div>
             <div>
@@ -229,7 +282,9 @@ function CreateTask() {
               />
             </div>
             <div>
-              <label>Due </label>
+              <label>
+                Due <span className="text-red-500">*</span>
+              </label>
               <input
                 onChange={(e) => {
                   handleInput(e);
@@ -242,7 +297,9 @@ function CreateTask() {
             </div>
           </div>
           <div className="py-4 md:pt-8">
-            <label>Task Description </label>
+            <label>
+              Task Description <span className="text-red-500">*</span>
+            </label>
             <Editor handleQuillChange={handleQuillChange} />
           </div>
           <div>
@@ -262,7 +319,13 @@ function CreateTask() {
               SVG, PNG, JPG or Any Document Type.
             </p>
           </div>
-          <div className=" mt-4">
+          <div className="mt-2">
+            <div className="opacity80 rounded text-xs text-red-500">
+              <span className="">{validInput}</span>
+              <span className="text-transparent">.</span>
+            </div>
+          </div>
+          <div className=" my-2">
             <div>
               {submit ? (
                 <Button />
