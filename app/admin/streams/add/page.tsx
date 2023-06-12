@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { api } from "@/utils/api";
 import { type Stream } from "@prisma/client";
 import React, { useState } from "react";
@@ -6,10 +6,15 @@ import { Button, StatusMsg } from "~/components";
 
 // eslint-disable-next-line no-unused-vars
 
+interface IndexedInput extends Stream {
+  [key: string]: any;
+}
+
 function AddStream() {
   const [stream, setStream] = useState<Stream | undefined>();
   const [submit, setSubmit] = useState(false);
   const [status, setStatus] = useState({ message: "", type: "" });
+  const [validInput, setValidInput] = useState("");
 
   const handleInput = (event: React.SyntheticEvent) => {
     const target = event.target as HTMLInputElement;
@@ -30,9 +35,29 @@ function AddStream() {
     });
   };
 
+  const inputValidate = () => {
+    const fields = ["name", "slug"];
+    const input = stream as IndexedInput;
+    let message = "Please fill: ";
+    fields.forEach((field) => {
+      if (input?.[field] === "" || input?.[field] === undefined) {
+        message += `${field}, `;
+        setValidInput(message);
+      }
+    });
+    if (message === "Please fill: ") {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const addStreamMutation = api.stream.addStream.useMutation();
 
   const handleSubmit = () => {
+    if (inputValidate() === false) {
+      return;
+    }
     setSubmit(true);
     try {
       addStreamMutation.mutate(stream as Stream, {
@@ -56,16 +81,16 @@ function AddStream() {
   return (
     <div>
       {<StatusMsg status={status} />}
-      <div className="p-2 md:p-4 text-2xl font-semibold">
+      <div className="p-2 text-2xl font-semibold md:p-4">
         <h3>Add Streams</h3>
       </div>
       <div>
         <div>
-          <div className="m-4 bg-[#F7F6FB] rounded-xl p-4 md:p-6">
+          <div className="m-4 rounded-xl bg-[#F7F6FB] p-4 md:p-6">
             <div className="card-body">
               <form>
                 <div className="col-12">
-                  <h5 className="text-xl pb-4">
+                  <h5 className="pb-4 text-xl">
                     Stream Information{" "}
                     <span>
                       <a href="javascript">
@@ -75,7 +100,7 @@ function AddStream() {
                   </h5>
                 </div>
                 <div>
-                  <div className="flex pb-4 flex-col md:grid grid-cols-3 gap-2 gap-y-4 md:gap-y-8">
+                  <div className="flex grid-cols-3 flex-col gap-2 gap-y-4 pb-4 md:grid md:gap-y-8">
                     <div>
                       <label>
                         Stream Name <span className="text-red-500">*</span>
@@ -85,7 +110,7 @@ function AddStream() {
                           handleInput(e);
                         }}
                         value={stream?.name}
-                        className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                         type="text"
                         placeholder="Enter Stream Name"
                         name="name"
@@ -98,21 +123,27 @@ function AddStream() {
                           handleInput(e);
                         }}
                         value={stream?.slug}
-                        className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                         type="text"
                         placeholder="Enter unique Stream ID"
                         name="slug"
                       />
                     </div>
                   </div>
-                  <div>
+                  <div className="mt-2">
+                    <div className="opacity80 rounded text-xs text-red-500">
+                      <span className="">{validInput}</span>
+                      <span className="text-transparent">.</span>
+                    </div>
+                  </div>
+                  <div className="mt-2">
                     {submit ? (
                       <Button />
                     ) : (
                       <button
                         onClick={() => handleSubmit()}
                         type="submit"
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded"
+                        className="rounded bg-blue-500 px-10 py-2 font-bold text-white hover:bg-blue-700"
                       >
                         Submit
                       </button>

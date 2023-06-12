@@ -18,11 +18,16 @@ import { type Teacher } from "@prisma/client";
 //   password: "123isaac",
 // };
 
+interface IndexedInput extends Teacher {
+  [key: string]: any;
+}
+
 function AddTeacher() {
   const [teacher, setTeacher] = useState<Teacher | undefined>();
   const [confPass, setConfPass] = useState("");
   const [submit, setSubmit] = useState(false);
   const [status, setStatus] = useState({ message: "", type: "" });
+  const [validInput, setValidInput] = useState("");
 
   const handleInput = (event: React.SyntheticEvent) => {
     const target = event.target as HTMLInputElement;
@@ -43,9 +48,39 @@ function AddTeacher() {
     });
   };
 
+  const inputValidate = () => {
+    const fields = [
+      "dateOfBirth",
+      "joiningDate",
+      "name",
+      "slug",
+      "email",
+      "password",
+      "phone",
+      "gender",
+      "qualification",
+    ];
+    const input = teacher as IndexedInput;
+    let message = "Please fill: ";
+    fields.forEach((field) => {
+      if (input?.[field] === "" || input?.[field] === undefined) {
+        message += `${field}, `;
+        setValidInput(message);
+      }
+    });
+    if (message === "Please fill: ") {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const addTeacherMutation = api.teacher.addTeacher.useMutation();
 
   const handleSubmit = () => {
+    if (inputValidate() === false) {
+      return;
+    }
     setSubmit(true);
     try {
       addTeacherMutation.mutate(teacher as Teacher, {
@@ -102,7 +137,7 @@ function AddTeacher() {
                   handleInput(e);
                 }}
                 value={teacher?.name}
-                className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                 type="text"
                 placeholder="Enter Full Names"
                 name="name"
@@ -147,7 +182,7 @@ function AddTeacher() {
                   handleInput(e);
                 }}
                 value={teacher?.dateOfBirth}
-                className="focus:shadow-outline datetimepicker w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                className="focus:shadow-outline datetimepicker w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                 type="text"
                 placeholder="DD-MM-YYYY"
                 name="dateOfBirth"
@@ -163,7 +198,7 @@ function AddTeacher() {
                   handleInput(e);
                 }}
                 value={teacher?.email}
-                className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                 type="text"
                 placeholder="eg. example@gmail.com"
                 name="email"
@@ -176,7 +211,7 @@ function AddTeacher() {
                   handleInput(e);
                 }}
                 value={teacher?.phone}
-                className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                 type="text"
                 placeholder="eg. 722123456"
                 name="phone"
@@ -191,7 +226,7 @@ function AddTeacher() {
                   handleInput(e);
                 }}
                 value={teacher?.joiningDate}
-                className="focus:shadow-outline datetimepicker w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                className="focus:shadow-outline datetimepicker w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                 type="text"
                 placeholder="DD-MM-YYYY"
                 name="joiningDate"
@@ -205,7 +240,7 @@ function AddTeacher() {
                 }}
                 value={teacher?.qualification}
                 type="text"
-                className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                 placeholder="eg. Geography & History"
                 name="qualification"
               />
@@ -226,7 +261,7 @@ function AddTeacher() {
                   handleInput(e);
                 }}
                 value={teacher?.slug?.toLowerCase()}
-                className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                 type="text"
                 placeholder="eg. 562jane"
                 name="slug"
@@ -243,7 +278,7 @@ function AddTeacher() {
                 value={teacher?.password}
                 name="password"
                 type="password"
-                className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                 placeholder="Enter Password"
               />
             </div>
@@ -258,7 +293,7 @@ function AddTeacher() {
                 value={confPass}
                 name="password"
                 type="password"
-                className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                 placeholder="Confirm Password"
               />
               {confPass && confPass !== teacher?.password && (
@@ -268,14 +303,20 @@ function AddTeacher() {
               )}
             </div>
           </div>
-          <div className=" mt-4">
+          <div className="mt-2">
+            <div className="opacity80 rounded text-xs text-red-500">
+              <span className="">{validInput}</span>
+              <span className="text-transparent">.</span>
+            </div>
+          </div>
+          <div className=" mt-2">
             {submit ? (
               <Button />
             ) : (
               <button
                 onClick={() => handleSubmit()}
                 type="submit"
-                className="rounded bg-blue-500 py-2 px-10 font-bold text-white hover:bg-blue-700"
+                className="rounded bg-blue-500 px-10 py-2 font-bold text-white hover:bg-blue-700"
               >
                 Submit
               </button>
