@@ -37,7 +37,7 @@ import { api } from "@/utils/api";
 //   html: "\u003ciframe width=\u0022200\u0022 height=\u0022113\u0022 src=\u0022https://www.youtube.com/embed/v5SuSB_93FM?feature=oembed\u0022 frameborder=\u00220\u0022 allow=\u0022accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\u0022 allowfullscreen title=\u0022Refraction of Light - Introduction | Don\u0026#39;t Memorise\u0022\u003e\u003c/iframe\u003e",
 // };
 
-interface IndexedCourse extends Course {
+interface IndexedInput extends Course {
   [key: string]: any;
 }
 
@@ -48,6 +48,7 @@ function AddCourse() {
   const [validInput, setValidInput] = useState("");
 
   const handleInput = (event: React.SyntheticEvent) => {
+    setValidInput("")
     const target = event.target as HTMLInputElement;
     const name = target.name;
     const value = target.value;
@@ -99,10 +100,10 @@ function AddCourse() {
       "video_url",
       "subject",
     ];
-    const inputCourse = course as IndexedCourse;
+    const input = course as IndexedInput;
     let message = "Please fill: ";
     fields.forEach((field) => {
-      if (inputCourse?.[field] === "" || inputCourse?.[field] === undefined) {
+      if (input?.[field] === "" || input?.[field] === undefined) {
         message += `${field}, `;
         setValidInput(message);
       }
@@ -146,7 +147,7 @@ function AddCourse() {
             type: "success",
             message: `succesfully added ${
               updatedCourse?.title ?? ""
-            } as a task`,
+            } as a Course`,
           });
           setTimeout(() => {
             res && window.location.reload();
@@ -160,7 +161,7 @@ function AddCourse() {
   };
 
   return (
-    <div>
+    <div className="container mx-auto">
       {<StatusMsg status={status} />}
       <div className="p-2 text-2xl font-semibold md:p-4">
         <h3>Add Courses</h3>

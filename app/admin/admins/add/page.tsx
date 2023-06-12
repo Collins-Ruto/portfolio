@@ -18,11 +18,16 @@ import { Button, StatusMsg } from "~/components";
 //   password: "123isaac",
 // };
 
+interface IndexedInput extends Admin {
+  [key: string]: any;
+}
+
 function AddAdmin() {
   const [admin, setAdmin] = useState<Admin | undefined>();
   const [confPass, setConfPass] = useState("");
   const [submit, setSubmit] = useState(false);
   const [status, setStatus] = useState({ message: "", type: "" });
+  const [validInput, setValidInput] = useState("");
 
  const handleInput = (event: React.SyntheticEvent) => {
    const target = event.target as HTMLInputElement;
@@ -42,10 +47,36 @@ function AddAdmin() {
      return updatedAdmin;
    });
  };
+  
+  const inputValidate = () => {
+    const fields = [
+    "name",
+    "slug",
+    "email",
+    "password",
+    "phone",
+    ];
+    const input = admin as IndexedInput;
+    let message = "Please fill: ";
+    fields.forEach((field) => {
+      if (input?.[field] === "" || input?.[field] === undefined) {
+        message += `${field}, `;
+        setValidInput(message);
+      }
+    });
+    if (message === "Please fill: ") {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   const addAdminMutation = api.admin.addAdmin.useMutation();
 
   const handleSubmit = () => {
+    if (inputValidate() === false) {
+      return;
+    }
     setSubmit(true);
     try {
       addAdminMutation.mutate(admin as Admin, {
@@ -79,9 +110,9 @@ function AddAdmin() {
       </div>
 
       <form>
-        <div className="m-4 bg-[#F7F6FB] rounded-xl p-4 md:p-6">
+        <div className="m-4 rounded-xl bg-[#F7F6FB] p-4 md:p-6">
           <div>
-            <h5 className="text-xl pb-4">
+            <h5 className="pb-4 text-xl">
               admin Information{" "}
               <span>
                 <a href="javascript">
@@ -90,7 +121,7 @@ function AddAdmin() {
               </span>
             </h5>
           </div>
-          <div className="flex flex-col md:grid grid-cols-2 max-w-[52rem] gap-4 md:gap-y-8 pb-4">
+          <div className="flex max-w-[52rem] grid-cols-2 flex-col gap-4 pb-4 md:grid md:gap-y-8">
             <div>
               <label>
                 Full Names <span className="text-red-500">*</span>
@@ -100,7 +131,7 @@ function AddAdmin() {
                   handleInput(e);
                 }}
                 value={admin?.name}
-                className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                 type="text"
                 placeholder="Enter Full Names"
                 name="name"
@@ -116,7 +147,7 @@ function AddAdmin() {
                   handleInput(e);
                 }}
                 value={admin?.email}
-                className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                 type="text"
                 placeholder="Enter Email Address"
                 name="email"
@@ -129,7 +160,7 @@ function AddAdmin() {
                   handleInput(e);
                 }}
                 value={admin?.phone}
-                className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                 type="number"
                 placeholder="Enter Phone Number"
                 name="phone"
@@ -137,13 +168,13 @@ function AddAdmin() {
             </div>
           </div>
         </div>
-        <div className="m-4 bg-[#F7F6FB] rounded-xl p-4 md:p-6">
+        <div className="m-4 rounded-xl bg-[#F7F6FB] p-4 md:p-6">
           <div className="col-12">
-            <h5 className="text-xl pb-4">
+            <h5 className="pb-4 text-xl">
               <span>Login Details</span>
             </h5>
           </div>
-          <div className="flex flex-col md:grid grid-cols-3 gap-4 md:gap-y-8 pb-4">
+          <div className="flex grid-cols-3 flex-col gap-4 pb-4 md:grid md:gap-y-8">
             <div>
               <label>Username </label>
               <input
@@ -151,7 +182,7 @@ function AddAdmin() {
                   handleInput(e);
                 }}
                 value={admin?.slug?.toLowerCase()}
-                className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                 type="text"
                 placeholder="Enter Username"
                 name="slug"
@@ -168,7 +199,7 @@ function AddAdmin() {
                 value={admin?.password}
                 name="password"
                 type="password"
-                className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                 placeholder="Enter Password"
               />
             </div>
@@ -183,7 +214,7 @@ function AddAdmin() {
                 value={confPass}
                 name="password"
                 type="password"
-                className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                 placeholder="Confirm Password"
               />
               {confPass && confPass !== admin?.password && (
@@ -193,6 +224,13 @@ function AddAdmin() {
               )}
             </div>
           </div>
+
+          <div className="mt-2">
+            <div className="opacity80 rounded text-xs text-red-500">
+              <span className="">{validInput}</span>
+              <span className="text-transparent">.</span>
+            </div>
+          </div>
           <div className=" mt-4">
             {submit ? (
               <Button />
@@ -200,7 +238,7 @@ function AddAdmin() {
               <button
                 onClick={() => handleSubmit()}
                 type="submit"
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded"
+                className="rounded bg-blue-500 px-10 py-2 font-bold text-white hover:bg-blue-700"
               >
                 Submit
               </button>

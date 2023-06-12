@@ -17,15 +17,20 @@ import { Button, Loader, StatusMsg } from "~/components";
 //   stream_slug: "1e",
 // };
 
+interface IndexedInput extends Student {
+  [key: string]: any;
+}
 
 function AddStudent() {
   const [student, setStudent] = useState<Student | undefined>();
   const [submit, setSubmit] = useState(false);
   const [status, setStatus] = useState({ message: "", type: "" });
+  const [validInput, setValidInput] = useState("");
 
   const { data: streams, isLoading } = api.stream.getAll.useQuery();
 
   const handleInput = (event: React.SyntheticEvent) => {
+    setValidInput("");
     const target = event.target as HTMLInputElement;
     const value = target.value;
     const name = target.name;
@@ -43,10 +48,42 @@ function AddStudent() {
       return updatedStudent;
     });
   };
+
+  const inputValidate = () => {
+    const fields = [
+      "dateOfBirth",
+      "name",
+      "slug",
+      "email",
+      "password",
+      "phone",
+      "parent",
+      "gender",
+      "admissionId",
+      "streamId",
+    ];
+    const input = student as IndexedInput;
+    let message = "Please fill: ";
+    fields.forEach((field) => {
+      if (input?.[field] === "" || input?.[field] === undefined) {
+        message += `${field}, `;
+        setValidInput(message);
+      }
+    });
+    if (message === "Please fill: ") {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   //http://localhost:8000
   const addStudentMutation = api.student.addStudent.useMutation();
 
   const handleSubmit = () => {
+    if (inputValidate() === false) {
+      return;
+    }
     setSubmit(true);
     try {
       addStudentMutation.mutate(student as Student, {
@@ -279,7 +316,13 @@ function AddStudent() {
                     </div>
                   </div>
                 </div>
-                <div className=" mt-4">
+                <div className="mt-2">
+                  <div className="opacity80 rounded text-xs text-red-500">
+                    <span className="">{validInput}</span>
+                    <span className="text-transparent">.</span>
+                  </div>
+                </div>
+                <div className=" my-2">
                   <div>
                     {submit ? (
                       <Button />

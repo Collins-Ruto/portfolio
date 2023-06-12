@@ -5,10 +5,15 @@ import { Button } from "~/components";
 import StatusMsg from "~/components/StatusMsg";
 import { api } from "@/utils/api";
 
+interface IndexedInput extends Fee {
+  [key: string]: any;
+}
+
 function AddFee() {
   const [fee, setFee] = useState<Fee | undefined>();
   const [submit, setSubmit] = useState(false);
   const [status, setStatus] = useState({ message: "", type: "" });
+  const [validInput, setValidInput] = useState("");
 
   const handleInput = (event: React.SyntheticEvent) => {
     const target = event.target as HTMLInputElement;
@@ -39,22 +44,49 @@ function AddFee() {
     });
   };
 
+  const inputValidate = () => {
+    const fields = [
+      "name",
+      "slug",
+      "term",
+      "type",
+      "amount",
+      "payday",
+      "studentId",
+    ];
+    const input = fee as IndexedInput;
+    let message = "Please fill: ";
+    fields.forEach((field) => {
+      if (input?.[field] === "" || input?.[field] === undefined) {
+        message += `${field}, `;
+        setValidInput(message);
+      }
+    });
+    if (message === "Please fill: ") {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const addFeeMutation = api.fee.addFee.useMutation();
-  
+
   const handleSubmit = () => {
+    if (inputValidate() === false) {
+      return;
+    }
     setSubmit(true);
-        
+
     try {
-      console.log("add fee", fee)
+      console.log("add fee", fee);
       const data = addFeeMutation.mutate(fee as Fee);
 
       setSubmit(false);
-      console.log("add fee data",data);
+      console.log("add fee data", data);
       setStatus({
-              type: "success",
-              message: `${fee?.type ?? "fee"} of ${fee?.amount ?? ""} is succesfull`,
-            }
-      );
+        type: "success",
+        message: `${fee?.type ?? "fee"} of ${fee?.amount ?? ""} is succesfull`,
+      });
       setTimeout(() => {
         window.location.reload();
       }, 2000);
@@ -89,7 +121,7 @@ function AddFee() {
                   handleInput(e);
                 }}
                 value={fee?.studentId}
-                className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                 type="text"
                 placeholder="Enter Username"
                 name="studentId"
@@ -104,7 +136,7 @@ function AddFee() {
                   handleInput(e);
                 }}
                 value={fee?.name}
-                className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                 type="text"
                 placeholder="Enter Name"
                 name="name"
@@ -119,7 +151,7 @@ function AddFee() {
                   handleInput(e);
                 }}
                 value={fee?.term}
-                className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                 type="text"
                 placeholder="Associated Term"
                 name="term"
@@ -134,7 +166,7 @@ function AddFee() {
                   handleInput(e);
                 }}
                 value={fee?.amount}
-                className="focus:shadow-outline w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                 type="number"
                 placeholder="Enter amount"
                 name="amount"
@@ -177,21 +209,29 @@ function AddFee() {
                   handleInput(e);
                 }}
                 value={fee?.payday}
-                className="focus:shadow-outline datetimepicker w-full appearance-none rounded border py-3 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                className="focus:shadow-outline datetimepicker w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                 type="text"
                 placeholder="DD-MM-YYYY"
                 name="payday"
               />
             </div>
           </div>
-          <div className=" mt-4">
+
+          <div className="mt-2">
+            <div className="opacity80 rounded text-xs text-red-500">
+              <span className="">{validInput}</span>
+              <span className="text-transparent">.</span>
+            </div>
+          </div>
+
+          <div className=" my-2">
             {submit ? (
               <Button />
             ) : (
               <div
                 onClick={() => handleSubmit()}
                 // type="submit"
-                className="w-32 rounded bg-blue-500 py-2 px-10 font-bold text-white hover:bg-blue-700"
+                className="w-32 rounded bg-blue-500 px-10 py-2 font-bold text-white hover:bg-blue-700"
               >
                 Submit
               </div>

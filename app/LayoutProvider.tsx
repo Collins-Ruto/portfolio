@@ -3,7 +3,7 @@
 
 // Use usePathname for catching route name.
 import { usePathname } from "next/navigation";
-import { Header } from "~/components";
+import { Header, PubHeader } from "~/components";
 
 export const LayoutProvider = ({
   // Layouts must accept a children prop.
@@ -33,7 +33,8 @@ export const LayoutProvider = ({
           </div>
         </div>
       ) : (
-        <div className="">
+          <div className="">
+            <PubHeader />
           <div className="flex">
             <div className="grow">{children}</div>
           </div>

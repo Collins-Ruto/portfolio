@@ -9,6 +9,11 @@ import { type Search, Subjects } from "~/types/types";
 
 const forms = ["1", "2", "3", "4"];
 
+Subjects.push({
+  slug: "all",
+  name: "",
+});
+
 const searchOrg = {
   form: "",
   subject: {
@@ -30,7 +35,7 @@ function Courses() {
     if (data) {
       setCourses(data);
     }
-    searchSubmit();
+    // searchSubmit();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, search]);
 
@@ -43,7 +48,6 @@ function Courses() {
   const searchSubmit = () => {
     console.log("search crs", search);
     const { data } = searchCourses;
-    console.log("search data crs", data);
     setCourses(data);
     setSubmit(false);
   };
@@ -72,9 +76,8 @@ function Courses() {
               }}
               value={search.form}
               className="focus:shadow-outline block w-full appearance-none rounded border border-gray-400 bg-white px-4 py-2 pr-8 leading-tight shadow hover:border-gray-500 focus:outline-none"
-              name="stream_slug"
             >
-              <option>Select Form</option>
+              <option value="">Select Form</option>
               {forms?.map((form, index) => {
                 return (
                   <option key={index} value={form}>
@@ -100,9 +103,8 @@ function Courses() {
               }}
               value={search.subject.name}
               className="focus:shadow-outline block w-full appearance-none rounded border border-gray-400 bg-white px-4 py-2 pr-8 leading-tight shadow hover:border-gray-500 focus:outline-none"
-              name="stream_slug"
             >
-              <option>Select Subject</option>
+              <option value="all">Select Subject</option>
               {Subjects?.map((subject, index) => {
                 return (
                   <option key={index} value={subject.slug}>
