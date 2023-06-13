@@ -35,7 +35,9 @@ export const adminRouter = createTRPCRouter({
         email: z.string(),
         password: z.string(),
         phone: z.string(),
-    })).mutation(({ ctx, input }) => {
+    })).mutation(async( { ctx, input }) => {
+        const encrypterPass = await bcrypt.hash(input.password, 10)
+        input.password = encrypterPass
         console.log("trpc input", input)
         return ctx.prisma.admin.create({
             data: input,

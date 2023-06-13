@@ -14,7 +14,7 @@ export const taskRouter = createTRPCRouter({
             },
             take: 20,
             orderBy: {
-              createdAt: 'desc'
+                createdAt: 'desc'
             }
         });
     }),
@@ -86,32 +86,23 @@ export const taskRouter = createTRPCRouter({
         teacherId: z.string(),
         streamId: z.string(),
     })).mutation(({ ctx, input }) => {
+        const { subject, teacherId, streamId, ...taskData } = input;
         console.log("trpc input", input)
         return ctx.prisma.task.create({
             data: {
                 createdAt: new Date(),
-                name: input.name,
-                description: input.description,
-                due: input.due,
-                posted: input.posted,
-                file: input.file,
-                secure_url: input.secure_url,
-                asset_id: input.asset_id,
-                original_filename: input.original_filename,
-                subject: {
-                    slug: input.subject.slug,
-                    name: input.subject.name,
-                },
+                subject: subject,
                 stream: {
                     connect: {
-                        slug: input.streamId
+                        slug: streamId
                     }
                 },
                 teacher: {
                     connect: {
-                        slug: input.teacherId
+                        slug: teacherId
                     }
-                }
+                },
+                ...taskData
             },
         });
     }),

@@ -53,11 +53,21 @@ export const studentRouter = createTRPCRouter({
     admissionId: z.string(),
     streamId: z.string(),
     dateOfBirth: z.string(),
-  })).mutation(({ ctx, input }) => {
+  })).mutation(async ({ ctx, input }) => {
+    const encrypterPass = await bcrypt.hash(input.slug, 10)
+    input.password = encrypterPass
     console.log("trpc input", input)
-    const newInput = { ...input, createdAt: new Date() };
+    const { streamId, ...inputData } = input
     return ctx.prisma.student.create({
-      data: newInput,
+      data: {
+        createdAt: new Date(),
+        stream: {
+          connect: {
+            slug: streamId
+          }
+        },
+        ...inputData
+      },
     });
   }),
 

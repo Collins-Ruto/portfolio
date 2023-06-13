@@ -43,6 +43,7 @@ function AddStudent() {
       const updatedStudent = {
         ...prevStudent,
         [name]: value,
+        password: "student"
       };
 
       return updatedStudent;
@@ -55,7 +56,6 @@ function AddStudent() {
       "name",
       "slug",
       "email",
-      "password",
       "phone",
       "parent",
       "gender",
@@ -216,8 +216,7 @@ function AddStudent() {
                         }}
                         value={student?.dateOfBirth}
                         className="focus:shadow-outline datetimepicker w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
-                        type="text"
-                        placeholder="DD-MM-YYYY"
+                        type="date"
                         name="dateOfBirth"
                       />
                     </div>

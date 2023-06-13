@@ -43,11 +43,12 @@ export const teacherRouter = createTRPCRouter({
     gender: z.string(),
     qualification: z.string(),
     dateOfBirth: z.string(),
-  })).mutation(({ ctx, input }) => {
+  })).mutation(async ({ ctx, input }) => {
+    const encrypterPass = await bcrypt.hash(input.password, 10)
+    input.password = encrypterPass
     console.log("trpc input", input)
-    const newInput = { ...input, createdAt: new Date() };
     return ctx.prisma.teacher.create({
-      data: newInput,
+      data: { ...input, createdAt: new Date() },
     });
   }),
 
