@@ -44,7 +44,7 @@ function AddFee() {
     });
   };
 
-  const inputValidate = () => {
+  const inputValidate = (action: string) => {
     const fields = [
       "name",
       "slug",
@@ -56,6 +56,15 @@ function AddFee() {
     ];
     const input = fee as IndexedInput;
     let message = "Please fill: ";
+    if (action === "clear") {
+      setFee(() => {
+        let newInput = {} as unknown as Fee;
+        fields.forEach((field) => {
+          newInput = { ...newInput, [field]: "" };
+        });
+        return newInput;
+      });
+    }
     fields.forEach((field) => {
       if (input?.[field] === "" || input?.[field] === undefined) {
         message += `${field}, `;
@@ -72,7 +81,7 @@ function AddFee() {
   const addFeeMutation = api.fee.addFee.useMutation();
 
   const handleSubmit = () => {
-    if (inputValidate() === false) {
+    if (inputValidate("") === false) {
       return;
     }
     setSubmit(true);
@@ -88,7 +97,7 @@ function AddFee() {
         message: `${fee?.type ?? "fee"} of ${fee?.amount ?? ""} is succesfull`,
       });
       setTimeout(() => {
-        window.location.reload();
+        inputValidate("clear");
       }, 2000);
     } catch (error) {
       setSubmit(false);

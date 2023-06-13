@@ -62,7 +62,7 @@ function CreateTask() {
     });
   };
 
-  const inputValidate = () => {
+  const inputValidate = (action: string) => {
     const fields = [
       "name",
       "description",
@@ -73,6 +73,15 @@ function CreateTask() {
     ];
     const inputTask = task as IndexedTask;
     let message = "Please fill: ";
+    if (action === "clear") {
+      setTask(() => {
+        let newInput = {} as unknown as Task;
+        fields.forEach((field) => {
+          newInput = { ...newInput, [field]: "" };
+        });
+        return newInput;
+      });
+    }
     fields.forEach((field) => {
       if (inputTask?.[field] === "" || inputTask?.[field] === undefined) {
         message += `${field}, `;
@@ -153,7 +162,7 @@ function CreateTask() {
   };
 
   async function handleSubmit() {
-    if (inputValidate() === false) {
+    if (inputValidate("") === false) {
       return;
     }
     setSubmit(true);
@@ -180,7 +189,7 @@ function CreateTask() {
             message: `succesfully added ${fileTask?.name ?? ""} as a task`,
           });
           setTimeout(() => {
-            res && window.location.reload();
+             inputValidate("clear");
           }, 2000);
         },
       });

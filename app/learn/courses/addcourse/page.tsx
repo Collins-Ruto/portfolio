@@ -48,7 +48,7 @@ function AddCourse() {
   const [validInput, setValidInput] = useState("");
 
   const handleInput = (event: React.SyntheticEvent) => {
-    setValidInput("")
+    setValidInput("");
     const target = event.target as HTMLInputElement;
     const name = target.name;
     const value = target.value;
@@ -91,7 +91,7 @@ function AddCourse() {
     });
   };
 
-  const inputValidate = () => {
+  const inputValidate = (action: string) => {
     const fields = [
       "topic",
       "description",
@@ -102,6 +102,15 @@ function AddCourse() {
     ];
     const input = course as IndexedInput;
     let message = "Please fill: ";
+    if (action === "clear") {
+      setCourse(() => {
+        let newInput = {} as unknown as Course;
+        fields.forEach((field) => {
+          newInput = { ...newInput, [field]: "" };
+        });
+        return newInput;
+      });
+    }
     fields.forEach((field) => {
       if (input?.[field] === "" || input?.[field] === undefined) {
         message += `${field}, `;
@@ -119,7 +128,7 @@ function AddCourse() {
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    if (inputValidate() === false) {
+    if (inputValidate("") === false) {
       return;
     }
     setSubmit(true);
@@ -150,7 +159,7 @@ function AddCourse() {
             } as a Course`,
           });
           setTimeout(() => {
-            res && window.location.reload();
+             inputValidate("clear");
           }, 2000);
         },
       });

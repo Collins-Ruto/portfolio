@@ -35,10 +35,19 @@ function AddStream() {
     });
   };
 
-  const inputValidate = () => {
+  const inputValidate = (action: string) => {
     const fields = ["name", "slug"];
     const input = stream as IndexedInput;
     let message = "Please fill: ";
+    if (action === "clear") {
+      setStream(() => {
+        let newInput = {} as unknown as Stream;
+        fields.forEach((field) => {
+          newInput = { ...newInput, [field]: "" };
+        });
+        return newInput;
+      });
+    }
     fields.forEach((field) => {
       if (input?.[field] === "" || input?.[field] === undefined) {
         message += `${field}, `;
@@ -55,7 +64,7 @@ function AddStream() {
   const addStreamMutation = api.stream.addStream.useMutation();
 
   const handleSubmit = () => {
-    if (inputValidate() === false) {
+    if (inputValidate("") === false) {
       return;
     }
     setSubmit(true);
@@ -68,7 +77,7 @@ function AddStream() {
             message: `succesfully added ${stream?.name ?? ""} as  stream`,
           });
           setTimeout(() => {
-            res && window.location.reload();
+            inputValidate("clear");
           }, 2000);
         },
       });

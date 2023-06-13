@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { api } from "@/utils/api";
 import { type Admin } from "@prisma/client";
 import React, { useState } from "react";
@@ -29,35 +29,38 @@ function AddAdmin() {
   const [status, setStatus] = useState({ message: "", type: "" });
   const [validInput, setValidInput] = useState("");
 
- const handleInput = (event: React.SyntheticEvent) => {
-   const target = event.target as HTMLInputElement;
-   const value = target.value;
-   const name = target.name;
+  const handleInput = (event: React.SyntheticEvent) => {
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
+    const name = target.name;
 
-   setAdmin((prevAdmin: Admin | undefined) => {
-     if (!prevAdmin) {
-       return undefined; // or some default value if you have one
-     }
+    setAdmin((prevAdmin: Admin | undefined) => {
+      if (!prevAdmin) {
+        return undefined; // or some default value if you have one
+      }
 
-     const updatedAdmin = {
-       ...prevAdmin,
-       [name]: value,
-     };
+      const updatedAdmin = {
+        ...prevAdmin,
+        [name]: value,
+      };
 
-     return updatedAdmin;
-   });
- };
-  
-  const inputValidate = () => {
-    const fields = [
-    "name",
-    "slug",
-    "email",
-    "password",
-    "phone",
-    ];
+      return updatedAdmin;
+    });
+  };
+
+  const inputValidate = (action: string) => {
+    const fields = ["name", "slug", "email", "password", "phone"];
     const input = admin as IndexedInput;
     let message = "Please fill: ";
+    if (action === "clear") {
+      setAdmin(() => {
+        let newInput = {} as unknown as Admin;
+        fields.forEach((field) => {
+          newInput = { ...newInput, [field]: "" };
+        });
+        return newInput;
+      });
+    }
     fields.forEach((field) => {
       if (input?.[field] === "" || input?.[field] === undefined) {
         message += `${field}, `;
@@ -74,7 +77,7 @@ function AddAdmin() {
   const addAdminMutation = api.admin.addAdmin.useMutation();
 
   const handleSubmit = () => {
-    if (inputValidate() === false) {
+    if (inputValidate("") === false) {
       return;
     }
     setSubmit(true);
@@ -87,7 +90,7 @@ function AddAdmin() {
             message: `succesfully added ${admin?.name ?? ""} as  admin`,
           });
           setTimeout(() => {
-            res && window.location.reload();
+            inputValidate("clear");
           }, 2000);
         },
       });

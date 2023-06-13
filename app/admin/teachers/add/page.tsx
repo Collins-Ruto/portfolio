@@ -48,20 +48,29 @@ function AddTeacher() {
     });
   };
 
-  const inputValidate = () => {
+  const inputValidate = (action: string) => {
     const fields = [
-      "dateOfBirth",
-      "joiningDate",
       "name",
-      "slug",
-      "email",
-      "password",
-      "phone",
       "gender",
+      "dateOfBirth",
+      "email",
+      "phone",
+      "joiningDate",
       "qualification",
+      "slug",
+      "password",
     ];
     const input = teacher as IndexedInput;
     let message = "Please fill: ";
+    if (action === "clear") {
+      setTeacher(() => {
+        let newInput = {} as unknown as Teacher;
+        fields.forEach((field) => { 
+          newInput = {...newInput, [field]: ""}
+        })
+        return newInput
+      })
+    }
     fields.forEach((field) => {
       if (input?.[field] === "" || input?.[field] === undefined) {
         message += `${field}, `;
@@ -77,8 +86,9 @@ function AddTeacher() {
 
   const addTeacherMutation = api.teacher.addTeacher.useMutation();
 
-  const handleSubmit = () => {
-    if (inputValidate() === false) {
+  const handleSubmit = (e: React.SyntheticEvent) => {
+    e.preventDefault()
+    if (inputValidate("") === false) {
       return;
     }
     setSubmit(true);
@@ -93,7 +103,7 @@ function AddTeacher() {
             } teacher`,
           });
           setTimeout(() => {
-            res && window.location.reload();
+            inputValidate("clear");
           }, 2000);
         },
       });
@@ -314,8 +324,8 @@ function AddTeacher() {
               <Button />
             ) : (
               <button
-                onClick={() => handleSubmit()}
-                type="submit"
+                onClick={(e) => handleSubmit(e)}
+                // type="submit"
                 className="rounded bg-blue-500 px-10 py-2 font-bold text-white hover:bg-blue-700"
               >
                 Submit

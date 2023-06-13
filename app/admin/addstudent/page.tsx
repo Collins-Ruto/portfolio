@@ -50,7 +50,7 @@ function AddStudent() {
     });
   };
 
-  const inputValidate = () => {
+  const inputValidate = (action: string) => {
     const fields = [
       "dateOfBirth",
       "name",
@@ -64,6 +64,15 @@ function AddStudent() {
     ];
     const input = student as IndexedInput;
     let message = "Please fill: ";
+    if (action === "clear") {
+      setStudent(() => {
+        let newStudent = {} as unknown as Student;
+        fields.forEach((field) => { 
+          newStudent = {...newStudent, [field]: ""}
+        })
+        return newStudent
+      })
+    }
     fields.forEach((field) => {
       if (input?.[field] === "" || input?.[field] === undefined) {
         message += `${field}, `;
@@ -77,24 +86,26 @@ function AddStudent() {
     }
   };
 
+  console.log("std", student)
+
   //http://localhost:8000
   const addStudentMutation = api.student.addStudent.useMutation();
 
   const handleSubmit = () => {
-    if (inputValidate() === false) {
+    if (inputValidate("") === false) {
       return;
     }
     setSubmit(true);
     try {
       addStudentMutation.mutate(student as Student, {
-        onSuccess: (res) => {
+        onSuccess: () => {
           setSubmit(false);
           setStatus({
             type: "success",
             message: `succesfully added ${student?.name ?? ""} as a student`,
           });
           setTimeout(() => {
-            res && window.location.reload();
+            inputValidate("clear")
           }, 2000);
         },
       });
@@ -248,7 +259,7 @@ function AddStudent() {
                         }}
                         value={student?.email}
                         className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
-                        type="text"
+                        type="email"
                         placeholder="eg. example@gmail.com"
                         name="email"
                       />
@@ -327,7 +338,10 @@ function AddStudent() {
                       <Button />
                     ) : (
                       <button
-                        onClick={() => handleSubmit()}
+                          onClick={(e) => {
+                            handleSubmit()
+                            e.preventDefault();
+                          }}
                         type="submit"
                         className="rounded bg-blue-500 px-10 py-2 font-bold text-white hover:bg-blue-700"
                       >

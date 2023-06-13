@@ -16,7 +16,7 @@ export async function generateMetadata(
     prisma: prisma,
   });
 
-  const data = await caller.course.getById(id || "621dd16f2eece6ce9587cb0d");
+  const data = await caller.course.getById(id);
   const course = data[0] as Course;
 
   const previousImages = (await parent)?.openGraph?.images || [];
@@ -25,6 +25,9 @@ export async function generateMetadata(
     title: course.topic,
     openGraph: {
       images: [course.thumbnail_url, ...previousImages],
+    },
+    alternates: {
+      canonical: `https://learnhq.vercel.app/learn/courses/course/${id}`,
     },
     authors: [
       {
