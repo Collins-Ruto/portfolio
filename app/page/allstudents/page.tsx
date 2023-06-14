@@ -63,7 +63,7 @@ function Students() {
       setisDelete(false);
 
       const newStudent: (Student & { stream: Stream })[] | undefined =
-        students?.filter((student) => student.slug !== delStudent);
+        students?.filter((student) => student.id !== delStudent);
       setStudents(newStudent);
     } catch (error) {
       console.log(error);
@@ -265,7 +265,7 @@ function Students() {
                         <div
                           onClick={() => {
                             setisDelete(true);
-                            setDelStudent(student.slug);
+                            setDelStudent(student.id);
                           }}
                         >
                           <Image
