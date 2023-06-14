@@ -4,7 +4,7 @@ import {
   createTRPCRouter,
   protectedProcedure,
 } from "@/server/api/trpc";
-import type{ Prisma } from "@prisma/client";
+import type { Prisma } from "@prisma/client";
 
 export const examRouter = createTRPCRouter({
   getAll: protectedProcedure.input(z.number()).query(({ ctx, input }) => {
@@ -61,6 +61,10 @@ export const examRouter = createTRPCRouter({
     name: z.string(),
     slug: z.string(),
     term: z.string(),
+    results: z.object({
+      slug: z.string(),
+      marks: z.string(),
+    }),
     examDate: z.string(),
     studentId: z.string()
   })).mutation(({ ctx, input }) => {
@@ -71,12 +75,32 @@ export const examRouter = createTRPCRouter({
     });
   }),
 
+  addManyExams: protectedProcedure.input(z.array(z.object({
+    name: z.string(),
+    slug: z.string(),
+    term: z.string(),
+    results: z.object({
+      slug: z.string(),
+      marks: z.string(),
+    }),
+    examDate: z.string(),
+    studentId: z.string()
+  }))).mutation(({ ctx, input }) => {
+    console.log("trpc input", input)
+    input.map((exam) => {
+      const newInput = { ...exam, createdAt: new Date() };
+      return ctx.prisma.exam.create({
+        data: newInput,
+      })
+    });
+  }),
+
   search: protectedProcedure.input(z.string()).query(({ ctx, input }) => {
     console.log("search in", input)
     const searchQuery: Prisma.ExamWhereInput = {
       OR: [
         { name: { contains: input, mode: "insensitive" } },
-        { student:{name: { contains: input, mode: "insensitive" }} },
+        { student: { name: { contains: input, mode: "insensitive" } } },
         { slug: { contains: input, mode: "insensitive" } },
         { term: { contains: input, mode: "insensitive" } },
         // Add additional conditions using the OR operator if needed

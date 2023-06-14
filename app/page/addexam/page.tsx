@@ -1,13 +1,13 @@
 "use client";
 import { api } from "@/utils/api";
-import type { Student, Exam, Stream } from "@prisma/client";
+import type { Student, Exam, Stream, Result } from "@prisma/client";
 import React, { useState } from "react";
 import { Subjects } from "~/types/types";
 import { Button, DateTime, Loader } from "~/components";
 import StatusMsg from "~/components/StatusMsg";
 
 function AddExam() {
-  const [exam, setExam] = useState<Exam | undefined>();
+  const [exams, setExams] = useState<Exam[]>();
   const [students, setStudents] = useState<(Student | undefined)[]>();
   const [stream, setStream] = useState<Stream>();
   const [loading, setLoading] = useState(false);
@@ -21,51 +21,123 @@ function AddExam() {
     const value = target.value;
     const name = target.name;
 
-    setExam((prevExam: Exam | undefined) => {
-      if (!prevExam) {
-        return { [name]: value } as unknown as Exam; // or some default value if you have one
+    setExams((prevExams: Exam[] | undefined) => {
+      let newExams = [] as unknown as Exam[];
+      if (!prevExams) {
+        students?.forEach((student) => {
+          newExams.push({
+            studentId: student?.id,
+            [name]: value,
+          } as unknown as Exam);
+        });
+        return newExams; // or some default value if you have one
       }
 
-      const updatedExam = {
-        ...prevExam,
-        [name]: value,
-      };
+      prevExams?.forEach((prevExam) => {
+        newExams.push({
+          ...prevExam,
+          [name]: value,
+        } as unknown as Exam);
+      });
 
-      return updatedExam;
+      return newExams;
     });
   };
 
-  const handleResult = (event: React.SyntheticEvent) => {
+  const handleResult = (event: React.SyntheticEvent, id: string) => {
     const target = event.target as HTMLInputElement;
-    // const value = target.type === "checkbox" ? target.checked : target.value;
     const value = target.value;
     const name = target.name;
 
-    setExam((prevExam) => {
-      if (!prevExam) {
-        return undefined;
+    console.log("hand chsng")
+
+    setExams((prevExams: Exam[] | undefined) => {
+      let newExams = [] as unknown as Exam[];
+      if (!prevExams) {
+        console.log("hand chsng 1");
+        students?.forEach((student) => {
+          if (student?.id === id) {
+            console.log("hand chsng 2");
+            newExams.push({
+              studentId: student?.id,
+              results: [
+                {
+                  slug: name,
+                  marks: value,
+                },
+              ],
+            } as unknown as Exam);
+          } else {
+            console.log("hand chsng 3");
+            newExams.push({
+              studentId: student?.id,
+              results: [
+                {
+                  slug: name,
+                  marks: value,
+                },
+              ],
+            } as unknown as Exam);
+          }
+        });
+        return newExams; // or some default value if you have one
       }
 
-      return {
-        ...prevExam,
-        [name]: value,
-      };
+      prevExams?.forEach((prevExam) => {
+        console.log("hand chsng 4");
+        if (prevExam.studentId === id) {
+          console.log("hand chsng 5");
+
+          let newResults = {} as unknown as Result
+
+          prevExam.results.forEach((result) => {
+            if (result.slug === name) {
+              result.marks = value;
+            }
+          })
+
+          const myExam = {
+            ...prevExam,
+            results: [
+              ...prevExam.results,
+              {
+                slug: name,
+                marks: value,
+              },
+            ],
+          } as unknown as Exam;
+
+          console.log("hand 5 exam ", myExam);
+
+          newExams.push(myExam);
+        } else {
+          console.log("hand chsng 6");
+          newExams = prevExams;
+        }
+      });
+
+      return newExams;
     });
   };
 
   console.log(stream);
+  console.log("exams", exams);
 
-  const addExamMutation = api.exam.addExam.useMutation();
+  const addExamMutation = api.exam.addManyExams.useMutation();
 
   const handleSubmit = () => {
+    if (!exams) {
+      return;
+    }
     setSubmit(true);
+    const newExams = exams.map((exam) => exam as Exam);
     try {
-      addExamMutation.mutate(exam as Exam, {
+      addExamMutation.mutate(exams, {
         onSuccess: (res) => {
           setSubmit(false);
           setStatus({
             type: "success",
-            message: `succesfully added ${exam?.name ?? ""} exam`,
+            message: `succesfully added ${exams?.[0]?.name ?? ""} exam`,
           });
 
           setTimeout(() => {
@@ -114,7 +186,7 @@ function AddExam() {
       {loading && <Loader />}
       <div className="px-4">
         <div className="my-2 flex flex-col items-center justify-between rounded-xl bg-[#F7F6FB] p-2 md:flex-row">
-          <div className="flex w-full items-center justify-between gap-2 px-2 md:w-1/2 sm:justify-around">
+          <div className="flex w-full items-center justify-between gap-2 px-2 sm:justify-around md:w-1/2">
             <div className="relative flex items-center gap-4">
               <label>
                 Stream <span className="text-red-500">*</span>
@@ -155,7 +227,7 @@ function AddExam() {
               <span className="text-lg font-semibold">{stream?.slug}</span>
             </div>
           </div>
-          <div className="flex w-full items-center justify-between gap-2 px-2 md:w-1/2 sm:justify-around">
+          <div className="flex w-full items-center justify-between gap-2 px-2 sm:justify-around md:w-1/2">
             <div>
               Stream :{" "}
               <span className="text-lg font-semibold">{stream?.name}</span>
@@ -175,7 +247,7 @@ function AddExam() {
               onChange={(e) => {
                 handleInput(e);
               }}
-              value={exam?.name}
+              value={exams?.[0]?.name}
               className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
               type="text"
               placeholder="eg: End Term 1"
@@ -190,7 +262,7 @@ function AddExam() {
               onChange={(e) => {
                 handleInput(e);
               }}
-              value={exam?.term}
+              value={exams?.[0]?.term}
               className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
               type="text"
               placeholder="eg: 2020 II"
@@ -205,7 +277,7 @@ function AddExam() {
               onChange={(e) => {
                 handleInput(e);
               }}
-              value={exam?.slug}
+              value={exams?.[0]?.slug}
               className="focus:shadow-outline w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
               type="text"
               placeholder="eg: 282021i"
@@ -231,6 +303,7 @@ function AddExam() {
             </thead>
             <tbody>
               {students?.map((student, index) => {
+                const id = student?.id || "621dd16f2eece6ce9587cb0d";
                 return (
                   <tr
                     key={index}
@@ -238,18 +311,20 @@ function AddExam() {
                   >
                     <td className="px-4 py-2 text-lg">{student?.name}</td>
                     {Subjects?.map((subject, index) => {
-                      const slug = subject.slug.substring(0, 1);
+                      const slug = subject.slug;
+                      const exam = exams?.find(
+                        (exam) => exam.studentId === student?.id
+                      );
+                      const result = exam?.results?.find(
+                        (result) => result.slug === slug
+                      );
                       return (
                         <td key={index} className="border-x px-2 py-2">
                           <input
-                            onInput={(e) => {
-                              handleResult(e);
+                            onChange={(e) => {
+                              handleResult(e, id);
                             }}
-                            value={
-                              exam?.results?.find(
-                                (result) => result.slug === slug
-                              )?.marks || ""
-                            }
+                            value={result?.marks}
                             className="focus:shadow-outline w-14 appearance-none rounded border px-2 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                             type="text"
                             placeholder="-"

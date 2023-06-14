@@ -116,14 +116,27 @@ model Admin {
 model Exam {
     id          String @id @default(auto()) @map("_id") @db.ObjectId
     name        String
-    slug        String @unique 
+    slug        String
     term        String
     createdAt   DateTime   @default(now())
     results     Result[]
     examDate    String
     student     Student @relation(fields: [studentId], references: [id])
     studentId   String @db.ObjectId
+    // examinations Examimations @relation(fields: [examId], references: [id])
+    // examId      String @db.ObjectId
 }
+
+// model Examimations {
+//     id          String @id @default(auto()) @map("_id") @db.ObjectId
+//     name        String
+//     slug        String @unique 
+//     term        String
+//     createdAt   DateTime   @default(now())
+//     examDate    String
+//     exam        Exam[]
+//     studentId   String @db.ObjectId
+// }
 
 model Fee {
     id          String @id @default(auto()) @map("_id") @db.ObjectId
