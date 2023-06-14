@@ -101,7 +101,6 @@ function Courses() {
               onChange={(e) => {
                 handleSubject(e.target.value);
               }}
-              value={search.subject.name}
               className="focus:shadow-outline block w-full appearance-none rounded border border-gray-400 bg-white px-4 py-2 pr-8 leading-tight shadow hover:border-gray-500 focus:outline-none"
             >
               <option value="all">Select Subject</option>
