@@ -1,13 +1,16 @@
 import { appRouter } from "@/server/api/root";
 import { prisma } from "@/server/db";
 import type { Course } from "@prisma/client";
-import type { Metadata } from "next";
+import type { Metadata, ResolvingMetadata } from "next";
 
-export async function generateMetadata({
-  params: { id },
-}: {
-  params: { id: string };
-}): Promise<Metadata> {
+export async function generateMetadata(
+  {
+    params: { id },
+  }: {
+    params: { id: string };
+  },
+  parent: ResolvingMetadata
+): Promise<Metadata> {
   const caller = appRouter.createCaller({
     session: null,
     prisma: prisma,
@@ -16,10 +19,12 @@ export async function generateMetadata({
   const data = await caller.course.getById(id);
   const course = data[0] as Course;
 
+  const previousImages = (await parent)?.openGraph?.images || [];
+
   return {
     title: course.topic,
     openGraph: {
-      images: [course.thumbnail_url],
+      images: [course.thumbnail_url, ...previousImages],
     },
     alternates: {
       canonical: `https://learnhq.vercel.app/learn/courses/course/${id}`,

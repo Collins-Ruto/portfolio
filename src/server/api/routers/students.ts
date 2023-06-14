@@ -1,5 +1,5 @@
 import { z } from "zod";
-import bcrypt from "bcryptjs";
+import bcrypt, { compare } from "bcryptjs";
 
 import {
   createTRPCRouter,
@@ -115,6 +115,42 @@ export const studentRouter = createTRPCRouter({
       },
       data: input,
     });
+  }),
+
+  editInfo: protectedProcedure.input(z.object({
+    id: z.string(),
+    email: z.string().optional(),
+    phone: z.string().optional(),
+    password: z.string().optional(),
+
+  })).mutation(async ({ ctx, input }) => {
+    console.log("trpc input", input)
+    const inputUpdate = {email: input.email, name: input.phone}
+    return ctx.prisma.student.update({
+      where: {
+        id: input.id
+      },
+      data: inputUpdate,
+    });
+  }),
+
+  passwordVerify: protectedProcedure.input(z.object({
+    id: z.string(),
+    password: z.string()
+  })).query(async ({ ctx, input }) => {
+    const user = await ctx.prisma.student.findUnique({
+      where: {
+        id: input.id
+      },
+      select: {
+        password: true
+      }
+    })
+    const isPasswordValid = await compare(
+      input.password,
+      user?.password || ""
+    )
+    return isPasswordValid
   }),
 
   delete: protectedProcedure.input(z.string()).mutation(({ ctx, input }) => {
