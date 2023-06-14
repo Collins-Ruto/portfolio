@@ -19,6 +19,14 @@ export const streamRouter = createTRPCRouter({
         });
     }),
 
+    getBySlug: publicProcedure.input(z.string()).query(({ ctx, input }) => {
+        return ctx.prisma.stream.findUnique({
+            where: {
+                slug: input
+            }
+        });
+    }),
+
     addStream: protectedProcedure.input(z.object({
         name: z.string(),
         slug: z.string(),

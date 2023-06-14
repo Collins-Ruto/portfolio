@@ -34,11 +34,28 @@ export const studentRouter = createTRPCRouter({
     return ctx.prisma.student.count();
   }),
 
+  getAllStream: publicProcedure.input(z.string()).query(({ ctx, input }) => {
+    return ctx.prisma.student.findMany({
+      where: {
+        streamId: input
+      }
+    });
+  }),
+
   getById: publicProcedure.input(z.string()).query(({ ctx, input }) => {
     return ctx.prisma.student.findUnique({
       where: {
         slug: input
       }
+    });
+  }),
+  
+  getByAdm: publicProcedure.input(z.string()).query(({ ctx, input }) => {
+    return ctx.prisma.student.findUnique({
+      where: {
+        admissionId: input
+      },
+      include: {stream: true}
     });
   }),
 
@@ -95,9 +112,14 @@ export const studentRouter = createTRPCRouter({
   }),
 
   delete: protectedProcedure.input(z.string()).mutation(({ ctx, input }) => {
+    // ctx.prisma.fee.deleteMany({
+    //   where: {
+    //     studentId: input
+    //   }
+    // })
     return ctx.prisma.student.delete({
       where: {
-        slug: input
+        id: input
       }
     })
   }),
