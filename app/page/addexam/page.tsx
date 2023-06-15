@@ -6,29 +6,30 @@ import { Subjects } from "~/types/types";
 import { Button, DateTime, Loader } from "~/components";
 import StatusMsg from "~/components/StatusMsg";
 
-// const dummyExams: Exam[] = [
-//   {
-//     id: "",
-//     name: "",
-//     slug: "",
-//     term: "",
-//     results: [
-//       {
-//         slug: "",
-//         marks: "",
-//       },
-//     ],
-//     createdAt: new Date(),
-//     examDate: "",
-//     studentId: "",
-//   },
-// ];
+const dummyExams: Exam[] = [
+  {
+    id: "",
+    name: "",
+    slug: "",
+    term: "",
+    results: [
+      {
+        slug: "",
+        marks: "",
+      },
+    ],
+    createdAt: new Date(),
+    examDate: "",
+    studentId: "",
+  },
+];
 
 function AddExam() {
   const [exams, setExams] = useState<Exam[]>();
   const [students, setStudents] = useState<(Student | undefined)[]>();
   const [stream, setStream] = useState<Stream>();
   const [submit, setSubmit] = useState(false);
+  const [clear, setClear] = useState(false);
   const [status, setStatus] = useState({ message: "", type: "" });
 
   const { data: streams, isLoading } = api.stream.getAll.useQuery();
@@ -74,7 +75,7 @@ function AddExam() {
 
     setExams((prevExams: Exam[] | undefined) => {
       let newExams = [{ results: [] as Result[] }] as unknown as Exam[];
-      if (!prevExams) {
+      if (!prevExams || prevExams.length < 1) {
         console.log("hand chsng 1");
         students?.forEach((student) => {
           if (student?.id === id) {
@@ -100,9 +101,9 @@ function AddExam() {
         return newExams; // or some default value if you have one
       }
 
-      // newExams = prevExams
-
       prevExams?.forEach((prevExam) => {
+        console.log("ex map", prevExams);
+        console.log("ex map id", prevExam.studentId);
         console.log("hand chsng 4");
         if (prevExam.studentId === id) {
           console.log("hand chsng 5");
@@ -160,17 +161,18 @@ function AddExam() {
           console.log("new exam ", newExams);
         } else {
           console.log("hand chsng 6");
-          return
+          return;
         }
       });
 
-      console.log("final exam ", newExams);
+      const filteredExams = newExams.filter((exam) => exam.results.length > 0);
 
-      return newExams;
+      console.log("final exam ", filteredExams);
+
+      return filteredExams;
     });
   };
 
-  // console.log(stream);
   console.log("exams", exams);
 
   const addExamMutation = api.exam.addManyExams.useMutation();
@@ -248,7 +250,10 @@ function AddExam() {
                       streams?.find((item) => item.slug === e.target.value)
                     );
                     getStudents();
-                    setExams(undefined);
+                    setClear(true);
+                    setTimeout(() => {
+                      setClear(false);
+                    }, 2000);
                   }}
                   className="focus:shadow-outline block w-full appearance-none rounded border border-gray-400 bg-white px-4 py-3 pr-8 leading-tight shadow hover:border-gray-500 focus:outline-none"
                   name="streamId"
@@ -375,7 +380,7 @@ function AddExam() {
                             onChange={(e) => {
                               handleResult(e, id);
                             }}
-                            value={result?.marks}
+                            value={clear ? "" : result?.marks}
                             className="focus:shadow-outline w-14 appearance-none rounded border px-2 py-3 leading-tight text-gray-700 shadow focus:outline-none"
                             type="text"
                             placeholder="-"

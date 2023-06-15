@@ -50,6 +50,7 @@ function CreateTask() {
           },
         };
       }
+      
       const updatedTask = {
         ...prevTask,
         [name]: value,
