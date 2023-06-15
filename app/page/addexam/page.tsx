@@ -49,7 +49,7 @@ function AddExam() {
     const value = target.value;
     const name = target.name;
 
-    console.log("hand chsng")
+    console.log("hand chsng");
 
     setExams((prevExams: Exam[] | undefined) => {
       let newExams = [] as unknown as Exam[];
@@ -71,45 +71,60 @@ function AddExam() {
             console.log("hand chsng 3");
             newExams.push({
               studentId: student?.id,
-              results: [
-                {
-                  slug: name,
-                  marks: value,
-                },
-              ],
             } as unknown as Exam);
           }
         });
         return newExams; // or some default value if you have one
       }
 
+      // newExams = prevExams
+
       prevExams?.forEach((prevExam) => {
         console.log("hand chsng 4");
         if (prevExam.studentId === id) {
           console.log("hand chsng 5");
 
-          let newResults = {} as unknown as Result
+          let newResults = {} as unknown as Result;
 
           prevExam.results.forEach((result) => {
             if (result.slug === name) {
               result.marks = value;
             }
-          })
+          });
 
-          const myExam = {
-            ...prevExam,
-            results: [
-              ...prevExam.results,
-              {
-                slug: name,
-                marks: value,
-              },
-            ],
-          } as unknown as Exam;
+          console.log("inject", prevExam);
 
-          console.log("hand 5 exam ", myExam);
+          const myExam = () => {
+            console.log(
+              "exists ? ",
+              prevExam.results.some((result) => {
+                console.log("res", result.slug, "name", name);
+                return result.slug === name;
+              })
+            );
+            if (prevExam.results.some((result) => result.slug !== name)) {
+              console.log("add new", prevExam);
+              return {
+                ...prevExam,
+                results: [
+                  ...prevExam.results,
+                  {
+                    slug: name,
+                    marks: value,
+                  },
+                ],
+              } as unknown as Exam;
+            } else {
+              console.log("not add new", prevExam);
+              return prevExam;
+            }
+          };
 
-          newExams.push(myExam);
+          console.log("hand 5 exam ", myExam());
+
+          newExams.push(myExam());
+          console.log("new exam ", newExams);
+          
         } else {
           console.log("hand chsng 6");
           newExams = prevExams;
@@ -120,7 +135,7 @@ function AddExam() {
     });
   };
 
-  console.log(stream);
+  // console.log(stream);
   console.log("exams", exams);
 
   const addExamMutation = api.exam.addManyExams.useMutation();
