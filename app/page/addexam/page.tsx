@@ -30,7 +30,7 @@ function AddExam() {
   const [stream, setStream] = useState<Stream>();
   const [submit, setSubmit] = useState(false);
   const [status, setStatus] = useState({ message: "", type: "" });
-  
+
   const { data: streams, isLoading } = api.stream.getAll.useQuery();
   const [loading, setLoading] = useState(isLoading);
 
@@ -160,9 +160,11 @@ function AddExam() {
           console.log("new exam ", newExams);
         } else {
           console.log("hand chsng 6");
-          newExams = prevExams;
+          return
         }
       });
+
+      console.log("final exam ", newExams);
 
       return newExams;
     });
@@ -246,6 +248,7 @@ function AddExam() {
                       streams?.find((item) => item.slug === e.target.value)
                     );
                     getStudents();
+                    setExams(undefined);
                   }}
                   className="focus:shadow-outline block w-full appearance-none rounded border border-gray-400 bg-white px-4 py-3 pr-8 leading-tight shadow hover:border-gray-500 focus:outline-none"
                   name="streamId"
