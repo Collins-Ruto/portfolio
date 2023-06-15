@@ -193,7 +193,7 @@ function AddExam() {
     });
     try {
       addExamMutation.mutate(exams, {
-        onSuccess: (res) => {
+        onSuccess: () => {
           setSubmit(false);
           setStatus({
             type: "success",
@@ -201,7 +201,7 @@ function AddExam() {
           });
 
           setTimeout(() => {
-            res && window.location.reload();
+            window.location.reload();
           }, 2000);
         },
       });
