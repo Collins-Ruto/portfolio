@@ -6,6 +6,24 @@ import { Subjects } from "~/types/types";
 import { Button, DateTime, Loader } from "~/components";
 import StatusMsg from "~/components/StatusMsg";
 
+const dummyExams: Exam[] = [
+  {
+    id: "",
+    name: "",
+    slug: "",
+    term: "",
+    results: [
+      {
+        slug: "",
+        marks: "",
+      },
+    ],
+    createdAt: new Date(),
+    examDate: "",
+    studentId: "",
+  },
+];
+
 function AddExam() {
   const [exams, setExams] = useState<Exam[]>();
   const [students, setStudents] = useState<(Student | undefined)[]>();
@@ -21,6 +39,8 @@ function AddExam() {
     const value = target.value;
     const name = target.name;
 
+    let emptyResults = [] as unknown as Result[];
+
     setExams((prevExams: Exam[] | undefined) => {
       let newExams = [] as unknown as Exam[];
       if (!prevExams) {
@@ -28,6 +48,7 @@ function AddExam() {
           newExams.push({
             studentId: student?.id,
             [name]: value,
+            results: emptyResults,
           } as unknown as Exam);
         });
         return newExams; // or some default value if you have one
@@ -52,7 +73,7 @@ function AddExam() {
     console.log("hand chsng");
 
     setExams((prevExams: Exam[] | undefined) => {
-      let newExams = [] as unknown as Exam[];
+      let newExams = [{ results: [] as Result[] }] as unknown as Exam[];
       if (!prevExams) {
         console.log("hand chsng 1");
         students?.forEach((student) => {
@@ -68,9 +89,11 @@ function AddExam() {
               ],
             } as unknown as Exam);
           } else {
+            let emptyResults = [] as unknown as Result[];
             console.log("hand chsng 3");
             newExams.push({
               studentId: student?.id,
+              results: emptyResults,
             } as unknown as Exam);
           }
         });
@@ -84,24 +107,19 @@ function AddExam() {
         if (prevExam.studentId === id) {
           console.log("hand chsng 5");
 
-          let newResults = {} as unknown as Result;
-
-          prevExam.results.forEach((result) => {
-            if (result.slug === name) {
-              result.marks = value;
-            }
-          });
+          // prevExam.results.forEach((result) => {
+          //   if (result.slug === name) {
+          //     result.marks = value;
+          //   }
+          // });
 
           console.log("inject", prevExam);
 
           const myExam = () => {
-            console.log(
-              "exists ? ",
-              prevExam.results.some((result) => {
-                console.log("res", result.slug, "name", name);
-                return result.slug === name;
-              })
+            const existingResult = prevExam.results.find(
+              (result) => result.slug === name
             );
+            console.log("exists ? ", existingResult);
             if (prevExam.results.some((result) => result.slug !== name)) {
               console.log("add new", prevExam);
               return {
@@ -116,15 +134,30 @@ function AddExam() {
               } as unknown as Exam;
             } else {
               console.log("not add new", prevExam);
-              return prevExam;
+              return {
+                ...prevExam,
+                results: prevExam.results.map((result) =>
+                  result.slug === name ? { ...result, marks: value } : result
+                ),
+              };
             }
           };
 
           console.log("hand 5 exam ", myExam());
 
-          newExams.push(myExam());
+          const newprevs = prevExams.map((exam) => {
+            console.log("hand chsng 7");
+            if (exam.studentId === id) {
+              console.log("hand chsng 8");
+              return myExam();
+            }
+            return exam;
+          });
+
+          newExams = newprevs;
+          console.log("new prev Exams ", prevExams);
+          console.log("new prev2 Exams ", newprevs);
           console.log("new exam ", newExams);
-          
         } else {
           console.log("hand chsng 6");
           newExams = prevExams;
@@ -145,7 +178,19 @@ function AddExam() {
       return;
     }
     setSubmit(true);
-    const newExams = exams.map((exam) => exam as Exam);
+    const newExams = exams.map((exam) => {
+      return {
+        ...exam,
+        results: exam.results.map((result) => {
+          return {
+            results: {
+              slug: result.slug as string,
+              name: result.marks as string,
+            } as unknown as Result[],
+          };
+        }),
+      } as unknown as Exam;
+    });
     try {
       addExamMutation.mutate(exams, {
         onSuccess: (res) => {

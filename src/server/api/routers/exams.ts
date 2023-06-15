@@ -61,10 +61,10 @@ export const examRouter = createTRPCRouter({
     name: z.string(),
     slug: z.string(),
     term: z.string(),
-    results: z.object({
+    results: z.array(z.object({
       slug: z.string(),
       marks: z.string(),
-    }),
+    })),
     examDate: z.string(),
     studentId: z.string()
   })).mutation(({ ctx, input }) => {
@@ -79,10 +79,10 @@ export const examRouter = createTRPCRouter({
     name: z.string(),
     slug: z.string(),
     term: z.string(),
-    results: z.object({
+    results: z.array(z.object({
       slug: z.string(),
       marks: z.string(),
-    }),
+    })),
     examDate: z.string(),
     studentId: z.string()
   }))).mutation(({ ctx, input }) => {
