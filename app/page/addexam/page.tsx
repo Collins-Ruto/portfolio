@@ -27,13 +27,13 @@ const dummyExams: Exam[] = [
 function AddExam() {
   const [exams, setExams] = useState<Exam[]>();
   const [students, setStudents] = useState<(Student | undefined)[]>();
-  const [stream, setStream] = useState<Stream>();
   const [submit, setSubmit] = useState(false);
   const [clear, setClear] = useState(false);
   const [status, setStatus] = useState({ message: "", type: "" });
 
-  const { data: streams, isLoading } = api.stream.getAll.useQuery();
-  const [loading, setLoading] = useState(isLoading);
+  const { data: streams } = api.stream.getAll.useQuery();
+  const [stream, setStream] = useState<Stream | undefined>(streams?.[0]);
+  const [loading, setLoading] = useState<boolean>();
 
   const handleInput = (event: React.SyntheticEvent) => {
     const target = event.target as HTMLInputElement;
@@ -49,6 +49,7 @@ function AddExam() {
           newExams.push({
             studentId: student?.id,
             [name]: value,
+            examDate: DateTime(),
             results: emptyResults,
           } as unknown as Exam);
         });
@@ -58,6 +59,7 @@ function AddExam() {
       prevExams?.forEach((prevExam) => {
         newExams.push({
           ...prevExam,
+          examDate: DateTime(),
           [name]: value,
         } as unknown as Exam);
       });
@@ -82,6 +84,7 @@ function AddExam() {
             console.log("hand chsng 2");
             newExams.push({
               studentId: student?.id,
+              examDate: DateTime(),
               results: [
                 {
                   slug: name,
@@ -94,6 +97,7 @@ function AddExam() {
             console.log("hand chsng 3");
             newExams.push({
               studentId: student?.id,
+              examDate: DateTime(),
               results: emptyResults,
             } as unknown as Exam);
           }
@@ -165,11 +169,12 @@ function AddExam() {
         }
       });
 
-      const filteredExams = newExams.filter((exam) => exam.results.length > 0);
+      // console.log("pre final exam ", newExams);
+      // const filteredExams = newExams.filter((exam) => exam.results.length > 0);
 
-      console.log("final exam ", filteredExams);
+      console.log("final exam ", newExams);
 
-      return filteredExams;
+      return newExams;
     });
   };
 
@@ -181,10 +186,13 @@ function AddExam() {
     if (!exams) {
       return;
     }
-    setSubmit(true);
+    // setSubmit(true);
+
+    const filteredExams = exams.filter((exam) => exam.results.length > 0);
+    console.log("subm exam ", filteredExams);
 
     try {
-      addExamMutation.mutate(exams, {
+      addExamMutation.mutate(filteredExams, {
         onSuccess: () => {
           setSubmit(false);
           setStatus({
@@ -192,8 +200,9 @@ function AddExam() {
             message: `succesfully added ${exams?.[0]?.name ?? ""} exam`,
           });
 
+          setClear(true);
           setTimeout(() => {
-            window.location.reload();
+            setClear(false);
           }, 2000);
         },
       });
