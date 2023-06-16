@@ -24,12 +24,18 @@ const dummyExams: Exam[] = [
   },
 ];
 
+console.log(dummyExams);
+interface IndexedInput extends Exam {
+  [key: string]: string | Date | Result[];
+}
+
 function AddExam() {
   const [exams, setExams] = useState<Exam[]>();
   const [students, setStudents] = useState<(Student | undefined)[]>();
   const [submit, setSubmit] = useState(false);
   const [clear, setClear] = useState(false);
   const [status, setStatus] = useState({ message: "", type: "" });
+  const [validInput, setValidInput] = useState("");
 
   const { data: streams } = api.stream.getAll.useQuery();
   const [stream, setStream] = useState<Stream | undefined>(streams?.[0]);
@@ -112,12 +118,6 @@ function AddExam() {
         if (prevExam.studentId === id) {
           console.log("hand chsng 5");
 
-          // prevExam.results.forEach((result) => {
-          //   if (result.slug === name) {
-          //     result.marks = value;
-          //   }
-          // });
-
           console.log("inject", prevExam);
 
           const myExam = () => {
@@ -160,7 +160,6 @@ function AddExam() {
           });
 
           newExams = newprevs;
-          console.log("new prev Exams ", prevExams);
           console.log("new prev2 Exams ", newprevs);
           console.log("new exam ", newExams);
         } else {
@@ -169,13 +168,28 @@ function AddExam() {
         }
       });
 
-      // console.log("pre final exam ", newExams);
-      // const filteredExams = newExams.filter((exam) => exam.results.length > 0);
-
       console.log("final exam ", newExams);
 
       return newExams;
     });
+  };
+
+  const inputValidate = () => {
+    const fields = ["name", "slug", "term"];
+    const input = exams?.[1] as IndexedInput;
+    let message = "Please fill: ";
+
+    fields.forEach((field) => {
+      if (input?.[field] === "" || input?.[field] === undefined) {
+        message += `${field}, `;
+        setValidInput(message);
+      }
+    });
+    if (message === "Please fill: ") {
+      return true;
+    } else {
+      return false;
+    }
   };
 
   console.log("exams", exams);
@@ -184,6 +198,9 @@ function AddExam() {
 
   const handleSubmit = () => {
     if (!exams) {
+      return;
+    }
+    if (inputValidate() === false) {
       return;
     }
     // setSubmit(true);
@@ -403,6 +420,12 @@ function AddExam() {
               })}
             </tbody>
           </table>
+        </div>
+      </div>
+      <div className="mt-2">
+        <div className="opacity80 rounded text-xs text-red-500">
+          <span className="">{validInput}</span>
+          <span className="text-transparent">.</span>
         </div>
       </div>
       <div className=" mx-4 rounded-b-xl bg-[#F7F6FB] px-2 py-4">
