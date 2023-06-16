@@ -92,7 +92,7 @@ export const examRouter = createTRPCRouter({
       return ctx.prisma.exam.create({
         data: newInput,
       })
-    };
+    }
   }),
 
   search: protectedProcedure.input(z.string()).query(({ ctx, input }) => {
