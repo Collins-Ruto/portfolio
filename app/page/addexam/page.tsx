@@ -41,53 +41,65 @@ function AddExam() {
   const [stream, setStream] = useState<Stream | undefined>(streams?.[0]);
   const [loading, setLoading] = useState<boolean>();
 
+  // Handles input of the exam name, term and slug which is included in every exam
   const handleInput = (event: React.SyntheticEvent) => {
     const target = event.target as HTMLInputElement;
     const value = target.value;
     const name = target.name;
 
-    const emptyResults = [] as unknown as Result[];
+    const emptyResults = [] as unknown as Result[]; // Create an empty array for results
 
     setExams((prevExams: Exam[] | undefined) => {
-      const newExams = [] as unknown as Exam[];
+      const newExams = [] as unknown as Exam[]; // Create a new array for updated exams
+
       if (!prevExams) {
+        // If there are no previous exams, create new exams for each student
         students?.forEach((student) => {
           newExams.push({
             studentId: student?.id,
-            [name]: value,
-            examDate: DateTime(),
-            results: emptyResults,
+            [name]: value, // Set the specified name property to the provided value
+            examDate: DateTime(), // Set the exam date to the current date and time
+            results: emptyResults, // Set the results to an empty value
           } as unknown as Exam);
         });
-        return newExams; // or some default value if you have one
+
+        return newExams; // Return the new exams
       }
 
       prevExams?.forEach((prevExam) => {
+        // Update existing exams with the specified name and value
         newExams.push({
-          ...prevExam,
-          examDate: DateTime(),
-          [name]: value,
+          ...prevExam, // Copy the properties of the previous exam
+          examDate: DateTime(), // Update the exam date to the current date and time
+          [name]: value, // Set the specified name property to the provided value
         } as unknown as Exam);
       });
 
-      return newExams;
+      return newExams; // Return the updated exams
     });
   };
 
+
+  // Handles input of results for every
   const handleResult = (event: React.SyntheticEvent, id: string) => {
     const target = event.target as HTMLInputElement;
     const value = target.value;
     const name = target.name;
 
-    console.log("hand chsng");
+    console.log("hand chsng"); // Log a message for debugging purposes
 
     setExams((prevExams: Exam[] | undefined) => {
-      let newExams = [{ results: [] as Result[] }] as unknown as Exam[];
+      let newExams = [{ results: [] as Result[] }] as unknown as Exam[]; // Initialize newExams with an empty result
+
       if (!prevExams || prevExams.length < 1) {
-        console.log("hand chsng 1");
+        console.log("hand chsng 1"); // Log a message for debugging purposes
+
+        // If there are no previous exams or the length is less than 1, create new exams for each student
         students?.forEach((student) => {
           if (student?.id === id) {
-            console.log("hand chsng 2");
+            console.log("hand chsng 2"); // Log a message for debugging purposes
+
+            // Create a new exam with the provided id, date, and result
             newExams.push({
               studentId: student?.id,
               examDate: DateTime(),
@@ -100,7 +112,9 @@ function AddExam() {
             } as unknown as Exam);
           } else {
             const emptyResults = [] as unknown as Result[];
-            console.log("hand chsng 3");
+            console.log("hand chsng 3"); // Log a message for debugging purposes
+
+            // Create a new exam with the student id and empty results
             newExams.push({
               studentId: student?.id,
               examDate: DateTime(),
@@ -108,25 +122,30 @@ function AddExam() {
             } as unknown as Exam);
           }
         });
-        return newExams; // or some default value if you have one
+
+        return newExams; // Return the new exams
       }
 
       prevExams?.forEach((prevExam) => {
-        console.log("ex map", prevExams);
-        console.log("ex map id", prevExam.studentId);
-        console.log("hand chsng 4");
-        if (prevExam.studentId === id) {
-          console.log("hand chsng 5");
+        console.log("ex map", prevExams); // Log a message for debugging purposes
+        console.log("ex map id", prevExam.studentId); // Log a message for debugging purposes
+        console.log("hand chsng 4"); // Log a message for debugging purposes
 
-          console.log("inject", prevExam);
+        if (prevExam.studentId === id) {
+          console.log("hand chsng 5"); // Log a message for debugging purposes
+
+          console.log("inject", prevExam); // Log a message for debugging purposes
 
           const myExam = () => {
             const existingResult = prevExam.results.find(
               (result) => result.slug === name
             );
-            console.log("exists ? ", existingResult);
+            console.log("exists ? ", existingResult); // Log a message for debugging purposes
+
             if (!existingResult) {
-              console.log("add new", prevExam);
+              console.log("add new", prevExam); // Log a message for debugging purposes
+
+              // Add a new result to the existing exam
               return {
                 ...prevExam,
                 results: [
@@ -138,7 +157,9 @@ function AddExam() {
                 ],
               } as unknown as Exam;
             } else {
-              console.log("not add new", prevExam);
+              console.log("not add new", prevExam); // Log a message for debugging purposes
+
+              // Update the marks of an existing result in the exam
               return {
                 ...prevExam,
                 results: prevExam.results.map((result) =>
@@ -148,31 +169,33 @@ function AddExam() {
             }
           };
 
-          console.log("hand 5 exam ", myExam());
+          console.log("hand 5 exam ", myExam()); // Log a message for debugging purposes
 
           const newprevs = prevExams.map((exam) => {
-            console.log("hand chsng 7");
+            console.log("hand chsng 7"); // Log a message for debugging purposes
+
             if (exam.studentId === id) {
-              console.log("hand chsng 8");
+              console.log("hand chsng 8"); // Log a message for debugging purposes
               return myExam();
             }
             return exam;
           });
 
           newExams = newprevs;
-          console.log("new prev2 Exams ", newprevs);
-          console.log("new exam ", newExams);
+          console.log("new prev2 Exams ", newprevs); // Log a message for debugging purposes
+          console.log("new exam ", newExams); // Log a message for debugging purposes
         } else {
-          console.log("hand chsng 6");
-          return;
+          console.log("hand chsng 6"); // Log a message for debugging purposes
+          return; // Skip the current iteration
         }
       });
 
-      console.log("final exam ", newExams);
+      console.log("final exam ", newExams); // Log a message for debugging purposes
 
-      return newExams;
+      return newExams; // Return the updated exams
     });
   };
+
 
   const inputValidate = () => {
     const fields = ["name", "slug", "term"];
