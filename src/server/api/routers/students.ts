@@ -114,11 +114,11 @@ export const studentRouter = createTRPCRouter({
   }),
 
   delete: protectedProcedure.input(z.string()).mutation(({ ctx, input }) => {
-    // ctx.prisma.fee.deleteMany({
-    //   where: {
-    //     studentId: input
-    //   }
-    // })
+    ctx.prisma.fee.deleteMany({
+      where: {
+        studentId: input
+      }
+    })
     return ctx.prisma.student.delete({
       where: {
         id: input
@@ -133,7 +133,6 @@ export const studentRouter = createTRPCRouter({
         { name: { contains: input, mode: "insensitive" } },
         { slug: { contains: input, mode: "insensitive" } },
         { admissionId: { contains: input, mode: "insensitive" } },
-        // Add additional conditions using the OR operator if needed
       ]
     };
     return ctx.prisma.student.findMany({
