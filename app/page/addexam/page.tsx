@@ -1,6 +1,6 @@
 "use client";
 import { api } from "@/utils/api";
-import type { Student, Exam, Stream, Result } from "@prisma/client";
+import type { Exam, Stream, Result } from "@prisma/client";
 import React, { useEffect, useState } from "react";
 import { Subjects } from "~/types/types";
 import { Button, DateTime, Loader } from "~/components";
@@ -21,12 +21,13 @@ const dummyExams: Exam[] = [
     createdAt: new Date(),
     examDate: "",
     studentId: "",
+    deleted: false,
   },
 ];
 
 console.log(dummyExams);
 interface IndexedInput extends Exam {
-  [key: string]: string | Date | Result[];
+  [key: string]: string | Date | Boolean | Result[];
 }
 
 type Students = { id: string; name: string; streamId: string }[];
@@ -58,7 +59,7 @@ function AddExam() {
       setStream(streams[0]);
     }
     // getStudents();
-  }, [streams]);
+  }, [streams, data, stream]);
 
   // Handles input of the exam name, term and slug which is included in every exam
   const handleInput = (event: React.SyntheticEvent) => {
@@ -289,12 +290,10 @@ function AddExam() {
     console.log("slug", slug);
     console.log("data", data);
     if (data) {
-      const streamStudents = data.filter(
-        (student) => {
-          const myStream = streams?.find((item) => item.slug === slug);
-          return student.streamId === myStream?.id;
-        }
-      );
+      const streamStudents = data.filter((student) => {
+        const myStream = streams?.find((item) => item.slug === slug);
+        return student.streamId === myStream?.id;
+      });
       setStudents(streamStudents);
     }
     // setSubmit(true);
