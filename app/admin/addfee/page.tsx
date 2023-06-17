@@ -6,7 +6,7 @@ import StatusMsg from "~/components/StatusMsg";
 import { api } from "@/utils/api";
 
 interface IndexedInput extends Fee {
-  [key: string]: string | Date;
+  [key: string]: string | Date | Boolean;
 }
 
 function AddFee() {

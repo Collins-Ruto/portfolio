@@ -19,7 +19,7 @@ import { type Teacher } from "@prisma/client";
 // };
 
 interface IndexedInput extends Teacher {
-  [key: string]: string | Date;
+  [key: string]: string | Date | Boolean;
 }
 
 function AddTeacher() {
