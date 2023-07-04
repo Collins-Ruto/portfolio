@@ -1,5 +1,5 @@
 import NextAuth from "next-auth";
-
+// TODO deal with this - remove
 declare module "next-auth" {
     interface Session {
         user: {

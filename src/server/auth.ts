@@ -7,9 +7,7 @@ import {
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 // import { env } from "@/env.mjs";
 import { prisma } from "@/server/db";
-import CredentialsProvider from "next-auth/providers/credentials";
-import { compare } from "bcryptjs";
-import type { Admin, Student, Teacher, User } from "@prisma/client";
+import GoogleProvider from "next-auth/providers/google";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -37,41 +35,6 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authOptions: NextAuthOptions = {
-  session: {
-    strategy: 'jwt'
-  },
-  callbacks: {
-    jwt({ token, user }) {
-      console.log("res jwt callback", { token, user })
-      const u = user as unknown as User
-      if (user) {
-        return {
-          ...token,
-          id: u.id,
-          role: u.role,
-          streamId: u.streamId,
-          phone: u.phone,
-        }
-      }
-      return token
-    },
-
-    session: ({ session, token }) => {
-      console.log('Session Callback', { session, token })
-      return {
-        ...session,
-        user: {
-          ...session.user,
-          id: token.id as string,
-          slug: token.slug,
-          phone: token.phone,
-          role: token.role,
-          streamId: token.streamId,
-          randomKey: token.randomKey
-        }
-      }
-    },
-  },
 
   pages: {
     signIn: "/login",
@@ -79,99 +42,11 @@ export const authOptions: NextAuthOptions = {
 
   adapter: PrismaAdapter(prisma),
   providers: [
-    CredentialsProvider({
-      name: 'Sign in',
-      credentials: {
-        username: {
-          label: 'Username',
-          type: 'username',
-          placeholder: 'johnsmith'
-        },
-        password: { label: 'Password', type: 'password' },
-        group: {
-          label: 'Group',
-          type: 'group',
-        }
-      },
-      async authorize(credentials) {
-        console.log("credentialss", credentials)
-        if (!credentials?.username || !credentials.password) {
-          return null
-        }
-
-        const student = await prisma.student.findUnique({
-          where: {
-            slug: credentials.username
-          },
-          select: {
-            id: true,
-            name: true,
-            slug: true,
-            email: true,
-            phone: true,
-            password: true,
-            streamId: true
-          }
-        }) as Student
-        const teacher = await prisma.teacher.findUnique({
-          where: {
-            slug: credentials.username
-          },
-          select: {
-            id: true,
-            name: true,
-            slug: true,
-            email: true,
-            phone: true,
-            password: true,
-          }
-        }) as Teacher
-        const admin = await prisma.admin.findUnique({
-          where: {
-            slug: credentials.username
-          },
-          select: {
-            id: true,
-            name: true,
-            slug: true,
-            email: true,
-            phone: true,
-            password: true,
-          }
-        }) as Admin
-
-        const user = credentials.group === "admin" ? admin : credentials.group === "teacher" ? teacher : student
-
-        if (!user) {
-          return null
-        }
-
-        if (typeof user.password !== "string") {
-          return null; // or handle the error in some other way
-        }
-        console.log("next user3", user)
-
-        const isPasswordValid = await compare(
-          credentials.password,
-          user.password
-        )
-        console.log("next user4", user)
-
-        if (!isPasswordValid) {
-          return null
-        }
-
-        return {
-          id: user.id + '',
-          slug: user.slug,
-          email: user.email,
-          phone: user.phone,
-          name: user.name,
-          role: student ? "student" : teacher ? "teacher" : "admin",
-          randomKey: 'Hey cool',
-          streamId: student ? student.streamId : ""
-        }
-      }
+    GoogleProvider({
+      // @ts-ignore
+      clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+      // @ts-ignore
+      clientSecret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET,
     }),
     /**
      * ...add more providers here.

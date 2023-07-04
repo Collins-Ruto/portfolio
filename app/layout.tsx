@@ -31,22 +31,26 @@ export default function RootLayout({
 
 export const metadata: Metadata = {
   title: {
-    default: "LearnHq School & Learning System",
-    template: `%s | LearnHq LMS`,
+    default: "Collins Ruto | Software developer",
+    template: `%s | Collins Ruto`,
   },
-  metadataBase: new URL("https://learnhq.vercel.app"),
+  metadataBase: new URL("https://collinsruto.netlify.app"),
   description:
-    "LearnHQ is a comprehensive learning management system that provides quality education and resources to students, teachers, and parents.",
+    "I am a hobbyist software developer with expertise in fullstack web development. I create web apps to solve your business problems.",
   keywords: [
-    "learnhq",
-    "learn",
-    "learnhq africa",
-    "education",
-    "learning management system",
-    "lms",
-    "africa education",
-    "study",
-    "online learning",
+    "Collins Ruto",
+    "software engineer",
+    "software developer",
+    "web developer",
+    "web3 developer",
+    "python developer",
+    "backend developer",
+    "nodejs",
+    "javascript",
+    "near certified",
+    "front end developer",
+    "solidity",
+    "rust",
   ],
   alternates: {
     canonical: "/",
@@ -63,49 +67,54 @@ export const metadata: Metadata = {
   icons: [
     {
       rel: "icon",
+      type: "image/x-icon",
+      sizes: "any",
+      url: "/favicon.ico",
+    },
+    {
+      rel: "icon",
       type: "image/png",
       sizes: "32x32",
-      url: "https://github.com/Collins-Ruto/learnhq/blob/main/assets/favicon-32x32.png?raw=true",
+      url: "/favicon-32x32.png",
     },
     {
       rel: "icon",
       type: "image/png",
       sizes: "16x16",
-      url: "https://github.com/Collins-Ruto/learnhq/blob/main/assets/favicon-16x16.png?raw=true",
+      url: "/favicon-16x16.png",
     },
     {
       rel: "apple",
       sizes: "180x180",
-      url: "https://github.com/Collins-Ruto/learnhq/blob/main/assets/apple-touch-icon.png?raw=true",
+      url: "/apple-touch-icon.png",
     },
   ],
   themeColor: "#ffffff",
-  manifest: "https://learnhq.vercel.app/site.webmanifest",
-  openGraph: {
-    type: "website",
-    title: "LearnHq School & Learning System",
-    siteName: "LearnHq School & Learning System",
-    url: "https://learnhq.vercel.app",
-    description:
-      "LearnHQ is a comprehensive learning management system that provides quality education and resources to students, teachers, and parents.",
-    images: [
-      {
-        url: "https://learnhq.vercel.app/learnhq-cover.jpg",
-      },
-    ],
-  },
+  manifest: "/site.webmanifest",
   twitter: {
-    title: "LearnHq School & Learning System",
-    description:
-      "LearnHQ is a comprehensive learning management system that provides quality education and resources to students, teachers, and parents.",
-    card: "summary_large_image",
-    site: "@learnhqafrica",
     creator: "@ruto_collins_",
-    images: "https://learnhq.vercel.app/learnhq-cover.jpg",
+    title: "Collins Ruto | Full-Stack Web Developer",
+    description:
+      "I am a Hobbyist Software designer & developer, software developer and software engineering Currently studying Marine Engineering at The Technical University of Mombasa.",
+    card: "summary_large_image",
+    site: "@ruto_collins_",
+    images:
+      "https://raw.githubusercontent.com/Collins-Ruto/collins-ruto.github.io/main/img/collinsruto-cover.png",
+  },
+  openGraph: {
+    title: "Collins Ruto | Full-stack Web developer",
+    siteName: "Collins Ruto | Full-stack web developer",
+    description:
+      "I am a hobbyist full-stack software developer with expertise in Web, Web3 and Android development. I create web apps to solve your business problems.",
+    type: "website",
+    url: "https://collinsruto.netlify.app",
+    images:
+      "https://raw.githubusercontent.com/Collins-Ruto/collins-ruto.github.io/main/img/collinsruto-cover.png",
   },
   viewport: {
     width: "device-width",
     initialScale: 1,
-    maximumScale: 1,
+    maximumScale: 5,
   },
+  robots: {},
 };

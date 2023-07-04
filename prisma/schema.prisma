@@ -14,12 +14,6 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Example {
-    id        String   @id @default(auto()) @map("_id") @db.ObjectId
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-}
-
 // Necessary for Next auth
 model Account {
     id                String  @id @default(auto()) @map("_id") @db.ObjectId
@@ -52,11 +46,6 @@ model User {
     name          String?
     email         String?   @unique
     slug          String? @unique
-    role          String
-    phone         String?
-    streamId      String?
-    emailVerified DateTime?
-    image         String?
     accounts      Account[]
     sessions      Session[]
 }
@@ -70,142 +59,30 @@ model VerificationToken {
     @@unique([identifier, token])
 }
 
-model Student {
+model Project {
     id          String @id @default(auto()) @map("_id") @db.ObjectId
-    dateOfBirth String
-    name        String
-    slug        String @unique 
-    email       String
-    password    String
-    phone       String
-    parent      String
-    gender      String
-    createdAt   DateTime   @default(now())
-    admissionId String @unique
-    subjects    Subject[]
-    exams       Exam[]
-    fees        Fee[]
-    stream     Stream @relation(fields: [streamId], references: [id])
-    streamId   String @db.ObjectId
-    deleted     Boolean     @default(false)
-}
-model Teacher {
-    id          String @id @default(auto()) @map("_id") @db.ObjectId
-    dateOfBirth String
-    joiningDate String
-    name        String
-    slug        String @unique 
-    email       String
-    createdAt   DateTime   @default(now())
-    password    String
-    phone       String
-    gender      String
-    qualification String
-    lessons     Lesson[]
-    tasks       Task[]
-    deleted     Boolean     @default(false)
-}
-
-model Admin {
-    id          String @id @default(auto()) @map("_id") @db.ObjectId
-    name        String
-    slug        String @unique 
-    email       String
-    password    String
-    phone       String
-}
-
-model Exam {
-    id          String @id @default(auto()) @map("_id") @db.ObjectId
-    name        String
-    slug        String
-    term        String
-    createdAt   DateTime   @default(now())
-    results     Result[]
-    examDate    String
-    student     Student @relation(fields: [studentId], references: [id])
-    studentId   String @db.ObjectId
-    deleted     Boolean     @default(false)
-}
-
-
-model Fee {
-    id          String @id @default(auto()) @map("_id") @db.ObjectId
-    name        String
-    slug        String @unique 
-    createdAt   DateTime   @default(now())
-    term        String
-    type        String
-    amount      String
-    payday      String
-    student     Student @relation(fields: [studentId], references: [id])
-    studentId   String @db.ObjectId
-    deleted     Boolean     @default(false)
-}
-
-model Stream {
-    id          String @id @default(auto()) @map("_id") @db.ObjectId
-    name        String
-    slug        String @unique 
-    lessons     Lesson[]
-    tasks       Task[]
-    students    Student[]
-    deleted     Boolean     @default(false)
-}
-
-model Lesson {
-    id          String @id @default(auto()) @map("_id") @db.ObjectId
-    day         String
-    startTime   String
-    endTime     String
-    subject     Subject
-    attendance  String
-    stream      Stream @relation(fields: [streamId], references: [id])
-    streamId    String @db.ObjectId
-    teacher     Teacher @relation(fields: [teacherId], references: [id])
-    teacherId   String @db.ObjectId
-    deleted     Boolean     @default(false)
-}
-
-model Task {
-    id          String @id @default(auto()) @map("_id") @db.ObjectId
-    name        String
+    title        String
     description String
-    file        String
-    original_filename String
-    secure_url  String
+    project_url        String
+    github_url  String
     createdAt   DateTime   @default(now())
-    asset_id    String
-    posted      String
-    due         String
-    subject     Subject
-    stream      Stream @relation(fields: [streamId], references: [id])
-    streamId    String @db.ObjectId
-    teacher     Teacher @relation(fields: [teacherId], references: [id])
-    teacherId   String @db.ObjectId 
-    deleted     Boolean     @default(false)
 }
 
-model Course {
+model Blog {
     id          String @id @default(auto()) @map("_id") @db.ObjectId
     createdAt   DateTime   @default(now())
     title       String
-    topic       String
     description String
-    form        String
-    unit_code   String
-    video_url   String
-    thumbnail_url String
-    subject     Subject
+    tags        String[]
+    image       String
+    content_url String
+    likes       Int
+    comments    Comment[]
     deleted     Boolean     @default(false)
 }
 
-type Result {
-    slug   String
-    marks  String
-}
-
-type Subject {
-    name String
-    slug String
+type Comment {
+    createdAt   DateTime   @default(now())
+    content     String
+    author      String
 }

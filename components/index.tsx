@@ -6,4 +6,4 @@ export { default as DateTime } from "./DateTime";
 export { default as Button } from "./Button";
 export { default as Editor } from "./Editor";
 export { default as StatusMsg } from "./StatusMsg";
-export { default as PubHeader } from "./PubHeader";
+export { default as PubHeader } from "./Header";

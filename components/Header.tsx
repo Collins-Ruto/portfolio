@@ -1,127 +1,135 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { signOut, useSession } from "next-auth/react";
-import { type User } from "@prisma/client";
 
 function Header() {
-  const { data: session } = useSession();
-
-  const [user, setUser] = useState<User>();
   const [opened, setOpened] = useState(false);
-  const [dropdown, setDropdown] = useState(false);
 
   const currentRoute = usePathname();
 
-  useEffect(() => {
-    const user = session?.user as User;
-    setUser(user);
-  }, [session]);
-
-  // console.log("header user", session);
-
   return (
-    <div className="sticky top-0 z-40 mx-auto bg-[#F7F6FB] bg-blend-darken">
+    <div className="sticky top-0 z-40 mx-auto bg-white text-black bg-blend-darken">
       <div className="pl-4">
-        <nav className="flex items-center justify-between p-1">
-          <div
-            className="order-las w-1/3 cursor-pointer space-y-1 p-2 md:hidden md:space-y-2"
-            onClick={() => {
-              setOpened(!opened);
-            }}
-          >
-            <div className="h-1 w-6 rounded bg-blue-600 md:w-8"></div>
-            <div className="h-1 w-6 rounded bg-blue-600 md:w-8"></div>
-            <div className="h-1 w-6 rounded bg-blue-600 md:w-8"></div>
-          </div>
-          <Link href="https://learnhqhome.vercel.app" className=" flex w-1/3 md:w-max">
-            <Image
-              width={90}
-              height={90}
-              src="/lhlogo.webp"
-              alt="learnhq"
-              className=""
-            />
-          </Link>
-
-          <div>
-            <div className="relative inline-block text-left">
-              <div>
-                <div
-                  onClick={() => {
-                    setDropdown(!dropdown);
-                  }}
-                  className="inline-flex w-full cursor-pointer items-center justify-center bg-[#F7F6FB] px-4 py-1 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:border-2 focus:border-gray-500"
-                  aria-expanded="true"
-                  aria-haspopup="true"
-                >
-                  <Image
-                    width={20}
-                    height={20}
-                    className="mr-2 hidden w-6 rounded-sm bg-[#F7F6FB] md:block"
-                    src="https://img.icons8.com/material-rounded/24/000000/user.png"
-                    alt=""
-                  />
-                  <div className="flex flex-col ">
-                    <span className="text-md -mb-2 md:text-lg">
-                      {user?.name}
-                    </span>
-                    <span className="text-center text-sm text-blue-600">
-                      {user?.role}
-                    </span>
-                  </div>
-                  <svg
-                    className="ml-2 hidden h-5 w-5 sm:block"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
-              </div>
-
-              {dropdown && (
-                <div
-                  className="absolute py-1 text-lg mt-1 right-0 z-10 w-56 origin-top-right rounded-md bg-white px-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                  role="menu"
-                  aria-orientation="vertical"
-                  aria-labelledby="menu-button"
-                  tabIndex={-1}
-                >
-                  <Link
-                    onClick={() => {
-                      setDropdown(false);
-                    }}
-                    href={user ? `${user?.role}/account` : "#"}
-                    className="block rounded cursor-pointer px-4 py-2 text-gray-700 hover:bg-gray-100"
-                    tabIndex={-1}
-                  >
-                    Account{" "}
-                  </Link>
-                  <div
-                    onClick={() => {
-                      void signOut();
-                      setDropdown(false);
-                    }}
-                    className="block rounded cursor-pointer px-4 py-2 text-gray-700 hover:bg-gray-100"
-                    tabIndex={-1}
-                  >
-                    Log Out
-                  </div>
-                </div>
-              )}
+        <nav className="flex items-center justify-between">
+          <div className="flex w-full justify-between px-2 py-1.5 md:hidden">
+            <Link href="/" className="flex">
+              <Image
+                width={90}
+                height={40}
+                src="/lhlogo.webp"
+                alt="learnhq"
+                className=""
+              />
+            </Link>
+            <div
+              className="cursor-pointer space-y-1 p-2 px-4 sm:space-y-1.5 md:hidden"
+              onClick={() => {
+                setOpened(!opened);
+              }}
+            >
+              <div className="h-1 w-6 rounded bg-blue-600 sm:w-8"></div>
+              <div className="h-1 w-6 rounded bg-blue-600 sm:w-8"></div>
+              <div className="h-1 w-6 rounded bg-blue-600 sm:w-8"></div>
             </div>
           </div>
+          <header className="hidden w-full border-b border-gray-300 md:block">
+            <div className="container mx-auto flex items-center justify-between px-4 py-2 lg:px-20">
+              <Link href="/" className="flex cursor-pointer">
+                <Image
+                  width={100}
+                  height={45}
+                  src="/lhlogo.webp"
+                  alt="learnhq"
+                  className="mr-2"
+                  loading="eager"
+                />
+              </Link>
+              <div className="">
+                <nav className="text-gray-700">
+                  <ul className="flex items-center space-x-2 text-sm font-semibold md:space-x-4 md:text-lg">
+                    <li>
+                      <Link
+                        href={`/`}
+                        className={` cursor-pointer items-center border-b-2  align-middle hover:text-blue-600 ${
+                          currentRoute === "/"
+                            ? " border-orange-500"
+                            : "border-transparent"
+                        }`}
+                      >
+                        <span className="rounded">Home</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="https://twitter.com/learnhqafrica"
+                        className="hover:text-blue-600"
+                      >
+                        Forums
+                      </Link>
+                    </li>
+
+                    <li>
+                      <Link
+                        href="https://learnhq.vercel.app/learn/courses"
+                        className="hover:text-blue-600"
+                      >
+                        Courses
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href={`/about`}
+                        className={` cursor-pointer items-center border-b-2  align-middle hover:text-blue-600 ${
+                          currentRoute === "/about"
+                            ? " border-orange-500"
+                            : "border-transparent"
+                        }`}
+                      >
+                        <span className="rounded">Blogs</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href={`/contact`}
+                        className={` cursor-pointer items-center border-b-2 align-middle hover:text-blue-600 ${
+                          currentRoute === "/contact"
+                            ? " border-orange-500"
+                            : "border-transparent"
+                        }`}
+                      >
+                        <span className="rounded">Contact</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href={`/faq`}
+                        className={` cursor-pointer items-center border-b-2  align-middle hover:text-blue-600 ${
+                          currentRoute === "/faq"
+                            ? " border-orange-500"
+                            : "border-transparent"
+                        }`}
+                      >
+                        <span className="rounded">FAQs</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="https://learnhq.vercel.app/login"
+                        className="bg-primary-500 hover:bg-primary-700 focus:border-primary-700 focus:shadow-outline-indigo inline-block rounded-md border border-transparent bg-indigo-600 px-5 py-2 text-base font-semibold leading-6 text-white transition duration-150 ease-in-out focus:outline-none active:bg-indigo-700"
+                      >
+                        Resume
+                      </Link>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </header>
         </nav>
       </div>
-      <div>
+      <div className="md:hidden">
         <div className={`${opened ? "block " : "hidden md:block"}`}>
           <div
             className="absolute right-0 h-screen w-screen bg-black opacity-20 bg-blend-darken md:hidden"
@@ -134,312 +142,74 @@ function Header() {
               setOpened(!opened);
             }}
             className="
-                absolute left-0 flex h-screen w-[60%] flex-col overflow-y-auto bg-[#F7F6FB] p-4 opacity-100 bg-blend-darken md:w-60 md:pb-[3.5rem] "
+               absolute right-0 flex h-screen w-[60%]  max-w-[20rem] flex-col gap-2 overflow-y-auto bg-[#F7F6FB] p-4 pt-[5rem] text-2xl font-semibold text-gray-800 opacity-100 bg-blend-darken md:w-60 "
           >
             <Link
-              href={`/${user?.role || ""}`}
-              className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
-                currentRoute === "/admin" ||
-                currentRoute === "/student" ||
-                currentRoute === "/teacher"
+              href={`/`}
+              className={` cursor-pointer items-center rounded p-2 px-4 align-middle text-gray-800 hover:text-blue-700 ${
+                currentRoute === "/"
                   ? "hover:text bg-blue-700 text-white hover:text-white"
                   : ""
               }`}
             >
-              <Image
+              <span className="rounded">Home</span>
+            </Link>
+            <Link
+              href={`https://twitter.com/learnhqafrica`}
+              className={` flex cursor-pointer items-center rounded-md p-2 px-4 align-middle text-gray-800 hover:text-blue-700 `}
+            >
+              {/* <Image
                 width={20}
                 height={20}
                 className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
                 src="https://img.icons8.com/material-rounded/24/000000/dashboard-layout.png"
                 alt=""
-              />
-              <span className="text-lg">Dashboard</span>
-            </Link>
-            {(user?.role === "teacher" || user?.role === "admin") && (
-              <Link
-                href="/page/allstudents"
-                className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
-                  currentRoute === "/page/allstudents"
-                    ? "hover:text bg-blue-700 text-white hover:text-white"
-                    : ""
-                }`}
-              >
-                <Image
-                  width={20}
-                  height={20}
-                  className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
-                  src="https://img.icons8.com/material-rounded/24/000000/student-center.png"
-                  alt=""
-                />
-                <span className="text-lg">Students</span>
-              </Link>
-            )}
-            {user?.role === "admin" && (
-              <div className="">
-                <Link
-                  href="/admin/teachers"
-                  className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
-                    currentRoute === "/admin/teachers"
-                      ? "hover:text bg-blue-700 text-white hover:text-white"
-                      : ""
-                  }`}
-                >
-                  <Image
-                    width={20}
-                    height={20}
-                    className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
-                    src="https://img.icons8.com/material-rounded/24/000000/teacher.png"
-                    alt=""
-                  />
-                  <span className="text-lg">Teachers</span>
-                </Link>
-              </div>
-            )}
-            <Link
-              href={user?.role === "student" ? "/student/exams" : "/page/exams"}
-              className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
-                currentRoute === "/page/exams" ||
-                currentRoute === "/student/exams"
-                  ? "hover:text bg-blue-700 text-white hover:text-white"
-                  : ""
-              }`}
-            >
-              <Image
-                width={20}
-                height={20}
-                className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
-                src="https://img.icons8.com/material-rounded/24/000000/test-partial-passed.png"
-                alt=""
-              />
-              <span className="text-lg">Exam Results</span>
-            </Link>
-            <Link
-              href="/calender"
-              className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
-                currentRoute === "/calender"
-                  ? "hover:text bg-blue-700 text-white hover:text-white"
-                  : ""
-              }`}
-            >
-              <Image
-                width={20}
-                height={20}
-                className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
-                src="https://img.icons8.com/material-rounded/24/000000/2012.png"
-                alt=""
-              />
-              <span className="text-lg">Calender</span>
+              /> */}
+              <span className="">Forums</span>
             </Link>
 
             <Link
-              href={user?.role === "student" ? "/student/fees" : "/page/fees"}
-              className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
-                ["/student/fees", "/page/fees"].includes(currentRoute ?? "")
+              href={`/about`}
+              className={` cursor-pointer items-center rounded p-2 px-4 align-middle text-gray-800 hover:text-blue-700 ${
+                currentRoute === "/about"
                   ? "hover:text bg-blue-700 text-white hover:text-white"
                   : ""
               }`}
             >
-              <Image
-                width={20}
-                height={20}
-                className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
-                src="https://img.icons8.com/material-rounded/24/000000/currency-exchange.png"
-                alt=""
-              />
-              <span className="text-lg">Finance</span>
+              <span className="rounded">About Us</span>
             </Link>
-            {(user?.role === "teacher" || user?.role === "student") && (
-              <Link
-                href={
-                  user?.role === "student" ? "/student/tasks" : "/teacher/tasks"
-                }
-                className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
-                  ["/student/tasks", "/teacher/tasks"].includes(
-                    currentRoute ?? ""
-                  )
-                    ? "hover:text bg-blue-700 text-white hover:text-white"
-                    : ""
-                }`}
-              >
-                <Image
-                  width={20}
-                  height={20}
-                  className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
-                  src="https://img.icons8.com/ios-filled/24/000000/task-completed.png"
-                  alt=""
-                />
-                <span className="text-lg">Tasks</span>
-              </Link>
-            )}
             <Link
-              href={
-                user?.role === "student" ? "/page/courses" : "/page/courses"
-              }
-              className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
-                ["/page/courses", "/student/courses"].includes(
-                  currentRoute ?? ""
-                )
-                  ? "hover:text bg-blue-700 text-white hover:text-white"
-                  : ""
-              }`}
+              href="https://learnhq.vercel.app/learn/courses"
+              className="rounded p-2 px-4 hover:text-blue-600"
             >
-              <Image
-                width={20}
-                height={20}
-                className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
-                src="https://img.icons8.com/external-sbts2018-outline-sbts2018/24/external-course-basic-ui-elements-2.3-sbts2018-outline-sbts2018.png"
-                alt=""
-              />
-              <span className="text-lg">Courses</span>
+              Courses
             </Link>
-            {(user?.role === "admin" || user?.role === "teacher") && (
-              <div className="">
-                <h2 className="w-fit border-b px-2 pt-1 text-sm text-gray-600">
-                  Data Management
-                </h2>
-                {user?.role === "admin" && (
-                  <div>
-                    <Link
-                      href="/admin/admins/add"
-                      className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
-                        currentRoute === "/admin/admins/add"
-                          ? "hover:text bg-blue-700 text-white hover:text-white"
-                          : ""
-                      }`}
-                    >
-                      <Image
-                        width={20}
-                        height={20}
-                        className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
-                        src="https://img.icons8.com/ios-filled/24/000000/admin-settings-male.png"
-                        alt=""
-                      />
-                      <span className="text-lg">Add Admin</span>
-                    </Link>
-
-                    <Link
-                      href="/admin/streams/add"
-                      className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
-                        currentRoute === "/admin/streams/add"
-                          ? "hover:text bg-blue-700 text-white hover:text-white"
-                          : ""
-                      }`}
-                    >
-                      <Image
-                        width={20}
-                        height={20}
-                        className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
-                        src="https://img.icons8.com/material/24/000000/school-building.png"
-                        alt=""
-                      />
-                      <span className="text-lg">Add Stream</span>
-                    </Link>
-                    <Link
-                      href="/admin/subjects"
-                      className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
-                        currentRoute === "/admin/subjects"
-                          ? "hover:text bg-blue-700 text-white hover:text-white"
-                          : ""
-                      }`}
-                    >
-                      <Image
-                        width={20}
-                        height={20}
-                        className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
-                        src="https://img.icons8.com/ios-filled/24/000000/wordbook.png"
-                        alt=""
-                      />
-                      <span className="text-lg">Add Subject</span>
-                    </Link>
-                  </div>
-                )}
-                <Link
-                  href="/page/addlesson"
-                  className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
-                    currentRoute === "/page/addlesson"
-                      ? "hover:text bg-blue-700 text-white hover:text-white"
-                      : ""
-                  }`}
-                >
-                  <Image
-                    width={20}
-                    height={20}
-                    className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
-                    src="https://img.icons8.com/external-vitaliy-gorbachev-fill-vitaly-gorbachev/24/000000/external-lesson-university-vitaliy-gorbachev-fill-vitaly-gorbachev-1.png"
-                    alt=""
-                  />
-                  <span className="text-lg">Add Lessons</span>
-                </Link>
-                <Link
-                  href="/page/courses/addcourse"
-                  className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
-                    currentRoute === "/page/courses/addcourse"
-                      ? "hover:text bg-blue-700 text-white hover:text-white"
-                      : ""
-                  }`}
-                >
-                  <Image
-                    width={20}
-                    height={20}
-                    className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
-                    src="https://img.icons8.com/fluency-systems-regular/24/online-group-studying.png"
-                    alt=""
-                  />
-                  <span className="text-lg">Add Course</span>
-                </Link>
-                {user?.role === "teacher" && (
-                  <Link
-                    href="/teacher/tasks/addtask"
-                    className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
-                      currentRoute === "/teacher/tasks/addtask"
-                        ? "hover:text bg-blue-700 text-white hover:text-white"
-                        : ""
-                    }`}
-                  >
-                    <Image
-                      width={20}
-                      height={20}
-                      className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
-                      src="https://img.icons8.com/ios-filled/24/000000/task.png"
-                      alt=""
-                    />
-                    <span className="text-lg">Add Task</span>
-                  </Link>
-                )}
-              </div>
-            )}
             <Link
-              href={`${user?.role || ""}/account`}
-              className={`mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700 ${
-                currentRoute === `/${user?.role || ""}/account`
+              href={`/contact`}
+              className={` cursor-pointer items-center rounded p-2 px-4 align-middle text-gray-800 hover:text-blue-700 ${
+                currentRoute === "/contact"
                   ? "hover:text bg-blue-700 text-white hover:text-white"
                   : ""
               }`}
             >
-              <Image
-                width={20}
-                height={20}
-                className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
-                src="https://img.icons8.com/material-rounded/24/000000/user.png"
-                alt=""
-              />
-              <span className="text-lg">Account</span>
+              <span className="rounded">Contact</span>
             </Link>
-            <div
-              onClick={() => {
-                void signOut();
-              }}
-              className="mt-4 flex cursor-pointer items-center rounded-md p-2 align-middle text-gray-800 hover:text-blue-700"
+            <Link
+              href="https://learnhq.vercel.app/login"
+              className=" rounded p-2 px-4"
             >
-              <Image
-                width={20}
-                height={20}
-                className="mr-2 w-6 rounded-sm bg-[#F7F6FB]"
-                src="https://img.icons8.com/ios-glyphs/24/logout-rounded--v1.png"
-                alt=""
-              />
-              <span className="text-lg">Log Out</span>
-            </div>
+              Demo
+            </Link>
+            <Link
+              href={`/faq`}
+              className={`flex cursor-pointer items-center rounded p-2 px-4 align-middle text-gray-800 hover:text-blue-700 ${
+                currentRoute === "/faq"
+                  ? "hover:text bg-blue-700 text-white hover:text-white"
+                  : ""
+              }`}
+            >
+              FAQs
+            </Link>
           </div>
         </div>
       </div>

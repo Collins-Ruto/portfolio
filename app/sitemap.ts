@@ -7,28 +7,26 @@ const caller = appRouter.createCaller({
 });
 
 export default async function sitemap() {
-    const baseUrl = "https://learnhq.vercel.app";
+    const baseUrl = "https://collinsruto.vercel.app";
 
-    const courses = await caller.course.getAll();
-    const tasks = await caller.task.getAll();
+    const blogs = await caller.blog.getAll();
+    const projects = await caller.project.getAll();
 
-    const courseUrls = courses.map((course) => ({
-        url: `${baseUrl}/learn/courses/course/${course.id}`,
+    const blogUrls = blogs.map((blog) => ({
+        url: `${baseUrl}/blogs/blog/${blog.id}`,
         lastModified: new Date(),
     }));
-    const taskUrls = tasks.map((task) => ({
-        url: `${baseUrl}/learn/tasks/task/${task.id}`,
+    const projectUrls = projects.map((project) => ({
+        url: `${baseUrl}/projects/project/${project.id}`,
         lastModified: new Date(),
     }));
 
     return [
         { url: baseUrl, lastModified: new Date() },
-        { url: `${baseUrl}/login`, lastModified: new Date() },
-        { url: `${baseUrl}/calender`, lastModified: new Date() },
-        { url: `${baseUrl}/learn/courses`, lastModified: new Date() },
-        { url: `${baseUrl}/learn/tasks`, lastModified: new Date() },
+        { url: `${baseUrl}/blogs`, lastModified: new Date() },
+        { url: `${baseUrl}/projects`, lastModified: new Date() },
 
-        ...courseUrls,
-        ...taskUrls,
+        ...blogUrls,
+        ...projectUrls,
     ];
 }

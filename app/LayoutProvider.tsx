@@ -2,8 +2,8 @@
 "use client";
 
 // Use usePathname for catching route name.
-import { usePathname } from "next/navigation";
-import { Header, PubHeader } from "~/components";
+// import { usePathname } from "next/navigation";
+import { Header } from "~/components";
 
 export const LayoutProvider = ({
   // Layouts must accept a children prop.
@@ -12,34 +12,24 @@ export const LayoutProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const pathname = usePathname();
-  // min-h-[calc(100vh_-_2.5rem)]
-  // ["/"]
+  // const pathname = usePathname();
+
   return (
     <>
-      {pathname !== "/" && pathname !== "/login" && !pathname?.startsWith("/learn") ? (
-        <div>
-          <Header />
-          <div className="flex min-h-[100vh] flex-col">
-            <div className="flex md:ml-60">
-              <div className="grow sm:overflow-auto">{children}</div>
-            </div>
-            <footer className="mt-auto border-t border-gray-300 bg-gray-800 py-4 md:ml-60">
-              <div className=" mx-auto text-center text-gray-200">
-                © 2023 LearnHq. All rights reserved. by{" "}
-                <a href="https://collinsruto.netlify.app">Collins Ruto</a>
-              </div>
-            </footer>
-          </div>
-        </div>
-      ) : (
-          <div className="">
-            <PubHeader />
+      <div>
+        <Header />
+        <div className="flex min-h-[100vh] flex-col">
           <div className="flex">
-            <div className="grow">{children}</div>
+            <div className="grow sm:overflow-auto">{children}</div>
           </div>
+          <footer className="mt-auto border-t border-gray-300 bg-gray-800 py-4">
+            <div className="container mx-auto text-center text-gray-300">
+              © 2023 <a className="text-blue-400" href="https://collinsruto.netlify.app">Collins Ruto</a>{" "}
+              All rights reserved.
+            </div>
+          </footer>
         </div>
-      )}
+      </div>
     </>
   );
 };
