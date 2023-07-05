@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import dynamic from "next/dynamic";
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
-import "react-quill/dist/quill.snow.css";
+// const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+// import "react-quill/dist/quill.snow.css";
 // { Quill }
 
 const modules = {
@@ -48,7 +48,7 @@ const Editor: React.FC<EditorProps> = ({ handleQuillChange }) => {
 
   return (
     <div className="ql-container h-48">
-      <ReactQuill
+      {/* <ReactQuill
         modules={modules}
         formats={formats}
         theme={"snow"}
@@ -58,7 +58,7 @@ const Editor: React.FC<EditorProps> = ({ handleQuillChange }) => {
           handleQuillChange(content);
           handleChange(content);
         }}
-      />
+      /> */}
     </div>
   );
 };

@@ -10,10 +10,10 @@ function Header() {
   const currentRoute = usePathname();
 
   return (
-    <div className="sticky top-0 z-40 mx-auto bg-white text-black bg-blend-darken">
-      <div className="pl-4">
+    <div className="container sticky top-0 z-40 mx-auto text-black bg-blend-darken">
+      <div className="">
         <nav className="flex items-center justify-between">
-          <div className="flex w-full justify-between px-2 py-1.5 md:hidden">
+          <div className="flex w-full justify-between py-1.5 md:hidden">
             <Link href="/" className="flex">
               <Image
                 width={90}
@@ -24,7 +24,7 @@ function Header() {
               />
             </Link>
             <div
-              className="cursor-pointer space-y-1 p-2 px-4 sm:space-y-1.5 md:hidden"
+              className="cursor-pointer space-y-1 p-2 sm:space-y-1.5 md:hidden"
               onClick={() => {
                 setOpened(!opened);
               }}
@@ -34,8 +34,8 @@ function Header() {
               <div className="h-1 w-6 rounded bg-blue-600 sm:w-8"></div>
             </div>
           </div>
-          <header className="hidden w-full border-b border-gray-300 md:block">
-            <div className="container mx-auto flex items-center justify-between px-4 py-2 lg:px-20">
+          <header className="hidden w-full md:block">
+            <div className="container mx-auto flex items-center justify-between">
               <Link href="/" className="flex cursor-pointer">
                 <Image
                   width={100}
@@ -47,7 +47,7 @@ function Header() {
                 />
               </Link>
               <div className="">
-                <nav className="text-gray-700">
+                <nav className="text-gray-700 dark:text-gray-300">
                   <ul className="flex items-center space-x-2 text-sm font-semibold md:space-x-4 md:text-lg">
                     <li>
                       <Link
