@@ -12,14 +12,21 @@ function ThemeToogle() {
     setMounted(true);
   }, []);
 
-  if (!mounted) return null;
+  if (!mounted)
+    return (
+      <div className="flex items-center justify-center">
+        <div className="h-6 w-16 animate-pulse rounded-full bg-gray-300">
+          <div className="h-full w-4/5 rounded-full bg-white"></div>
+        </div>
+      </div>
+    );
 
   return (
-    <div>
+    <div className="flex">
       <input
         type="checkbox"
-              id="darkmode-toggle"
-              defaultChecked={theme === 'light'}
+        id="darkmode-toggle"
+        defaultChecked={theme === "light"}
         onClick={() => {
           if (theme === "dark") {
             setTheme("light");

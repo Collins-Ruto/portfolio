@@ -37,14 +37,14 @@ input:checked + label:after {
 label:active:after{
 	width: 2.6rem;
 }
-.background {
+/* .background {
 	width:100vw;
 	height: 100vh;
 	background: #fff;
 	z-index: -1;
 	position: absolute;
 	transition: 0.3s;
-}
+} */
 input:checked + label + .background {
 	background:#242424;
 }
@@ -52,7 +52,7 @@ label svg {
 	position: absolute;
 	width: 1.2rem;
 	top:.4rem;
-	z-index: 100;
+	z-index: 30;
 }
 label svg.sun {
 	left:.4rem;

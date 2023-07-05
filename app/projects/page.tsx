@@ -84,15 +84,13 @@ const Page = async () => {
     <div>
       <div className="flex min-h-screen flex-col items-center justify-between">
         <main className=" md: py-4">
-          <div className="flex justify-between items-center">
-          <h1 className="py-16 text-5xl font-bold">Projects</h1>
-          <div className="">
+          <div className="flex items-center justify-between">
+            <h1 className="py-6 text-5xl font-bold md:py-16">Projects</h1>
             <ThemeToogle />
-            </div>
           </div>
           <div className="md:flex-nowra flex flex-wrap gap-4 sm:flex-row">
             {projects.map((project, index) => (
-              <div className="w-1/3 grow md:w-1/4" key={index}>
+              <div className="w-1/2 grow md:w-1/3 lg:w-1/4" key={index}>
                 <ProjectCard project={project} />
               </div>
             ))}

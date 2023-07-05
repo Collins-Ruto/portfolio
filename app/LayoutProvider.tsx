@@ -19,9 +19,9 @@ export const LayoutProvider = ({
     <>
       <ThemeProvider enableSystem={true} attribute="class">
         <div className=" flex min-h-[100vh] flex-col bg-gray-100 dark:bg-slate-900">
+              <Header />
           <div className="flex px-5 py-4 sm:px-6 lg:px-28">
             <div className="container mx-auto grow sm:overflow-auto">
-              <Header />
               {children}
             </div>
           </div>
