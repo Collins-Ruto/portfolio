@@ -1,8 +1,8 @@
 import "@/styles/globals.css";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/server/auth";
-import { Metadata } from "next";
-import { RepositoryData } from "~/types/types";
+import type { Metadata } from "next";
+// import { RepositoryData } from "~/types/types";
 import projects from "~/assets/sortedArray.json";
 import pinnedProjects from "~/assets/pinnedProjects.json";
 import ThemeToogle from "~/components/ThemeToogle";

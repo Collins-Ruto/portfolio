@@ -1,11 +1,11 @@
-import { z } from "zod";
+// import { z } from "zod";
 
 import {
     createTRPCRouter,
     publicProcedure,
-    protectedProcedure,
+    // protectedProcedure,
 } from "@/server/api/trpc";
-import type { Prisma } from "@prisma/client";
+// import type { Prisma } from "@prisma/client";
 
 export const projectRouter = createTRPCRouter({
     getAll: publicProcedure.query(({ ctx }) => {

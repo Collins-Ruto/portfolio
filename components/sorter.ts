@@ -1,10 +1,10 @@
 import { repos } from "~/assets/repos";
 import fs from "fs";
-import { RepositoryData } from "~/types/types";
+import type { RepositoryData } from "~/types/types";
 
 
 
-const HomePage = async () => {
+const HomePage = () => {
 
     const cleanData: RepositoryData[] = [];
     const clean = repos.forEach((data) => {

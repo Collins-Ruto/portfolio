@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { PrismaClient, type Prisma } from '@prisma/client'
-import { setTimeout } from 'timers/promises'
+// import { setTimeout } from 'timers/promises'
 
-import { appRouter } from "@/server/api/root";
+// import { appRouter } from "@/server/api/root";
 // import { prisma } from "@/server/db";
 
 const prisma = new PrismaClient()

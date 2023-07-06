@@ -1,18 +1,12 @@
 "use client";
-import React, { useState } from "react";
-import { signIn, useSession } from "next-auth/react";
-
-type userInput = {
-  [group: string]: string;
-  password: string;
-  userName: string;
-};
+import React from "react";
+import { signIn } from "next-auth/react";
 
 function Login() {
-  const [user, setUser] = useState<userInput | undefined>();
-  const { data: session } = useSession();
+  // const [user, setUser] = useState<userInput | undefined>();
+  // const { data: session } = useSession();
 
-  console.log("user input", user);
+  // console.log("user input", user);
 
   return (
     <div className="relative flex   min-h-screen w-full flex-col justify-center text-black">
@@ -22,7 +16,7 @@ function Login() {
             <div className="">
               <div>
                 <button
-                  onClick={() => signIn("google", { callbackUrl: 'http://localhost:3000/projects'})}
+                  onClick={() => void signIn("google", { callbackUrl: 'http://localhost:3000/projects'})}
                   className="w-full rounded bg-blue-500 p-2 font-bold text-white hover:bg-blue-700"
                   // type="submit"
                 >
