@@ -1,4 +1,4 @@
-// import { z } from "zod";
+import { z } from "zod";
 
 import {
     createTRPCRouter,
@@ -12,8 +12,16 @@ export const blogRouter = createTRPCRouter({
         return ctx.prisma.blog.findMany({
             take: 10,
             orderBy: {
-                createdAt: 'desc'
+                created_at: 'desc'
             }
+        });
+    }),
+
+    getById: publicProcedure.input(z.string()).query(({ ctx, input }) => {
+        return ctx.prisma.blog.findUnique({
+            where: {
+                slug: input
+            },
         });
     }),
 })

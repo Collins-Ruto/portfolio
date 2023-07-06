@@ -72,7 +72,7 @@ model Blog {
     id           String @id @default(auto()) @map("_id") @db.ObjectId
     title        String
     description  String
-    slug         String
+    slug         String   @unique
     markdown     String
     github       String
     devto_url    String

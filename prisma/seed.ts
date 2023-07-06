@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { PrismaClient, type Prisma } from '@prisma/client'
 // import { setTimeout } from 'timers/promises'
+import blogs from '../assets/blogs.json'
 
 // import { appRouter } from "@/server/api/root";
 // import { prisma } from "@/server/db";
@@ -11,7 +12,6 @@ const prisma = new PrismaClient()
 //   session: null,
 //   prisma: prisma,
 // });
-
 
 
 // const adminData: Prisma.AdminCreateInput[] = 
@@ -26,22 +26,23 @@ async function main() {
   //   console.log(`Created task with id: ${task.id}`)
   // }
 
-  // for (const u of examData) {
-  //   const exam = await prisma.exam.create({
+  // for (const u of blogs) {
+  //   const entry = await prisma.blog.create({
   //     data: u,
   //   })
-  //   console.log(`Created exam with id: ${exam.id}`)
+  //   console.log(`Created entry with id: ${entry.id}`)
+  //   //  setTimeout(2000)
   // }
 
   // const data = await caller.course.getAll();
-  // for (const u of data) {
-  //   const entry = await prisma.course.update({
-  //     where: { id: u.id },
-  //     data: {deleted: false}
-  //   })
-  //   console.log(`updated entry with id: ${entry.id}`)
-  //   await setTimeout(2000)
-  // }
+  for (const u of blogs) {
+    const entry = await prisma.blog.update({
+      where: { slug: u.slug },
+      data: u
+    })
+    console.log(`updated entry with id: ${entry.id}`)
+    // await setTimeout(2000)
+  }
 
   console.log(`Seeding finished.`)
 }

@@ -1,17 +1,18 @@
-// import Link from "next/link";
-// import Image from "next/image";
 import "@/styles/globals.css";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/server/auth";
 import type { Metadata } from "next";
 import ThemeToogle from "~/components/ThemeToogle";
 import { BlogCard } from "~/components";
-import blogs from '~/assets/blogs.json'
+
+import { appRouter } from "@/server/api/root";
+import { prisma } from "@/server/db";
 
 const Page = async () => {
-  const data = await getServerSession(authOptions);
+  const caller = appRouter.createCaller({
+    session: null,
+    prisma: prisma,
+  });
 
-  console.log("user data", data);
+  const blogs = await caller.blog.getAll();
 
   return (
     <div>
