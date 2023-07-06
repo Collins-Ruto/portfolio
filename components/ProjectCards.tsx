@@ -6,68 +6,65 @@ import type { RepositoryData } from "~/types/types";
 
 export const ProjectCard = ({ project }: { project: RepositoryData }) => {
   return (
-    <div className="h-full rounded-lg  border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900">
-
-      <div className="flex  flex-col justify-between gap-2 p-5 ">
-        <div className="flex justify-between">
-          <span className="text-gray-600 dark:text-gray-400">
-            {project.created_at.substring(0, 4)}
-          </span>
-          <Link
-            href={`${project.html_url}/stargazers`}
-            className="lex-end flex justify-between text-gray-400 "
-          >
-            {project.stargazers_count}
-            <Image
-              width={100}
-              height={45}
-              alt="demo"
-              className="ml-1 h-5 w-5"
-              src="https://img.icons8.com/windows/32/FFAE00/star--v1.png"
-            />
-          </Link>
-        </div>
-        <span className="text-xl ">{project.name}</span>
-        <span className="text-sm text-gray-500 dark:text-gray-400">
-          {project.description}
+    <div className="flex h-full flex-col justify-between gap-2 rounded-lg border border-gray-200  bg-gray-50 p-5 shadow-xl dark:border-gray-700 dark:bg-gray-900">
+      <div className="flex justify-between">
+        <span className="text-gray-600 dark:text-gray-400">
+          {project.created_at.substring(0, 4)}
         </span>
-        <div className="flex-end flex justify-between pt-4">
-          {/* <Link href={project.html_url} className="rounded border px-2 py-1">
-            Article
-          </Link> */}
-          <Link
-            href={project.html_url}
-            className="flex items-center rounded border px-2 py-1 dark:border-0 dark:bg-gray-800"
-          >
-            Demo
-            <div className="ml-1 h-5 w-5">
-              <ProjectIcon
-                lighturl={
-                  "https://img.icons8.com/ios/25/000000/screensharing.png"
-                }
-                darkurl={
-                  "https://img.icons8.com/ios/25/FFFFFF/screensharing.png"
-                }
-              />
-            </div>
-          </Link>
-          <Link
-            href={project.html_url}
-            className="flex items-center rounded border px-2 py-1 dark:border-0 dark:bg-gray-800"
-          >
-            Source
-            <div className="ml-1 h-4 w-4">
-              <ProjectIcon
-                lighturl={
-                  "https://img.icons8.com/external-anggara-basic-outline-anggara-putra/24/external-share-ui-anggara-basic-outline-anggara-putra.png"
-                }
-                darkurl={
-                  "https://img.icons8.com/external-anggara-basic-outline-anggara-putra/24/FFFFFF/external-share-ui-anggara-basic-outline-anggara-putra.png"
-                }
-              />
-            </div>
-          </Link>
-        </div>
+        <Link
+          href={`${project.html_url}/stargazers`}
+          className="lex-end flex justify-between text-gray-400 "
+        >
+          {project.stargazers_count}
+          <Image
+            width={100}
+            height={45}
+            alt="demo"
+            className="ml-1 h-5 w-5"
+            src="https://img.icons8.com/windows/32/FFAE00/star--v1.png"
+          />
+        </Link>
+      </div>
+      <Link
+        href={project.html_url}
+        className="text-xl underline-offset-2 hover:underline"
+      >
+        {project.name}
+      </Link>
+      <span className="text-sm text-gray-500 dark:text-gray-400">
+        {project.description}
+      </span>
+      <div className="flex-end flex justify-between pt-4">
+        <Link
+          href={project.homepage == "" ? project.html_url : project.homepage}
+          className="flex items-center rounded border px-2 py-1 dark:border-0 dark:bg-gray-800"
+        >
+          Demo
+          <div className="ml-1 h-5 w-5">
+            <ProjectIcon
+              lighturl={
+                "https://img.icons8.com/ios/25/000000/screensharing.png"
+              }
+              darkurl={"https://img.icons8.com/ios/25/FFFFFF/screensharing.png"}
+            />
+          </div>
+        </Link>
+        <Link
+          href={project.html_url}
+          className="flex items-center rounded border px-2 py-1 dark:border-0 dark:bg-gray-800"
+        >
+          Source
+          <div className="ml-1 h-4 w-4">
+            <ProjectIcon
+              lighturl={
+                "https://img.icons8.com/external-anggara-basic-outline-anggara-putra/24/external-share-ui-anggara-basic-outline-anggara-putra.png"
+              }
+              darkurl={
+                "https://img.icons8.com/external-anggara-basic-outline-anggara-putra/24/FFFFFF/external-share-ui-anggara-basic-outline-anggara-putra.png"
+              }
+            />
+          </div>
+        </Link>
       </div>
     </div>
   );
@@ -75,24 +72,24 @@ export const ProjectCard = ({ project }: { project: RepositoryData }) => {
 
 export const PinnedCard = ({ project }: { project: RepositoryData }) => {
   return (
-    <div className="h-full rounded-lg  border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900">
+    <div className="flex h-full flex-col rounded-md  border border-gray-200 bg-gray-50 shadow-xl dark:border-gray-700 dark:bg-gray-900">
       <Image
         width={600}
         height={200}
         alt="project | collins ruto"
-        className="cover h-40 w-full  rounded-t-lg"
+        className="cover h-40 w-full  rounded-t-md"
         style={{ objectFit: "cover", justifyContent: "start" }}
-        src="https://github.com/Collins-Ruto/lms-admin/raw/main/client/public/learnhq.webp"
+        src={project.pin_url}
       />
 
-      <div className="flex  flex-col justify-between gap-2 p-5 ">
+      <div className="flex h-full flex-col justify-between p-3 ">
         <div className="flex justify-between">
           <span className="text-gray-600 dark:text-gray-400">
             {project.created_at.substring(0, 4)}
           </span>
           <Link
             href={`${project.html_url}/stargazers`}
-            className="lex-end flex justify-between text-gray-400 "
+            className=" flex justify-between text-gray-400 "
           >
             {project.stargazers_count}
             <Image
@@ -104,16 +101,21 @@ export const PinnedCard = ({ project }: { project: RepositoryData }) => {
             />
           </Link>
         </div>
-        <span className="text-xl ">{project.name}</span>
+        <Link
+          href={project.html_url}
+          className="text-xl underline-offset-2 hover:underline"
+        >
+          {project.name}
+        </Link>
         <span className="text-sm text-gray-500 dark:text-gray-400">
           {project.description}
         </span>
-        <div className="flex-end flex justify-between pt-4">
+        <div className="flex-end flex justify-between pt-2">
           {/* <Link href={project.html_url} className="rounded border px-2 py-1">
             Article
           </Link> */}
           <Link
-            href={project.html_url}
+            href={project.homepage == "" ? project.html_url : project.homepage}
             className="flex items-center rounded border px-2 py-1 dark:border-0 dark:bg-gray-800"
           >
             Demo

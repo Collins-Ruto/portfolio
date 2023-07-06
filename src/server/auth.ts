@@ -4,9 +4,9 @@ import {
   type NextAuthOptions,
   type DefaultSession,
 } from "next-auth";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
+// import { PrismaAdapter } from "@next-auth/prisma-adapter";
 // import { env } from "@/env.mjs";
-import { prisma } from "@/server/db";
+// import { prisma } from "@/server/db";
 import GoogleProvider from "next-auth/providers/google";
 
 /**
@@ -35,12 +35,6 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authOptions: NextAuthOptions = {
-
-  pages: {
-    signIn: "/login",
-  },
-
-  adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
       // @ts-ignore

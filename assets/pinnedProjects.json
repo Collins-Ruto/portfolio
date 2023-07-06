@@ -7,7 +7,7 @@
     "stargazers_count": 0,
     "description": "Fully fledged Learning and School Management system",
     "homepage": "https://learnhqhome.vercel.app",
-    "pin_url": "https://github.com/Collins-Ruto/lms-admin/raw/main/client/public/learnhq.webp"
+    "pin_url": "/learnhqhome.webp"
   },
   {
     "name": "app-store",
@@ -17,7 +17,7 @@
     "stargazers_count": 1,
     "description": "A one-stop source for all your favorites apps and games for free.",
     "homepage": "https://applate.vercel.app",
-    "pin_url": "https://github.com/Collins-Ruto/lms-admin/raw/main/client/public/learnhq.webp"
+    "pin_url": "/appstore.webp"
   },
   {
     "name": "collins-ruto.github.io",
@@ -27,7 +27,7 @@
     "stargazers_count": 2,
     "description": "My personal portfolio website",
     "homepage": "https://collinsruto.netlify.app/",
-    "pin_url": "https://github.com/Collins-Ruto/lms-admin/raw/main/client/public/learnhq.webp"
+    "pin_url": "/collinsio.webp"
   },
   {
     "name": "hospital-supply-system",
@@ -37,7 +37,7 @@
     "stargazers_count": 1,
     "description": "A NEAR protocol smart contract built with Rust with aim of giving transparency to our government activities and in this case Health Systesm",
     "homepage": "",
-    "pin_url": "https://github.com/Collins-Ruto/lms-admin/raw/main/client/public/learnhq.webp"
+    "pin_url": "/supply.webp"
   },
   {
     "name": "lms-admin",
@@ -57,6 +57,6 @@
     "stargazers_count": 2,
     "description": "A template for creating near smart contracts using rust and NextJS for frontend",
     "homepage": "",
-    "pin_url": "https://github.com/Collins-Ruto/lms-admin/raw/main/client/public/learnhq.webp"
+    "pin_url": "/neartemplate.webp"
   }
 ]

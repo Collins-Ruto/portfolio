@@ -1,5 +1,3 @@
-import Link from "next/link";
-import Image from "next/image";
 import "@/styles/globals.css";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/server/auth";
@@ -7,9 +5,8 @@ import { Metadata } from "next";
 import { RepositoryData } from "~/types/types";
 import projects from "~/assets/sortedArray.json";
 import pinnedProjects from "~/assets/pinnedProjects.json";
-import ProjectIcon from "~/components/ProjectIcon";
 import ThemeToogle from "~/components/ThemeToogle";
-import { PinnedCard, ProjectCard } from "~/components/ProjectCards";
+import { PinnedCard, ProjectCard } from "~/components";
 
 const Page = async () => {
   const data = await getServerSession(authOptions);
