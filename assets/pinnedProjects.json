@@ -20,16 +20,6 @@
     "pin_url": "/appstore.webp"
   },
   {
-    "name": "collins-ruto.github.io",
-    "id": 421059134,
-    "html_url": "https://github.com/Collins-Ruto/collins-ruto.github.io",
-    "created_at": "2021-10-25T14:30:56Z",
-    "stargazers_count": 2,
-    "description": "My personal portfolio website",
-    "homepage": "https://collinsruto.netlify.app/",
-    "pin_url": "/collinsio.webp"
-  },
-  {
     "name": "hospital-supply-system",
     "id": 497597356,
     "html_url": "https://github.com/Collins-Ruto/hospital-supply-system",
@@ -38,6 +28,16 @@
     "description": "A NEAR protocol smart contract built with Rust with aim of giving transparency to our government activities and in this case Health Systesm",
     "homepage": "",
     "pin_url": "/supply.webp"
+  },
+  {
+    "name": "collins-ruto.github.io",
+    "id": 421059134,
+    "html_url": "https://github.com/Collins-Ruto/collins-ruto.github.io",
+    "created_at": "2021-10-25T14:30:56Z",
+    "stargazers_count": 2,
+    "description": "My personal portfolio website",
+    "homepage": "https://collinsruto.netlify.app/",
+    "pin_url": "/collinsio.webp"
   },
   {
     "name": "lms-admin",
