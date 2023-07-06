@@ -1,4 +1,3 @@
-import { Blog } from '@prisma/client';
 import React from 'react'
 import { appRouter } from "@/server/api/root";
 import { prisma } from "@/server/db";
@@ -19,8 +18,12 @@ export async function generateMetadata(
     prisma: prisma,
   });
 
-  const data = await caller.blog.getById(slug || "621dd16f2eece6ce9587cb0d");
-  const blog = data as Blog;
+  const blog = await caller.blog.getById(slug || "621dd16f2eece6ce9587cb0d");
+    if (!blog) { 
+        return {
+            title: "blog not found"
+        }
+    }
 
   const previousImages = (await parent)?.openGraph?.images || [];
 
@@ -46,8 +49,7 @@ async function BlogPage({ params: { slug } }: { params: { slug: string } }) {
       prisma: prisma,
     });
 
-    const data = await caller.blog.getById(slug || "621dd16f2eece6ce9587cb0d");
-    const blog = data as Blog;
+    const blog = await caller.blog.getById(slug || "621dd16f2eece6ce9587cb0d");
 
     if (!blog) {
         return <div>Blog not found</div>;
@@ -58,9 +60,9 @@ async function BlogPage({ params: { slug } }: { params: { slug: string } }) {
 
     return (
       <div className="pt-8">
-            <div className=" prose mx-auto dark:prose-invert lg:prose-xl">
-                <h1>{ blog.title}</h1>
-          <ReactMarkdown children={`${markdown}`} remarkPlugins={[remarkGfm]} />
+        <div className=" prose mx-auto dark:prose-invert lg:prose-xl">
+          <h1>{blog.title}</h1>
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>{markdown}</ReactMarkdown>
         </div>
       </div>
     );

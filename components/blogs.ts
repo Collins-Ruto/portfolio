@@ -1,7 +1,20 @@
 
-import type { Blog } from "@prisma/client";
 import fs from "fs";
 import blogs from '~/assets/devto.json'
+
+type Blog = {
+    title:  string,
+    description: string,
+    slug: string,
+    markdown: string,
+    github: string,
+    devto_url: string,
+    created_at: string,
+    tag_list: string[],
+    public_reactions_count: number,
+    comments_count: number,
+    cover_image: string,
+}
 
 const HomePage = () => {
 
