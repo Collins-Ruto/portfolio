@@ -17,6 +17,7 @@ const nextConfig = {
       "preschool.dreamguystech.com",
       "icons-for-free.com",
       "i.ytimg.com",
+      "github.com",
     ],
   },
   async headers() {

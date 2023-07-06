@@ -1,15 +1,8 @@
 import { repos } from "~/assets/repos";
 import fs from "fs";
+import { RepositoryData } from "~/types/types";
 
-interface RepositoryData {
-    id: number;
-    name: string;
-    html_url: string;
-    created_at: string;
-    stargazers_count: number;
-    description: string;
-    homepage: string;
-}
+
 
 const HomePage = async () => {
 
@@ -22,7 +15,8 @@ const HomePage = async () => {
             created_at: data.created_at,
             stargazers_count: data.stargazers_count,
             description: data.description ?? "",
-            homepage: data.homepage ?? ""
+            homepage: data.homepage ?? "",
+            pin_url: ""
         }
         cleanData.push(newdata)
     })

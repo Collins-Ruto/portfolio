@@ -4,20 +4,28 @@ import "@/styles/globals.css";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/server/auth";
 import { Metadata } from "next";
+import ThemeToogle from "~/components/ThemeToogle";
 
 const Page = async () => {
   const data = await getServerSession(authOptions);
 
   console.log("user data", data);
 
+  const BlogCard = () => {
+    return (
+      <div className=""></div>
+    )
+  }
+
   return (
     <div>
-      
-      <div className="flex min-h-screen flex-col items-center justify-between bg-gray-100">
-        <main className="container mx-auto px-4 py-4 md:flex">
-         <h1>Blogs</h1>
+      <div className="flex min-h-screen flex-col items-center justify-between">
+        <main className=" md: py-4">
+          <div className="flex items-center justify-between">
+            <h1 className="py-6 text-5xl font-bold md:py-16">My Blogs</h1>
+            <ThemeToogle />
+          </div>
         </main>
-        
       </div>
     </div>
   );

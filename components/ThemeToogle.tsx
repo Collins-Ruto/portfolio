@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import "~/styles/themetoogle.css";
 
 function ThemeToogle() {
-  const { systemTheme, theme, setTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {

@@ -6,6 +6,7 @@ export type RepositoryData = {
   stargazers_count: number;
   description: string;
   homepage: string;
+  pin_url: string;
 }
 
 export type Search = {
