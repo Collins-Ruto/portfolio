@@ -1,9 +1,9 @@
+import React from "react";
 import type { Blog } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
-//
-function BlogCard({ blog }: { blog: Blog }) {
+
+const BlogCard = ({ blog }: { blog: Blog }) => {
   return (
     <div className="rounded-xlflex drop-shadow-sm hover:shadow-xl mx-auto flex h-full flex-col justify-between gap-2 overflow-hidden rounded-lg border border-gray-200  bg-gray-50 shadow-md dark:border-gray-700 dark:bg-gray-900 md:max-w-xl">
       <Image
@@ -13,7 +13,7 @@ function BlogCard({ blog }: { blog: Blog }) {
         src={blog.cover_image}
         alt="Blog Cover Image"
       />
-      <Link href={blog.devto_url} className="flex h-full flex-col justify-between p-4">
+      <Link href={`/blogs/blog/${blog.slug}`} className="flex h-full flex-col justify-between p-4">
         <div className="flex justify-between">
           <div className="flex items-center">
             {blog.tag_list.map((tag, index) => (
