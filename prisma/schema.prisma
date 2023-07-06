@@ -69,16 +69,18 @@ model Project {
 }
 
 model Blog {
-    id          String @id @default(auto()) @map("_id") @db.ObjectId
-    createdAt   DateTime   @default(now())
-    title       String
-    description String
-    tags        String[]
-    image       String
-    content_url String
-    likes       Int
-    comments    Comment[]
-    deleted     Boolean     @default(false)
+    id           String @id @default(auto()) @map("_id") @db.ObjectId
+    title        String
+    description  String
+    slug         String
+    markdown     String
+    github       String
+    devto_url    String
+    created_at   String
+    tag_list     String[]
+    public_reactions_count Int
+    comments_count Int
+    cover_image  String
 }
 
 type Comment {

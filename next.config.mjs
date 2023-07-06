@@ -18,6 +18,8 @@ const nextConfig = {
       "icons-for-free.com",
       "i.ytimg.com",
       "github.com",
+      "res.cloudinary.com",
+      "dev.to",
     ],
   },
   async headers() {

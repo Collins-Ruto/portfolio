@@ -2,8 +2,6 @@ import { repos } from "~/assets/repos";
 import fs from "fs";
 import type { RepositoryData } from "~/types/types";
 
-
-
 const HomePage = () => {
 
     const cleanData: RepositoryData[] = [];

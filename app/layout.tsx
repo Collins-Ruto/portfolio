@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     default: "Collins Ruto | Software developer",
     template: `%s | Collins Ruto`,
   },
-  metadataBase: new URL("https://collinsruto.netlify.app"),
+  metadataBase: new URL("https://collinsruto.vercel.app"),
   description:
     "I am a hobbyist software developer with expertise in fullstack web development. I create web apps to solve your business problems.",
   keywords: [

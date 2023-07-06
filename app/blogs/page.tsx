@@ -5,17 +5,13 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/server/auth";
 import type { Metadata } from "next";
 import ThemeToogle from "~/components/ThemeToogle";
+import { BlogCard } from "~/components";
+import blogs from '~/assets/blogs.json'
 
 const Page = async () => {
   const data = await getServerSession(authOptions);
 
   console.log("user data", data);
-
-  const BlogCard = () => {
-    return (
-      <div className=""></div>
-    )
-  }
 
   return (
     <div>
@@ -25,8 +21,14 @@ const Page = async () => {
             <h1 className="py-6 text-5xl font-bold md:py-16">My Blogs</h1>
             <ThemeToogle />
           </div>
-          <div className="">
-            <BlogCard />
+          <div className="md:flex-nowra mb-4 flex flex-wrap gap-4 sm:flex-row">
+            {blogs.map((blog, index) => {
+              return (
+                <div className="w-1/2 grow md:w-1/3 lg:w-1/3" key={index}>
+                <BlogCard blog={blog} />
+              </div>
+              )
+            })}
           </div>
         </main>
       </div>

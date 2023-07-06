@@ -5,4 +5,5 @@ export { default as Button } from "./Button";
 // export { default as Editor } from "./Editor";
 export { default as StatusMsg } from "./StatusMsg";
 export { default as PubHeader } from "./Header";
+export { default as BlogCard } from "./BlogCard";
 export { ProjectCard, PinnedCard } from "./ProjectCards";
