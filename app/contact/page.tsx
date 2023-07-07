@@ -1,5 +1,5 @@
 import { Contact } from "~/components";
-import { Metadata } from "next";
+import type{ Metadata } from "next";
 import React from "react";
 
 function page() {

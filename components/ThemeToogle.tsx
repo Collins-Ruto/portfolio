@@ -21,6 +21,8 @@ function ThemeToogle() {
       </div>
     );
 
+    console.log("theme", theme)
+
   return (
     <div className="flex">
       <input

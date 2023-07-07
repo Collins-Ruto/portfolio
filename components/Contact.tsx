@@ -33,10 +33,10 @@ function Contact() {
   return (
     <div className="container  py-6">
       <div className="mx-auto text-white">
-        <div className="flex lg:grid max-w-full grid-cols-3 flex-col flex-wrap gap-6 py-4">
+        <div className="flex max-w-full grid-cols-3 flex-col flex-wrap gap-6 py-4 lg:grid">
           <div className="col-span-1 min-w-[16rem]">
             <div className="flex justify-between">
-              <div className="flex flex-col mx-auto sm:mx-0">
+              <div className="mx-auto flex flex-col sm:mx-0">
                 <span className="text-4xl font-medium text-gray-200">
                   Contact Me
                 </span>

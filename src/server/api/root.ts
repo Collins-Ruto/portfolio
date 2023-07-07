@@ -1,6 +1,7 @@
 import { createTRPCRouter } from "@/server/api/trpc";
 import { projectRouter } from "@/server/api/routers/projects";
 import { blogRouter } from "@/server/api/routers/blogs";
+import { formRouter } from "./routers/forms";
 
 
 /**
@@ -11,6 +12,7 @@ import { blogRouter } from "@/server/api/routers/blogs";
 export const appRouter = createTRPCRouter({
   project: projectRouter,
   blog: blogRouter,
+  form: formRouter
 
 });
 
