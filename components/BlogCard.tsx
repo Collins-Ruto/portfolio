@@ -4,8 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 
 const BlogCard = ({ blog }: { blog: Blog }) => {
+  const date = new Date(blog.created_at);
   return (
-    <div className="  flex h-full flex-col rounded-lg border border-gray-200 bg-gray-50 shadow-md  drop-shadow-sm hover:shadow-xl dark:border-gray-700 dark:bg-gray-900">
+    <div className=" flex h-full flex-col rounded-lg border border-gray-200 bg-gray-50 shadow-md drop-shadow-sm  hover:shadow-xl dark:border-gray-700 dark:bg-gray-900 md:max-w-2xl">
       <Image
         width={600}
         height={200}
@@ -29,8 +30,9 @@ const BlogCard = ({ blog }: { blog: Blog }) => {
               </span>
             ))}
           </div>
-          <div className="ml-2 text-sm text-gray-600 dark:text-gray-400">
-            Created at: <span className="font-semibold">June 30, 2023</span>
+          <div className="ml-2 flex text-sm text-gray-600 dark:text-gray-400">
+            <span className="hidden md:block">Created at:&nbsp; </span>
+            <span className="font-semibold">{date.toDateString()}</span>
           </div>
         </div>
         <h2 className="my-2 text-2xl font-semibold text-gray-800 hover:underline dark:text-gray-100">
@@ -99,6 +101,6 @@ const BlogCard = ({ blog }: { blog: Blog }) => {
       </Link>
     </div>
   );
-}
+};
 
 export default BlogCard;

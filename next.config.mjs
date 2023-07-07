@@ -11,6 +11,7 @@ const nextConfig = {
     serverComponentsExternalPackages: ["@prisma/client", "bcryptjs"],
   },
   images: {
+    dangerouslyAllowSVG: true,
     domains: [
       "img.icons8.com",
       "cdn-icons-png.flaticon.com",
@@ -20,6 +21,10 @@ const nextConfig = {
       "github.com",
       "res.cloudinary.com",
       "dev.to",
+      "img.shields.io",
+      "github-readme-stats.vercel.app",
+      "visitor-badge.glitch.me",
+      "wakatime.com",
     ],
   },
   async headers() {

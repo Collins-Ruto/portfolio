@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import '~/styles/globals.css'
+import "~/styles/globals.css";
 
 function Header() {
   const [opened, setOpened] = useState(false);
@@ -27,7 +27,7 @@ function Header() {
             <div
               id="menuButton"
               className={`flex ${
-                opened && "open"
+                opened? "open" : ""
               } cursor-pointer flex-col items-center justify-center space-y-1 p-2  md:hidden`}
               onClick={() => {
                 setOpened(!opened);
@@ -67,11 +67,6 @@ function Header() {
                     </li>
 
                     <li>
-                      <Link href="#" className="hover:text-blue-600">
-                        Courses
-                      </Link>
-                    </li>
-                    <li>
                       <Link
                         href={`/blogs`}
                         className={` cursor-pointer items-center border-b-2  align-middle transition duration-200 ease-in-out hover:text-blue-600 ${
@@ -93,6 +88,18 @@ function Header() {
                         }`}
                       >
                         <span className="rounded">Projects</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href={`/`}
+                        className={` cursor-pointer items-center border-b-2 align-middle transition duration-200 ease-in-out hover:text-blue-600 ${
+                          currentRoute === "/about"
+                            ? " border-orange-500"
+                            : "border-transparent"
+                        }`}
+                      >
+                        <span className="rounded">About Me</span>
                       </Link>
                     </li>
                     <li>
@@ -147,7 +154,7 @@ function Header() {
               setOpened(!opened);
             }}
             className="
-               absolute sm:text-3xl right-0 flex h-screen w-[60%]  max-w-[20rem] flex-col gap-4 overflow-y-auto bg-[#F7F6FB] p-4 pt-[5rem] text-2xl font-semibold text-gray-800 opacity-100 bg-blend-darken md:w-60 "
+               absolute right-0 flex h-screen w-[60%] max-w-[20rem]  flex-col gap-4 overflow-y-auto bg-[#F7F6FB] p-4 pt-[5rem] text-2xl font-semibold text-gray-800 opacity-100 bg-blend-darken sm:text-3xl md:w-60 "
           >
             <Link
               href={`/`}
@@ -186,6 +193,16 @@ function Header() {
               }`}
             >
               <span className="rounded">Projects</span>
+            </Link>
+            <Link
+              href={`/about`}
+              className={`w-fit cursor-pointer items-center border-b-2 px-2 transition duration-200 ease-in-out hover:text-blue-600 ${
+                currentRoute === "/about"
+                  ? " border-orange-500"
+                  : "border-transparent"
+              }`}
+            >
+              <span className="rounded">About Me</span>
             </Link>
             <Link
               href={`/contact`}
