@@ -51,6 +51,7 @@ export const metadata: Metadata = {
     "front end developer",
     "solidity",
     "rust",
+    "code",
   ],
   alternates: {
     canonical: "/",

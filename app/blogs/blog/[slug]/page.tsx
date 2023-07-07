@@ -38,7 +38,7 @@ export async function generateMetadata(
         url: "https://collinsruto.netlify.app/",
       },
     ],
-    keywords: ["learnhq", ...blog.tag_list, blog.title],
+    keywords: ["blog", ...blog.tag_list, blog.title],
     twitter: { creator: "@ruto_collins_" },
   };
 }

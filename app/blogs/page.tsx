@@ -2,7 +2,6 @@ import "@/styles/globals.css";
 import type { Metadata } from "next";
 import ThemeToogle from "~/components/ThemeToogle";
 import { BlogCard } from "~/components";
-
 import { appRouter } from "@/server/api/root";
 import { prisma } from "@/server/db";
 

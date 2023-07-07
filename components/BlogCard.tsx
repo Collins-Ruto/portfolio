@@ -5,19 +5,26 @@ import Link from "next/link";
 
 const BlogCard = ({ blog }: { blog: Blog }) => {
   return (
-    <div className="rounded-xlflex drop-shadow-sm hover:shadow-xl mx-auto flex h-full flex-col justify-between gap-2 overflow-hidden rounded-lg border border-gray-200  bg-gray-50 shadow-md dark:border-gray-700 dark:bg-gray-900 md:max-w-xl">
+    <div className="  flex h-full flex-col rounded-lg border border-gray-200 bg-gray-50 shadow-md  drop-shadow-sm hover:shadow-xl dark:border-gray-700 dark:bg-gray-900">
       <Image
-        width={1200}
-        height={400}
-        className="h-40 w-full object-cover"
+        width={600}
+        height={200}
+        className="cover h-40 w-full  rounded-t-md"
         src={blog.cover_image}
+        style={{ objectFit: "cover", justifyContent: "start" }}
         alt="Blog Cover Image"
       />
-      <Link href={`/blogs/blog/${blog.slug}`} className="flex h-full flex-col justify-between p-4">
+      <Link
+        href={`/blogs/blog/${blog.slug}`}
+        className="flex h-full flex-col justify-between p-4"
+      >
         <div className="flex justify-between">
-          <div className="flex items-center">
+          <div className="flex flex-wrap items-center">
             {blog.tag_list.map((tag, index) => (
-              <span key={index} className="mx-1 inline-block rounded-full bg-indigo-200 px-2 py-1 text-xs font-semibold uppercase tracking-wide text-indigo-800">
+              <span
+                key={index}
+                className="m-1 inline-block rounded-full bg-indigo-200 px-2 py-1 text-xs font-semibold uppercase tracking-wide text-indigo-800"
+              >
                 {tag}
               </span>
             ))}
@@ -26,12 +33,10 @@ const BlogCard = ({ blog }: { blog: Blog }) => {
             Created at: <span className="font-semibold">June 30, 2023</span>
           </div>
         </div>
-        <h2 className="my-2 text-2xl hover:underline font-semibold text-gray-800 dark:text-gray-100">
+        <h2 className="my-2 text-2xl font-semibold text-gray-800 hover:underline dark:text-gray-100">
           {blog.title}
         </h2>
-        <p className="text-gray-700 dark:text-gray-200">
-          {blog.description}
-        </p>
+        <p className="text-gray-700 dark:text-gray-200">{blog.description}</p>
         <div className="mt-2 flex items-center justify-between">
           <div className="flex items-center text-gray-600 dark:text-gray-400">
             <svg

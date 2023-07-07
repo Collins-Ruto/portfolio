@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import '~/styles/globals.css'
 
 function Header() {
   const [opened, setOpened] = useState(false);
@@ -24,14 +25,17 @@ function Header() {
               />
             </Link>
             <div
-              className="cursor-pointer space-y-1 p-2 sm:space-y-1.5 md:hidden"
+              id="menuButton"
+              className={`flex ${
+                opened && "open"
+              } cursor-pointer flex-col items-center justify-center space-y-1 p-2  md:hidden`}
               onClick={() => {
                 setOpened(!opened);
               }}
             >
-              <div className="h-1 w-6 rounded bg-blue-600 sm:w-8"></div>
-              <div className="h-1 w-6 rounded bg-blue-600 sm:w-8"></div>
-              <div className="h-1 w-6 rounded bg-blue-600 sm:w-8"></div>
+              <span className="duration-400 h-1 w-6 rounded bg-blue-600 transition-all sm:w-8"></span>
+              <span className="duration-400 h-1 w-6 rounded bg-blue-600 transition-all sm:w-8"></span>
+              <span className="duration-400 h-1 w-6 rounded bg-blue-600 transition-all sm:w-8"></span>
             </div>
           </div>
           <header className="hidden w-full md:block">
@@ -63,10 +67,7 @@ function Header() {
                     </li>
 
                     <li>
-                      <Link
-                        href="#"
-                        className="hover:text-blue-600"
-                      >
+                      <Link href="#" className="hover:text-blue-600">
                         Courses
                       </Link>
                     </li>
@@ -146,21 +147,26 @@ function Header() {
               setOpened(!opened);
             }}
             className="
-               absolute right-0 flex h-screen w-[60%]  max-w-[20rem] flex-col gap-2 overflow-y-auto bg-[#F7F6FB] p-4 pt-[5rem] text-2xl font-semibold text-gray-800 opacity-100 bg-blend-darken md:w-60 "
+               absolute sm:text-3xl right-0 flex h-screen w-[60%]  max-w-[20rem] flex-col gap-4 overflow-y-auto bg-[#F7F6FB] p-4 pt-[5rem] text-2xl font-semibold text-gray-800 opacity-100 bg-blend-darken md:w-60 "
           >
             <Link
               href={`/`}
-              className={` cursor-pointer items-center rounded p-2 px-4 align-middle text-gray-800 hover:text-blue-700 ${
+              className={` w-fit cursor-pointer items-center border-b-2 px-2 transition duration-200 ease-in-out hover:text-blue-600 ${
                 currentRoute === "/"
-                  ? "hover:text bg-blue-700 text-white hover:text-white"
-                  : ""
+                  ? "  border-orange-500"
+                  : "border-transparent"
               }`}
             >
               <span className="rounded">Home</span>
             </Link>
+
             <Link
-              href={`https://twitter.com/learnhqafrica`}
-              className={` flex cursor-pointer items-center rounded-md p-2 px-4 align-middle text-gray-800 hover:text-blue-700 `}
+              href={`/blogs`}
+              className={` w-fit cursor-pointer items-center border-b-2 px-2 transition duration-200 ease-in-out hover:text-blue-600 ${
+                currentRoute === "/blogs"
+                  ? "  border-orange-500"
+                  : "border-transparent"
+              }`}
             >
               {/* <Image
                 width={20}
@@ -169,47 +175,37 @@ function Header() {
                 src="https://img.icons8.com/material-rounded/24/000000/dashboard-layout.png"
                 alt=""
               /> */}
-              <span className="">Forums</span>
+              <span className="rounded">Blogs</span>
             </Link>
-
             <Link
-              href={`/about`}
-              className={` cursor-pointer items-center rounded p-2 px-4 align-middle text-gray-800 hover:text-blue-700 ${
-                currentRoute === "/about"
-                  ? "hover:text bg-blue-700 text-white hover:text-white"
-                  : ""
+              href={`/projects`}
+              className={`w-fit cursor-pointer items-center border-b-2 px-2 transition duration-200 ease-in-out hover:text-blue-600 ${
+                currentRoute === "/projects"
+                  ? " border-orange-500"
+                  : "border-transparent"
               }`}
             >
-              <span className="rounded">About Us</span>
-            </Link>
-            <Link
-              href="#"
-              className="rounded p-2 px-4 hover:text-blue-600"
-            >
-              Courses
+              <span className="rounded">Projects</span>
             </Link>
             <Link
               href={`/contact`}
-              className={` cursor-pointer items-center rounded p-2 px-4 align-middle text-gray-800 hover:text-blue-700 ${
+              className={` w-fit cursor-pointer items-center border-b-2 px-2 transition duration-200 ease-in-out hover:text-blue-600 ${
                 currentRoute === "/contact"
-                  ? "hover:text bg-blue-700 text-white hover:text-white"
-                  : ""
+                  ? "  border-orange-500"
+                  : "border-transparent"
               }`}
             >
               <span className="rounded">Contact</span>
             </Link>
-            <Link
-              href="#"
-              className=" rounded p-2 px-4"
-            >
-              Demo
+            <Link href="#" className=" rounded p-2 px-2">
+              Resume
             </Link>
             <Link
               href={`/faq`}
-              className={`flex cursor-pointer items-center rounded p-2 px-4 align-middle text-gray-800 hover:text-blue-700 ${
+              className={` w-fit cursor-pointer items-center border-b-2 px-2 transition duration-200 ease-in-out hover:text-blue-600 ${
                 currentRoute === "/faq"
-                  ? "hover:text bg-blue-700 text-white hover:text-white"
-                  : ""
+                  ? "  border-orange-500"
+                  : "border-transparent"
               }`}
             >
               FAQs
