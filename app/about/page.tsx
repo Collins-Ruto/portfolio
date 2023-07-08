@@ -30,10 +30,10 @@ function BlogPage() {
   return (
     <div className="pt-8">
       <div className="prose mx-auto dark:prose-invert lg:prose-xl ">
-        <div className="flex mt-6 items-center justify-between">
+        <div className="mt-6 flex items-center justify-between">
           <div className="my-auto text-6xl font-bold ">Whoami</div>
           <span className="mt-0">
-          <ThemeToogle />
+            <ThemeToogle place="blogs-toogle" />
           </span>
         </div>
         <p>

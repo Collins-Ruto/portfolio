@@ -4,17 +4,24 @@ import { useTheme } from "next-themes";
 import React, { useEffect, useState } from "react";
 import "~/styles/themetoogle.css";
 
-function ThemeToogle() {
+function ThemeToogle({place}:{place: string}) {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [checked, setChecked] = useState(theme === "light");
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  const handleCheckboxChange = () => {
+    const updatedTheme = checked ? "dark" : "light";
+    setChecked(!checked);
+    setTheme(updatedTheme);
+  };
+
   if (!mounted)
     return (
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center" key={place}>
         <div className="h-6 w-16 animate-pulse rounded-full bg-gray-300">
           <div className="h-full w-4/5 rounded-full bg-white"></div>
         </div>
@@ -24,20 +31,17 @@ function ThemeToogle() {
     console.log("theme", theme)
 
   return (
-    <div className="flex">
+    <div className="themetoogle flex" key={place}>
       <input
         type="checkbox"
-        id="darkmode-toggle"
-        defaultChecked={theme === "light"}
-        onClick={() => {
-          if (theme === "dark") {
-            setTheme("light");
-          } else {
-            setTheme("dark");
-          }
+        id={`darkmode-toggle-${place}`}
+        // defaultChecked={theme === "light"}
+        checked={checked}
+        onChange={() => {
+          handleCheckboxChange();
         }}
       />
-      <label htmlFor="darkmode-toggle">
+      <label htmlFor={`darkmode-toggle-${place}`}>
         <svg
           version="1.1"
           className="sun"

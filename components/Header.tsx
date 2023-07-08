@@ -28,7 +28,7 @@ function Header() {
             <div
               id="menuButton"
               className={`flex ${
-                opened? "open" : ""
+                opened ? "open" : ""
               } cursor-pointer flex-col items-center justify-center space-y-1 p-2  md:hidden`}
               onClick={() => {
                 setOpened(!opened);
@@ -157,10 +157,8 @@ function Header() {
             className="
                absolute right-0 flex h-screen w-[60%] max-w-[20rem]  flex-col gap-4 overflow-y-auto bg-[#F7F6FB] p-4 pt-[5rem] text-2xl font-semibold text-gray-800 opacity-100 bg-blend-darken sm:text-3xl md:w-60 "
           >
-            <div
-              className={` w-fit items-center px-2`}
-            >
-              <ThemeToogle/>
+            <div className="w-fit items-center px-2 md:hidden">
+              <ThemeToogle place="sidebar-toogle" />
             </div>
             <Link
               href={`/`}

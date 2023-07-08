@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { api } from "@/utils/api";
 import React, { useState } from "react";
 
@@ -8,8 +8,15 @@ type Message = {
   message: string;
 };
 
+const cleanField = {
+  name: "",
+  email: "",
+  message: "",
+};
+
 function ContactForm() {
   const [message, setMessage] = useState<Message>();
+  const [status, setStatus] = useState(false);
 
   const handleInput = (event: React.SyntheticEvent) => {
     const target = event.target as HTMLInputElement;
@@ -29,18 +36,25 @@ function ContactForm() {
     });
   };
 
-  console.log(message)
+  console.log(message);
 
   const sendMessage = api.form.addForm.useMutation();
 
   const handleSubmit = (event: React.SyntheticEvent) => {
-    event.preventDefault()
+    event.preventDefault();
+
     if (!message) {
       return;
     }
     try {
       console.log("send  message", message);
       const data = sendMessage.mutate(message);
+
+      setStatus(true);
+      setTimeout(() => {
+      setMessage(cleanField)
+        setStatus(false);
+      }, 4000);
 
       console.log("send  message data", data);
     } catch (error) {
@@ -53,32 +67,30 @@ function ContactForm() {
       <form className="flex flex-col gap-4" noValidate>
         <div className="flex w-full flex-col justify-between gap-4 sm:flex-row">
           <input
-            onChange={() => {
-              handleInput;
+            onChange={(e) => {
+              handleInput(e);
             }}
             name="name"
             value={message?.name}
-            className="focus:shadow-outline block w-full border rounded  bg-slate-900 bg-opacity-80 px-3 py-4 leading-tight placeholder-white shadow focus:outline-none"
+            className="focus:shadow-outline block w-full rounded border  bg-slate-900 bg-opacity-80 px-3 py-4 leading-tight placeholder-white shadow focus:outline-none"
             type="text"
             placeholder="Your Name"
           />
-
           <input
-            onChange={() => {
-              handleInput;
+            onChange={(e) => {
+              handleInput(e);
             }}
             name="email"
             value={message?.email}
             className="focus:shadow-outline block w-full appearance-none rounded border bg-slate-900 bg-opacity-80 px-3 py-4 leading-tight placeholder-white shadow focus:outline-none"
             type="email"
             placeholder="Email Address"
-            
           />
         </div>
         <div className=" ">
           <textarea
-            onChange={() => {
-              handleInput;
+            onChange={(e) => {
+              handleInput(e);
             }}
             value={message?.message}
             name="message"
@@ -90,12 +102,12 @@ function ContactForm() {
 
         <div className="flex w-full justify-center sm:justify-start">
           <button
-            onClick={() => {
-              handleSubmit;
+            onClick={(e) => {
+              handleSubmit(e);
             }}
             className="bg-primary-500 hover:bg-primary-700 focus:border-primary-700 focus:shadow-outline-indigo mt-6 inline-block w-full rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-semibold leading-6 text-white transition duration-150 ease-in-out focus:outline-none active:bg-indigo-700 sm:mt-8 sm:w-1/2"
           >
-            Mail Me 🙂
+            {status ? "Well Recieved 😁 " : "Mail Me 🙂"}
           </button>
         </div>
       </form>

@@ -18,7 +18,7 @@ const Page = async () => {
         <main className=" md: py-4">
           <div className="flex items-center justify-between">
             <h1 className="py-6 text-5xl font-bold md:py-16">My Crafts</h1>
-            <ThemeToogle />
+            <ThemeToogle place="projects-toogle" />
           </div>
           <div className="md:flex-nowra mb-4 flex flex-wrap gap-4 sm:flex-row">
             {pinnedProjects.map((project, index) => (

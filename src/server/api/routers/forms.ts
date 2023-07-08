@@ -14,29 +14,30 @@ export const formRouter = createTRPCRouter({
         email: z.string(),
         message: z.string(),
     })).mutation(async ({ input }) => {
-        
+
         const transporter = nodemailer.createTransport({
-            service: 'Gmail',
+            service: 'gmail',
             auth: {
                 user: process.env.NEXT_PUBLIC_EMAIL_ADDRESS,
-                pass: process.env.NEXT_PUBLIC_PASSWORD,
+                pass: "msafkdeuomozkbqn",
             },
         });
+        console.log("input", input)
 
         const message = {
-            from: input.email,
+            from: process.env.NEXT_PUBLIC_EMAIL_ADDRESS,
             to: process.env.NEXT_PUBLIC_EMAIL_ADDRESS,
             subject: 'New Message From Portfolio Form!',
             text: input.message,
-            html: `<p>${input.message}</p>`
+            html: `<p>${input.message} from ${input.name} via email: ${input.email}</p>`
         }
 
         const res = await transporter.sendMail(message);
 
         console.log(res);
 
-        return res.response
-         
+        return "res"
+
     }),
 
 })
