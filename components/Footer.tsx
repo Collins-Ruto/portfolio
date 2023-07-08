@@ -9,6 +9,8 @@ function Footer() {
         <div className="container mx-auto w-full max-w-screen-xl py-6 md:p-2 lg:pt-8">
           <div className="items-center justify-between text-center text-[#16e0bd] lg:flex">
             <Link
+              target="_blank"
+              rel="noopener"
               href="mailto:collinsruto48@gmail.com"
               className=" underline-offset-2 hover:underline "
             >
@@ -26,6 +28,8 @@ function Footer() {
             <div className=" pt-6 ">
               <div className="mb-4 flex w-full justify-center gap-4">
                 <Link
+                  target="_blank"
+                  rel="noopener"
                   href="https://collinsruto.netlify.com"
                   type="button"
                   aria-label="collins ruto website"
@@ -44,6 +48,8 @@ function Footer() {
                 </Link>
 
                 <Link
+                  target="_blank"
+                  rel="noopener"
                   href="https://twitter.com/ruto_collins_"
                   type="button"
                   aria-label="collins ruto twitter"
@@ -62,6 +68,8 @@ function Footer() {
                 </Link>
 
                 <Link
+                  target="_blank"
+                  rel="noopener"
                   href="https://instagram.com/learn.hq"
                   type="button"
                   aria-label="learnhq instagram"
@@ -80,6 +88,8 @@ function Footer() {
                 </Link>
 
                 <Link
+                  target="_blank"
+                  rel="noopener"
                   href="https://www.linkedin.com/in/collins-ruto"
                   type="button"
                   aria-label="collins ruto linkedin "
@@ -98,6 +108,8 @@ function Footer() {
                 </Link>
 
                 <Link
+                  target="_blank"
+                  rel="noopener"
                   href="https://github.com/collins-ruto"
                   type="button"
                   aria-label="collins ruto github"
@@ -120,6 +132,8 @@ function Footer() {
             <div className="pb-2 text-center md:pb-0">
               © 2023{" "}
               <Link
+                target="_blank"
+                rel="noopener"
                 className="text-blue-400 "
                 href="https://collinsruto.netlify.com"
               >

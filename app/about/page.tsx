@@ -51,7 +51,7 @@ function BlogPage() {
             href="https://twitter.com/ruto_collins_"
             target="_blank"
             className="h-full"
-            rel="noopener noreferrer"
+            rel="noopener"
           >
             <Image
               height={100}
@@ -63,7 +63,7 @@ function BlogPage() {
           <Link
             href="https://codepen.com/collins-ruto"
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noopener"
           >
             <Image
               height={100}
@@ -75,7 +75,7 @@ function BlogPage() {
           <Link
             href="https://www.linkedin.com/in/collins-ruto/"
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noopener"
           >
             <Image
               height={100}
@@ -87,7 +87,7 @@ function BlogPage() {
           <Link
             href="https://instagram.com/colins_ruto"
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noopener"
           >
             <Image
               height={100}
@@ -99,7 +99,7 @@ function BlogPage() {
           <Link
             href="https://stackoverflow.com/users/17242991/collins-ruto"
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noopener"
           >
             <Image
               height={100}
@@ -112,7 +112,7 @@ function BlogPage() {
           <Link
             href="mailto:collinsruto48@gmail.com"
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noopener"
           >
             <Image
               height={100}
@@ -147,7 +147,7 @@ function BlogPage() {
           <Link
             href="https://github.com/collins-ruto/wallpaper-app"
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noopener"
           >
             <Image
               height={100}
@@ -159,7 +159,7 @@ function BlogPage() {
           <Link
             href="https://github.com/collins-ruto/wallpaper-app"
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noopener"
           >
             <Image
               height={100}
@@ -168,7 +168,7 @@ function BlogPage() {
               alt="Javascript Badge"
             />
           </Link>
-          <Link href="#" target="_blank" rel="noopener noreferrer">
+          <Link href="#" target="_blank" rel="noopener">
             <Image
               height={100}
               width={100}
@@ -179,7 +179,7 @@ function BlogPage() {
           <Link
             href="https://github.com/collins-ruto/christmas-tree-python"
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noopener"
           >
             <Image
               height={100}
@@ -191,7 +191,7 @@ function BlogPage() {
           <Link
             href="https://github.com/collins-ruto/wallpaper-app/server"
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noopener"
           >
             <Image
               height={100}
@@ -200,7 +200,7 @@ function BlogPage() {
               alt="Nodejs Badge"
             />
           </Link>
-          <Link href="#" target="_blank" rel="noopener noreferrer">
+          <Link href="#" target="_blank" rel="noopener">
             <Image
               height={100}
               width={100}
@@ -211,7 +211,7 @@ function BlogPage() {
           <Link
             href="https://github.com/collins-ruto/restaurant-reviews"
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noopener"
           >
             <Image
               height={100}
@@ -223,7 +223,7 @@ function BlogPage() {
           <Link
             href="https://github.com/collins-ruto/my-portfolio"
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noopener"
           >
             <Image
               height={100}

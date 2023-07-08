@@ -115,7 +115,7 @@ function Header() {
                         <span className="rounded">Contact</span>
                       </Link>
                     </li>
-                    <li>
+                    {/* <li>
                       <Link
                         href={`/faq`}
                         className={` cursor-pointer items-center border-b-2  align-middle hover:text-blue-600 ${
@@ -126,7 +126,7 @@ function Header() {
                       >
                         <span className="rounded">FAQs</span>
                       </Link>
-                    </li>
+                    </li> */}
                     <li>
                       <Link
                         href="#"
@@ -221,7 +221,7 @@ function Header() {
             <Link href="#" className=" rounded p-2 px-2">
               Resume
             </Link>
-            <Link
+            {/* <Link
               href={`/faq`}
               className={` w-fit cursor-pointer items-center border-b-2 px-2 transition duration-200 ease-in-out hover:text-blue-600 ${
                 currentRoute === "/faq"
@@ -230,7 +230,7 @@ function Header() {
               }`}
             >
               FAQs
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>

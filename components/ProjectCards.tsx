@@ -12,6 +12,8 @@ export const ProjectCard = ({ project }: { project: RepositoryData }) => {
           {project.created_at.substring(0, 4)}
         </span>
         <Link
+          target="_blank"
+          rel="noopener"
           href={`${project.html_url}/stargazers`}
           className="lex-end flex justify-between text-gray-400 "
         >
@@ -26,6 +28,8 @@ export const ProjectCard = ({ project }: { project: RepositoryData }) => {
         </Link>
       </div>
       <Link
+        target="_blank"
+        rel="noopener"
         href={project.html_url}
         className="text-xl underline-offset-2 hover:underline"
       >
@@ -34,8 +38,10 @@ export const ProjectCard = ({ project }: { project: RepositoryData }) => {
       <span className="text-sm text-gray-500 dark:text-gray-400">
         {project.description}
       </span>
-      <div className="flex-end flex justify-between pt-4">
+      <div className="flex-end flex justify-between pt-4 font-medium">
         <Link
+          target="_blank"
+          rel="noopener"
           href={project.homepage == "" ? project.html_url : project.homepage}
           className="flex items-center rounded border px-2 py-1 dark:border-0 dark:bg-gray-800"
         >
@@ -50,6 +56,8 @@ export const ProjectCard = ({ project }: { project: RepositoryData }) => {
           </div>
         </Link>
         <Link
+          target="_blank"
+          rel="noopener"
           href={project.html_url}
           className="flex items-center rounded border px-2 py-1 dark:border-0 dark:bg-gray-800"
         >
@@ -88,6 +96,8 @@ export const PinnedCard = ({ project }: { project: RepositoryData }) => {
             {project.created_at.substring(0, 4)}
           </span>
           <Link
+            target="_blank"
+            rel="noopener"
             href={`${project.html_url}/stargazers`}
             className=" flex justify-between text-gray-400 "
           >
@@ -102,6 +112,8 @@ export const PinnedCard = ({ project }: { project: RepositoryData }) => {
           </Link>
         </div>
         <Link
+          target="_blank"
+          rel="noopener"
           href={project.html_url}
           className="text-xl underline-offset-2 hover:underline"
         >
@@ -110,8 +122,10 @@ export const PinnedCard = ({ project }: { project: RepositoryData }) => {
         <span className="text-sm text-gray-500 dark:text-gray-400">
           {project.description}
         </span>
-        <div className="flex-end flex justify-between pt-2">
+        <div className="flex-end flex justify-between pt-2 font-medium">
           <Link
+            target="_blank"
+            rel="noopener"
             href={project.homepage == "" ? project.html_url : project.homepage}
             className="flex items-center rounded border px-2 py-1 dark:border-0 dark:bg-gray-800"
           >
@@ -128,6 +142,8 @@ export const PinnedCard = ({ project }: { project: RepositoryData }) => {
             </div>
           </Link>
           <Link
+            target="_blank"
+            rel="noopener"
             href={project.html_url}
             className="flex items-center rounded border px-2 py-1 dark:border-0 dark:bg-gray-800"
           >

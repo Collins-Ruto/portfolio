@@ -1,18 +1,18 @@
 export const contacts = [
     {
-        icon: "https://img.icons8.com/ios-filled/64/4F02FF/new-post.png",
+        icon: "https://img.icons8.com/ios-filled/64/16e0bd/new-post.png",
         title: "EMAIL",
         info1: "collinsruto48@gmail.com",
         info2: "collinsruto@hotmail.com",
     },
     {
-        icon: "https://img.icons8.com/glyph-neue/64/4F02FF/phone.png",
+        icon: "https://img.icons8.com/glyph-neue/64/16e0bd/phone.png",
         title: "PHONE",
         info1: "+254711339134",
         info2: "+254785767763",
     },
     // {
-    //     icon: "https://img.icons8.com/ios-filled/64/4F02FF/address--v1.png",
+    //     icon: "https://img.icons8.com/ios-filled/64/16e0bd/address--v1.png",
     //     title: "ADDRESS",
     //     info1: "Highrise house",
     //     info2: "Saba Saba Mombasa, Kenya",
