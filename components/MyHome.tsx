@@ -1,4 +1,6 @@
+import Image from "next/image";
 import React from "react";
+import { tools1, tools2 } from "~/assets/homedata";
 
 function MyHome() {
   return (
@@ -79,37 +81,43 @@ function MyHome() {
             </a>
           </section>
           <section className="about--me text-dark bg-white py-16">
-            <div className="about-me mx-auto max-w-5xl px-4">
-              <h2 className="section__title section__title--about mb-4 text-4xl font-bold">
-                Who Am I
-              </h2>
-              <p className="section__subtitle section__subtitle--about mb-8 text-lg font-semibold">
-                Designer & Developer based in Mombasa, Kenya
-              </p>
-              <div className="about-me__body mb-8 text-lg">
-                <p>
-                  I'm a freelance web developer and designer based in Mombasa,
-                  Kenya. I believe life is all about pursuing your dreams and
-                  finding what makes you happy. My goal is to help individuals
-                  and businesses turn their ideas into functional websites and
-                  applications that not only work effectively but also reach
-                  their target audience and experience exponential growth.
-                </p>
-                <p>
-                  You might wonder, why choose me? Well, I can assist you in
-                  building a website that serves your purpose and elevates your
-                  business by delivering the best client experience. I
-                  understand that the first impression matters, and a
-                  well-designed website allows you to establish a warm and
-                  productive relationship with your clients right from the
-                  start.
-                </p>
-              </div>
-              <img
+            <div className="about-me mx-auto flex gap-4">
+              <Image
+                width={250}
+                height={120}
                 src="/img/25.webp"
                 alt="collins"
                 className="about-me__img mx-auto rounded-lg shadow-md"
               />
+              <div className="">
+                <div className="text-center">
+                  <h2 className="section__title section__title--about mb-4 text-4xl font-bold">
+                    Who Am I
+                  </h2>
+                  <p className="section__subtitle section__subtitle--about mb-8 text-lg font-semibold">
+                    Designer & Developer based in Mombasa, Kenya
+                  </p>
+                </div>
+                <div className="about-me__body mb-8 text-lg">
+                  <p>
+                    I'm a freelance web developer and designer based in Mombasa,
+                    Kenya. I believe life is all about pursuing your dreams and
+                    finding what makes you happy. My goal is to help individuals
+                    and businesses turn their ideas into functional websites and
+                    applications that not only work effectively but also reach
+                    their target audience and experience exponential growth.
+                  </p>
+                  <p>
+                    You might wonder, why choose me? Well, I can assist you in
+                    building a website that serves your purpose and elevates
+                    your business by delivering the best client experience. I
+                    understand that the first impression matters, and a
+                    well-designed website allows you to establish a warm and
+                    productive relationship with your clients right from the
+                    start.
+                  </p>
+                </div>
+              </div>
             </div>
           </section>
           <section className="lifestyle bg-gray-100 py-16">
@@ -130,7 +138,9 @@ function MyHome() {
                   </p>
                 </div>
                 <div className="life-img">
-                  <img
+                  <Image
+                    width={800}
+                    height={500}
                     src="/img/42.webp"
                     alt="teams"
                     className="lifestyle__img rounded-lg shadow-md"
@@ -140,102 +150,54 @@ function MyHome() {
             </div>
           </section>
           <section className="tools bg-gray-100 py-16">
-            <div className="toolss mx-auto max-w-5xl px-4">
+            <div className="toolss mx-auto">
               <h2 className="section__title section__title--tools mb-8 text-4xl font-bold">
                 My Tools
               </h2>
-              <div className="toolbox-wrapper flex flex-col md:flex-row">
-                <div className="toolbox-card md:mr-8">
+              <div className="toolbox-wrapper flex flex-col  gap-6">
+                <div className="toolbox-card">
                   <div className="tools-container">
-                    <ul className="tool-list">
-                      <li className="tool-list-item flex items-center">
-                        <div className="tool-self">
-                          <img
-                            src="/svg/html5.svg"
-                            alt="html icon"
-                            className="tool__img"
+                    <ul className="tool-list flex flex-wrap justify-between gap-4">
+                      {tools1.map((tool, index) => (
+                        <div
+                          key={index}
+                          className="tool-card flex w-32 flex-col items-center justify-center rounded-lg bg-white p-2 shadow-lg"
+                        >
+                          <Image
+                            width={50}
+                            height={50}
+                            src={tool.url}
+                            alt={tool.alt}
+                            className="tool-icon mb-2 h-16 w-16"
                           />
+                          <span className="tool-name text-center text-sm font-semibold">
+                            {tool.name}
+                          </span>
                         </div>
-                        <span className="tool-name ml-2">HTML</span>
-                      </li>
-                      <li className="tool-list-item flex items-center">
-                        <div className="tool-self">
-                          <img
-                            src="/svg/css.svg"
-                            alt="css icon"
-                            className="tool__img"
-                          />
-                        </div>
-                        <span className="tool-name ml-2">CSS</span>
-                      </li>
-                      <li className="tool-list-item flex items-center">
-                        <div className="tool-self">
-                          <img
-                            src="/svg/javascript.svg"
-                            alt="javascript icon"
-                            className="tool__img"
-                          />
-                        </div>
-                        <span className="tool-name ml-2">JavaScript</span>
-                      </li>
-                      <li className="tool-list-item flex items-center">
-                        <div className="tool-self">
-                          <img
-                            src="/svg/php.png"
-                            alt="php icon"
-                            className="tool__img"
-                          />
-                        </div>
-                        <span className="tool-name ml-2">PHP</span>
-                      </li>
-                      {/* Repeat the same structure for other tools */}
+                      ))}
                     </ul>
                   </div>
                 </div>
                 <div className="toolbox-card">
                   <div className="tools-container">
-                    <ul className="tool-list">
-                      <li className="tool-list-item flex items-center">
-                        <div className="tool-self">
-                          <img
-                            src="/svg/vscode.svg"
-                            alt="vs code icon"
-                            className="tool__img"
+                    <ul className="tool-list flex flex-wrap justify-between gap-4">
+                      {tools2.map((tool, index) => (
+                        <div
+                          key={index}
+                          className="tool-card flex w-32 flex-col items-center justify-center rounded-lg bg-white p-2 shadow-lg"
+                        >
+                          <Image
+                            width={50}
+                            height={50}
+                            src={tool.url}
+                            alt={tool.alt}
+                            className="tool-icon mb-2 h-16 w-16"
                           />
+                          <span className="tool-name text-center text-sm font-semibold">
+                            {tool.name}
+                          </span>
                         </div>
-                        <span className="tool-name ml-2">VS Code</span>
-                      </li>
-                      <li className="tool-list-item flex items-center">
-                        <div className="tool-self">
-                          <img
-                            src="/svg/sublime-text.svg"
-                            alt="sublime icon"
-                            className="tool__img"
-                          />
-                        </div>
-                        <span className="tool-name ml-2">Sublime Text</span>
-                      </li>
-                      <li className="tool-list-item flex items-center">
-                        <div className="tool-self">
-                          <img
-                            src="/svg/github.svg"
-                            alt="github icon"
-                            className="tool__img"
-                          />
-                        </div>
-                        <span className="tool-name ml-2">GitHub</span>
-                      </li>
-                      <li className="tool-list-item flex items-center">
-                        <div className="tool-self">
-                          <img
-                            src="/svg/stack-overflow.svg"
-                            alt="stack icon"
-                            className="tool__img"
-                          />
-                        </div>
-                        <span className="tool-name ml-2">Stack Overflow</span>
-                      </li>
-                      {/* Repeat the same structure for other tools */}
+                      ))}
                     </ul>
                   </div>
                 </div>
