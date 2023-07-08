@@ -22,7 +22,7 @@ function page() {
             height={60}
             className="mr-2 h-6 w-6 rounded-sm"
             src={contact.icon}
-            alt="Learnhq contact"
+            alt={contact.title}
           />
           <span className="font-semibold text-black dark:text-white">
             {contact.title}
@@ -114,15 +114,11 @@ export default page;
 
 export const metadata: Metadata = {
   title: "Contact Us",
-  metadataBase: new URL("https://learnhqhome.vercel.app/contact"),
-  description:
-    "LearnHQ Terms and Conditions. We are a comprehensive learning management system that provides quality education and resources to students, teachers, and parents.",
+  metadataBase: new URL("https://collinsruto.vercel.app/contact"),
   keywords: [
-    "contact learnhq",
-    "learnhq questions",
-    "learnhq phone",
-    "learnhq email",
-    "access learnhq",
+    "contact collins ",
+    "collins ruto phone",
+    "collins ruto email",
   ],
   alternates: {
     canonical: "/",

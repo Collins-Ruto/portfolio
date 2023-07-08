@@ -72,7 +72,7 @@ function Footer() {
                   rel="noopener"
                   href="https://instagram.com/learn.hq"
                   type="button"
-                  aria-label="learnhq instagram"
+                  aria-label="Collins instagram"
                   className="m-1 h-9 w-9 rounded-full border border-[#16e0bd] bg-black bg-opacity-20 uppercase leading-normal text-[#16e0bd] transition-all duration-150 ease-in-out hover:border-none hover:border-gray-500 hover:bg-pink-600 hover:text-white focus:outline-none focus:ring-0"
                   data-te-ripple-init
                   data-te-ripple-color="light"

@@ -1,42 +1,13 @@
-import Image from "next/image";
-import React from "react";
-import { tools1, tools2 } from "~/assets/homedata";
-
-function MyHome() {
-  return (
-    <div>
-      <div className="">
-        <div className="mx-auto max-w-7xl px-4 py-16">
-          <section className="text-center">
-            <h1 className="text-5xl font-extrabold tracking-tight sm:text-5xl">
-              {" "}
-              Hello, I am <span className="text-indigo-600">
-                Collins Ruto
-              </span>{" "}
-            </h1>
-            <p className="text-medium mx-auto mt-6 max-w-[24rem] text-gray-500">
-              A Full-Stack Developer building the Frontend & Backend of Websites
-              and Web Applications that leads to the success of the overall
-              product
-            </p>
-
-            <a
-              href="./collinsruto.pdf"
-              className="mt-8 inline-block rounded bg-indigo-600 px-8 py-3 font-medium text-white shadow-lg hover:bg-indigo-700"
-            >
-              Download Resume
-            </a>
-          </section>
-          <section className="my-services bg-dark text-accent relative py-16 text-center">
+<section className="my-services bg-dark text-accent relative py-16 text-center">
             <h2 className="section__title section__title--services transition-delay-300 mb-6 text-4xl font-bold">
               What I do
             </h2>
-            <div className="services flex flex-wrap justify-center">
-              <div className="service mx-4 mb-12 max-w-lg">
+            <div className="services mx-auto flex-wrap justify-between gap-4 md:flex">
+              <div className="service mx-auto mb-12 max-w-lg grow md:w-1/4">
                 <h3 className="section__subtitle--services transition-delay-400 mb-4 text-2xl font-bold">
                   Web Design
                 </h3>
-                <p className="transition-delay-500 text-lg">
+                <p className="transition-delay-500 text-sm">
                   I build and design impressive and user-friendly websites with
                   a focus on exceptional user experience and functionality. I
                   integrate high-quality search engine optimization (SEO)
@@ -45,49 +16,47 @@ function MyHome() {
                 </p>
               </div>
 
-              <div className="service mx-4 mb-12 max-w-lg">
+              <div className="service mx-auto mb-12 max-w-lg grow md:w-1/4">
                 <h3 className="section__subtitle--services transition-delay-600 mb-4 text-2xl font-bold">
                   Software Development
                 </h3>
-                <p className="transition-delay-700 text-lg">
-                  In this era of increased digital dependence, I develop
-                  high-end software solutions tailored to your specific needs
-                  across multiple platforms. With expertise in JavaScript,
-                  TypeScript, React, Next.js, Node.js, Express, MongoDB, Python,
-                  and Rust, I deliver exceptional software that aligns with your
-                  business goals.
+                <p className="transition-delay-700 text-sm">
+                  I develop high-end software solutions tailored to your
+                  specific needs across multiple platforms. With expertise in
+                  JavaScript, TypeScript, React, Next.js, Node.js, Express,
+                  MongoDB, Python, and Rust, I deliver exceptional software that
+                  aligns with your business goals.
                 </p>
               </div>
 
-              <div className="service mx-4 mb-12 max-w-lg">
+              <div className="service mx-auto mb-12 max-w-lg grow md:w-1/4">
                 <h3 className="section__subtitle--services transition-delay-800 mb-4 text-2xl font-bold">
                   Web3 Development
                 </h3>
-                <p className="transition-delay-900 text-lg">
-                  As a NEAR Protocol certified web3 developer, I specialize in
-                  building secure smart contracts on the blockchain using Rust
-                  and Solidity languages. I connect these contracts with
-                  intuitive front-end interfaces using ReactJS and Next.js to
-                  create fast and responsive web applications for the
-                  decentralized future.
+                <p className="transition-delay-900 text-sm">
+                  As a NEAR Protocol certified web3 developer, I build secure
+                  smart contracts on the blockchain using Rust and Solidity. I
+                  connect these contracts with intuitive front-end interfaces
+                  using ReactJS and Next.js to create fast and responsive web
+                  applications for the decentralized future.
                 </p>
               </div>
             </div>
             <a
               href="#work"
-              className="btnn bg-accent text-dark hover:bg-light hover:text-accent inline-block rounded-full px-6 py-3 font-semibold transition duration-300"
+              className="btnn hover:bg-light inline-block rounded-full bg-black px-6 py-3 font-semibold text-white transition duration-300 hover:text-black"
             >
               My Work
             </a>
           </section>
-          <section className="about--me text-dark bg-white py-16">
-            <div className="about-me mx-auto flex gap-4">
+          <section className="about--me text-dark py-16">
+            <div className="about-me flex items-center gap-4">
               <Image
-                width={250}
-                height={120}
+                width={450}
+                height={40}
                 src="/img/25.webp"
                 alt="collins"
-                className="about-me__img mx-auto rounded-lg shadow-md"
+                className="about-me__img mx-auto hidden h-[26rem] rounded-lg shadow-md lg:block"
               />
               <div className="">
                 <div className="text-center">
@@ -100,34 +69,35 @@ function MyHome() {
                 </div>
                 <div className="about-me__body mb-8 text-lg">
                   <p>
-                    I&apos;m a freelance web developer and designer based in Mombasa,
-                    Kenya. I believe life is all about pursuing your dreams and
-                    finding what makes you happy. My goal is to help individuals
-                    and businesses turn their ideas into functional websites and
-                    applications that not only work effectively but also reach
-                    their target audience and experience exponential growth.
+                    I am a freelance web developer based in Mombasa, Kenya. I
+                    strongly believe that life is about pursuing our dreams and
+                    finding genuine happiness. My objective is to assist
+                    individuals and businesses in transforming their ideas into
+                    functional websites and applications. I strive to create
+                    digital solutions that not only perform effectively but also
+                    reach their intended audience, enabling exponential growth
                   </p>
                   <p>
-                    You might wonder, why choose me? Well, I can assist you in
-                    building a website that serves your purpose and elevates
-                    your business by delivering the best client experience. I
-                    understand that the first impression matters, and a
-                    well-designed website allows you to establish a warm and
+                    You may wonder why you should choose me. Well, I can help
+                    you build a website that serves to enhance your business by
+                    providing an exceptional client experience. I understand the
+                    importance of making a great first impression, and a
+                    well-designed website allows you to establish a positive and
                     productive relationship with your clients right from the
-                    start.
+                    beginning."
                   </p>
                 </div>
               </div>
             </div>
           </section>
-          <section className="lifestyle bg-gray-100 py-16">
-            <div className="life-style mx-auto max-w-5xl px-4">
+          <section className="lifestyle items-center bg-gray-100 py-16 sm:flex">
+            <div className="life-style mx-auto">
               <h2 className="section__title section__title--life-style mb-8 text-4xl font-bold">
                 Lifestyle
               </h2>
               <div className="lifestyle-item flex flex-col items-center md:flex-row md:items-start">
                 <div className="lifestyle-text md:mr-8">
-                  <p className="text-lg">
+                  <p className="w-[] text-lg">
                     I love open source because it provides opportunities for
                     learning, growth, and helping others. Although I&apos;m
                     relatively new to web development with less than a year of
@@ -137,16 +107,16 @@ function MyHome() {
                     my foundational knowledge.
                   </p>
                 </div>
-                <div className="life-img">
-                  <Image
-                    width={800}
-                    height={500}
-                    src="/img/42.webp"
-                    alt="teams"
-                    className="lifestyle__img rounded-lg shadow-md"
-                  />
-                </div>
               </div>
+            </div>
+            <div className="life-img mx-auto max-w-[60%]">
+              <Image
+                width={1800}
+                height={800}
+                src="/img/lifestyle.png"
+                alt="teams"
+                className="lifestyle__img rounded-l "
+              />
             </div>
           </section>
           <section className="tools bg-gray-100 py-16">
@@ -154,10 +124,10 @@ function MyHome() {
               <h2 className="section__title section__title--tools mb-8 text-4xl font-bold">
                 My Tools
               </h2>
-              <div className="toolbox-wrapper flex flex-col  gap-6">
+              <div className="toolbox-wrapper flex flex-col  gap-8">
                 <div className="toolbox-card">
                   <div className="tools-container">
-                    <ul className="tool-list flex flex-wrap justify-between gap-4">
+                    <ul className="tool-list flex flex-wrap justify-around gap-2">
                       {tools1.map((tool, index) => (
                         <div
                           key={index}
@@ -180,7 +150,7 @@ function MyHome() {
                 </div>
                 <div className="toolbox-card">
                   <div className="tools-container">
-                    <ul className="tool-list flex flex-wrap justify-between gap-4">
+                    <ul className="tool-list l flex flex-wrap justify-around gap-2">
                       {tools2.map((tool, index) => (
                         <div
                           key={index}
@@ -204,10 +174,3 @@ function MyHome() {
               </div>
             </div>
           </section>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export default MyHome;

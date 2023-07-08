@@ -70,3 +70,140 @@
 .themetoogle input:checked + label svg.moon {
 	fill:#fff;
 }
+
+/* @keyframes animated-mouse {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+@keyframes mouse-scroll {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+#mouse-scroll {
+  margin: auto;
+  transform: translateX(-50%);
+  z-index: 9999;
+}
+
+#mouse-scroll span {
+  display: block;
+  width: 5px;
+  height: 5px;
+  transform: rotate(45deg);
+  border-right: 2px solid ;
+  border-bottom: 2px solid ;
+  margin: 0 0 3px 5px;
+}
+
+#mouse-scroll .mouse {
+  height: 21px;
+  width: 14px;
+  border-radius: 10px;
+  transform: none;
+  border: 2px solid ;
+  top: 170px;
+}
+
+#mouse-scroll .down-arrow-1 {
+  margin-top: 6px;
+  animation: mouse-scroll 1s infinite alternate .1s;
+}
+
+#mouse-scroll .down-arrow-2 {
+  animation: mouse-scroll 1s infinite alternate .2s;
+}
+
+#mouse-scroll .down-arrow-3 {
+  animation: mouse-scroll 1s infinite alternate .3s;
+}
+
+#mouse-scroll .mouse-in {
+  height: 5px;
+  width: 2px;
+  display: block;
+  margin: 5px auto;
+  background: ;
+  position: relative;
+  animation: animated-mouse 1.2s ease infinite;
+} */
+
+@keyframes animated-mouse {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(1.5rem);
+  }
+}
+
+@keyframes mouse-scroll {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+#mouse-scroll span {
+  display: block;
+  width: 0.5rem;
+  height: 0.5rem;
+  transform: rotate(45deg);
+  border-right: 0.125rem solid ;
+  border-bottom: 0.125rem solid ;
+  /* margin: 0 0 0.1875rem ; */
+}
+
+#mouse-scroll .mouse {
+  height: 3.125rem;
+  width: 2rem;
+  border-radius: 1.25rem;
+  transform: none;
+  border: 0.125rem solid ;
+  top: 10.625rem;
+}
+
+#mouse-scroll .down-arrow-1 {
+  margin-top: 0.375rem;
+  animation: mouse-scroll 1s infinite alternate 0.1s;
+}
+
+#mouse-scroll .down-arrow-2 {
+  animation: mouse-scroll 1s infinite alternate 0.2s;
+}
+
+#mouse-scroll .down-arrow-3 {
+  animation: mouse-scroll 1s infinite alternate 0.3s;
+}
+
+#mouse-scroll .mouse-in {
+  height: .7rem;
+  width: 0.7rem;
+  border-radius: 50%;
+  display: block;
+  margin: 0.3rem auto;
+  /* background: ; */
+  position: relative;
+  animation: animated-mouse 1.5s ease infinite;
+}

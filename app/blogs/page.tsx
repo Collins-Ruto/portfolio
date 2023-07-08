@@ -24,7 +24,7 @@ const Page = async () => {
           <div className="md:flex-nowra mb-4 flex flex-wrap gap-4 sm:flex-row">
             {blogs.map((blog, index) => {
               return (
-                <div className="w-1/2 grow md:w-1/3 lg:w-1/3" key={index}>
+                <div className="w-1/2 grow md:w-1/3 lg:w-1/3 xl:w-1/4" key={index}>
                   <BlogCard blog={blog} />
                 </div>
               );

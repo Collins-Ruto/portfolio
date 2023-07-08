@@ -13,7 +13,7 @@ function Header() {
 
   return (
     <div className="  sticky top-0 z-40 bg-gray-100 px-5 py-2 text-black bg-blend-darken dark:bg-slate-900 sm:px-6 lg:px-28">
-      <div className="container mx-auto">
+      <div className="container mx-auto max-w-7xl">
         <nav className="flex items-center justify-between">
           <div className="flex w-full justify-between py-1.5 md:hidden">
             <Link href="/" className="flex">
@@ -21,7 +21,7 @@ function Header() {
                 width={90}
                 height={40}
                 src="/lhlogo.webp"
-                alt="learnhq"
+                alt="Collins"
                 className=""
               />
             </Link>
@@ -46,7 +46,7 @@ function Header() {
                   width={100}
                   height={45}
                   src="/lhlogo.webp"
-                  alt="learnhq"
+                  alt="Collins"
                   className="mr-2"
                   loading="eager"
                 />

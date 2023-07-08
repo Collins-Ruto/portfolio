@@ -4,9 +4,9 @@ export default function robots(): MetadataRoute.Robots {
     return {
         rules: {
             userAgent: '*',
-            allow: ['/', '/learn/'],
-            disallow: ['/admin/', '/teacher/', "/student/", '/page/'],
+            allow: ['/'],
+            disallow: ['/login/'],
         },
-        sitemap: 'https://learnhq.vercel.app/sitemap.xml',
+        sitemap: 'https://collinsruto.vercel.app/sitemap.xml',
     };
 }

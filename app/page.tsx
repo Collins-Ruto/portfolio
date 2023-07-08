@@ -3,7 +3,7 @@
 import "@/styles/globals.css";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/server/auth";
-import MyHome from "~/components/MyHome";
+import MyHomes from "~/components/MyHomes";
 
 const HomePage = async () => {
   const data = await getServerSession(authOptions);
@@ -13,7 +13,7 @@ const HomePage = async () => {
 
   return (
     <div>
-      <MyHome />
+      <MyHomes />
     </div>
   );
 };
