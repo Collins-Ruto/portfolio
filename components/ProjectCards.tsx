@@ -38,7 +38,17 @@ export const ProjectCard = ({ project }: { project: RepositoryData }) => {
       <span className="text-sm text-gray-500 dark:text-gray-400">
         {project.description}
       </span>
-      <div className="flex-end flex justify-between pt-4 font-medium">
+      <div className="flex flex-wrap items-center">
+          {project.topics?.map((tag, index) => (
+            <span
+              key={index}
+              className="m-[0.1rem] inline-block rounded-full bg-indigo-200 px-2 py-[0.15rem] text-xs font-semibold uppercas tracking-wide text-indigo-800"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      <div className="flex-end flex justify-between pt-1 font-medium">
         <Link
           target="_blank"
           rel="noopener"
@@ -55,6 +65,7 @@ export const ProjectCard = ({ project }: { project: RepositoryData }) => {
             />
           </div>
         </Link>
+        
         <Link
           target="_blank"
           rel="noopener"
@@ -122,7 +133,17 @@ export const PinnedCard = ({ project }: { project: RepositoryData }) => {
         <span className="text-sm text-gray-500 dark:text-gray-400">
           {project.description}
         </span>
-        <div className="flex-end flex justify-between pt-2 font-medium">
+        <div className="flex justify-center py-1 flex-wrap items-center">
+          {project.topics?.slice(0, 4).map((tag, index) => (
+            <span
+              key={index}
+              className="m-[0.1rem] inline-block rounded-full bg-indigo-200 px-2 py-[0.15rem] text-xs font-semibold uppercas tracking-wide text-indigo-800"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+        <div className="flex-end flex justify-between pt- font-medium">
           <Link
             target="_blank"
             rel="noopener"

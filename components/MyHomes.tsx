@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 import { tools1, tools2 } from "~/assets/homedata";
 import "~/styles/themetoogle.css";
-import pinnedProjects from "~/assets/pinnedProjects.json";
+import pinnedProjects from "~/assets/pinnedProjects2.json";
 import localFont from "@next/font/local";
 import { Contact, PinnedCard } from ".";
 

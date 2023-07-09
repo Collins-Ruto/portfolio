@@ -7,6 +7,7 @@ export type RepositoryData = {
   description: string;
   homepage: string;
   pin_url: string;
+  topics: string[]
 }
 
 export type Search = {

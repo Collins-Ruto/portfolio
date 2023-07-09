@@ -19,23 +19,23 @@ const BlogCard = ({ blog }: { blog: Blog }) => {
         href={`/blogs/blog/${blog.slug}`}
         className="flex h-full flex-col justify-between p-4"
       >
-        <div className="flex justify-between">
+        <div className="flex justify-betwee">
           <div className="flex flex-wrap items-center">
             {blog.tag_list.map((tag, index) => (
               <span
                 key={index}
-                className="m-1 inline-block rounded-full bg-indigo-200 px-2 py-1 text-xs font-semibold uppercase tracking-wide text-indigo-800"
+                className="m-[0.1rem] inline-block rounded-full bg-indigo-200 px-2 py-[0.15rem] text-xs font-semibold uppercase tracking-wide text-indigo-800"
               >
                 {tag}
               </span>
             ))}
           </div>
-          <div className="ml-2 flex text-sm text-gray-600 dark:text-gray-400">
+          <div className="ml-2 flex flex-wrap text-sm text-gray-600 dark:text-gray-400">
             <span className="hidden md:block">Created at:&nbsp; </span>
             <span className="font-semibold">{date.toDateString()}</span>
           </div>
         </div>
-        <h2 className="my-2 text-2xl font-semibold text-gray-800 hover:underline dark:text-gray-100">
+        <h2 className=" text-2xl font-semibold text-gray-800 hover:underline dark:text-gray-100">
           {blog.title}
         </h2>
         <p className="text-gray-700 dark:text-gray-200">{blog.description}</p>

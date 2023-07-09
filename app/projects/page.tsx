@@ -2,8 +2,8 @@ import "@/styles/globals.css";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/server/auth";
 import type { Metadata } from "next";
-import projects from "~/assets/sortedArray.json";
-import pinnedProjects from "~/assets/pinnedProjects.json";
+import projects from "~/assets/sortedArray2.json";
+import pinnedProjects2 from "~/assets/pinnedProjects2.json";
 import ThemeToogle from "~/components/ThemeToogle";
 import { PinnedCard, ProjectCard } from "~/components";
 
@@ -21,7 +21,7 @@ const Page = async () => {
             <ThemeToogle place="projects-toogle" />
           </div>
           <div className="md:flex-nowra mb-4 flex flex-wrap gap-4 sm:flex-row">
-            {pinnedProjects.map((project, index) => (
+            {pinnedProjects2.map((project, index) => (
               <div className="w-1/2 grow md:w-1/3 lg:w-1/4" key={index}>
                 <PinnedCard project={project} />
               </div>

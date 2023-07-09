@@ -63,9 +63,10 @@ model Project {
     id          String @id @default(auto()) @map("_id") @db.ObjectId
     title        String
     description String
-    project_url        String
+    project_url String
     github_url  String
     createdAt   DateTime   @default(now())
+    topics      String[]    @default([])
 }
 
 model Blog {
