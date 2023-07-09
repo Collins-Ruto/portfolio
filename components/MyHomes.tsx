@@ -4,9 +4,25 @@ import React from "react";
 import { tools1, tools2 } from "~/assets/homedata";
 import '~/styles/themetoogle.css'
 
+import localFont from "@next/font/local";
+
+const font = localFont({
+  // src: "../assets/fonts/Saira/Saira-VariableFont_wdth,wght.ttf",
+  // src: "../assets/fonts/Source_Sans_3/SourceSans3-VariableFont_wght.ttf",
+  src: "../assets/fonts/Roboto/Roboto-Regular.ttf",
+  // src: "../assets/fonts/Open_Sans/OpenSans-VariableFont_wdth,wght.ttf",
+  display: "fallback",
+});
+const headFont = localFont({
+  src: "../assets/fonts/Saira/Saira-VariableFont_wdth,wght.ttf",
+  // src: "../assets/fonts/Source_Sans_3/SourceSans3-VariableFont_wght.ttf",
+  // src: "../assets/fonts/Open_Sans/OpenSans-VariableFont_wdth,wght.ttf",
+  display: "fallback",
+});
+
 function MyHome() {
   return (
-    <div>
+    <div className={`${font.className}`}>
       <div className="">
         <div className="px- mx-auto">
           <section className=" flex h-[82vh] flex-col justify-center text-center sm:mt-16 sm:h-fit  lg:py-16 xl:h-fit xl:pt-24 ">
@@ -14,7 +30,8 @@ function MyHome() {
               {" "}
               Hello, I am{" "}
               <span className="text-indigo-600 dark:text-indigo-500">
-                Collins Ruto
+                {/* Collins Ruto */}
+                Samuel Kibet
               </span>{" "}
             </h1>
             <p className="mx-auto mt-6 max-w-[30rem] py-4 text-lg font-medium text-gray-600 dark:text-gray-400">
@@ -48,12 +65,14 @@ function MyHome() {
             </div>
           </section>
           <section className="my-services bg-dark text-accent relative py-16 text-center">
-            <h2 className="section__title section__title--services transition-delay-300 mb-6 text-4xl font-bold">
+            <h2
+              className={` ${headFont.className} section__title section__title--services transition-delay-300 mb-6 text-4xl font-bold`}
+            >
               What I do
             </h2>
             <div className="services mx-auto flex-wrap justify-between gap-4 md:flex">
               <div className="service mx-auto mb-12 max-w-lg grow md:w-1/4">
-                <h3 className="section__subtitle--services transition-delay-400 mb-4 text-2xl font-bold">
+                <h3 className={` ${headFont.className} section__subtitle--services transition-delay-400 mb-4 text-2xl font-bold`}>
                   Web Design
                 </h3>
                 <p className="transition-delay-500 text-sm">
@@ -66,7 +85,7 @@ function MyHome() {
               </div>
 
               <div className="service mx-auto mb-12 max-w-lg grow md:w-1/4">
-                <h3 className="section__subtitle--services transition-delay-600 mb-4 text-2xl font-bold">
+                <h3 className={` ${headFont.className} section__subtitle--services transition-delay-600 mb-4 text-2xl font-bold`}>
                   Software Development
                 </h3>
                 <p className="transition-delay-700 text-sm">
@@ -79,7 +98,7 @@ function MyHome() {
               </div>
 
               <div className="service mx-auto mb-12 max-w-lg grow md:w-1/4">
-                <h3 className="section__subtitle--services transition-delay-800 mb-4 text-2xl font-bold">
+                <h3 className={` ${headFont.className} section__subtitle--services transition-delay-800 mb-4 text-2xl font-bold`}>
                   Web3 Development
                 </h3>
                 <p className="transition-delay-900 text-sm">
@@ -109,7 +128,9 @@ function MyHome() {
               />
               <div className="">
                 <div className="text-center">
-                  <h2 className="section__title section__title--about mb-4 text-4xl font-bold">
+                  <h2
+                    className={` ${headFont.className}section__title section__title--about mb-4 text-4xl font-bold`}
+                  >
                     Who Am I
                   </h2>
                   <p className="section__subtitle section__subtitle--about mb-8 text-lg font-semibold">
@@ -140,7 +161,9 @@ function MyHome() {
             </div>
           </section>
           <section className="lifestyle items-center py-16 ">
-            <h2 className="section__title section__title--life-style mb-8 text-center text-4xl font-bold">
+            <h2
+              className={` ${headFont.className}section__title section__title--life-style mb-8 text-center text-4xl font-bold`}
+            >
               Lifestyle
             </h2>
             <div className="life-style mx-auto md:flex">
@@ -171,7 +194,9 @@ function MyHome() {
           </section>
           <section className="tools py-16">
             <div className="toolss mx-auto">
-              <h2 className="section__title section__title--tools mb-8 text-center text-4xl font-bold">
+              <h2
+                className={` ${headFont.className}section__title section__title--tools mb-8 text-center text-4xl font-bold`}
+              >
                 My Tools
               </h2>
               <div className="toolbox-wrapper flex flex-col  gap-8">

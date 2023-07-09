@@ -6,25 +6,37 @@ import Link from "next/link";
 import "~/styles/globals.css";
 import ThemeToogle from "./ThemeToogle";
 
+import localFont from '@next/font/local'
+
+const logoFont = localFont({
+  src: "../assets/fonts/Train_One/TrainOne-Regular.ttf",
+  // src: '../assets/fonts/Monoton/Monoton-Regular.ttf',
+  // src: "../assets/fonts/Saira/Saira-VariableFont_wdth,wght.ttf",
+  display: "fallback",
+});
+
 // TODO: Capitalize links
 function Header() {
   const [opened, setOpened] = useState(false);
 
   const currentRoute = usePathname();
-
+ 
   return (
-    <div className="  sticky top-0 z-40 bg-gray-100 shadow-lg px-5 py-2 text-black bg-blend-darken dark:bg-slate-900 sm:px-6 lg:px-28">
+    <div className="  sticky top-0 z-40 bg-gray-100 px-5 py-2 text-black bg-blend-darken shadow-lg dark:bg-slate-900 sm:px-6 lg:px-28">
       <div className="container mx-auto max-w-7xl">
         <nav className="flex items-center justify-between">
-          <div className="flex w-full justify-between py-1.5 md:hidden">
-            <Link href="/" className="flex">
+          <div className="flex items-center w-full justify-between py-1.5 md:hidden">
+            <Link href="/" className="flex items-center">
               <Image
-                width={90}
-                height={40}
-                src="/lhlogo.webp"
+                width={45}
+                height={35}
+                src="/c-bg-y.png"
                 alt="Collins"
                 className=""
               />
+              <h1 className={`${logoFont.className} ml-2 text-lg dark:text-white  `}>
+                RUTO COLLINS
+              </h1>
             </Link>
             <div
               id="menuButton"
@@ -42,19 +54,24 @@ function Header() {
           </div>
           <header className="hidden w-full md:block">
             <div className="container mx-auto flex items-center justify-between">
-              <Link href="/" className="flex cursor-pointer">
+              <Link href="/" className="flex cursor-pointer items-center">
                 <Image
-                  width={100}
+                  width={50}
                   height={45}
-                  src="/lhlogo.webp"
+                  src="/c-bg-y.png"
                   alt="Collins"
                   className="mr-2"
                   loading="eager"
                 />
+                <span
+                  className={`${logoFont.className} ml-1 text-2xl dark:text-white md:ml-2`}
+                >
+                  RUTO COLLINS
+                </span>
               </Link>
               <div className="">
                 <nav className="w-full text-gray-700 dark:text-gray-300">
-                  <ul className="flex items-center space-x-2 text-sm font-semibold md:space-x-8 md:text-lg">
+                  <ul className="flex items-center space-x-4 text-sm font-semibold md:text-lg lg:space-x-8">
                     <li>
                       <Link
                         href={`/`}
@@ -156,14 +173,14 @@ function Header() {
               setOpened(!opened);
             }}
             className="
-               absolute text-end right-0 flex h-screen w-[60%] max-w-[20rem]  flex-col gap-4 overflow-y-auto bg-[#F7F6FB] p-4 pt-[5rem] text-2xl font-semibold text-gray-800 opacity-100 bg-blend-darken sm:text-3xl md:w-60 "
+               absolute right-0 flex h-screen w-[60%] max-w-[20rem] flex-col  gap-4 overflow-y-auto bg-[#F7F6FB] p-4 pt-[5rem] text-end text-2xl font-semibold text-gray-800 opacity-100 bg-blend-darken sm:text-3xl md:w-60 "
           >
-            <div className="w-fit ml-auto items-center px-2 md:hidden">
+            <div className="ml-auto w-fit items-center px-2 md:hidden">
               <ThemeToogle place="sidebar-toogle" />
             </div>
             <Link
               href={`/`}
-              className={` w-fit cursor-pointer ml-auto items-center border-b-2 px-2 transition duration-200 ease-in-out hover:text-blue-600 ${
+              className={` ml-auto w-fit cursor-pointer items-center border-b-2 px-2 transition duration-200 ease-in-out hover:text-blue-600 ${
                 currentRoute === "/"
                   ? "  border-orange-500"
                   : "border-transparent"
@@ -174,7 +191,7 @@ function Header() {
 
             <Link
               href={`/blogs`}
-              className={` w-fit cursor-pointer ml-auto items-center border-b-2 px-2 transition duration-200 ease-in-out hover:text-blue-600 ${
+              className={` ml-auto w-fit cursor-pointer items-center border-b-2 px-2 transition duration-200 ease-in-out hover:text-blue-600 ${
                 currentRoute === "/blogs"
                   ? "  border-orange-500"
                   : "border-transparent"
@@ -191,7 +208,7 @@ function Header() {
             </Link>
             <Link
               href={`/projects`}
-              className={`w-fit cursor-pointer ml-auto items-center border-b-2 px-2 transition duration-200 ease-in-out hover:text-blue-600 ${
+              className={`ml-auto w-fit cursor-pointer items-center border-b-2 px-2 transition duration-200 ease-in-out hover:text-blue-600 ${
                 currentRoute === "/projects"
                   ? " border-orange-500"
                   : "border-transparent"
@@ -201,7 +218,7 @@ function Header() {
             </Link>
             <Link
               href={`/about`}
-              className={`w-fit cursor-pointer ml-auto items-center border-b-2 px-2 transition duration-200 ease-in-out hover:text-blue-600 ${
+              className={`ml-auto w-fit cursor-pointer items-center border-b-2 px-2 transition duration-200 ease-in-out hover:text-blue-600 ${
                 currentRoute === "/about"
                   ? " border-orange-500"
                   : "border-transparent"
@@ -211,7 +228,7 @@ function Header() {
             </Link>
             <Link
               href={`/contact`}
-              className={` w-fit cursor-pointer ml-auto items-center border-b-2 px-2 transition duration-200 ease-in-out hover:text-blue-600 ${
+              className={` ml-auto w-fit cursor-pointer items-center border-b-2 px-2 transition duration-200 ease-in-out hover:text-blue-600 ${
                 currentRoute === "/contact"
                   ? "  border-orange-500"
                   : "border-transparent"
@@ -221,7 +238,7 @@ function Header() {
             </Link>
             <Link
               href="https://raw.githubusercontent.com/Collins-Ruto/collins-ruto.github.io/main/collinsruto.pdf"
-              className=" flex ml-auto items-center rounded p-2 px-2"
+              className=" ml-auto flex items-center rounded p-2 px-2"
             >
               Résumé
               <Image
