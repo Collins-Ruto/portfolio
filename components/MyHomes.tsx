@@ -3,9 +3,9 @@ import Link from "next/link";
 import React from "react";
 import { tools1, tools2 } from "~/assets/homedata";
 import "~/styles/themetoogle.css";
-
+import pinnedProjects from "~/assets/pinnedProjects.json";
 import localFont from "@next/font/local";
-import { Contact } from ".";
+import { Contact, PinnedCard } from ".";
 
 const font = localFont({
   // src: "../assets/fonts/Saira/Saira-VariableFont_wdth,wght.ttf",
@@ -31,7 +31,9 @@ function MyHome() {
       <div className="">
         <div className="px- mx-auto">
           <section className=" flex h-[82vh] flex-col justify-center text-center sm:mt-12 sm:h-fit lg:py-16 xl:h-fit xl:pt-24 ">
-            <h1 className={`${helloFont.className} text-6xl font-extrabold tracking-tight md:text-6xl`}>
+            <h1
+              className={`${helloFont.className} text-6xl font-extrabold tracking-tight md:text-6xl`}
+            >
               {" "}
               HELLO, I&apos;M{" "}
               <span className="text-indigo-600 dark:text-indigo-500">
@@ -175,9 +177,25 @@ function MyHome() {
             <h2
               className={` ${headFont.className}section__title section__title--life-style mb-8 text-center text-4xl font-bold`}
             >
-              Lifestyle
+              My Crafts
             </h2>
-            <div className="life-style mx-auto md:flex">
+            <div className="md:flex-nowra mb-4 py-4 flex flex-wrap gap-4 sm:flex-row">
+              {pinnedProjects.map((project, index) => (
+                <div className="w-1/2 grow md:w-1/3 lg:w-1/4" key={index}>
+                  <PinnedCard project={project} />
+                </div>
+              ))}
+            </div>
+            <div className="w-full flex justify-center">
+
+            <Link
+              href="/projects"
+              className="btnn inline-block mx-auto rounded bg-black px-6 py-3 font-semibold text-white transition duration-300 hover:bg-opacity-90 dark:bg-white dark:text-black"
+              >
+              Some More?
+            </Link>
+              </div>
+            {/* <div className="life-style mx-auto md:flex">
               <div className="lifestyle-item flex flex-col items-center md:flex-row md:items-start">
                 <div className="lifestyle-text md:mr-8">
                   <p className="w-[] text-lg">
@@ -201,7 +219,7 @@ function MyHome() {
                   className="lifestyle__img rounded-l "
                 />
               </div>
-            </div>
+            </div> */}
           </section>
           <section className="tools py-16">
             <div className="toolss mx-auto">

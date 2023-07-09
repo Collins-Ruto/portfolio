@@ -23,7 +23,7 @@ const headFont = localFont({
 function page() {
   const contactCard = (contact: Contact) => {
     return (
-      <div className="flex flex-col gap-3 borde rounded-md bg-zinc-300 py-6  text-center dark:bg-gray-700 dark:border-gray">
+      <div className="flex flex-col gap-3 borde rounded-md bg-slate-800 py-6  text-center text-white dark:border-gray">
         <div className="mx-auto flex items-center">
           <Image
             width={60}
@@ -32,7 +32,7 @@ function page() {
             src={contact.icon}
             alt={contact.title}
           />
-          <span className="font-semibold text-black dark:text-white">
+          <span className="font-semibold text-blac dark:text-white">
             {contact.title}
           </span>
         </div>

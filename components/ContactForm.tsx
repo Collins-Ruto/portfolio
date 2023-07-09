@@ -72,7 +72,7 @@ function ContactForm() {
             }}
             name="name"
             value={message?.name}
-            className="focus:shadow-outline block w-full rounded border  bg-slate-900 bg-opacity-70 px-3 py-4 leading-tight placeholder-white shadow focus:outline-none"
+            className="focus:shadow-outline block w-full rounded border  bg-slate-900 bg-opacit-90 px-3 py-4 leading-tight placeholder-white shadow focus:outline-none"
             type="text"
             placeholder="Your Name"
           />
@@ -82,7 +82,7 @@ function ContactForm() {
             }}
             name="email"
             value={message?.email}
-            className="focus:shadow-outline block w-full appearance-none rounded border bg-slate-900 bg-opacity-70 px-3 py-4 leading-tight placeholder-white shadow focus:outline-none"
+            className="focus:shadow-outline block w-full appearance-none rounded border bg-slate-900 bg-opacit-90 px-3 py-4 leading-tight placeholder-white shadow focus:outline-none"
             type="email"
             placeholder="Email Address"
           />
@@ -94,7 +94,7 @@ function ContactForm() {
             }}
             value={message?.message}
             name="message"
-            className="focus:shadow-outline block w-full rounded border bg-slate-900 bg-opacity-70 px-3 py-4 leading-tight text-white placeholder-white shadow focus:outline-none"
+            className="focus:shadow-outline block w-full rounded border bg-slate-900 bg-opacit-90 px-3 py-4 leading-tight text-white placeholder-white shadow focus:outline-none"
             rows={3}
             placeholder="A message for us ..."
           />
