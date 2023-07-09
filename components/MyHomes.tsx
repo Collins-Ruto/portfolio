@@ -2,15 +2,20 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { tools1, tools2 } from "~/assets/homedata";
-import '~/styles/themetoogle.css'
+import "~/styles/themetoogle.css";
 
 import localFont from "@next/font/local";
+import { Contact } from ".";
 
 const font = localFont({
   // src: "../assets/fonts/Saira/Saira-VariableFont_wdth,wght.ttf",
   // src: "../assets/fonts/Source_Sans_3/SourceSans3-VariableFont_wght.ttf",
   src: "../assets/fonts/Roboto/Roboto-Regular.ttf",
   // src: "../assets/fonts/Open_Sans/OpenSans-VariableFont_wdth,wght.ttf",
+  display: "fallback",
+});
+const helloFont = localFont({
+  src: "../assets/fonts/Open_Sans/OpenSans-VariableFont_wdth,wght.ttf",
   display: "fallback",
 });
 const headFont = localFont({
@@ -25,13 +30,13 @@ function MyHome() {
     <div className={`${font.className}`}>
       <div className="">
         <div className="px- mx-auto">
-          <section className=" flex h-[82vh] flex-col justify-center text-center sm:mt-16 sm:h-fit  lg:py-16 xl:h-fit xl:pt-24 ">
-            <h1 className="text-6xl font-extrabold tracking-tight md:text-6xl">
+          <section className=" flex h-[82vh] flex-col justify-center text-center sm:mt-12 sm:h-fit lg:py-16 xl:h-fit xl:pt-24 ">
+            <h1 className={`${helloFont.className} text-6xl font-extrabold tracking-tight md:text-6xl`}>
               {" "}
-              Hello, I am{" "}
+              HELLO, I&apos;M{" "}
               <span className="text-indigo-600 dark:text-indigo-500">
-                {/* Collins Ruto */}
-                Samuel Kibet
+                COLLINS RUTO
+                {/* Samuel Kibet */}
               </span>{" "}
             </h1>
             <p className="mx-auto mt-6 max-w-[30rem] py-4 text-lg font-medium text-gray-600 dark:text-gray-400">
@@ -72,7 +77,9 @@ function MyHome() {
             </h2>
             <div className="services mx-auto flex-wrap justify-between gap-4 md:flex">
               <div className="service mx-auto mb-12 max-w-lg grow md:w-1/4">
-                <h3 className={` ${headFont.className} section__subtitle--services transition-delay-400 mb-4 text-2xl font-bold`}>
+                <h3
+                  className={` ${headFont.className} section__subtitle--services transition-delay-400 mb-4 text-2xl font-bold`}
+                >
                   Web Design
                 </h3>
                 <p className="transition-delay-500 text-sm">
@@ -85,7 +92,9 @@ function MyHome() {
               </div>
 
               <div className="service mx-auto mb-12 max-w-lg grow md:w-1/4">
-                <h3 className={` ${headFont.className} section__subtitle--services transition-delay-600 mb-4 text-2xl font-bold`}>
+                <h3
+                  className={` ${headFont.className} section__subtitle--services transition-delay-600 mb-4 text-2xl font-bold`}
+                >
                   Software Development
                 </h3>
                 <p className="transition-delay-700 text-sm">
@@ -98,7 +107,9 @@ function MyHome() {
               </div>
 
               <div className="service mx-auto mb-12 max-w-lg grow md:w-1/4">
-                <h3 className={` ${headFont.className} section__subtitle--services transition-delay-800 mb-4 text-2xl font-bold`}>
+                <h3
+                  className={` ${headFont.className} section__subtitle--services transition-delay-800 mb-4 text-2xl font-bold`}
+                >
                   Web3 Development
                 </h3>
                 <p className="transition-delay-900 text-sm">
@@ -111,7 +122,7 @@ function MyHome() {
               </div>
             </div>
             <Link
-              href="#work"
+              href="/projects"
               className="btnn inline-block rounded bg-black px-6 py-3 font-semibold text-white transition duration-300 hover:bg-opacity-90 dark:bg-white dark:text-black"
             >
               My Work
@@ -248,6 +259,9 @@ function MyHome() {
                 </div>
               </div>
             </div>
+          </section>
+          <section>
+            <Contact />
           </section>
         </div>
       </div>

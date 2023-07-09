@@ -125,13 +125,13 @@ async function BlogPage({ params: { slug } }: { params: { slug: string } }) {
               {markdown}
             </ReactMarkdown>
           </div>
-          <div className="bg-gray-100 py-8">
+          <div className="py-8">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
               <div className="text-center">
-                <h2 className="text-3xl font-extrabold text-gray-900">
+                <h2 className="text-3xl font-extrabold text-gray-900 dark:text-gray-200">
                   Enjoyed this post?
                 </h2>
-                <p className="mt-4 text-lg text-gray-500">
+                <p className="mt-4 text-lg text-gray-500 dark:text-gray-400">
                   Head over to Dev.to and show some love!
                 </p>
                 <div className="mt-6">

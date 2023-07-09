@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     "code",
   ],
   alternates: {
-    canonical: "/",
+    canonical: "https://collinsruto.netlify.app",
   },
   verification: {
     google: process.env.GOOGLE_VERIFICATION,
@@ -108,7 +108,7 @@ export const metadata: Metadata = {
     description:
       "I am a hobbyist full-stack software developer with expertise in Web, Web3 and Android development. I create web apps to solve your business problems.",
     type: "website",
-    url: "https://collinsruto.netlify.app",
+    url: "https://collinsruto.vercel.app",
     images:
       "https://raw.githubusercontent.com/Collins-Ruto/collins-ruto.github.io/main/img/collinsruto-cover.png",
   },

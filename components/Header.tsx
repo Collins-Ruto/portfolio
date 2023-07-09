@@ -91,7 +91,7 @@ function Header() {
                       <Link
                         href={`/blogs`}
                         className={` cursor-pointer items-center border-b-2  align-middle transition duration-200 ease-in-out hover:text-blue-600 ${
-                          currentRoute === "/blogs"
+                          currentRoute?.substring(0, 6) === "/blogs"
                             ? "  border-orange-500"
                             : "border-transparent"
                         }`}
