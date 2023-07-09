@@ -6,13 +6,14 @@ import Link from "next/link";
 import "~/styles/globals.css";
 import ThemeToogle from "./ThemeToogle";
 
+// TODO: Capitalize links
 function Header() {
   const [opened, setOpened] = useState(false);
 
   const currentRoute = usePathname();
 
   return (
-    <div className="  sticky top-0 z-40 bg-gray-100 px-5 py-2 text-black bg-blend-darken dark:bg-slate-900 sm:px-6 lg:px-28">
+    <div className="  sticky top-0 z-40 bg-gray-100 shadow-lg px-5 py-2 text-black bg-blend-darken dark:bg-slate-900 sm:px-6 lg:px-28">
       <div className="container mx-auto max-w-7xl">
         <nav className="flex items-center justify-between">
           <div className="flex w-full justify-between py-1.5 md:hidden">
@@ -53,7 +54,7 @@ function Header() {
               </Link>
               <div className="">
                 <nav className="w-full text-gray-700 dark:text-gray-300">
-                  <ul className="flex items-center space-x-2 text-sm font-semibold md:space-x-4 md:text-lg">
+                  <ul className="flex items-center space-x-2 text-sm font-semibold md:space-x-8 md:text-lg">
                     <li>
                       <Link
                         href={`/`}
@@ -63,7 +64,7 @@ function Header() {
                             : "border-transparent"
                         }`}
                       >
-                        <span className="rounded">Home</span>
+                        <span className="rounded">HOME</span>
                       </Link>
                     </li>
 
@@ -76,7 +77,7 @@ function Header() {
                             : "border-transparent"
                         }`}
                       >
-                        <span className="rounded">Blogs</span>
+                        <span className="rounded">BLOGS</span>
                       </Link>
                     </li>
                     <li>
@@ -88,7 +89,7 @@ function Header() {
                             : "border-transparent"
                         }`}
                       >
-                        <span className="rounded">Projects</span>
+                        <span className="rounded">PROJECTS</span>
                       </Link>
                     </li>
                     <li>
@@ -100,7 +101,7 @@ function Header() {
                             : "border-transparent"
                         }`}
                       >
-                        <span className="rounded">About Me</span>
+                        <span className="rounded">ABOUT ME</span>
                       </Link>
                     </li>
                     <li>
@@ -112,7 +113,7 @@ function Header() {
                             : "border-transparent"
                         }`}
                       >
-                        <span className="rounded">Contact</span>
+                        <span className="rounded">CONTACT</span>
                       </Link>
                     </li>
                     {/* <li>
@@ -124,17 +125,17 @@ function Header() {
                             : "border-transparent"
                         }`}
                       >
-                        <span className="rounded">FAQs</span>
+                        <span className="rounded">FAQS</span>
                       </Link>
                     </li> */}
-                    <li>
+                    {/* <li>
                       <Link
                         href="#"
                         className="bg-primary-500 hover:bg-primary-700 focus:border-primary-700 focus:shadow-outline-indigo inline-block rounded-md border border-transparent bg-indigo-600 px-5 py-2 text-base font-semibold leading-6 text-white transition duration-150 ease-in-out focus:outline-none active:bg-indigo-700"
                       >
-                        Resume
+                        Résumé
                       </Link>
-                    </li>
+                    </li> */}
                   </ul>
                 </nav>
               </div>
@@ -155,14 +156,14 @@ function Header() {
               setOpened(!opened);
             }}
             className="
-               absolute right-0 flex h-screen w-[60%] max-w-[20rem]  flex-col gap-4 overflow-y-auto bg-[#F7F6FB] p-4 pt-[5rem] text-2xl font-semibold text-gray-800 opacity-100 bg-blend-darken sm:text-3xl md:w-60 "
+               absolute text-end right-0 flex h-screen w-[60%] max-w-[20rem]  flex-col gap-4 overflow-y-auto bg-[#F7F6FB] p-4 pt-[5rem] text-2xl font-semibold text-gray-800 opacity-100 bg-blend-darken sm:text-3xl md:w-60 "
           >
-            <div className="w-fit items-center px-2 md:hidden">
+            <div className="w-fit ml-auto items-center px-2 md:hidden">
               <ThemeToogle place="sidebar-toogle" />
             </div>
             <Link
               href={`/`}
-              className={` w-fit cursor-pointer items-center border-b-2 px-2 transition duration-200 ease-in-out hover:text-blue-600 ${
+              className={` w-fit cursor-pointer ml-auto items-center border-b-2 px-2 transition duration-200 ease-in-out hover:text-blue-600 ${
                 currentRoute === "/"
                   ? "  border-orange-500"
                   : "border-transparent"
@@ -173,7 +174,7 @@ function Header() {
 
             <Link
               href={`/blogs`}
-              className={` w-fit cursor-pointer items-center border-b-2 px-2 transition duration-200 ease-in-out hover:text-blue-600 ${
+              className={` w-fit cursor-pointer ml-auto items-center border-b-2 px-2 transition duration-200 ease-in-out hover:text-blue-600 ${
                 currentRoute === "/blogs"
                   ? "  border-orange-500"
                   : "border-transparent"
@@ -190,7 +191,7 @@ function Header() {
             </Link>
             <Link
               href={`/projects`}
-              className={`w-fit cursor-pointer items-center border-b-2 px-2 transition duration-200 ease-in-out hover:text-blue-600 ${
+              className={`w-fit cursor-pointer ml-auto items-center border-b-2 px-2 transition duration-200 ease-in-out hover:text-blue-600 ${
                 currentRoute === "/projects"
                   ? " border-orange-500"
                   : "border-transparent"
@@ -200,7 +201,7 @@ function Header() {
             </Link>
             <Link
               href={`/about`}
-              className={`w-fit cursor-pointer items-center border-b-2 px-2 transition duration-200 ease-in-out hover:text-blue-600 ${
+              className={`w-fit cursor-pointer ml-auto items-center border-b-2 px-2 transition duration-200 ease-in-out hover:text-blue-600 ${
                 currentRoute === "/about"
                   ? " border-orange-500"
                   : "border-transparent"
@@ -210,7 +211,7 @@ function Header() {
             </Link>
             <Link
               href={`/contact`}
-              className={` w-fit cursor-pointer items-center border-b-2 px-2 transition duration-200 ease-in-out hover:text-blue-600 ${
+              className={` w-fit cursor-pointer ml-auto items-center border-b-2 px-2 transition duration-200 ease-in-out hover:text-blue-600 ${
                 currentRoute === "/contact"
                   ? "  border-orange-500"
                   : "border-transparent"
@@ -218,12 +219,22 @@ function Header() {
             >
               <span className="rounded">Contact</span>
             </Link>
-            <Link href="#" className=" rounded p-2 px-2">
-              Resume
+            <Link
+              href="https://raw.githubusercontent.com/Collins-Ruto/collins-ruto.github.io/main/collinsruto.pdf"
+              className=" flex ml-auto items-center rounded p-2 px-2"
+            >
+              Résumé
+              <Image
+                src="https://img.icons8.com/sf-regular-filled/48/000000/downloading-updates.png"
+                className="ml-1 w-7 "
+                height={100}
+                width={100}
+                alt=""
+              />
             </Link>
             {/* <Link
               href={`/faq`}
-              className={` w-fit cursor-pointer items-center border-b-2 px-2 transition duration-200 ease-in-out hover:text-blue-600 ${
+              className={` w-fit cursor-pointer ml-auto items-center border-b-2 px-2 transition duration-200 ease-in-out hover:text-blue-600 ${
                 currentRoute === "/faq"
                   ? "  border-orange-500"
                   : "border-transparent"

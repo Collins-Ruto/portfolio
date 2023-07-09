@@ -34,7 +34,7 @@ function MyHome() {
                 width={100}
                 alt=""
               />
-              Download Resume
+              Download Résumé
             </Link>
             <div id="mouse-scroll" className=" mx-auto transform">
               <div className="mouse">

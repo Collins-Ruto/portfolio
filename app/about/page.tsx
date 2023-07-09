@@ -8,8 +8,6 @@ import ThemeToogle from "~/components/ThemeToogle";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "All About Collins",
-
   authors: [
     {
       name: "Collins Ruto",
