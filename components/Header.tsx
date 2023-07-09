@@ -9,8 +9,10 @@ import ThemeToogle from "./ThemeToogle";
 import localFont from '@next/font/local'
 
 const logoFont = localFont({
-  src: "../assets/fonts/Train_One/TrainOne-Regular.ttf",
+  // src: "../assets/fonts/Train_One/TrainOne-Regular.ttf",
   // src: '../assets/fonts/Monoton/Monoton-Regular.ttf',
+  // src: '../assets/fonts/Monoton/Monoton-Regular.ttf',
+  src: '../assets/fonts/Saira_Stencil_One/SairaStencilOne-Regular.ttf',
   // src: "../assets/fonts/Saira/Saira-VariableFont_wdth,wght.ttf",
   display: "fallback",
 });
