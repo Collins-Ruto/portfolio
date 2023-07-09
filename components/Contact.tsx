@@ -64,7 +64,7 @@ function page() {
                           target="_blank"
                           rel="noopener"
                           href={social.link}
-                          className="flex w-1/2 items-center rounded-lg p-1 py-2 opacity-90 hover:bg-gray-800 hover:opacity-100 "
+                          className="flex w-1/2 items-center rounded-lg p-1 py-2 opacity-90 hover:bg-gray-300 hover:opacity-100 "
                           key={index}
                         >
                           <Image

@@ -233,7 +233,7 @@ function MyHome() {
                   <div className="tools-container">
                     <ul className="tool-list flex flex-wrap justify-center gap-4 md:justify-around">
                       {tools1.map((tool, index) => (
-                        <div
+                        <li
                           key={index}
                           className="tool-card flex w-[9rem] flex-col items-center justify-center rounded-lg bg-white p-4 shadow-lg dark:bg-slate-800"
                         >
@@ -247,7 +247,7 @@ function MyHome() {
                           <span className="tool-name text-center text-sm font-semibold">
                             {tool.name}
                           </span>
-                        </div>
+                        </li>
                       ))}
                     </ul>
                   </div>
@@ -256,7 +256,7 @@ function MyHome() {
                   <div className="tools-container">
                     <ul className="tool-list l flex flex-wrap justify-center gap-2 md:justify-around">
                       {tools2.map((tool, index) => (
-                        <div
+                        <li
                           key={index}
                           className="tool-card flex w-[9rem] flex-col items-center justify-center rounded-lg bg-white p-4 shadow-lg dark:bg-slate-800"
                         >
@@ -270,7 +270,7 @@ function MyHome() {
                           <span className="tool-name text-center text-sm font-semibold">
                             {tool.name}
                           </span>
-                        </div>
+                        </li>
                       ))}
                     </ul>
                   </div>

@@ -50,9 +50,11 @@ function ContactForm() {
       console.log("send  message", message);
       const data = sendMessage.mutate(message);
 
-      setStatus(true);
       setTimeout(() => {
-      setMessage(cleanField)
+        setStatus(true);
+      }, 500);
+      setTimeout(() => {
+        setMessage(cleanField);
         setStatus(false);
       }, 4000);
 
@@ -72,7 +74,7 @@ function ContactForm() {
             }}
             name="name"
             value={message?.name}
-            className="focus:shadow-outline block w-full rounded border  bg-slate-900 bg-opacit-90 px-3 py-4 leading-tight placeholder-white shadow focus:outline-none"
+            className="focus:shadow-outline bg-opacit-90 block w-full rounded  border bg-slate-900 px-3 py-4 leading-tight text-white placeholder-gray-400 shadow focus:outline-none"
             type="text"
             placeholder="Your Name"
           />
@@ -82,7 +84,7 @@ function ContactForm() {
             }}
             name="email"
             value={message?.email}
-            className="focus:shadow-outline block w-full appearance-none rounded border bg-slate-900 bg-opacit-90 px-3 py-4 leading-tight placeholder-white shadow focus:outline-none"
+            className="focus:shadow-outline bg-opacit-90 block w-full appearance-none rounded border bg-slate-900 px-3 py-4 leading-tight text-white placeholder-gray-400 shadow focus:outline-none"
             type="email"
             placeholder="Email Address"
           />
@@ -94,9 +96,9 @@ function ContactForm() {
             }}
             value={message?.message}
             name="message"
-            className="focus:shadow-outline block w-full rounded border bg-slate-900 bg-opacit-90 px-3 py-4 leading-tight text-white placeholder-white shadow focus:outline-none"
+            className="focus:shadow-outline bg-opacit-90 block w-full rounded border bg-slate-900 px-3 py-4 leading-tight text-white placeholder-gray-400 shadow focus:outline-none"
             rows={3}
-            placeholder="A message for us ..."
+            placeholder="Something awesome in mind? or say 'Hi!'"
           />
         </div>
 
@@ -105,7 +107,7 @@ function ContactForm() {
             onClick={(e) => {
               handleSubmit(e);
             }}
-            className="hover:bg-primary-700 text-black focus:border-primary-700 focus:shadow-outline-indigo inline-block w-full rounded-md border border-transparent bg-[#16e0bd] px-8 py-3 text-base font-semibold leading-6 txt-white transition duration-150 ease-in-out focus:outline-none active:bg-indigo-700 sm:mt-8 sm:w-1/2"
+            className="hover:bg-opacity-70 focus:border-primary-700 focus:shadow-outline-indigo txt-white inline-block w-full rounded-md border border-transparent bg-[#16e0bd] px-8 py-3 text-base font-semibold leading-6 text-black transition duration-150 ease-in-out focus:outline-none active:border-cyan-600 sm:mt-8 sm:w-1/2"
           >
             {status ? "Well Recieved 😁 " : "Mail Me 🙂"}
           </button>

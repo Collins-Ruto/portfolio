@@ -133,7 +133,7 @@ export const PinnedCard = ({ project }: { project: RepositoryData }) => {
         <span className="text-sm text-gray-500 dark:text-gray-400">
           {project.description}
         </span>
-        <div className="flex justify-center py-1 flex-wrap items-center">
+        <div className="flex justify-cente py-1 flex-wrap items-center">
           {project.topics?.slice(0, 4).map((tag, index) => (
             <span
               key={index}
