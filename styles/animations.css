@@ -1,3 +1,36 @@
+.notification__progress {
+  position: absolute;
+  width: calc(100% - 0.5rem);
+
+  transform: scaleX(0);
+  transform-origin: left;
+  /* background: linear-gradient(to right, #313e2c, #aaec8a); */
+  border-radius: inherit;
+  animation: progress 3s 0.2s linear;
+}
+
+@keyframes progress {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+#menuButton span {
+  transform-origin: center;
+}
+
+#menuButton.open span:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 6px);
+}
+
+#menuButton.open span:nth-child(2) {
+  opacity: 0;
+}
+
+#menuButton.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(8px, -8px);
+}
+
 @keyframes animated-mouse {
   0% {
     opacity: 1;

@@ -44,14 +44,14 @@ function Header() {
               id="menuButton"
               className={`flex ${
                 opened ? "open" : ""
-              } cursor-pointer flex-col items-center justify-center space-y-1 p-2  md:hidden`}
+              } cursor-pointer flex-col items-center justify-center space-y-1.5 p-2  md:hidden`}
               onClick={() => {
                 setOpened(!opened);
               }}
             >
-              <span className="duration-400 h-1 w-6 rounded bg-blue-600 transition-all sm:w-8"></span>
-              <span className="duration-400 h-1 w-6 rounded bg-blue-600 transition-all sm:w-8"></span>
-              <span className="duration-400 h-1 w-6 rounded bg-blue-600 transition-all sm:w-8"></span>
+              <span className="duration-400 h-1 w-8 rounded bg-blue-600 transition-all sm:w-8"></span>
+              <span className="duration-400 h-1 w-8 rounded bg-blue-600 transition-all sm:w-8"></span>
+              <span className="duration-400 h-1 w-8 rounded bg-blue-600 transition-all sm:w-8"></span>
             </div>
           </div>
           <header className="hidden w-full md:block">
@@ -135,18 +135,7 @@ function Header() {
                         <span className="rounded">CONTACT</span>
                       </Link>
                     </li>
-                    {/* <li>
-                      <Link
-                        href={`/faq`}
-                        className={` cursor-pointer items-center border-b-2  align-middle hover:text-blue-600 ${
-                          currentRoute === "/faq"
-                            ? " border-orange-500"
-                            : "border-transparent"
-                        }`}
-                      >
-                        <span className="rounded">FAQS</span>
-                      </Link>
-                    </li> */}
+                   
                     {/* <li>
                       <Link
                         href="#"
@@ -181,7 +170,7 @@ function Header() {
               setOpened(!opened);
             }}
             className="
-               absolute right-0 flex h-screen w-[60%] max-w-[20rem] flex-col  gap-4 overflow-y-auto bg-[#F7F6FB] p-4 pt-[5rem] text-end text-2xl font-semibold text-gray-800 opacity-100 bg-blend-darken sm:text-3xl md:w-60 "
+               absolute right-0 flex h-screen w-[60%] max-w-[20rem] flex-col  gap-4 overflow-y-auto bg-[#F7F6FB] dark:bg-slate-900 dark:text-white p-4 pt-[5rem] text-end text-2xl font-semibold  opacity-100 bg-blend-darken sm:text-3xl md:w-60 "
           >
             <div className="ml-auto w-fit items-center px-2 md:hidden">
               <ThemeToogle place="sidebar-toogle" />
@@ -251,7 +240,14 @@ function Header() {
               Résumé
               <Image
                 src="https://img.icons8.com/sf-regular-filled/48/000000/downloading-updates.png"
-                className="ml-1 w-7 "
+                className="ml-1 w-7 dark:hidden"
+                height={100}
+                width={100}
+                alt=""
+              />
+              <Image
+                src="https://img.icons8.com/sf-regular-filled/48/FFFFFF/downloading-updates.png"
+                className="ml-1 w-7 hidden dark:block"
                 height={100}
                 width={100}
                 alt=""
