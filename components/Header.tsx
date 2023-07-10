@@ -6,13 +6,11 @@ import Link from "next/link";
 import "~/styles/globals.css";
 import ThemeToogle from "./ThemeToogle";
 
-import localFont from '@next/font/local'
+import localFont from "@next/font/local";
 
 const logoFont = localFont({
   // src: "../assets/fonts/Train_One/TrainOne-Regular.ttf",
-  // src: '../assets/fonts/Monoton/Monoton-Regular.ttf',
-  // src: '../assets/fonts/Monoton/Monoton-Regular.ttf',
-  src: '../assets/fonts/Saira_Stencil_One/SairaStencilOne-Regular.ttf',
+  src: "../assets/fonts/Saira_Stencil_One/SairaStencilOne-Regular.ttf",
   // src: "../assets/fonts/Saira/Saira-VariableFont_wdth,wght.ttf",
   display: "fallback",
 });
@@ -22,12 +20,12 @@ function Header() {
   const [opened, setOpened] = useState(false);
 
   const currentRoute = usePathname();
- 
+
   return (
     <div className="  sticky top-0 z-40 bg-gray-100 px-5 py-2 text-black bg-blend-darken shadow-lg dark:bg-slate-900 sm:px-6 lg:px-28">
       <div className="container mx-auto max-w-7xl">
         <nav className="flex items-center justify-between">
-          <div className="flex items-center w-full justify-between py-1.5 md:hidden">
+          <div className="flex w-full items-center justify-between py-1.5 md:hidden">
             <Link href="/" className="flex items-center">
               <Image
                 width={45}
@@ -36,7 +34,9 @@ function Header() {
                 alt="Collins"
                 className=""
               />
-              <h1 className={`${logoFont.className} ml-2 text-lg dark:text-white  `}>
+              <h1
+                className={`${logoFont.className} ml-2 text-lg dark:text-white  `}
+              >
                 RUTO COLLINS
               </h1>
             </Link>
@@ -163,13 +163,19 @@ function Header() {
         </nav>
       </div>
       <div className="md:hidden">
-        <div className={`${opened ? "block " : "hidden md:block"}`}>
-          <div
-            className="absolute right-0 h-screen w-screen bg-black opacity-20 bg-blend-darken md:hidden"
-            onClick={() => {
-              setOpened(!opened);
-            }}
-          ></div>
+        <div
+          className={`hidde absolute right-0 h-screen w-screen bg-black opacity-20 bg-blend-darken md:hidden ${
+            opened ? "active block " : ` hidden `
+          }`}
+          onClick={() => {
+            setOpened(false);
+          }}
+        ></div>
+        <div
+          className={`sidebar translate-x-4 transition-transform  duration-300 ease-in-out ${
+            opened ? "active block " : ` hidden`
+          }`}
+        >
           <div
             onClick={() => {
               setOpened(!opened);
@@ -194,7 +200,7 @@ function Header() {
             <Link
               href={`/blogs`}
               className={` ml-auto w-fit cursor-pointer items-center border-b-2 px-2 transition duration-200 ease-in-out hover:text-blue-600 ${
-                currentRoute === "/blogs"
+                currentRoute?.substring(0, 6) === "/blogs"
                   ? "  border-orange-500"
                   : "border-transparent"
               }`}

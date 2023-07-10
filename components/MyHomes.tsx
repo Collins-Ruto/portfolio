@@ -7,30 +7,23 @@ import pinnedProjects from "~/assets/pinnedProjects2.json";
 import localFont from "@next/font/local";
 import { Contact, PinnedCard } from ".";
 
-const font = localFont({
-  // src: "../assets/fonts/Saira/Saira-VariableFont_wdth,wght.ttf",
-  // src: "../assets/fonts/Source_Sans_3/SourceSans3-VariableFont_wght.ttf",
-  src: "../assets/fonts/Roboto/Roboto-Regular.ttf",
-  // src: "../assets/fonts/Open_Sans/OpenSans-VariableFont_wdth,wght.ttf",
-  display: "fallback",
-});
 const helloFont = localFont({
-  src: "../assets/fonts/Open_Sans/OpenSans-VariableFont_wdth,wght.ttf",
+  src: "../assets/fonts/Open_Sans/static/OpenSans-ExtraBold.ttf",
+  // src: "../assets/fonts/Open_Sans/OpenSans-VariableFont_wdth,wght.ttf",
   display: "fallback",
 });
 const headFont = localFont({
-  src: "../assets/fonts/Saira/Saira-VariableFont_wdth,wght.ttf",
-  // src: "../assets/fonts/Source_Sans_3/SourceSans3-VariableFont_wght.ttf",
-  // src: "../assets/fonts/Open_Sans/OpenSans-VariableFont_wdth,wght.ttf",
+  // src: "../assets/fonts/Saira/Saira-VariableFont_wdth,wght.ttf",
+  src: "../assets/fonts/Saira/static/Saira-Medium.ttf",
   display: "fallback",
 });
 
 function MyHome() {
   return (
-    <div className={`${font.className}`}>
+    <div className={``}>
       <div className="">
-        <div className="px- mx-auto">
-          <section className=" flex h-[82vh] flex-col justify-center text-center sm:mt-12 sm:h-fit lg:py-16 xl:h-fit xl:pt-24 ">
+        <div className=" mx-auto">
+          <section className=" flex h-[82vh] flex-col justify-center text-center sm:mt-12 sm:h-fit sm:pt-14 md:px-0 lg:py-16 xl:h-fit xl:pt-24 ">
             <h1
               className={`${helloFont.className} text-6xl font-extrabold tracking-tight md:text-6xl`}
             >
@@ -135,7 +128,7 @@ function MyHome() {
               <Image
                 width={450}
                 height={40}
-                src="/img/25.webp"
+                src="/img/26.webp"
                 alt="collins"
                 className="about-me__img rounded-l4 mx-auto hidden h-[26rem] shadow-md lg:block"
               />
@@ -150,7 +143,7 @@ function MyHome() {
                     Designer & Developer based in Mombasa, Kenya
                   </p>
                 </div>
-                <div className="about-me__body mb-8 text-lg">
+                <div className="about-me__body text-l mb-8">
                   <p>
                     I am a freelance web developer based in Mombasa, Kenya. I
                     strongly believe that life is about pursuing our dreams and
@@ -179,47 +172,21 @@ function MyHome() {
             >
               My Crafts
             </h2>
-            <div className="md:flex-nowra mb-4 py-4 flex flex-wrap gap-4 sm:flex-row">
+            <div className="md:flex-nowra mb-4 flex flex-wrap gap-4 py-4 sm:flex-row">
               {pinnedProjects.map((project, index) => (
                 <div className="w-1/2 grow md:w-1/3 lg:w-1/4" key={index}>
                   <PinnedCard project={project} />
                 </div>
               ))}
             </div>
-            <div className="w-full flex justify-center">
-
-            <Link
-              href="/projects"
-              className="btnn inline-block mx-auto rounded bg-black px-6 py-3 font-semibold text-white transition duration-300 hover:bg-opacity-90 dark:bg-white dark:text-black"
+            <div className="flex w-full justify-center">
+              <Link
+                href="/projects"
+                className="btnn mx-auto inline-block rounded bg-black px-6 py-3 font-semibold text-white transition duration-300 hover:bg-opacity-90 dark:bg-white dark:text-black"
               >
-              Some More?
-            </Link>
-              </div>
-            {/* <div className="life-style mx-auto md:flex">
-              <div className="lifestyle-item flex flex-col items-center md:flex-row md:items-start">
-                <div className="lifestyle-text md:mr-8">
-                  <p className="w-[] text-lg">
-                    I love open source because it provides opportunities for
-                    learning, growth, and helping others. Although I&apos;m
-                    relatively new to web development with less than a year of
-                    experience, I dedicate time to contribute to other
-                    developers&apos; projects on platforms like GitHub and Stack
-                    Overflow. This approach allows me to learn more and enhance
-                    my foundational knowledge.
-                  </p>
-                </div>
-              </div>
-
-              <div className="life-img mx-auto max-w-[80%] sm:max-w-[60%]">
-                <Image
-                  width={1800}
-                  height={800}
-                  src="/img/lifestyle.png"
-                  alt="teams"
-                  className="lifestyle__img rounded-l "
-                />
-              </div>
-            </div> */}
+                Some More?
+              </Link>
+            </div>
           </section>
           <section className="tools py-16">
             <div className="toolss mx-auto">

@@ -125,26 +125,51 @@ async function BlogPage({ params: { slug } }: { params: { slug: string } }) {
               {markdown}
             </ReactMarkdown>
           </div>
-          <div className="py-8">
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-              <div className="text-center">
-                <h2 className="text-3xl font-extrabold text-gray-900 dark:text-gray-200">
-                  Enjoyed this post?
-                </h2>
-                <p className="mt-4 text-lg text-gray-500 dark:text-gray-400">
-                  Head over to Dev.to and show some love!
-                </p>
-                <div className="mt-6">
-                  <Link
-                    href={blog.devto_url}
-                    target="_blank"
-                    rel="noopener"
-                    className="text-base font-medium text-indigo-600 hover:text-indigo-500"
-                  >
-                    Like 💜 and comment ✒️ on Dev.to
-                  </Link>
-                </div>
+          <div className="py-6">
+            <div className="mx-auto text-center">
+              <h2 className="text-3xl font-extrabold text-gray-900 dark:text-gray-200">
+                Enjoyed this post?
+              </h2>
+              <p className="mt-4 text-lg text-gray-500 dark:text-gray-400">
+                Head over to Dev.to and show some love!
+              </p>
+              <div className="mt-6">
+                <Link
+                  href={blog.devto_url}
+                  target="_blank"
+                  rel="noopener"
+                  className="text-base font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-500"
+                >
+                  Like 💜 and comment ✒️ on Dev.to
+                </Link>
               </div>
+              <span className="mt-4 block text-lg text-gray-500 dark:text-gray-400">
+                Seen a bug/error somewhere?
+              </span>
+
+              <Link
+                href={`https://github.com/Collins-Ruto/blogs/fork`}
+                target="_blank"
+                rel="noopener"
+                className="not-prose flex items-center justify-center text-purple-500"
+              >
+                {" "}
+                fork & submit a pull request
+                <Image
+                  height={30}
+                  width={30}
+                  src="https://img.icons8.com/ios-glyphs/30/3D3D3D/pull-request.png"
+                  alt="contribute Badge "
+                  className="ml-1  dark:hidden"
+                />
+                <Image
+                  height={30}
+                  width={30}
+                  src="https://img.icons8.com/ios-glyphs/30/pull-request.png"
+                  alt="contribute Badge "
+                  className="ml-1 hidden dark:block"
+                />
+              </Link>
             </div>
           </div>
         </div>

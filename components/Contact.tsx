@@ -14,9 +14,7 @@ type Contact = {
 };
 
 const headFont = localFont({
-  src: "../assets/fonts/Saira/Saira-VariableFont_wdth,wght.ttf",
-  // src: "../assets/fonts/Source_Sans_3/SourceSans3-VariableFont_wght.ttf",
-  // src: "../assets/fonts/Open_Sans/OpenSans-VariableFont_wdth,wght.ttf",
+  src: "../assets/fonts/Saira/static/Saira-Medium.ttf",
   display: "fallback",
 });
 

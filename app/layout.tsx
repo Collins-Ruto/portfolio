@@ -6,6 +6,7 @@ import type { Metadata } from "next";
 import { ClientProvider } from "@/utils/trpc-provider";
 import { LayoutProvider } from "./LayoutProvider";
 import GoogleAnalytics from "~/components/GoogleAnalytics";
+import '~/styles/animations.css'
 
 export default function RootLayout({
   // Layouts must accept a children prop.
@@ -52,6 +53,7 @@ export const metadata: Metadata = {
     "solidity",
     "rust",
     "code",
+    "programming"
   ],
   alternates: {
     canonical: "https://collinsruto.netlify.app",

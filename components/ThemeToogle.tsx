@@ -11,7 +11,8 @@ function ThemeToogle({place}:{place: string}) {
 
   useEffect(() => {
     setMounted(true);
-  }, []);
+    setChecked(theme === "light");
+  }, [theme]);
 
   const handleCheckboxChange = () => {
     const updatedTheme = checked ? "dark" : "light";
@@ -35,7 +36,6 @@ function ThemeToogle({place}:{place: string}) {
       <input
         type="checkbox"
         id={`darkmode-toggle-${place}`}
-        // defaultChecked={theme === "light"}
         checked={checked}
         onChange={() => {
           handleCheckboxChange();
@@ -50,7 +50,6 @@ function ThemeToogle({place}:{place: string}) {
           x="0px"
           y="0px"
           viewBox="0 0 496 496"
-          // style={"enable-background:new 0 0 496 496;"}
           xmlSpace="preserve"
         >
           <rect
@@ -160,7 +159,6 @@ function ThemeToogle({place}:{place: string}) {
           x="0px"
           y="0px"
           viewBox="0 0 49.739 49.739"
-          // style={{ enableBackground: "new 0 0 49.739 49.739" }}
           xmlSpace="preserve"
         >
           <path
