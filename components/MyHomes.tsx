@@ -12,8 +12,8 @@ const helloFont = localFont({
   // src: "../assets/fonts/Open_Sans/OpenSans-VariableFont_wdth,wght.ttf",
   display: "fallback",
 });
+
 const headFont = localFont({
-  // src: "../assets/fonts/Saira/Saira-VariableFont_wdth,wght.ttf",
   src: "../assets/fonts/Saira/static/Saira-Medium.ttf",
   display: "fallback",
 });
@@ -40,7 +40,7 @@ function MyHome() {
               overall product
             </p>
 
-            <Link
+            <a
               href="https://raw.githubusercontent.com/Collins-Ruto/collins-ruto.github.io/main/collinsruto.pdf"
               className="mx-auto my-12 flex w-fit items-center rounded bg-indigo-600 px-6 py-3 font-medium text-white shadow-lg hover:bg-indigo-700"
             >
@@ -52,7 +52,7 @@ function MyHome() {
                 alt=""
               />
               Download Résumé
-            </Link>
+            </a>
             <div id="mouse-scroll" className=" mx-auto transform">
               <div className="mouse">
                 <div className="mouse-in bg-black dark:bg-white"></div>

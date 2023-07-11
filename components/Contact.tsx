@@ -21,7 +21,7 @@ const headFont = localFont({
 function page() {
   const contactCard = (contact: Contact) => {
     return (
-      <div className="flex flex-col gap-3 borde rounded-md bg-slate-800 py-6  text-center text-white dark:border-gray">
+      <div className="borde dark:border-gray flex flex-col gap-3 rounded-md bg-slate-800  py-6 text-center text-white">
         <div className="mx-auto flex items-center">
           <Image
             width={60}
@@ -30,7 +30,7 @@ function page() {
             src={contact.icon}
             alt={contact.title}
           />
-          <span className="font-semibold text-blac dark:text-white">
+          <span className="text-blac font-semibold dark:text-white">
             {contact.title}
           </span>
         </div>
@@ -48,7 +48,11 @@ function page() {
               <div className="col-span-1 min-w-[16rem]">
                 <div className="flex justify-between">
                   <div className="mx-auto flex flex-col sm:mx-0">
-                    <span className={` ${headFont.className} text-4xl font-medium`}>Contact Me</span>
+                    <span
+                      className={` ${headFont.className} text-4xl font-medium`}
+                    >
+                      Contact Me
+                    </span>
                     <span className="mx-auto py-2 text-sm  sm:mx-0">
                       via quick socials?
                     </span>

@@ -15,7 +15,6 @@ const logoFont = localFont({
   display: "fallback",
 });
 
-// TODO: Capitalize links
 function Header() {
   const [opened, setOpened] = useState(false);
 
@@ -28,11 +27,11 @@ function Header() {
           <div className="flex w-full items-center justify-between py-1.5 md:hidden">
             <Link href="/" className="flex items-center">
               <Image
-                width={45}
-                height={35}
+                width={64}
+                height={64}
                 src="/c-bg-y.png"
                 alt="Collins"
-                className=""
+                className="h-11 w-11"
               />
               <h1
                 className={`${logoFont.className} ml-2 text-lg dark:text-white  `}
@@ -62,7 +61,7 @@ function Header() {
                   height={45}
                   src="/c-bg-y.png"
                   alt="Collins"
-                  className="mr-2"
+                  className="mr-2 h-12 w-12"
                   loading="eager"
                 />
                 <span
@@ -135,7 +134,19 @@ function Header() {
                         <span className="rounded">CONTACT</span>
                       </Link>
                     </li>
-                   
+                    <li>
+                      <Link
+                        href={`/cv`}
+                        className={` cursor-pointer items-center border-b-2 align-middle transition duration-200 ease-in-out hover:text-blue-600 ${
+                          currentRoute === "/cv"
+                            ? " border-orange-500"
+                            : "border-transparent"
+                        }`}
+                      >
+                        <span className="rounded">CV</span>
+                      </Link>
+                    </li>
+
                     {/* <li>
                       <Link
                         href="#"
@@ -170,7 +181,7 @@ function Header() {
               setOpened(!opened);
             }}
             className="
-               absolute right-0 flex h-screen w-[60%] max-w-[20rem] flex-col  gap-4 overflow-y-auto bg-[#F7F6FB] dark:bg-slate-900 dark:text-white p-4 pt-[5rem] text-end text-2xl font-semibold  opacity-100 bg-blend-darken sm:text-3xl md:w-60 "
+               absolute right-0 flex h-screen w-[60%] max-w-[20rem] flex-col  gap-4 overflow-y-auto bg-[#F7F6FB] p-4 pt-[5rem] text-end text-2xl font-semibold opacity-100 bg-blend-darken  dark:bg-slate-900 dark:text-white sm:text-3xl md:w-60 "
           >
             <div className="ml-auto w-fit items-center px-2 md:hidden">
               <ThemeToogle place="sidebar-toogle" />
@@ -234,6 +245,16 @@ function Header() {
               <span className="rounded">Contact</span>
             </Link>
             <Link
+              href={`/cv`}
+              className={` ml-auto w-fit cursor-pointer items-center border-b-2 px-2 transition duration-200 ease-in-out hover:text-blue-600 ${
+                currentRoute === "/cv"
+                  ? "  border-orange-500"
+                  : "border-transparent"
+              }`}
+            >
+              <span className="rounded">CV</span>
+            </Link>
+            <a
               href="https://raw.githubusercontent.com/Collins-Ruto/collins-ruto.github.io/main/collinsruto.pdf"
               className=" ml-auto flex items-center rounded p-2 px-2"
             >
@@ -247,12 +268,12 @@ function Header() {
               />
               <Image
                 src="https://img.icons8.com/sf-regular-filled/48/FFFFFF/downloading-updates.png"
-                className="ml-1 w-7 hidden dark:block"
+                className="ml-1 hidden w-7 dark:block"
                 height={100}
                 width={100}
                 alt=""
               />
-            </Link>
+            </a>
             {/* <Link
               href={`/faq`}
               className={` w-fit cursor-pointer ml-auto items-center border-b-2 px-2 transition duration-200 ease-in-out hover:text-blue-600 ${

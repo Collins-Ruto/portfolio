@@ -40,6 +40,7 @@ export const metadata: Metadata = {
     "I am a hobbyist software developer with expertise in fullstack web development. I create web apps to solve your business problems.",
   keywords: [
     "Collins Ruto",
+    "collins cv",
     "software engineer",
     "software developer",
     "web developer",

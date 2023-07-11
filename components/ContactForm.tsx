@@ -36,8 +36,6 @@ function ContactForm() {
     });
   };
 
-  console.log(message);
-
   const sendMessage = api.form.addForm.useMutation();
 
   const handleSubmit = (event: React.SyntheticEvent) => {
@@ -49,6 +47,7 @@ function ContactForm() {
     try {
       console.log("send  message", message);
       const data = sendMessage.mutate(message);
+      console.log(data);
 
       setTimeout(() => {
         setStatus(true);
@@ -58,7 +57,6 @@ function ContactForm() {
         setStatus(false);
       }, 4000);
 
-      console.log("send  message data", data);
     } catch (error) {
       console.log(error);
     }

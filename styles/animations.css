@@ -4,7 +4,6 @@
 
   transform: scaleX(0);
   transform-origin: left;
-  /* background: linear-gradient(to right, #313e2c, #aaec8a); */
   border-radius: inherit;
   animation: progress 3s 0.2s linear;
 }
@@ -61,7 +60,6 @@
   transform: rotate(45deg);
   border-right: 0.125rem solid;
   border-bottom: 0.125rem solid;
-  /* margin: 0 0 0.1875rem ; */
 }
 
 #mouse-scroll .mouse {
@@ -92,7 +90,6 @@
   border-radius: 50%;
   display: block;
   margin: 0.3rem auto;
-  /* background: ; */
   position: relative;
   animation: animated-mouse 1.5s ease infinite;
 }

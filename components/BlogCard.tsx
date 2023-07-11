@@ -19,7 +19,7 @@ const BlogCard = ({ blog }: { blog: Blog }) => {
         href={`/blogs/blog/${blog.slug}`}
         className="flex h-full flex-col justify-between p-4"
       >
-        <div className="flex justify-betwee">
+        <div className="justify-betwee flex">
           <div className="flex flex-wrap items-center">
             {blog.tag_list.map((tag, index) => (
               <span
