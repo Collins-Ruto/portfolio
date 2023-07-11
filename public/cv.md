@@ -58,13 +58,15 @@ As a full-stack developer and NEAR certified web3 developer, I have built fully-
 - Typescript
 - Rust
 - Python
+- C
 
 ### Web Development
-- Tailwind CSS
-- React.js
 - Next.js
+- React.js
+- Tailwind CSS
 - TRPC
 - NodeJS
+- GraphQL
 - Express
 
 ### Database

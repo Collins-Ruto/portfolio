@@ -252,7 +252,7 @@ function Header() {
                   : "border-transparent"
               }`}
             >
-              <span className="rounded">CV</span>
+              <span className="rounded">Read CV</span>
             </Link>
             <a
               href="https://raw.githubusercontent.com/Collins-Ruto/collins-ruto.github.io/main/collinsruto.pdf"

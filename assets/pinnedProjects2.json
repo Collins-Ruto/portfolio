@@ -1,5 +1,24 @@
 [
   {
+    "name": "LearnHq",
+    "id": 600822628,
+    "html_url": "https://github.com/Collins-Ruto/lms-admin",
+    "created_at": "2023-02-12T17:49:19Z",
+    "stargazers_count": 1,
+    "description": "Full scale school & learning management system",
+    "homepage": "https://learnhq.vercel.app",
+    "pin_url": "https://github.com/Collins-Ruto/lms-admin/raw/main/client/public/learnhq.webp",
+    "topics": [
+      "nextjs / typescript",
+      "mongodb",
+      "trpc",
+      "tailwindcss",
+      "hygraphcms",
+      "express",
+      "reactjs"
+    ]
+  },
+  {
     "name": "app-store",
     "id": 562201236,
     "html_url": "https://github.com/Collins-Ruto/app-store",
@@ -26,12 +45,7 @@
     "description": "My personal portfolio website",
     "homepage": "https://collinsruto.netlify.app/",
     "pin_url": "/collinsio.webp",
-    "topics": [
-      "css3",
-      "html5",
-      "javascript",
-      "portfolio-website"
-    ]
+    "topics": ["css3", "html5", "javascript", "portfolio-website"]
   },
   {
     "name": "hospital-supply-system",
@@ -42,46 +56,7 @@
     "description": "A NEAR protocol smart contract built with Rust for transparency in Health Suply System",
     "homepage": "",
     "pin_url": "/supply.webp",
-    "topics": [
-      "nearprotocol",
-      "rust",
-      "web3-dapp"
-    ]
-  },
-  {
-    "name": "learnhqhome",
-    "id": 650556804,
-    "html_url": "https://github.com/Collins-Ruto/learnhqhome",
-    "created_at": "2023-06-07T10:16:10Z",
-    "stargazers_count": 0,
-    "description": "Fully fledged Learning and School Management system",
-    "homepage": "https://learnhqhome.vercel.app",
-    "pin_url": "/learnhqhome.webp",
-    "topics": [
-      "nextjs",
-      "tailwindcss",
-      "typescript"
-    ]
-  },
-  {
-    "name": "lms-admin",
-    "id": 600822628,
-    "html_url": "https://github.com/Collins-Ruto/lms-admin",
-    "created_at": "2023-02-12T17:49:19Z",
-    "stargazers_count": 1,
-    "description": "Full scale learning management system",
-    "homepage": "https://lms-adm.netlify.app",
-    "pin_url": "https://github.com/Collins-Ruto/lms-admin/raw/main/client/public/learnhq.webp",
-    "topics": [
-      "react",
-      "graphql",
-      "nodejs",
-      "hygraphcms",
-      "express",
-      "reactjs",
-      "tailwindcss",
-      "jwt-authentication"
-    ]
+    "topics": ["nearprotocol", "rust", "web3-dapp"]
   },
   {
     "name": "near-rust-nextjs-template",
@@ -92,10 +67,17 @@
     "description": "A template for creating near smart contracts using rust and NextJS for frontend",
     "homepage": "",
     "pin_url": "/neartemplate.webp",
-    "topics": [
-      "nearprotocol",
-      "nextjs",
-      "rust"
-    ]
+    "topics": ["nearprotocol", "nextjs", "rust"]
+  },
+  {
+    "name": "learnhqhome",
+    "id": 650556804,
+    "html_url": "https://github.com/Collins-Ruto/learnhqhome",
+    "created_at": "2023-06-07T10:16:10Z",
+    "stargazers_count": 0,
+    "description": "LearnHq home. Fully fledged Learning and School Management system",
+    "homepage": "https://learnhqhome.vercel.app",
+    "pin_url": "/learnhqhome.webp",
+    "topics": ["nextjs", "tailwindcss", "typescript"]
   }
 ]
