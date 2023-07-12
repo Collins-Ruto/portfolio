@@ -12,7 +12,7 @@ function Login() {
             <div className="">
               <div>
                 <button
-                  onClick={() => void signIn("google", { callbackUrl: 'http://localhost:3000/projects'})}
+                  onClick={async () => await signIn("google", { callbackUrl: 'http://localhost:3000/projects'})}
                   className="w-full rounded bg-blue-500 p-2 font-bold text-white hover:bg-blue-700"
                 >
                   Sign in with Google

@@ -12,7 +12,7 @@ export const projectRouter = createTRPCRouter({
         return ctx.prisma.project.findMany({
             take: 10,
             orderBy: {
-                createdAt: 'desc'
+                created_at: 'desc'
             }
         });
     }),

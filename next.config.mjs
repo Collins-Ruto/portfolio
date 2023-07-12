@@ -50,3 +50,14 @@ const nextConfig = {
   },
 };
 export default nextConfig;
+
+// {
+//         source: "/(.*)",
+//         headers: [
+//           {
+//             key: "Content-Security-Policy",
+//             value:
+//               "default-src 'unsafe-inline' 'self' https://collinsruto.vercel.app"
+//           },
+//         ],
+//       },

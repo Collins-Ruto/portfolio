@@ -66,13 +66,13 @@ As a full-stack developer and NEAR certified web3 developer, I have built fully-
 - Tailwind CSS
 - TRPC
 - NodeJS
-- GraphQL
 - Express
 
 ### Database
 - MongoDB
 - GraphCMS
 - Prisma
+- GraphQL
 
 ## References
 John Kipkapto  

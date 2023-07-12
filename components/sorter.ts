@@ -5,7 +5,6 @@ import sortedArray from '~/assets/sortedArray.json'
 import pinnedArray from '~/assets/pinnedProjects.json'
 
 const HomePage = () => {
-
     const cleanData: RepositoryData[] = [];
     const cleanPinned: RepositoryData[] = [];
     const clean = repos.forEach((data) => {
@@ -29,6 +28,7 @@ const HomePage = () => {
                 cleanPinned.push(newdata)
             }
         })
+
         // const newdata = {
         //     name: data.name,
         //     id: data.id,
@@ -50,21 +50,21 @@ const HomePage = () => {
     const jsonContent = JSON.stringify(cleanData, null, 2);
     const jsonPinnedContent = JSON.stringify(cleanPinned, null, 2);
 
-    fs.writeFile("assets/sortedArray2.json", jsonContent, "utf8", (err) => {
+    fs.writeFile("assets/sortedArray3.json", jsonContent, "utf8", (err) => {
         if (err) {
             console.error("An error occurred while writing the file:", err);
         } else {
             console.log("sortedArray2.json has been saved successfully.");
         }
     });
-    fs.writeFile("assets/pinnedProjects2.json", jsonPinnedContent, "utf8", (err) => {
+    
+    fs.writeFile("assets/pinnedProjects3.json", jsonPinnedContent, "utf8", (err) => {
         if (err) {
             console.error("An error occurred while writing the file:", err);
         } else {
             console.log("pinnedProjects2.json has been saved successfully.");
         }
     });
-
 };
 
 export default HomePage;

@@ -65,6 +65,12 @@ async function BlogPage({ params: { slug } }: { params: { slug: string } }) {
 
   const date = new Date(blog.created_at);
 
+  // const blgr = await fetch(
+  //   "https://dev.to/api/articles/collinsruto/github-ssh-for-linux-alx-sandbox-37mp"
+  // );
+
+  // const blg = await blgr.json()
+
   return (
     <div className="pt-8">
       <div className=" prose mx-auto dark:prose-invert lg:prose-xl">
@@ -122,8 +128,13 @@ async function BlogPage({ params: { slug } }: { params: { slug: string } }) {
             </Link>
           </div>
         </div>
-        <div className="prose mx-auto dark:prose-invert lg:prose-xl">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>{markdown}</ReactMarkdown>
+        <div
+          // dangerouslySetInnerHTML={{ __html: blg.body_html }}
+          className="prose mx-auto dark:prose-invert lg:prose-xl"
+        >
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+          {markdown}
+          </ReactMarkdown>
         </div>
         <div className="py-6">
           <div className="mx-auto text-center">

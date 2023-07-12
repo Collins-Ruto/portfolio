@@ -1,5 +1,4 @@
 export type RepositoryData = {
-  id: number;
   name: string;
   html_url: string;
   created_at: string;

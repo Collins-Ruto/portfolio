@@ -9,7 +9,6 @@ import { Contact, PinnedCard } from ".";
 
 const helloFont = localFont({
   src: "../assets/fonts/Open_Sans/static/OpenSans-ExtraBold.ttf",
-  // src: "../assets/fonts/Open_Sans/OpenSans-VariableFont_wdth,wght.ttf",
   display: "fallback",
 });
 
@@ -31,7 +30,6 @@ function MyHome() {
               HELLO, I&apos;M{" "}
               <span className="text-indigo-600 dark:text-indigo-500">
                 COLLINS RUTO
-                {/* Samuel Kibet */}
               </span>{" "}
             </h1>
             <p className="mx-auto mt-6 max-w-[30rem] py-4 text-lg font-medium text-gray-600 dark:text-gray-400">
@@ -39,13 +37,12 @@ function MyHome() {
               of Websites and Web Applications that leads to the success of the
               overall product
             </p>
-
             <a
               href="https://raw.githubusercontent.com/Collins-Ruto/collins-ruto.github.io/main/collinsruto.pdf"
               className="mx-auto my-12 flex w-fit items-center rounded bg-indigo-600 px-6 py-3 font-medium text-white shadow-lg hover:bg-indigo-700"
             >
               <Image
-                src="https://img.icons8.com/sf-regular-filled/24/FFFFFF/downloading-updates.png"
+                src="https://img.icons8.com/sf-regular-filled/48/FFFFFF/downloading-updates.png"
                 className="mr-1 w-6 "
                 height={100}
                 width={100}

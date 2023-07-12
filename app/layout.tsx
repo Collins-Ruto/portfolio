@@ -1,5 +1,3 @@
-// "use client";
-
 import "@/styles/globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
@@ -122,3 +120,4 @@ export const metadata: Metadata = {
   },
   robots: {},
 };
+

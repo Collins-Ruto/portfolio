@@ -1,4 +1,3 @@
-
 import fs from "fs";
 import blogs from '~/assets/devto.json'
 
@@ -17,7 +16,6 @@ type Blog = {
 }
 
 const HomePage = () => {
-
     const cleanData: Blog[] = [];
     const clean = blogs.forEach((data) => {
 

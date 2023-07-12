@@ -5,16 +5,11 @@ import remarkGfm from "remark-gfm";
 import Image from "next/image";
 import cv from "../../public/cv.md";
 
-// generate the site metatdata for each blog page and add/replace to that
-// of 
-
 export const metadata: Metadata = {
   title: "CV",
 };
 
 function BlogPage() {
-
-  // const cvmd = await import(
 
   return (
     <div className="pt-8">
@@ -23,7 +18,6 @@ function BlogPage() {
           <div className="flex mb-4 text-gray-500 flex-wrap justify-end ">
             Last updated: Tue Jul 11, 2023
           </div>
-          
         </div>
         <div className="prose mx-auto dark:prose-invert lg:prose-xl">
           <ReactMarkdown remarkPlugins={[remarkGfm]}>{cv}</ReactMarkdown>
@@ -35,7 +29,7 @@ function BlogPage() {
               className="mx-auto my-12 flex w-fit items-center rounded bg-indigo-600 px-6 py-3 font-medium text-white shadow-lg hover:bg-indigo-700"
             >
               <Image
-                src="https://img.icons8.com/sf-regular-filled/24/FFFFFF/downloading-updates.png"
+                src="https://img.icons8.com/sf-regular-filled/48/FFFFFF/downloading-updates.png"
                 className="mr-1 w-6 "
                 height={100}
                 width={100}

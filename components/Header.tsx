@@ -5,19 +5,15 @@ import Image from "next/image";
 import Link from "next/link";
 import "~/styles/globals.css";
 import ThemeToogle from "./ThemeToogle";
-
 import localFont from "@next/font/local";
 
 const logoFont = localFont({
-  // src: "../assets/fonts/Train_One/TrainOne-Regular.ttf",
   src: "../assets/fonts/Saira_Stencil_One/SairaStencilOne-Regular.ttf",
-  // src: "../assets/fonts/Saira/Saira-VariableFont_wdth,wght.ttf",
   display: "fallback",
 });
 
 function Header() {
   const [opened, setOpened] = useState(false);
-
   const currentRoute = usePathname();
 
   return (
@@ -57,8 +53,8 @@ function Header() {
             <div className="container mx-auto flex items-center justify-between">
               <Link href="/" className="flex cursor-pointer items-center">
                 <Image
-                  width={50}
-                  height={45}
+                  width={128}
+                  height={128}
                   src="/c-bg-y.png"
                   alt="Collins"
                   className="mr-2 h-12 w-12"

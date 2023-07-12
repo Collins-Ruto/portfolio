@@ -100,7 +100,6 @@ export const PinnedCard = ({ project }: { project: RepositoryData }) => {
         style={{ objectFit: "cover", justifyContent: "start" }}
         src={project.pin_url}
       />
-
       <div className="flex h-full flex-col justify-between p-3 ">
         <div className="flex justify-between">
           <span className="text-gray-600 dark:text-gray-400">
