@@ -1,0 +1,21 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "problemMatcher": ["$eslint-stylish"],
+      "label": "eslint: lint whole folder",
+      "script": "lint",
+      "presentation": {
+        "reveal": "never",
+        "panel": "new"
+      },
+      "runOptions": { "runOn": "folderOpen" },
+      "detail": "Run eslint for all files on the workspace folder",
+      "options": {
+        "configFile": ".eslintrc.cjs",
+        "ignorePath": ".eslintignore"
+      }
+    }
+  ]
+}

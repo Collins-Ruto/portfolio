@@ -70,5 +70,6 @@
   },
   "prisma": {
     "seed": "ts-node ./prisma/seed.ts"
-  }
+  },
+  "lint": "tsc --project ./src/tsconfig.dev.json --noEmit && eslint **/*.{ts,json,js} *.*"
 }

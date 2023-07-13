@@ -1,7 +1,7 @@
 "use client";
 import { api } from "@/utils/api";
 import type { Blog } from "@prisma/client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { StatusMsg } from "~/components";
 // import { Button, Loader, StatusMsg } from "~/components";
 
@@ -19,23 +19,22 @@ type DevToBlog = {
 };
 
 function AddSBlog() {
-  const [blog, setBlog] = useState<Blog>();
   const [submit, setSubmit] = useState(false);
   const [status, setStatus] = useState({ message: "", type: "" });
   const [validInput, setValidInput] = useState("");
   const [devtourl, setDevtourl] = useState("");
   const [username, setUsername] = useState("collins-ruto");
 
-  useEffect(() => {
-    const generateFields = async () => {
-      const parts = devtourl.split("/");
-      const postSlug = parts[parts.length - 1] || "";
-      const devtoUsername = parts[parts.length - 2] || "";
+  const generateFields = async (): Promise<Blog | undefined> => {
+    const parts = devtourl.split("/");
+    const postSlug = parts[parts.length - 1] || "";
+    const devtoUsername = parts[parts.length - 2] || "";
 
+    try {
       const blogapi = `https://dev.to/api/articles/${devtoUsername}/${postSlug}`;
 
-      const blogres = await fetch(blogapi);
-      const blogjson: DevToBlog = await blogres.json();
+      const blogres: Response = await fetch(blogapi);
+      const blogjson = await blogres.json() as DevToBlog;
 
       const markdown = `https://raw.githubusercontent.com/${username}/blogs/main/${postSlug}/README.md`;
       const github = `https://github.com/${username}/blogs/tree/main/${postSlug}`;
@@ -54,10 +53,12 @@ function AddSBlog() {
         cover_image: blogjson.cover_image || blogjson.social_image,
       } as unknown as Blog;
 
-      setBlog(newBlog);
-    };
-    generateFields();
-  }, [submit]);
+      return newBlog;
+    } catch (error) {
+      console.log(error);
+      return undefined;
+    }
+  };
 
   const inputValidate = (action: string) => {
     let message = "Please fill: ";
@@ -86,10 +87,14 @@ function AddSBlog() {
     if (inputValidate("") === false) {
       return;
     }
+    const blog = await generateFields();
+    if (!blog) {
+      return;
+    }
     console.log("submit", blog);
     setSubmit(true);
     try {
-      addSBlogMutation.mutate(blog as Blog, {
+      addSBlogMutation.mutate(blog, {
         onSuccess: () => {
           setSubmit(false);
           setStatus({
@@ -126,7 +131,7 @@ function AddSBlog() {
                   setValidInput("");
                 }}
                 value={devtourl}
-                className="focus:shadow-outline mt-2 w-fit appearance-none rounded border bg-slate-800 px-3 py-3 leading-tight shadow focus:outline-none sm:min-w-[25rem]"
+                className="focus:shadow-outline mt-2 w-full appearance-none rounded border bg-slate-800 px-3 py-3 leading-tight shadow focus:outline-none sm:w-fit sm:min-w-[25rem]"
                 type="text"
                 placeholder="Blog dev.to Url"
                 name="name"
@@ -156,7 +161,7 @@ function AddSBlog() {
             <div className="">
               <button
                 onClick={(e) => {
-                  handleSubmit();
+                  void handleSubmit();
                   e.preventDefault();
                 }}
                 type="submit"

@@ -5,7 +5,7 @@ import {
   type DefaultSession,
 } from "next-auth";
 // import { PrismaAdapter } from "@next-auth/prisma-adapter";
-// import { env } from "@/env.mjs";
+import { env } from "@/env.mjs";
 // import { prisma } from "@/server/db";
 import GoogleProvider from "next-auth/providers/google";
 
@@ -22,11 +22,6 @@ declare module "next-auth" {
       // ...other properties
     } & DefaultSession["user"];
   }
-
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
 }
 
 /**
@@ -37,8 +32,8 @@ declare module "next-auth" {
 export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
-      clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID ?? "",
-      clientSecret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET ?? "",
+      clientId: env.NEXT_PUBLIC_GOOGLE_CLIENT_ID ,
+      clientSecret: env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET,
     }),
     /**
      * ...add more providers here.
