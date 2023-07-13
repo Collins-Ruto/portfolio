@@ -31,6 +31,7 @@ const config = {
     "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
     "@typescript-eslint/explicit-module-boundary-types": "off",
   },
+  root: true
 };
 
 module.exports = config;

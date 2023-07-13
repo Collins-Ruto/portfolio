@@ -62,14 +62,13 @@ async function BlogPage({ params: { slug } }: { params: { slug: string } }) {
 
   const res = await fetch(blog.markdown);
   const markdown = await res.text();
-
   const date = new Date(blog.created_at);
 
   // const blgr = await fetch(
   //   "https://dev.to/api/articles/collinsruto/github-ssh-for-linux-alx-sandbox-37mp"
   // );
 
-  // const blg = await blgr.json()
+  // const blg = await 
 
   return (
     <div className="pt-8">

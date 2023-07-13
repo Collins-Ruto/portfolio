@@ -12,7 +12,6 @@ const Page = async () => {
   });
 
   const blogs = await caller.blog.getAll();
-
   return (
     <div>
       <div className="flex min-h-screen flex-col items-center justify-between">

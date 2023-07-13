@@ -25,6 +25,7 @@
     "bcryptjs": "^2.4.3",
     "date-fns": "^2.29.3",
     "gray-matter": "^4.0.3",
+    "mkdirp": "^3.0.1",
     "next": "^13.4.6",
     "next-auth": "^4.19.0",
     "next-query": "^1.9.0",
@@ -50,13 +51,17 @@
     "@types/prettier": "^2.7.2",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
-    "@typescript-eslint/eslint-plugin": "^5.53.0",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.53.0",
     "autoprefixer": "^10.4.7",
-    "eslint": "^8.34.0",
+    "eslint": "^8.44.0",
     "eslint-config-next": "^13.4.3",
     "eslint-config-prettier": "^8.8.0",
+    "eslint-config-standard-with-typescript": "^36.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.7.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-promise": "^6.1.1",
     "postcss": "^8.4.14",
     "prettier": "^2.8.1",
     "prettier-plugin-tailwindcss": "^0.2.1",
@@ -70,6 +75,5 @@
   },
   "prisma": {
     "seed": "ts-node ./prisma/seed.ts"
-  },
-  "lint": "tsc --project ./src/tsconfig.dev.json --noEmit && eslint **/*.{ts,json,js} *.*"
+  }
 }

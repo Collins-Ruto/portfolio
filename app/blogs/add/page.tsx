@@ -3,7 +3,6 @@ import { api } from "@/utils/api";
 import type { Blog } from "@prisma/client";
 import React, { useState } from "react";
 import { StatusMsg } from "~/components";
-// import { Button, Loader, StatusMsg } from "~/components";
 
 type DevToBlog = {
   title: string;
@@ -32,7 +31,6 @@ function AddSBlog() {
 
     try {
       const blogapi = `https://dev.to/api/articles/${devtoUsername}/${postSlug}`;
-
       const blogres: Response = await fetch(blogapi);
       const blogjson = await blogres.json() as DevToBlog;
 
@@ -82,7 +80,6 @@ function AddSBlog() {
   };
 
   const addSBlogMutation = api.blog.addBlog.useMutation();
-
   const handleSubmit = async () => {
     if (inputValidate("") === false) {
       return;

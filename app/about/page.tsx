@@ -20,7 +20,6 @@ export const metadata: Metadata = {
 
 function BlogPage() {
   // const res = await fetch(
-  //   // "https://raw.githubusercontent.com/Collins-Ruto/collins-ruto/main/README.md"
   //   "https://raw.githubusercontent.com/Collins-Ruto/blogs/main/whoami/README.md"
   // );
   // const markdown = await res.text();

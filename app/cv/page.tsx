@@ -10,7 +10,6 @@ export const metadata: Metadata = {
 };
 
 function BlogPage() {
-
   return (
     <div className="pt-8">
       <div className=" prose mx-auto dark:prose-invert lg:prose-xl">

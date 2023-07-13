@@ -24,7 +24,6 @@ export default withAuth(
                 new URL("/api/auth/signin", req.url)
             )
         }
-        // message=You Are Not Authorized!
     },
     {
         callbacks: {

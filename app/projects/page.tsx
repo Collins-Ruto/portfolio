@@ -1,17 +1,15 @@
 import "@/styles/globals.css";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/server/auth";
 import type { Metadata } from "next";
 import projects from "~/assets/sortedArray2.json";
 import pinnedProjects2 from "~/assets/pinnedProjects2.json";
 import ThemeToogle from "~/components/ThemeToogle";
 import { PinnedCard, ProjectCard } from "~/components";
 
-const Page = async () => {
-  const data = await getServerSession(authOptions);
+export const metadata: Metadata = {
+  title: "Projects",
+};
 
-  console.log("user data", data);
-
+const Page = () => {
   return (
     <div>
       <div className="flex min-h-screen flex-col items-center justify-between">
@@ -42,6 +40,3 @@ const Page = async () => {
 
 export default Page;
 
-export const metadata: Metadata = {
-  title: "Projects",
-};
