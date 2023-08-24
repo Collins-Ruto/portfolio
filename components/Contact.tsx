@@ -11,7 +11,7 @@ type Contact = {
   title: string;
   info1: string;
   info2: string;
-};
+}
 
 const headFont = localFont({
   src: "../assets/fonts/Saira/static/Saira-Medium.ttf",
