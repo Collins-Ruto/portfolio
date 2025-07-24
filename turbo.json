@@ -1,5 +1,11 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalEnv": [
+    "NEXTAUTH_URL",
+    "NEXTAUTH_SECRET",
+    "DATABASE_URL",
+    "GOOGLE_VERIFICATION"
+  ],
   "tasks": {
     "build": {
       "outputs": [".next/**", "!.next/cache/**"]
