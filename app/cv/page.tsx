@@ -15,7 +15,7 @@ function BlogPage() {
       <div className=" prose mx-auto dark:prose-invert lg:prose-xl">
         <div className="text-center">
           <div className="flex mb-4 text-gray-500 flex-wrap justify-end ">
-            Last updated: Tue Jul 11, 2023
+            Last updated: Tue Jul 24, 2025
           </div>
         </div>
         <div className="prose mx-auto dark:prose-invert lg:prose-xl">

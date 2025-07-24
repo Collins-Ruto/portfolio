@@ -1,81 +1,119 @@
-# Collins Kibiwott Ruto
-**Full-stack Developer**
+# COLLINS RUTO
 
-Contact:
-Mombasa County, Kenya  
-Email: collinsruto48@gmail.com  
-Phone: +254 711339134  
-GitHub: https://github.com/collins-ruto  
-LinkedIn: https://linkedin.com/in/collins-ruto  
-Website: https://collinsruto.netlify.app  
+#### SOFTWARE ENGINEER
 
-## Summary
-As a full-stack developer and NEAR certified web3 developer, I have built fully-fledged web applications using Javascript and Typescript with React.js and Next.js, Tailwindcss for the frontend, Node.js with Express for the backend and APIs. I have connected APIs with databases such as MongoDB and GraphCMS using prisma and TRPC. I have also developed smart contracts for NEAR Protocol using Rust and React.js for an interactive frontend. I use Tailwind CSS and Bootstrap for styling, and I'm experienced with Python, JavaScript, TypeScript and Rust. My applications are hosted on GitHub where I contribute to open-source. I am a treasurer for TUM Developers Club where I lead members through full-stack web app development. I have participated in various tech events and hackathons. My goal is to inspire and mentor upcoming developers and programmers worldwide.
+---
+
+### Contact
+
+* **Phone:** +2547 1133 9134
+* **Email:** <collinsruto48@gmail.com>
+* **GitHub:** [github.com/collins-ruto](https://github.com/collins-ruto)
+* **Portfolio:** [collinsruto.vercel.app](https://collinsruto.vercel.app)
+* **LinkedIn:** [linkedin.com/in/collins-ruto](https://linkedin.com/in/collins-ruto)
+
+---
+
+### Profile
+
+As a **full-stack developer** and **NEAR & ICP certified web3 developer**, I specialize in building fully-fledged web applications. My expertise includes **Javascript and Typescript** with **React.js and Next.js** for the frontend, and **Node.js with Express** for backend development and APIs. I have extensive experience connecting APIs with databases such as **MongoDB and GraphCMS** using **Prisma and tRPC**. Additionally, I build intuitive **mobile and desktop applications using Flutter**.
+
+---
 
 ## Career Objective
-- As a hard-working and passionate full-stack developer, my objective is to leverage my skills and expertise to create elegant and efficient software solutions for businesses and organizations.
-- I am committed to staying up-to-date with the latest technologies and best practices to deliver high-quality results.
-- To join a dynamic and innovative team where I can contribute my skills and collaborate on challenging projects.
 
-## Experience
-**Jan 2021 – Present: Freelance Web Developer**
-- Contributed to back-end experience and collaborated on APIs.
-- Reviewed information regularly on websites and pages to ensure 80% accuracy.
-- Crafted seamless user journeys by optimizing interfaces for user access.
-- Partnered with technical teams to align designs with hosting and site performance capabilities.
-- Managed online content using best practices in SEO to improve search rankings.
+* As a hard-working and passionate full-stack developer, my objective is to leverage my skills and expertise to create elegant and efficient software solutions for businesses and organizations.
+* I am committed to staying up-to-date with the latest technologies and best practices to deliver high-quality results.
+* To join a dynamic and innovative team where I can contribute my skills and collaborate on challenging projects.
 
-**May 2022 - Aug 2022: NEAR Protocol Web3 Bootcamp Participant**
-- Participated in the BitKE web3 NEAR Protocol training bootcamp and became a certified web3 developer.
-- Successfully integrated a smart contract backend with Next.js and React.js front-ends.
-- Learnt about writing tests for my programs and successfully implemented them.
+---
 
-## Education
-**2020 – Present: Technical University of Mombasa**
-- Bachelor of Technology in Marine Engineering and Naval Architecture.
-- Treasurer of TUM web3 developers club
-- Participated in BitKE web3 developers Bootcamp
-- Member of TUM Marine Cadets
+### Work Experience
 
-**2016 – 2019: Uzalendo High School**
-- Kenya Certificate of Secondary Education
-- Attained B+ in the Kenya Certificate of Secondary Education
-- Was the school captain
-- Participated in the school chess team
+**Web Developer** | Eldama Ravine Education Foundation
+*MAY - PRESENT*
 
-**2008 - 2015**
-- Kenya Certificate of Primary Education
-- Kokwomoi Primary School
-- Attained 372 points in the Kenya Certificate of Primary Education
-- Best student of the year class of 2015
+* Built and deployed **EREF Foundation's website & event registration platform** using **Next.js, Firebase, and Vercel serverless functions**.
+* Integrated **M-Pesa Daraja and KCB Buni APIs** for secure mobile payments with real-time callback handling.
+* Collaborated with a development team of 5 using **Git** for version control, established **CI/CD workflows with Vercel** for seamless deployment, and maintained code quality through feature-based branching.
+* Optimized online content using **SEO best practices** to improve ranking and visibility.
 
-## Licenses & Certifications
-- NEAR CERTIFIED DEVELOPER - NEAR Protocol lefeefcde2a7415eb83742b5e49534bf
+**Software Engineer** | Freelance Developer
+*2024 - 2025*
 
-## Skills
-### Software Development
-- JavaScript
-- Typescript
-- Rust
-- Python
-- C
+* Developed a full-featured school management system using the **T3 Stack (Next.js, TypeScript, tRPC, Prisma)** for end-to-end type safety.
+* Collaborated on building **Web3 applications** with real-time features, decentralized logic, and fast prototyping, resulting in my team winning **3 hackathons**.
+* Wrote and maintained automated tests to ensure application reliability and performance.
+* Implemented role-based access control, security middlewares, and authentication via **NextAuth (Google, GitHub)**.
 
-### Web Development
-- Next.js
-- React.js
-- Tailwind CSS
-- TRPC
-- NodeJS
-- Express
+**Web / Web3 Developer Lead & Treasurer** | TUM Developers Club
+*2022 - 2024*
 
-### Database
-- MongoDB
-- GraphCMS
-- Prisma
-- GraphQL
+* Led the development of innovative solutions, including a **USSD-based system** to access student data offline.
+* Conducted workshops on **Linux setup, smart contracts, and modern web/Web3 development technologies**.
+* Served as the **TUM Web Dev Lead for the Google Developer Student Club**, mentoring students in frontend and backend development.
+* Collaborated with industry partners to organize major tech events including **Flutter Festivals, Google I/O Extended, Atlassian Dev Day, and AWS Community Days**.
 
-## References
-John Kipkapto  
-Principal, Uzalendo School  
-Phone: +254 771 848 138  
-Email: uzalendoschool@gmail.com
+---
+
+### Education
+
+**B.Tech Marine Engineering** | TECHNICAL UNIVERSITY OF MOMBASA
+*2020 - 2024*
+
+* Graduated 2nd Class Upper Division
+
+**KCSE** | UZALENDO SECONDARY SCHOOL
+*2016 - 2019*
+
+* Attained B+ in the Kenya Certificate of Secondary Education
+* School Captain
+
+**KCPE** | KOKWOMOI PRIMARY SCHOOL
+*2008 - 2015*
+
+* Attained 372 points in the Kenya Certificate of Primary Education
+* Best student of the year class of 2015
+
+---
+
+### Skills
+
+* **Software Development:** Dart, JavaScript, Typescript, Rust, Python
+* **Web Development:** Tailwind CSS, React.js, Next.js, tRPC, NodeJS, Express
+* **Database:** MongoDB, My SQL, GraphCMS, Prisma, Firebase
+* **Mobile & desktop app development:** Flutter, Dart, Android Studio
+
+---
+
+### Certifications
+
+* **Internet Computer Protocol (ICP) Rust & Typescript 101/201** | dacade.org (Aug - Oct 2024)
+* **NEAR Protocol Rust Smart Contracts Development** | dacade.org (May - Jul 2024)
+* **SUI DeFi development using move** | BitKE Web3 developers Club (Jun - Aug 2022)
+
+---
+
+### Dev Tools
+
+* ArchLinux
+* VS Code
+* Git & Github
+* Nvim
+* Android Studio
+
+---
+
+### Languages
+
+* English
+* Swahili
+
+---
+
+### References
+
+* **Abiud Kigen**
+  * **Phone:** +2547 2450 4563
+  * **Email:** <abiudkigen09@gmail.com>
+  * EREF Foundation

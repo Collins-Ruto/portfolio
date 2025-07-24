@@ -30,7 +30,7 @@ function Footer() {
                 <Link
                   target="_blank"
                   rel="noopener"
-                  href="https://collinsruto.netlify.com"
+                  href="https://collinsruto.vercel.app"
                   type="button"
                   aria-label="collins ruto website"
                   className="m-1 h-9 w-9 rounded-full border border-[#16e0bd] bg-black bg-opacity-20 uppercase leading-normal text-[#16e0bd] transition-all duration-300 ease-in-out hover:border-none hover:border-gray-500 hover:bg-pink-600 hover:text-white focus:outline-none focus:ring-0"
@@ -125,16 +125,16 @@ function Footer() {
               </div>
             </div>
             <div className="pb-2 text-center md:pb-0">
-              © 2023{" "}
+              © {new Date().toLocaleString()}{" "}
               <Link
                 target="_blank"
                 rel="noopener"
                 className="text-blue-400 "
-                href="https://collinsruto.netlify.com"
+                href="https://collinsruto.vercel.app"
               >
                 Collins Ruto,
               </Link>{" "}
-              July 2023
+              July 2025
             </div>
           </div>
         </div>
