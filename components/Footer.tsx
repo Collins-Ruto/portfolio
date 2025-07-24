@@ -125,7 +125,7 @@ function Footer() {
               </div>
             </div>
             <div className="pb-2 text-center md:pb-0">
-              © {new Date().toLocaleString()}{" "}
+              © {new Date().getFullYear()}{" "}
               <Link
                 target="_blank"
                 rel="noopener"
