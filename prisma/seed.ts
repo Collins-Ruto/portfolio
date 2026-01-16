@@ -28,23 +28,30 @@ async function main() {
   //   console.log(`Created task with id: ${task.id}`)
   // }
 
-  for (const u of pinnedProjects) {
-    const entry = await prisma.pinnedProject.create({
-      data: u,
-    })
-    console.log(`Created entry with id: ${entry.id}`)
-    //  setTimeout(2000)
-  }
+  // for (const u of pinnedProjects) {
+  //   const entry = await prisma.pinnedProject.create({
+  //     data: u,
+  //   })
+  //   console.log(`Created entry with id: ${entry.id}`)
+  //   //  setTimeout(2000)
+  // }
 
   // const data = await caller.course.getAll();
   // for (const u of blogs) {
-  //   const entry = await prisma.blog.update({
+  //   const entry = await prisma.blog.upsert({
   //     where: { slug: u.slug },
-  //     data: u
+  //     update: u,
+  //     create: u
   //   })
-  //   console.log(`updated entry with id: ${entry.id}`)
+  //   console.log(`updated entry with id: ${entry}`)
   //   // await setTimeout(2000)
   // }
+
+  // await prisma.blog.delete({
+  //   where: {
+  //     slug: "add-google-analytics-to-nextjs-134-app-dir-51c5",
+  //   },
+  // });
 
   console.log(`Seeding finished.`)
 }
