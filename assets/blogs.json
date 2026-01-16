@@ -9,8 +9,8 @@
     "created_at": "2023-06-26T20:39:50Z",
     "tag_list": ["ssh", "github", "alx", "linux"],
     "public_reactions_count": 0,
-    "comments_count": 0,
-    "cover_image": "https://dev.to/social_previews/article/1517724.png"
+    "comments_count": 2,
+    "cover_image": "https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F8lpujfd4b8n270x4aubl.png"
   },
   {
     "title": "Add Google Analyticts to Next.Js 13.4 app dir",
@@ -21,9 +21,9 @@
     "devto_url": "https://dev.to/collinsruto/add-google-analyticts-to-nextjs-134-app-dir-51c5",
     "created_at": "2023-06-02T17:42:26Z",
     "tag_list": ["nextjs", "analytics", "google", "typescript"],
-    "public_reactions_count": 2,
-    "comments_count": 0,
-    "cover_image": "https://res.cloudinary.com/practicaldev/image/fetch/s--XtpLvcMf--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/bo63hsh3ktkbewwic3z8.png"
+    "public_reactions_count": 26,
+    "comments_count": 10,
+    "cover_image": "https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fbo63hsh3ktkbewwic3z8.png"
   },
   {
     "title": "Write response from a rust function to a file",
@@ -36,7 +36,7 @@
     "tag_list": ["rust", "programming"],
     "public_reactions_count": 5,
     "comments_count": 0,
-    "cover_image": "https://res.cloudinary.com/practicaldev/image/fetch/s--EJ1BBO46--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/pdo8smv2s34nwq0yb9pv.png"
+    "cover_image": "https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fpdo8smv2s34nwq0yb9pv.png"
   },
   {
     "title": "Send a HashMap as parameters to a rust smart contract",
@@ -49,7 +49,7 @@
     "tag_list": ["rust", "near", "web3", "webdev"],
     "public_reactions_count": 4,
     "comments_count": 0,
-    "cover_image": "https://res.cloudinary.com/practicaldev/image/fetch/s--OEX26P2t--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/biqac3tfg574b3wdt30i.jpeg"
+    "cover_image": "https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fbiqac3tfg574b3wdt30i.jpeg"
   },
   {
     "title": "Survey Form",
@@ -62,7 +62,7 @@
     "tag_list": ["codepen", "webdev", "beginners", "css"],
     "public_reactions_count": 5,
     "comments_count": 0,
-    "cover_image": "https://dev.to/social_previews/article/1039492.png"
+    "cover_image": "https://media2.dev.to/dynamic/image/width=1000,height=500,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fdt4x2izth76o42aaizrf.png"
   },
   {
     "title": "Web Tribute To Nelson Mandela",
@@ -75,7 +75,7 @@
     "tag_list": ["codepen", "webdev"],
     "public_reactions_count": 7,
     "comments_count": 0,
-    "cover_image": "https://dev.to/social_previews/article/1039334.png"
+    "cover_image": "https://media2.dev.to/dynamic/image/width=1000,height=500,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F47b5wk77vpcgrypifxd7.png"
   },
   {
     "title": "Product landing page",
@@ -88,6 +88,6 @@
     "tag_list": ["codepen", "webdev", "html"],
     "public_reactions_count": 7,
     "comments_count": 0,
-    "cover_image": "https://dev.to/social_previews/article/1039332.png"
+    "cover_image": "https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fka9u684pc9nv1zd62zzk.png"
   }
 ]
