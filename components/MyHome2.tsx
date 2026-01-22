@@ -6,6 +6,7 @@ import "~/styles/themetoogle.css";
 import localFont from "@next/font/local";
 import pinnedProjects from "~/assets/pinnedProjects2.json";
 import { Contact, PinnedCard } from ".";
+import { FloatingSocialBar } from "./FloatingSocials";
 
 const helloFont = localFont({
   src: "../assets/fonts/Open_Sans/static/OpenSans-ExtraBold.ttf",
@@ -54,7 +55,7 @@ const experiences = [
 
 function MyHome() {
   return (
-    <div className="relative isolate min-h-screen overflow-hidden bg-white transition-colors duration-500 dark:bg-[#0A0E1A]">
+    <div className="relative isolate min-h-screen overflow-hidden bg-gray-100 transition-colors duration-500 dark:bg-slate-900">
       {/* DIAGONAL SNAKE GLOW BACKGROUND */}
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
         {/* Main indigo ribbon - visible in both modes, slightly more subtle in light */}
@@ -67,11 +68,13 @@ function MyHome() {
 
         <div className="absolute left-[-30%] top-[40%] h-[300px] w-[150%] -rotate-12 rounded-full bg-gradient-to-r from-transparent via-emerald-500/20 to-transparent blur-[100px] dark:via-emerald-400/20" />
 
+        <div className="absolute bottom-[30%] right-[-10%] h-[400px] w-[80%] -rotate-12 rounded-full bg-gradient-to-l from-transparent via-pink-500/20 to-transparent blur-[120px] dark:via-pink-500/20" />
         {/* Subtle bottom glow */}
-        <div className="absolute bottom-[10%] right-[-10%] h-[400px] w-[80%] rotate-12 rounded-full bg-gradient-to-l from-transparent via-purple-500/10 to-transparent blur-[120px] dark:via-purple-500/20" />
+        <div className="absolute bottom-[10%] left-[-10%] h-[400px] w-[80%] rotate-12 rounded-full bg-gradient-to-l from-transparent via-purple-500/20 to-transparent blur-[120px] dark:via-purple-500/20" />
       </div>
 
       <div className="flex px-5 py-4 sm:px-6 lg:px-28 ">
+        <FloatingSocialBar />
         <div className="container mx-auto max-w-7xl">
           {/* HERO SECTION */}
           <section className=" flex h-[82vh] flex-col justify-center text-center sm:mt-12 sm:h-fit sm:pt-14 md:px-0 lg:py-16 xl:h-fit xl:pt-24 ">
@@ -110,7 +113,7 @@ function MyHome() {
                 href="https://github.com/collins-ruto"
                 type="button"
                 aria-label="collins ruto github"
-                className="h-14 w-14 rounded bg-transparent bg-opacity-20 uppercase leading-normal text-indigo-500 transition-all duration-150 ease-in-out hover:border-none hover:border-gray-500 hover:bg-indigo-600 hover:text-white focus:outline-none focus:ring-0 dark:text-indigo-400"
+                className="h-12 w-12 rounded uppercase leading-normal text-indigo-500 transition-all duration-150 ease-in-out hover:border-none hover:border-gray-500 hover:bg-indigo-700 hover:text-white focus:outline-none focus:ring-0 dark:text-indigo-200"
                 data-te-ripple-init
                 data-te-ripple-color="light"
               >
@@ -129,7 +132,7 @@ function MyHome() {
                 href="https://www.linkedin.com/in/collins-ruto"
                 type="button"
                 aria-label="collins ruto linkedin "
-                className="h-14 w-14 rounded bg-transparent bg-opacity-20 uppercase leading-normal text-indigo-500 transition-all duration-150 ease-in-out hover:border-none hover:border-gray-500 hover:bg-indigo-600 hover:text-white focus:outline-none focus:ring-0 dark:text-indigo-400"
+                className="h-12 w-12 rounded uppercase leading-normal text-indigo-500 transition-all duration-150 ease-in-out hover:border-none hover:border-gray-500 hover:bg-indigo-700 hover:text-white focus:outline-none focus:ring-0 dark:text-indigo-200"
                 data-te-ripple-init
                 data-te-ripple-color="light"
               >
@@ -183,7 +186,7 @@ function MyHome() {
                       </span>
 
                       {/* Dot */}
-                      <span className="relative z-10 h-3 w-3 rounded-full bg-amber-400 shadow-[0_0_0_6px_rgba(251,191,36,0.20)] dark:shadow-[0_0_0_6px_rgba(251,191,36,0.18)]" />
+                      <span className="relative z-10 h-3 w-3 rounded-full bg-indigo-400 shadow-[0_0_0_6px_rgba(251,191,36,0.20)] dark:shadow-[0_0_0_6px_rgba(251,191,36,0.18)]" />
 
                       {/* Vertical line to next item */}
                       {
