@@ -3,8 +3,8 @@ import Link from "next/link";
 import React from "react";
 import { tools1, tools2 } from "~/assets/homedata";
 import "~/styles/themetoogle.css";
-import pinnedProjects from "~/assets/pinnedProjects2.json";
 import localFont from "@next/font/local";
+import pinnedProjects from "~/assets/pinnedProjects2.json";
 import { Contact, PinnedCard } from ".";
 
 const helloFont = localFont({
@@ -28,17 +28,16 @@ function MyHome() {
             >
               {" "}
               HELLO, I&apos;M{" "}
-              <span className="text-indigo-600 dark:text-indigo-500">
+              <span className="text-indigo-600 dark:text-indigo-400">
                 COLLINS RUTO
               </span>{" "}
             </h1>
             <p className="mx-auto mt-6 max-w-[30rem] pt-4 text-lg font-medium text-gray-600 dark:text-gray-400">
               A Full-Stack Developer from Nairobi, Kenya.
-              </p>
+            </p>
             <p className="mx-auto max-w-[30rem] pb-4 text-lg font-medium text-gray-600 dark:text-gray-400">
-              Focused on building the Frontend & Backend
-              of Websites and Web Applications that leads to the success of the
-              overall product
+              Focused on building the Frontend & Backend of Websites and Web
+              Applications that leads to the success of the overall product
             </p>
             <a
               href="https://raw.githubusercontent.com/Collins-Ruto/collins-ruto.github.io/main/collinsruto.pdf"
@@ -140,12 +139,12 @@ function MyHome() {
                     Who Am I
                   </h2>
                   <p className="section__subtitle section__subtitle--about mb-8 text-lg font-semibold">
-                    Designer & Developer based in Mombasa, Kenya
+                    Designer & Developer based in Nairobi, Kenya
                   </p>
                 </div>
                 <div className="about-me__body text-l mb-8">
                   <p>
-                    I am a freelance web developer based in Mombasa, Kenya. I
+                    I am a freelance web developer based in Nairobi, Kenya. I
                     strongly believe that life is about pursuing our dreams and
                     finding genuine happiness. My objective is to assist
                     individuals and businesses in transforming their ideas into
