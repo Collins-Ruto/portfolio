@@ -25,6 +25,7 @@ const nextConfig = {
       "github-readme-stats.vercel.app",
       "visitor-badge.glitch.me",
       "wakatime.com",
+      "media2.dev.to",
     ],
   },
   async headers() {
