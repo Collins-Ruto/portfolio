@@ -13,15 +13,23 @@ export function FloatingSocialBar() {
           target="_blank"
           rel="noopener"
           href="mailto:collinsruto48@gmail.com"
-          className="m-1 flex h-9 w-9 items-center justify-center gap-4 rounded-full bg-indigo-600 bg-opacity-20 uppercase leading-normal text-indigo-500 dark:text-indigo-200 transition-all duration-300 ease-in-out hover:border-none hover:border-gray-500 hover:bg-indigo-700 hover:text-white focus:outline-none focus:ring-0"
+          className="m-1 flex h-9 w-9 items-center justify-center gap-4 rounded-full bg-indigo-600 bg-opacity-20 uppercase leading-normal text-indigo-500 transition-all duration-300 ease-in-out hover:border-none hover:border-gray-500 hover:bg-indigo-700 hover:text-white focus:outline-none focus:ring-0 dark:text-indigo-200"
         >
-          <Image
-            width={20}
-            height={20}
-            className="h-6 w-6 rounded-sm"
-            src="https://img.icons8.com/material-outlined/24/a5b4fc/mail.png"
-            alt=""
-          />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <rect x="3" y="5" width="18" height="14" rx="2" />
+            <path d="m3 7 9 6 9-6" />
+          </svg>
         </Link>
 
         <Link
@@ -30,7 +38,7 @@ export function FloatingSocialBar() {
           href="https://twitter.com/ruto_collins_"
           type="button"
           aria-label="collins ruto twitter"
-          className="m-1 h-9 w-9 rounded-full bg-indigo-600 bg-opacity-20 uppercase leading-normal text-indigo-500 dark:text-indigo-200 transition-all duration-150 ease-in-out hover:border-none hover:border-gray-500 hover:bg-indigo-600 hover:text-white focus:outline-none focus:ring-0"
+          className="m-1 h-9 w-9 rounded-full bg-indigo-600 bg-opacity-20 uppercase leading-normal text-indigo-500 transition-all duration-150 ease-in-out hover:border-none hover:border-gray-500 hover:bg-indigo-600 hover:text-white focus:outline-none focus:ring-0 dark:text-indigo-200"
           data-te-ripple-init
           data-te-ripple-color="light"
         >
@@ -49,7 +57,7 @@ export function FloatingSocialBar() {
           href="https://instagram.com/learn.hq"
           type="button"
           aria-label="Collins instagram"
-          className="m-1 h-9 w-9 rounded-full bg-indigo-600 bg-opacity-20 uppercase leading-normal text-indigo-500 dark:text-indigo-200 transition-all duration-150 ease-in-out hover:border-none hover:border-gray-500 hover:bg-indigo-600 hover:text-white focus:outline-none focus:ring-0"
+          className="m-1 h-9 w-9 rounded-full bg-indigo-600 bg-opacity-20 uppercase leading-normal text-indigo-500 transition-all duration-150 ease-in-out hover:border-none hover:border-gray-500 hover:bg-indigo-600 hover:text-white focus:outline-none focus:ring-0 dark:text-indigo-200"
           data-te-ripple-init
           data-te-ripple-color="light"
         >
@@ -68,7 +76,7 @@ export function FloatingSocialBar() {
           href="https://collinsruto.vercel.app"
           type="button"
           aria-label="collins ruto website"
-          className="m-1 h-9 w-9 rounded-full bg-indigo-600 bg-opacity-20 uppercase leading-normal text-indigo-500 dark:text-indigo-200 transition-all duration-300 ease-in-out hover:border-none hover:border-gray-500 hover:bg-indigo-600 hover:text-white focus:outline-none focus:ring-0"
+          className="m-1 h-9 w-9 rounded-full bg-indigo-600 bg-opacity-20 uppercase leading-normal text-indigo-500 transition-all duration-300 ease-in-out hover:border-none hover:border-gray-500 hover:bg-indigo-600 hover:text-white focus:outline-none focus:ring-0 dark:text-indigo-200"
           data-te-ripple-init
           data-te-ripple-color="light"
         >
@@ -87,7 +95,7 @@ export function FloatingSocialBar() {
           href="https://github.com/collins-ruto"
           type="button"
           aria-label="collins ruto github"
-          className="m-1 h-9 w-9 rounded-full bg-indigo-600 bg-opacity-20 uppercase leading-normal text-indigo-500 dark:text-indigo-200 transition-all duration-150 ease-in-out hover:border-none hover:border-gray-500 hover:bg-indigo-600 hover:text-white focus:outline-none focus:ring-0"
+          className="m-1 h-9 w-9 rounded-full bg-indigo-600 bg-opacity-20 uppercase leading-normal text-indigo-500 transition-all duration-150 ease-in-out hover:border-none hover:border-gray-500 hover:bg-indigo-600 hover:text-white focus:outline-none focus:ring-0 dark:text-indigo-200"
           data-te-ripple-init
           data-te-ripple-color="light"
         >

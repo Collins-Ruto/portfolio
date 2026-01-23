@@ -47,7 +47,7 @@ export function AboutSection({
   ];
 
   return (
-    <section className="relative isolate overflow-hidden rounded-3xl bg-[#0A0E1A] px-6 py-16 text-white">
+    <section className="relative isolate overflow-hidden py-16 dark:text-white">
       {/* BACKGROUND GLOW LAYER */}
       <div className="pointer-events-none absolute inset-0 -z-10">
         {/* Main snake ribbon - increased opacity and narrowed blur for visibility */}
@@ -75,7 +75,7 @@ export function AboutSection({
           "
         />
         {/* Adjusted vignette: lighter center to allow glow to show through */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/20 to-black/60" />
+        <div className="absolute inset-0 bg-gradient-to-b " />
       </div>
 
       {/* Header pill */}
@@ -94,21 +94,21 @@ export function AboutSection({
           className={`${headFontClassName} text-4xl font-extrabold leading-tight md:text-5xl`}
         >
           I build{" "}
-          <span className="rounded border border-indigo-500/30 bg-indigo-600/30 px-2 py-1 text-white">
+          <span className="rounded border border-indigo-500/30 bg-indigo-600/30 px-2 py-1">
             full-stack web apps
           </span>{" "}
           with{" "}
-          <span className="rounded border border-emerald-500/30 bg-emerald-600/30 px-2 py-1 text-white">
+          <span className="rounded border border-emerald-500/30 bg-emerald-600/30 px-2 py-1">
             secure APIs
           </span>{" "}
           and{" "}
-          <span className="rounded border border-amber-500/30 bg-amber-600/30 px-2 py-1 text-white">
+          <span className="rounded border border-amber-500/30 bg-amber-600/30 px-2 py-1">
             payment integrations
           </span>
           .
         </h2>
 
-        <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/80 md:text-lg">
+        <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-black/80 dark:text-white/80 md:text-lg">
           Full-stack software engineer with experience building and maintaining
           Next.js/Node applications, database-backed APIs, and M-Pesa Daraja +
           KCB Buni payment flows, deployed on Vercel with Docker-based dev
@@ -119,7 +119,7 @@ export function AboutSection({
           {chips.map((c) => (
             <span
               key={c}
-              className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-white/90 backdrop-blur-md"
+              className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-black/90 dark:text-white/90 backdrop-blur-md"
             >
               {c}
             </span>
@@ -164,7 +164,7 @@ export function AboutSection({
                   "rounded-2xl border p-6 transition-all",
                   active
                     ? "border-emerald-400/50 bg-emerald-400/10 text-white"
-                    : "border-white/5 bg-white/[0.02] text-white/80",
+                    : "border-white/5 bg-white/[0.02] text-black/80 dark:text-white/80",
                 ].join(" ")}
               >
                 <div className="mb-4 flex items-center justify-between">
@@ -173,7 +173,7 @@ export function AboutSection({
                       "rounded-full px-4 py-1 text-[10px] font-extrabold uppercase tracking-wider",
                       active
                         ? "bg-emerald-400 text-black"
-                        : "border border-white/20 bg-white/5 text-white/70",
+                        : "border border-white/20 bg-white/5 text-black/70 dark:text-white/70",
                     ].join(" ")}
                   >
                     {step.label}
@@ -226,12 +226,12 @@ export function AboutSection({
               {/* Individual card glow on hover */}
               <div className="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-br from-emerald-400/10 via-transparent to-transparent opacity-0 blur-xl transition duration-500 group-hover:opacity-100" />
 
-              <p className="text-sm italic leading-relaxed text-white/75">
+              <p className="text-sm italic leading-relaxed text-black/75 dark:text-white/75">
                 “{t.quote}”
               </p>
               <div className="mt-6">
                 <p className="text-sm font-bold text-white">{t.name}</p>
-                <p className="text-[10px] uppercase tracking-widest text-white/50">
+                <p className="text-[10px] uppercase tracking-widest text-black/50 dark:text-white/50">
                   {t.role}
                 </p>
               </div>
