@@ -9,7 +9,7 @@ export const LayoutProvider = ({ children }: { children: React.ReactNode }) => {
 
   // Define pages where styles/provider should NOT apply
   const excludedPaths = ["/about/abt", "/signup", "/admin/dashboard"];
-  const isExcluded = excludedPaths.includes(pathname || "") || pathname === "/";
+  const isExcluded = excludedPaths.includes(pathname || "");
 
   if (isExcluded) {
     return (
