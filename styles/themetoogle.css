@@ -146,3 +146,44 @@
 	fill:#fff;
 }
 
+
+
+.photo-stack {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.photo-stack::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  right: 0; bottom: 0;
+  background: linear-gradient(135deg, 
+    #4f46e5, #6366f1);
+  border-radius: 1rem;
+  transform: translate(-12px, 12px);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.photo-stack::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  right: 0; bottom: 0;
+  background-image: var(--photo-url);
+  background-size: cover;
+  background-position: center;
+  border-radius: 1rem;
+  filter: grayscale(100%);
+  transform: translate(-6px, 6px);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.photo-stack img {
+  position: relative;
+  z-index: 3;
+  display: block;
+}
