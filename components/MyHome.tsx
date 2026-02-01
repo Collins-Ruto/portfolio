@@ -6,7 +6,7 @@ import "~/styles/themetoogle.css";
 import localFont from "@next/font/local";
 import pinnedProjects from "~/assets/pinnedProjects2.json";
 import { Contact, PinnedCard } from ".";
-import { FloatingSocialBar } from "./FloatingSocials";
+import AboutPhoto from "./AboutPhoto";
 
 interface Experience {
   role: string;
@@ -66,7 +66,6 @@ function MyHome() {
     <div className="text-[16px] md:text-[17px] lg:text-[18px]">
       <div className="mx-auto">
         <div className="flex py-4 ">
-          <FloatingSocialBar />
           <div className="container mx-auto max-w-7xl">
             {/* HERO SECTION */}
             <section className=" flex h-[82vh] flex-col justify-center text-center sm:mt-12 sm:h-fit sm:pt-14 md:px-0 lg:py-16 xl:h-fit xl:pt-24 ">
