@@ -234,15 +234,9 @@ function MyHome() {
             </section>
 
             {/* TECHNICAL PROFILE SECTION */}
-            <section className="about--me text-dark py-24">
-              <div className="about-me mx-auto flex max-w-6xl flex-col items-center gap-12 px-4 max-md:px-0 lg:flex-row">
-                <Image
-                  width={400}
-                  height={400}
-                  src="/img/26.webp" // Ensure this path is correct in your public folder
-                  alt="Collins Ruto"
-                  className="h-[30rem] w-full rounded-2xl object-cover shadow-2xl lg:w-1/2"
-                />
+            <section className="about--me text-dark py-16 md:py-24">
+              <div className="about-me mx-auto flex max-w-6xl flex-col items-center gap-12 md:gap-2 px-4 max-md:px-0 lg:flex-row">
+                <AboutPhoto />
                 <div className="lg:w-1/2">
                   <h2
                     className={`${headFont.className} mb-6 text-4xl font-bold`}
