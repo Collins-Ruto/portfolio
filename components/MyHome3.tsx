@@ -84,7 +84,7 @@ function MyHome() {
           </h1>
 
           <p className="mx-auto mt-6 max-w-[42rem] text-lg font-medium leading-relaxed text-gray-700 dark:text-gray-300 sm:text-xl">
-            Full-stack software engineer based in Nairobi, Kenya — I build web apps,
+            Full-stack software engineer based in Nairobi, Kenya. I build web apps,
             backend APIs, and payment integrations.
           </p>
 
@@ -194,7 +194,7 @@ function MyHome() {
                 </p>
                 <p>
                   Recently I’ve focused on admin dashboards, event registration flows, and
-                  payment integrations (including callback handling and edge cases) — because
+                  payment integrations (including callback handling and edge cases), because
                   “it works in production” matters more than fancy demos.
                 </p>
               </div>
