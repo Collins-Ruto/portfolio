@@ -6,6 +6,7 @@ export type RepositoryData = {
   description: string;
   homepage: string;
   pin_url: string;
+  logo?: string;
   topics: string[]
 }
 
