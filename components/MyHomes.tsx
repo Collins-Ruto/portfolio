@@ -32,8 +32,11 @@ function MyHome() {
                 COLLINS RUTO
               </span>{" "}
             </h1>
-            <p className="mx-auto mt-6 max-w-[30rem] py-4 text-lg font-medium text-gray-600 dark:text-gray-400">
-              A Full-Stack Developer focused on building the Frontend & Backend
+            <p className="mx-auto mt-6 max-w-[30rem] pt-4 text-lg font-medium text-gray-600 dark:text-gray-400">
+              A Full-Stack Developer from Nairobi, Kenya.
+              </p>
+            <p className="mx-auto max-w-[30rem] pb-4 text-lg font-medium text-gray-600 dark:text-gray-400">
+              Focused on building the Frontend & Backend
               of Websites and Web Applications that leads to the success of the
               overall product
             </p>

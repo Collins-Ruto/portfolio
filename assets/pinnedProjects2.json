@@ -1,5 +1,25 @@
 [
   {
+    "name": "Eldama Ravine Education Foundation",
+    "html_url": "https://ereffoundation.org/",
+    "created_at": "2025-07-25T14:30:56Z",
+    "stargazers_count": 5,
+    "description": "EREF official website",
+    "homepage": "https://ereffoundation.org/",
+    "pin_url": "/eref.webp",
+    "topics": [ "html5", "javascript", "M-Pesa API", "supabase", "tailwindcss",  "css3"]
+  },
+  {
+    "name": "Uzalendo School",
+    "html_url": "https://ereffoundation.org/uzalendo.html",
+    "created_at": "2025-06-25T14:30:56Z",
+    "stargazers_count": 3,
+    "description": "Uzalendo school official website",
+    "homepage": "https://ereffoundation.org/uzalendo.html",
+    "pin_url": "/uzalendo.webp",
+    "topics": ["css3", "html5", "javascript", "tailwindcss", "email"]
+  },
+  {
     "name": "LearnHq",
     "html_url": "https://github.com/Collins-Ruto/lms-admin",
     "created_at": "2023-02-12T17:49:19Z",
@@ -35,16 +55,6 @@
     ]
   },
   {
-    "name": "collins-ruto.github.io",
-    "html_url": "https://github.com/Collins-Ruto/collins-ruto.github.io",
-    "created_at": "2021-10-25T14:30:56Z",
-    "stargazers_count": 2,
-    "description": "My personal portfolio website",
-    "homepage": "https://collinsruto.netlify.app/",
-    "pin_url": "/collinsio.webp",
-    "topics": ["css3", "html5", "javascript", "portfolio-website"]
-  },
-  {
     "name": "hospital-supply-system",
     "html_url": "https://github.com/Collins-Ruto/hospital-supply-system",
     "created_at": "2022-05-29T13:22:01Z",
@@ -63,15 +73,5 @@
     "homepage": "",
     "pin_url": "/neartemplate.webp",
     "topics": ["nearprotocol", "nextjs", "rust"]
-  },
-  {
-    "name": "learnhqhome",
-    "html_url": "https://github.com/Collins-Ruto/learnhqhome",
-    "created_at": "2023-06-07T10:16:10Z",
-    "stargazers_count": 0,
-    "description": "LearnHq home. Fully fledged Learning and School Management system",
-    "homepage": "https://learnhqhome.vercel.app",
-    "pin_url": "/learnhqhome.webp",
-    "topics": ["nextjs", "tailwindcss", "typescript"]
   }
 ]

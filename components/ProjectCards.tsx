@@ -133,7 +133,7 @@ export const PinnedCard = ({ project }: { project: RepositoryData }) => {
           {project.description}
         </span>
         <div className="justify-cente flex flex-wrap items-center py-1">
-          {project.topics?.slice(0, 4).map((tag, index) => (
+          {project.topics?.slice(0, 5).map((tag, index) => (
             <span
               key={index}
               className="uppercas m-[0.1rem] inline-block rounded-full bg-indigo-200 px-2 py-[0.15rem] text-xs font-semibold tracking-wide text-indigo-800"
