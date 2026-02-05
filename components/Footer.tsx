@@ -134,7 +134,7 @@ function Footer() {
               >
                 Collins Ruto,
               </Link>{" "}
-              July 2025
+              February 2026
             </div>
           </div>
         </div>
