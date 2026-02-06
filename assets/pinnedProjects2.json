@@ -7,6 +7,7 @@
     "description": "EREF official website",
     "homepage": "https://ereffoundation.org/",
     "pin_url": "/eref.webp",
+    "logo": "/img/eref.png",
     "topics": [ "html5", "javascript", "M-Pesa API", "supabase", "tailwindcss",  "css3"]
   },
   {
@@ -17,6 +18,7 @@
     "description": "Uzalendo school official website",
     "homepage": "https://ereffoundation.org/uzalendo.html",
     "pin_url": "/uzalendo.webp",
+    "logo": "/img/uzalendo.png",
     "topics": ["css3", "html5", "javascript", "tailwindcss", "email"]
   },
   {
@@ -27,6 +29,7 @@
     "description": "Full scale school & learning management system",
     "homepage": "https://learnhq.vercel.app",
     "pin_url": "https://github.com/Collins-Ruto/lms-admin/raw/main/client/public/learnhq.webp",
+    "logo": "/img/learnhq.png",
     "topics": [
       "nextjs / typescript",
       "mongodb",
@@ -45,6 +48,7 @@
     "description": "A one-stop source for all your favorites apps and games for free.",
     "homepage": "https://applate.vercel.app",
     "pin_url": "/appstore.webp",
+    "logo": "/img/appstore.png",
     "topics": [
       "javascript",
       "nextjs",
@@ -62,7 +66,8 @@
     "description": "A NEAR protocol smart contract built with Rust for transparency in Health Suply System",
     "homepage": "",
     "pin_url": "/supply.webp",
-    "topics": ["nearprotocol", "rust", "web3-dapp"]
+    "logo": "/img/supply.png",
+    "topics": ["nearprotocol", "rust", "web3-dapp", "react"]
   },
   {
     "name": "near-rust-nextjs-template",
@@ -72,6 +77,7 @@
     "description": "A template for creating near smart contracts using rust and NextJS for frontend",
     "homepage": "",
     "pin_url": "/neartemplate.webp",
-    "topics": ["nearprotocol", "nextjs", "rust"]
+    "logo": "/img/photo.png",
+    "topics": ["nearprotocol", "nextjs", "rust", "tailwindcss"]
   }
 ]
