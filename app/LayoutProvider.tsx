@@ -20,9 +20,9 @@ export const LayoutProvider = ({ children }: { children: React.ReactNode }) => {
             className={` flex min-h-[100vh] flex-col justify-between bg-gray-100 dark:bg-slate-900`}
           >
             <Header />
-            <div className="flex">
+            <main className="flex">
               <div className="w-full">{children}</div>
-            </div>
+            </main>
             <Footer />
           </div>
         </ThemeProvider>
@@ -36,7 +36,7 @@ export const LayoutProvider = ({ children }: { children: React.ReactNode }) => {
           className={` flex min-h-[100vh] flex-col justify-between bg-gray-100 dark:bg-slate-900`}
         >
           <Header />
-          <div className="flex">
+          <main className="flex">
             <div className="w-full ">
               <div className="relative isolate min-h-screen overflow-hidden bg-gray-100 transition-colors duration-500 dark:bg-slate-900">
                 {/* DIAGONAL SNAKE GLOW BACKGROUND */}
@@ -61,7 +61,7 @@ export const LayoutProvider = ({ children }: { children: React.ReactNode }) => {
                 </div>
               </div>
             </div>
-          </div>
+          </main>
           <Footer />
         </div>
       </ThemeProvider>
