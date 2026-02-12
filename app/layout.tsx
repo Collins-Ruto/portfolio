@@ -15,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <ClientProvider>
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning>
         <body>
           {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
             <GoogleAnalytics ga_id={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
