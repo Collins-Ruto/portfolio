@@ -35,18 +35,23 @@ function Header() {
                 RUTO COLLINS
               </h1>
             </Link>
-            <div
-              id="menuButton"
-              className={`flex ${
-                opened ? "open" : ""
-              } cursor-pointer flex-col items-center justify-center space-y-1.5 p-2  md:hidden`}
-              onClick={() => {
-                setOpened(!opened);
-              }}
-            >
-              <span className="duration-400 h-1 w-8 rounded bg-blue-600 transition-all sm:w-8"></span>
-              <span className="duration-400 h-1 w-8 rounded bg-blue-600 transition-all sm:w-8"></span>
-              <span className="duration-400 h-1 w-8 rounded bg-blue-600 transition-all sm:w-8"></span>
+            <div className="flex items-center justify-center">
+              <div
+                id="menuButton"
+                className={`flex ${
+                  opened ? "open" : ""
+                } cursor-pointer flex-col items-center justify-center space-y-1.5 p-2  md:hidden`}
+                onClick={() => {
+                  setOpened(!opened);
+                }}
+              >
+                <span className="duration-400 h-1 w-8 rounded bg-blue-600 transition-all sm:w-8"></span>
+                <span className="duration-400 h-1 w-8 rounded bg-blue-600 transition-all sm:w-8"></span>
+                <span className="duration-400 h-1 w-8 rounded bg-blue-600 transition-all sm:w-8"></span>
+              </div>
+            <div className="w-fit px-2">
+              <ThemeToogle place="mobile-toogle" />
+            </div>
             </div>
           </div>
           <header className="hidden w-full md:block">
@@ -68,7 +73,7 @@ function Header() {
               </Link>
               <div className="">
                 <nav className="w-full text-gray-700 dark:text-gray-300">
-                  <ul className="flex items-center space-x-2 xl:space-x-8 text-sm font-semibold md:text-lg">
+                  <ul className="flex items-center space-x-2 lg:space-x-3 text-sm font-semibold md:text-lg xl:space-x-8">
                     <li>
                       <Link
                         href={`/`}
@@ -103,7 +108,9 @@ function Header() {
                             : "border-transparent"
                         }`}
                       >
-                        <span className="rounded md:hidden lg:block">PROJECTS</span>
+                        <span className="rounded md:hidden lg:block">
+                          PROJECTS
+                        </span>
                       </Link>
                     </li>
                     <li>
@@ -144,8 +151,8 @@ function Header() {
                     </li>
 
                     <li>
-                      <div className="w-fit items-center px-2 max-md:hidden">
-                        <ThemeToogle place="sidebar-toogle" />
+                      <div className="w-fit items-center px-2">
+                        <ThemeToogle place="nav-toogle" />
                       </div>
                     </li>
                     {/* <li>
@@ -184,7 +191,7 @@ function Header() {
             className="
                absolute right-0 flex h-screen w-[60%] max-w-[20rem] flex-col  gap-4 overflow-y-auto bg-[#F7F6FB] p-4 pt-[5rem] text-end text-2xl font-semibold opacity-100 bg-blend-darken  dark:bg-slate-900 dark:text-white sm:text-3xl md:w-60 "
           >
-            <div className="ml-auto w-fit items-center px-2 md:hidden">
+            <div className="ml-auto w-fit items-center px-2">
               <ThemeToogle place="sidebar-toogle" />
             </div>
             <Link
