@@ -5,9 +5,9 @@ import React from "react";
 function Footer() {
   return (
     <div>
-      <footer className="bg-slate-900  px-6 text-white md:px-10 ">
+      <footer className="bg-gray-100 px-6  text-white dark:bg-slate-900 md:px-10 ">
         <div className="container mx-auto w-full max-w-screen-xl py-6 md:p-2 lg:pt-8">
-          <div className="items-center justify-between text-center text-[#16e0bd] lg:flex">
+          <div className="items-center justify-between text-center text-[#0b705f] dark:text-[#16e0bd] lg:flex">
             <Link
               target="_blank"
               rel="noopener"
@@ -15,13 +15,22 @@ function Footer() {
               className=" underline-offset-2 hover:underline "
             >
               <div className=" mx-auto flex w-fit items-center">
-                <Image
-                  width={20}
-                  height={20}
-                  className="mr-2 w-6 rounded-sm"
-                  src="https://img.icons8.com/material-outlined/24/16e0bd/mail.png"
-                  alt=""
-                />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                  className="mr-2"
+                >
+                  <rect x="3" y="5" width="18" height="14" rx="2" />
+                  <path d="m3 7 9 6 9-6" />
+                </svg>
                 collinsruto48@gmail.com
               </div>
             </Link>
@@ -33,7 +42,7 @@ function Footer() {
                   href="https://collinsruto.vercel.app"
                   type="button"
                   aria-label="collins ruto website"
-                  className="m-1 h-9 w-9 rounded-full border border-[#16e0bd] bg-black bg-opacity-20 uppercase leading-normal text-[#16e0bd] transition-all duration-300 ease-in-out hover:border-none hover:border-gray-500 hover:bg-pink-600 hover:text-white focus:outline-none focus:ring-0"
+                  className="m-1 h-9 w-9 rounded-full border border-[#0b705f] bg-opacity-20 uppercase leading-normal text-[#0b705f] transition-all duration-300 ease-in-out hover:border-none hover:border-gray-500 hover:bg-[#0b705f] hover:text-white focus:outline-none focus:ring-0 dark:border-[#16e0bd] dark:bg-black dark:text-[#16e0bd]"
                   data-te-ripple-init
                   data-te-ripple-color="light"
                 >
@@ -52,7 +61,7 @@ function Footer() {
                   href="https://twitter.com/ruto_collins_"
                   type="button"
                   aria-label="collins ruto twitter"
-                  className="m-1 h-9 w-9 rounded-full border border-[#16e0bd] bg-black bg-opacity-20 uppercase leading-normal text-[#16e0bd] transition-all duration-150 ease-in-out hover:border-none hover:border-gray-500 hover:bg-pink-600 hover:text-white focus:outline-none focus:ring-0"
+                  className="m-1 h-9 w-9 rounded-full border border-[#0b705f] bg-opacity-20 uppercase leading-normal text-[#0b705f] transition-all duration-150 ease-in-out hover:border-none hover:border-gray-500 hover:bg-[#0b705f] hover:text-white focus:outline-none focus:ring-0 dark:border-[#16e0bd] dark:bg-black dark:text-[#16e0bd]"
                   data-te-ripple-init
                   data-te-ripple-color="light"
                 >
@@ -71,7 +80,7 @@ function Footer() {
                   href="https://instagram.com/learn.hq"
                   type="button"
                   aria-label="Collins instagram"
-                  className="m-1 h-9 w-9 rounded-full border border-[#16e0bd] bg-black bg-opacity-20 uppercase leading-normal text-[#16e0bd] transition-all duration-150 ease-in-out hover:border-none hover:border-gray-500 hover:bg-pink-600 hover:text-white focus:outline-none focus:ring-0"
+                  className="m-1 h-9 w-9 rounded-full border border-[#0b705f] bg-opacity-20 uppercase leading-normal text-[#0b705f] transition-all duration-150 ease-in-out hover:border-none hover:border-gray-500 hover:bg-[#0b705f] hover:text-white focus:outline-none focus:ring-0 dark:border-[#16e0bd] dark:bg-black dark:text-[#16e0bd]"
                   data-te-ripple-init
                   data-te-ripple-color="light"
                 >
@@ -90,7 +99,7 @@ function Footer() {
                   href="https://www.linkedin.com/in/collins-ruto"
                   type="button"
                   aria-label="collins ruto linkedin "
-                  className="m-1 h-9 w-9 rounded-full border border-[#16e0bd] bg-black bg-opacity-20 uppercase leading-normal text-[#16e0bd] transition-all duration-150 ease-in-out hover:border-none hover:border-gray-500 hover:bg-pink-600 hover:text-white focus:outline-none focus:ring-0"
+                  className="m-1 h-9 w-9 rounded-full border border-[#0b705f] bg-opacity-20 uppercase leading-normal text-[#0b705f] transition-all duration-150 ease-in-out hover:border-none hover:border-gray-500 hover:bg-[#0b705f] hover:text-white focus:outline-none focus:ring-0 dark:border-[#16e0bd] dark:bg-black dark:text-[#16e0bd]"
                   data-te-ripple-init
                   data-te-ripple-color="light"
                 >
@@ -109,7 +118,7 @@ function Footer() {
                   href="https://github.com/collins-ruto"
                   type="button"
                   aria-label="collins ruto github"
-                  className="m-1 h-9 w-9 rounded-full border border-[#16e0bd] bg-black bg-opacity-20 uppercase leading-normal text-[#16e0bd] transition-all duration-150 ease-in-out hover:border-none hover:border-gray-500 hover:bg-pink-600 hover:text-white focus:outline-none focus:ring-0"
+                  className="m-1 h-9 w-9 rounded-full border border-[#0b705f] bg-opacity-20 uppercase leading-normal text-[#0b705f] transition-all duration-150 ease-in-out hover:border-none hover:border-gray-500 hover:bg-[#0b705f] hover:text-white focus:outline-none focus:ring-0 dark:border-[#16e0bd] dark:bg-black dark:text-[#16e0bd]"
                   data-te-ripple-init
                   data-te-ripple-color="light"
                 >
@@ -125,16 +134,16 @@ function Footer() {
               </div>
             </div>
             <div className="pb-2 text-center md:pb-0">
-              © {new Date().getFullYear()}{" "}
+              © {new Date().toLocaleDateString("en", { month: "long" })},{" "}
+              {new Date().getFullYear()}{" "}
               <Link
                 target="_blank"
                 rel="noopener"
                 className="text-blue-400 "
                 href="https://collinsruto.vercel.app"
               >
-                Collins Ruto,
-              </Link>{" "}
-              February 2026
+                Collins Ruto
+              </Link>
             </div>
           </div>
         </div>
