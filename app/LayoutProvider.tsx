@@ -3,12 +3,13 @@
 import { ThemeProvider } from "next-themes";
 import { usePathname } from "next/navigation";
 import { Footer, Header } from "~/components";
+import { FloatingSocialBar } from "~/components/FloatingSocials";
 
 export const LayoutProvider = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
 
   // Define pages where styles/provider should NOT apply
-  const excludedPaths = ["/about/abt", "/signup", "/admin/dashboard"];
+  const excludedPaths = ["/about/abt", "/sorte  ", "/admin/dashboard"];
   const isExcluded = excludedPaths.includes(pathname || "");
 
   if (isExcluded) {
@@ -55,6 +56,7 @@ export const LayoutProvider = ({ children }: { children: React.ReactNode }) => {
                   <div className="absolute bottom-[10%] left-[-10%] h-[400px] w-[80%] rotate-12 rounded-full bg-gradient-to-l from-transparent via-purple-500/20 to-transparent blur-[120px] dark:via-purple-500/20" />
                 </div>
                 <div className="flex px-5 py-4 sm:px-6 lg:px-28 ">
+                  <FloatingSocialBar />
                   <div className="container mx-auto max-w-7xl">{children}</div>
                 </div>
               </div>
