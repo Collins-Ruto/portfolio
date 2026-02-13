@@ -1,10 +1,5 @@
 import React from "react";
 import type { Metadata } from "next";
-// import ReactMarkdown from "react-markdown";
-// import remarkGfm from "remark-gfm";
-import Image from "next/image";
-import Link from "next/link";
-import ThemeToogle from "~/components/ThemeToogle";
 import { AboutSection } from "~/components/About";
 
 export const metadata: Metadata = {

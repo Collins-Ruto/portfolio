@@ -8,6 +8,14 @@ import pinnedProjects from "~/assets/pinnedProjects2.json";
 import { Contact, PinnedCard } from ".";
 import { FloatingSocialBar } from "./FloatingSocials";
 
+interface Experience {
+  role: string;
+  company: string;
+  period: string;
+  year?: string; // Optional property
+  bullets: string[];
+}
+
 const helloFont = localFont({
   src: "../assets/fonts/Open_Sans/static/OpenSans-ExtraBold.ttf",
   display: "fallback",
@@ -18,7 +26,7 @@ const headFont = localFont({
   display: "fallback",
 });
 
-const experiences = [
+const experiences: Experience[] = [
   {
     role: "Software Engineer / Full Stack Developer",
     company: "Eldama Ravine Education Foundation (EREF)",
@@ -174,10 +182,8 @@ function MyHome() {
               <div className="mx-auto max-w-4xl space-y-10">
                 {experiences.map((exp, idx) => {
                   // Prefer an explicit year if you have one; else try to grab a 4-digit year from period.
-                  const year =
-                    (exp as any).year ??
-                    exp.period?.match(/\b(19|20)\d{2}\b/)?.[0] ??
-                    "";
+                 const year =
+                   exp.year ?? exp.period?.match(/\b(19|20)\d{2}\b/)?.[0] ?? "";
 
                   return (
                     <div key={idx} className="flex gap-6">
