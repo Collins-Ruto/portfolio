@@ -21,7 +21,7 @@ export const ProjectCard = ({ project }: { project: RepositoryData }) => {
           <Image
             width={100}
             height={45}
-            alt="demo"
+            alt="demo link"
             className="ml-1 h-5 w-5"
             src="https://img.icons8.com/windows/32/FFAE00/star--v1.png"
           />
@@ -115,7 +115,7 @@ export const PinnedCard2 = ({ project }: { project: RepositoryData }) => {
             <Image
               width={100}
               height={45}
-              alt="demo"
+              alt="demo link"
               className="ml-1 h-5 w-5"
               src="https://img.icons8.com/windows/32/FFAE00/star--v1.png"
             />
@@ -185,14 +185,13 @@ export const PinnedCard2 = ({ project }: { project: RepositoryData }) => {
   );
 };
 
-
 export const PinnedCard = ({ project }: { project: RepositoryData }) => {
   return (
     <div className="group flex h-full w-full max-w-md flex-col overflow-hidden rounded-xl border border-slate-200 bg-slate-100 shadow-sm dark:border-slate-800 dark:bg-slate-900/50">
       {/* Top Section: Brand Header */}
       <div className="flex flex-col items-center justify-center gap-2 px-4 pb-4 pt-4">
         <div className="size-10 flex w-full items-center justify-between rounded-full text-blue-500">
-          <div className="relative h-11 w-fit items-start flex-grow">
+          <div className="relative h-11 w-fit flex-grow items-start">
             <Image
               alt={project.name}
               fill
@@ -200,7 +199,7 @@ export const PinnedCard = ({ project }: { project: RepositoryData }) => {
               src={project.logo || "/img/photo.png"}
             />
           </div>
-          <h2 className="rounded-full border border-slate-200 bg-blue-500/10 px-4 py-1 text-sm font-semibold shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/5">
+          <h2 className="rounded-full border border-slate-200 bg-blue-100/50 px-4 py-1 text-sm font-bold text-blue-700 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/5 dark:text-blue-300">
             {project.created_at.substring(0, 4)}
           </h2>
         </div>
@@ -229,7 +228,7 @@ export const PinnedCard = ({ project }: { project: RepositoryData }) => {
       </div>
 
       {/* Bottom Section: Info Footer */}
-      <div className="mt-aut h-full rounded-t-xl flex flex-col justify-between border-t border-slate-100 bg-white p-6 shadow-[0_-4px_20px_rgba(0,0,0,0.03)] dark:border-slate-700/50 dark:bg-slate-800">
+      <div className="mt-aut flex h-full flex-col justify-between rounded-t-xl border-t border-slate-100 bg-white p-6 shadow-[0_-4px_20px_rgba(0,0,0,0.03)] dark:border-slate-700/50 dark:bg-slate-800">
         <div className="flex flex-col gap-2">
           <div className="flex items-center justify-between">
             <Link
