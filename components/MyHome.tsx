@@ -181,8 +181,10 @@ function MyHome() {
               <div className="mx-auto max-w-4xl space-y-10">
                 {experiences.map((exp, idx) => {
                   // Prefer an explicit year if you have one; else try to grab a 4-digit year from period.
-                 const year =
-                   exp.year ?? exp.period?.match(/\b(19|20)\d{2}\b/)?.[0] ?? "";
+                  const year =
+                    exp.year ??
+                    exp.period?.match(/\b(19|20)\d{2}\b/)?.[0] ??
+                    "";
 
                   return (
                     <div key={idx} className="flex gap-6">
@@ -234,7 +236,7 @@ function MyHome() {
 
             {/* TECHNICAL PROFILE SECTION */}
             <section className="about--me text-dark py-16 md:py-24">
-              <div className="about-me mx-auto flex max-w-6xl flex-col items-center gap-12 md:gap-2 px-4 max-md:px-0 lg:flex-row">
+              <div className="about-me mx-auto flex max-w-6xl flex-col items-center gap-12 px-4 max-md:px-0 md:gap-2 lg:flex-row">
                 <AboutPhoto />
                 <div className="lg:w-1/2">
                   <h2
@@ -245,19 +247,19 @@ function MyHome() {
                   <div className="space-y-6 text-gray-700 dark:text-gray-300">
                     {/* Marine Engineering Narrative */}
                     <p className="border-l-4 border-indigo-500 bg-indigo-500/5 py-2 pl-4 text-lg italic leading-relaxed">
-                      I am a Software Engineer with a background in{" "}
-                      <strong>Marine Engineering</strong> from the Technical
-                      University of Mombasa. This unique transition has equipped
-                      me with a rigorous approach to system architecture,
-                      technical accountability, and the ability to operate under
-                      strict safety and compliance standards.
+                      I’m a software engineer building
+                      production-ready web systems, APIs, and payment
+                      integrations. My background in Marine Engineering shapes
+                      how I approach software, with structured thinking,
+                      attention to failure modes, and accountability in
+                      real-world environments.
                     </p>
 
                     {/* Product Engineering */}
                     <div>
-                      <h4 className="mb-1 text-sm font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400">
+                      <h3 className="mb-1 text-sm font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400">
                         Product Engineering
-                      </h4>
+                      </h3>
                       <p>
                         I build web applications end-to-end: UI, data models,
                         APIs, and deployment. My focus is on clarity,
@@ -267,9 +269,9 @@ function MyHome() {
 
                     {/* Backend & APIs */}
                     <div>
-                      <h4 className="mb-1 text-sm font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400">
+                      <h3 className="mb-1 text-sm font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400">
                         Backend & APIs
-                      </h4>
+                      </h3>
                       <p>
                         I design REST APIs, database schemas, and background
                         workflows. I am proficient in Node.js, Firebase,
@@ -279,9 +281,9 @@ function MyHome() {
 
                     {/* Payments & Integrations */}
                     <div>
-                      <h4 className="mb-1 text-sm font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400">
+                      <h3 className="mb-1 text-sm font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400">
                         Payments & Integrations
-                      </h4>
+                      </h3>
                       <p>
                         Experienced in integrating payment systems like{" "}
                         <strong>M-Pesa (Daraja)</strong> and{" "}
