@@ -21,9 +21,9 @@ function Footer() {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   aria-hidden="true"
                   className="mr-2"
                 >
@@ -138,7 +138,7 @@ function Footer() {
               <Link
                 target="_blank"
                 rel="noopener"
-                className="text-blue-400 "
+                className="font-medium text-blue-700 transition-colors hover:underline dark:text-blue-400"
                 href="https://collinsruto.vercel.app"
               >
                 Collins Ruto

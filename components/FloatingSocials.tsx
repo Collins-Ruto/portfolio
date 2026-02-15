@@ -12,6 +12,10 @@ export function FloatingSocialBar() {
           target="_blank"
           rel="noopener"
           href="mailto:collinsruto48@gmail.com"
+          type="button"
+          aria-label="collins ruto email"
+          data-te-ripple-init
+          data-te-ripple-color="light"
           className="m-1 flex h-9 w-9 items-center justify-center gap-4 rounded-full bg-indigo-600 bg-opacity-20 uppercase leading-normal text-indigo-500 transition-all duration-300 ease-in-out hover:border-none hover:border-gray-500 hover:bg-indigo-700 hover:text-white focus:outline-none focus:ring-0 dark:text-indigo-200"
         >
           <svg
@@ -21,9 +25,9 @@ export function FloatingSocialBar() {
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
             aria-hidden="true"
           >
             <rect x="3" y="5" width="18" height="14" rx="2" />
