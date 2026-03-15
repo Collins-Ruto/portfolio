@@ -84,13 +84,13 @@ function MyHome() {
           </h1>
 
           <p className="mx-auto mt-6 max-w-[42rem] text-lg font-medium leading-relaxed text-gray-700 dark:text-gray-300 sm:text-xl">
-            Full-stack software engineer based in Nairobi, Kenya. I build web apps,
-            backend APIs, and payment integrations.
+            Full-stack software engineer based in Nairobi, Kenya. I build web
+            apps, backend APIs, and payment integrations.
           </p>
 
           <div className="mx-auto mt-8 flex flex-wrap items-center justify-center gap-3">
             <a
-              href="https://raw.githubusercontent.com/Collins-Ruto/collins-ruto.github.io/main/collinsruto.pdf"
+              href="http://collinsruto.vercel.app/collinsruto.pdf"
               className="inline-flex items-center rounded bg-indigo-600 px-6 py-3 font-semibold text-white shadow-lg hover:bg-indigo-700"
             >
               <Image
@@ -131,10 +131,8 @@ function MyHome() {
         </section>
 
         {/* WHAT I DO */}
-        <section className="relative bg-dark py-16 text-center text-accent">
-          <h2
-            className={`${headFont.className} mb-6 text-4xl font-bold`}
-          >
+        <section className="bg-dark text-accent relative py-16 text-center">
+          <h2 className={`${headFont.className} mb-6 text-4xl font-bold`}>
             What I do
           </h2>
 
@@ -144,9 +142,7 @@ function MyHome() {
                 key={s.title}
                 className="service mx-auto mb-2 max-w-xl grow rounded-xl bg-white/60 p-6 text-left shadow-sm backdrop-blur dark:bg-slate-900/40 md:w-1/3"
               >
-                <h3
-                  className={`${headFont.className} mb-3 text-2xl font-bold`}
-                >
+                <h3 className={`${headFont.className} mb-3 text-2xl font-bold`}>
                   {s.title}
                 </h3>
                 <p className="text-base leading-relaxed text-gray-700 dark:text-gray-300 sm:text-lg">
@@ -165,7 +161,7 @@ function MyHome() {
         </section>
 
         {/* ABOUT */}
-        <section className="about--me py-16 text-dark">
+        <section className="about--me text-dark py-16">
           <div className="about-me flex items-center gap-6">
             <Image
               width={450}
@@ -176,26 +172,27 @@ function MyHome() {
             />
             <div className="w-full">
               <div className="text-center">
-                <h2
-                  className={`${headFont.className} mb-3 text-4xl font-bold`}
-                >
+                <h2 className={`${headFont.className} mb-3 text-4xl font-bold`}>
                   About
                 </h2>
                 <p className="mb-8 text-lg font-semibold text-gray-700 dark:text-gray-300 sm:text-xl">
-                  I build reliable web products with clean UI, solid APIs, and practical deployments.
+                  I build reliable web products with clean UI, solid APIs, and
+                  practical deployments.
                 </p>
               </div>
 
               <div className="mx-auto max-w-[52rem] space-y-4 text-left text-base leading-relaxed text-gray-700 dark:text-gray-300 sm:text-lg">
                 <p>
-                  Most of my work is full-stack: I design the UI, implement backend endpoints,
-                  model data, and ship to production. I’m comfortable working in small teams,
-                  reviewing PRs, and iterating fast when requirements change.
+                  Most of my work is full-stack: I design the UI, implement
+                  backend endpoints, model data, and ship to production. I’m
+                  comfortable working in small teams, reviewing PRs, and
+                  iterating fast when requirements change.
                 </p>
                 <p>
-                  Recently I’ve focused on admin dashboards, event registration flows, and
-                  payment integrations (including callback handling and edge cases), because
-                  “it works in production” matters more than fancy demos.
+                  Recently I’ve focused on admin dashboards, event registration
+                  flows, and payment integrations (including callback handling
+                  and edge cases), because “it works in production” matters more
+                  than fancy demos.
                 </p>
               </div>
             </div>

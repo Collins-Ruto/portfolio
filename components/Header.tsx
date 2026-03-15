@@ -49,9 +49,9 @@ function Header() {
                 <span className="duration-400 h-1 w-8 rounded bg-blue-600 transition-all sm:w-8"></span>
                 <span className="duration-400 h-1 w-8 rounded bg-blue-600 transition-all sm:w-8"></span>
               </div>
-            <div className="w-fit px-2">
-              <ThemeToogle place="mobile-toogle" />
-            </div>
+              <div className="w-fit px-2">
+                <ThemeToogle place="mobile-toogle" />
+              </div>
             </div>
           </div>
           <header className="hidden w-full md:block">
@@ -73,7 +73,7 @@ function Header() {
               </Link>
               <div className="">
                 <nav className="w-full text-gray-700 dark:text-gray-300">
-                  <ul className="flex items-center space-x-2 lg:space-x-3 text-sm font-semibold md:text-lg xl:space-x-8">
+                  <ul className="flex items-center space-x-2 text-sm font-semibold md:text-lg lg:space-x-3 xl:space-x-8">
                     <li>
                       <Link
                         href={`/`}
@@ -263,7 +263,7 @@ function Header() {
               <span className="rounded">Read CV</span>
             </Link>
             <a
-              href="https://raw.githubusercontent.com/Collins-Ruto/collins-ruto.github.io/main/collinsruto.pdf"
+              href="http://collinsruto.vercel.app/collinsruto.pdf"
               className=" ml-auto flex items-center rounded p-2 px-2"
             >
               Résumé

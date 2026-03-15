@@ -14,7 +14,7 @@ function BlogPage() {
     <div className="pt-8">
       <div className=" prose mx-auto dark:prose-invert lg:prose-xl">
         <div className="text-center">
-          <div className="flex mb-4 text-gray-500 flex-wrap justify-end ">
+          <div className="mb-4 flex flex-wrap justify-end text-gray-500 ">
             Last updated: Wed Feb 4, 2026
           </div>
         </div>
@@ -22,9 +22,9 @@ function BlogPage() {
           <ReactMarkdown remarkPlugins={[remarkGfm]}>{cv}</ReactMarkdown>
         </div>
         <div className="py-6">
-          <div className="mx-auto text-center not-prose">
+          <div className="not-prose mx-auto text-center">
             <a
-              href="https://raw.githubusercontent.com/Collins-Ruto/collins-ruto.github.io/main/collinsruto.pdf"
+              href="http://collinsruto.vercel.app/collinsruto.pdf"
               className="mx-auto my-12 flex w-fit items-center rounded bg-indigo-600 px-6 py-3 font-medium text-white shadow-lg hover:bg-indigo-700"
             >
               <Image

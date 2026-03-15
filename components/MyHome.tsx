@@ -106,8 +106,8 @@ function MyHome() {
                 applications, secure payment systems, and blockchain solutions.
               </p>
               <div className="my-12 flex justify-center gap-4">
-                <a
-                  href="https://raw.githubusercontent.com/Collins-Ruto/collins-ruto.github.io/main/collinsruto.pdf"
+                <Link
+                  href="http://collinsruto.vercel.app/collinsruto.pdf"
                   className="flex items-center rounded bg-indigo-600 px-6 py-3 font-medium text-white shadow-lg transition hover:bg-indigo-700"
                 >
                   <Image
@@ -118,7 +118,7 @@ function MyHome() {
                     alt=""
                   />
                   Résumé
-                </a>
+                </Link>
                 <Link
                   target="_blank"
                   rel="noopener"
@@ -247,12 +247,11 @@ function MyHome() {
                   <div className="space-y-6 text-gray-700 dark:text-gray-300">
                     {/* Marine Engineering Narrative */}
                     <p className="border-l-4 border-indigo-500 bg-indigo-500/5 py-2 pl-4 text-lg italic leading-relaxed">
-                      I’m a software engineer building
-                      production-ready web systems, APIs, and payment
-                      integrations. My background in Marine Engineering shapes
-                      how I approach software, with structured thinking,
-                      attention to failure modes, and accountability in
-                      real-world environments.
+                      I’m a software engineer building production-ready web
+                      systems, APIs, and payment integrations. My background in
+                      Marine Engineering shapes how I approach software, with
+                      structured thinking, attention to failure modes, and
+                      accountability in real-world environments.
                     </p>
 
                     {/* Product Engineering */}

@@ -85,7 +85,7 @@ function MyHome() {
             </p>
             <div className="my-12 flex justify-center gap-4">
               <a
-                href="https://raw.githubusercontent.com/Collins-Ruto/collins-ruto.github.io/main/collinsruto.pdf"
+                href="http://collinsruto.vercel.app/collinsruto.pdf"
                 className="flex items-center rounded bg-indigo-600 px-6 py-3 font-medium text-white shadow-lg transition hover:bg-indigo-700"
               >
                 <Image
@@ -158,7 +158,6 @@ function MyHome() {
 
             <div className="mx-auto max-w-4xl space-y-10">
               {experiences.map((exp, idx) => {
-
                 // Prefer an explicit year if you have one; else try to grab a 4-digit year from period.
                 const year =
                   exp.year ?? exp.period?.match(/\b(19|20)\d{2}\b/)?.[0] ?? "";

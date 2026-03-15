@@ -40,7 +40,7 @@ function MyHome() {
               Applications that leads to the success of the overall product
             </p>
             <a
-              href="https://raw.githubusercontent.com/Collins-Ruto/collins-ruto.github.io/main/collinsruto.pdf"
+              href="http://collinsruto.vercel.app/collinsruto.pdf"
               className="mx-auto my-12 flex w-fit items-center rounded bg-indigo-600 px-6 py-3 font-medium text-white shadow-lg hover:bg-indigo-700"
             >
               <Image
