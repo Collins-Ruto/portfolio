@@ -206,7 +206,7 @@ export const PinnedCard = ({ project }: { project: RepositoryData }) => {
       </div>
 
       {/* Middle Section: Floating Screenshot */}
-      <div className="px-4 pb-4">
+      <div className="px-3 pb-3">
         <div className="relative">
           {/* Decorative background glow */}
           <div className="absolute -inset-1 rounded-lg bg-gradient-to-r from-blue-500/20 to-cyan-500/10 opacity-25 blur transition duration-500 group-hover:opacity-50"></div>
@@ -251,7 +251,7 @@ export const PinnedCard = ({ project }: { project: RepositoryData }) => {
               </svg>
             </div>
           </div>
-          <p className="line-clamp-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">
+          <p className="line-clamp-3 text-sm leading-relaxed text-slate-500 dark:text-slate-400">
             {project.description ||
               "No description provided for this repository."}
           </p>
