@@ -24,7 +24,8 @@ function BlogPage() {
         <div className="py-6">
           <div className="not-prose mx-auto text-center">
             <a
-              href="http://collinsruto.vercel.app/collinsruto.pdf"
+              download="collinsruto.pdf"
+                  href="/collinsruto.pdf"
               className="mx-auto my-12 flex w-fit items-center rounded bg-indigo-600 px-6 py-3 font-medium text-white shadow-lg hover:bg-indigo-700"
             >
               <Image

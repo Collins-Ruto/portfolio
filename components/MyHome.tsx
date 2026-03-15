@@ -106,8 +106,9 @@ function MyHome() {
                 applications, secure payment systems, and blockchain solutions.
               </p>
               <div className="my-12 flex justify-center gap-4">
-                <Link
-                  href="http://collinsruto.vercel.app/collinsruto.pdf"
+                <a
+                  download="collinsruto.pdf"
+                  href="/collinsruto.pdf"
                   className="flex items-center rounded bg-indigo-600 px-6 py-3 font-medium text-white shadow-lg transition hover:bg-indigo-700"
                 >
                   <Image
@@ -118,7 +119,7 @@ function MyHome() {
                     alt=""
                   />
                   Résumé
-                </Link>
+                </a>
                 <Link
                   target="_blank"
                   rel="noopener"

@@ -90,7 +90,8 @@ function MyHome() {
 
           <div className="mx-auto mt-8 flex flex-wrap items-center justify-center gap-3">
             <a
-              href="http://collinsruto.vercel.app/collinsruto.pdf"
+              download="collinsruto.pdf"
+              href="/collinsruto.pdf"
               className="inline-flex items-center rounded bg-indigo-600 px-6 py-3 font-semibold text-white shadow-lg hover:bg-indigo-700"
             >
               <Image

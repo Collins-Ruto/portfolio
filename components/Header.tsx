@@ -263,7 +263,8 @@ function Header() {
               <span className="rounded">Read CV</span>
             </Link>
             <a
-              href="http://collinsruto.vercel.app/collinsruto.pdf"
+              download="collinsruto.pdf"
+              href="/collinsruto.pdf"
               className=" ml-auto flex items-center rounded p-2 px-2"
             >
               Résumé

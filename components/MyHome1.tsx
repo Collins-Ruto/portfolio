@@ -85,7 +85,8 @@ function MyHome() {
             </p>
             <div className="my-12 flex justify-center gap-4">
               <a
-                href="http://collinsruto.vercel.app/collinsruto.pdf"
+                download="collinsruto.pdf"
+                href="/collinsruto.pdf"
                 className="flex items-center rounded bg-indigo-600 px-6 py-3 font-medium text-white shadow-lg transition hover:bg-indigo-700"
               >
                 <Image
